@@ -354,6 +354,19 @@ header.stuck{border-bottom-color:var(--line)}
 .more{margin-top:38px;display:flex;justify-content:center}
 
 /* ============ notes ============ */
+/* press */
+.press-list{list-style:none;margin-top:8px}
+.press-item{display:grid;grid-template-columns:110px 92px 1fr;gap:20px;align-items:baseline;
+  padding:22px 4px;border-top:1px solid var(--line)}
+.press-item:last-child{border-bottom:1px solid var(--line)}
+@media(max-width:640px){.press-item{grid-template-columns:1fr;gap:6px;padding:18px 2px}}
+.press-item time{font-family:"Noto Serif KR",Georgia,serif;font-size:.88rem;color:var(--ink-3);letter-spacing:.04em}
+.press-item .outlet{font-size:.75rem;font-weight:700;color:var(--gold);letter-spacing:.08em;white-space:nowrap}
+.press-item h3{font-size:1.02rem;font-weight:600;line-height:1.55}
+.press-item h3 a{border-bottom:1px solid transparent;transition:.2s}
+.press-item h3 a:hover{color:var(--gold);border-bottom-color:var(--gold-2)}
+.press-item p{font-size:.88rem;color:var(--ink-2);margin-top:5px}
+.press-note{margin-top:22px;font-size:.82rem;color:var(--ink-3)}
 .notes{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .note-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
 @media(max-width:760px){.note-grid{grid-template-columns:1fr}}
@@ -422,6 +435,7 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
     <a class="link" href="#care">진료 분야</a>
     <a class="link" href="#cv">약력</a>
     <a class="link" href="#video">영상</a>
+    <a class="link" href="#press">보도</a>
     <a class="link" href="#contact">오시는 길</a>
     <button class="tbtn" id="themeBtn" aria-label="화면 테마 전환" title="화면 테마 전환">◐</button>
   </div>
@@ -789,6 +803,82 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
   </div>
 </section>
 
+<!-- ═══════════ PRESS ═══════════ -->
+<section id="press">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Press</div>
+      <h2>언론이 기록한 활동</h2>
+      <p class="lede">
+        진료실 밖에서의 활동이 언론에 보도된 기록입니다.
+        직접 확인한 기사만 싣고, 새 보도가 나오면 매주 갱신합니다.
+      </p>
+    </div>
+
+    <ul class="press-list">
+<!-- PRESS:LIST:START -->
+      <li class="press-item">
+        <time datetime="2026-03-24">2026. 3. 24</time>
+        <span class="outlet">데일리벳</span>
+        <div>
+          <h3><a href="https://www.dailyvet.co.kr/news/association/277586" target="_blank" rel="noopener">대한수의사회 설채현 대변인 임명‥회원·대국민 홍보기능 강화</a></h3>
+          <p>대한수의사회 학술홍보위원회 위원장 위촉 소식이 함께 보도되었습니다.</p>
+        </div>
+      </li>
+      <li class="press-item">
+        <time datetime="2026-02-26">2026. 2. 26</time>
+        <span class="outlet">데일리벳</span>
+        <div>
+          <h3><a href="https://www.dailyvet.co.kr/news/academy/274711" target="_blank" rel="noopener">큰 병원? 작은 병원? 초보 수의사 고민에 답한 선배들, 2026 카하 스타터 성료</a></h3>
+          <p>신입 수의사 대상 카하 스타터 진로 토크에서 "병원의 규모보다 그 안에서 얼마나 성장할 수 있는가가 중요하다"고 조언했습니다.</p>
+        </div>
+      </li>
+      <li class="press-item">
+        <time datetime="2026-01-15">2026. 1. 15</time>
+        <span class="outlet">뉴스1</span>
+        <div>
+          <h3><a href="https://www.news1.kr/industry/general-industry/6040139" target="_blank" rel="noopener">스마트한 '육각형 수의사' 이태호, 시그니처로 이름 바꾼 이유</a></h3>
+          <p>15년간의 스마트동물병원 신사본원을 시그니처 동물의료센터로 바꾸며 진료 철학을 이야기한 인터뷰입니다.</p>
+        </div>
+      </li>
+      <li class="press-item">
+        <time datetime="2025-10-09">2025. 10. 9</time>
+        <span class="outlet">뉴스1</span>
+        <div>
+          <h3><a href="https://www.news1.kr/society/general-society/5935734" target="_blank" rel="noopener">배까고 자는 강아지, 이유는…수면자세로 본 건강상태 영상 인기</a></h3>
+          <p>수면 자세로 살펴보는 반려견 건강 상태를 다룬 유튜브 강의가 소개되었습니다.</p>
+        </div>
+      </li>
+      <li class="press-item">
+        <time datetime="2025-08-01">2025. 8. 1</time>
+        <span class="outlet">데일리벳</span>
+        <div>
+          <h3><a href="https://www.dailyvet.co.kr/news/association/253384" target="_blank" rel="noopener">KAHA 17대 집행부 실행이사진 "카하 키즈로서 받은 혜택, 카하 발전으로 갚는다"</a></h3>
+          <p>한국동물병원협회 정책기획위원회 위원장으로서 집행부 출범과 위원회 방향을 밝혔습니다.</p>
+        </div>
+      </li>
+      <li class="press-item">
+        <time datetime="2025-05-08">2025. 5. 8</time>
+        <span class="outlet">데일리개원</span>
+        <div>
+          <h3><a href="https://www.dailygaewon.com/news/articleView.html?idxno=16642" target="_blank" rel="noopener">스마트동물병원 신사본원 '제1회 VHR' 개최 "뜨거운 관심 속 국내 첫 신대체요법 집중 논의"</a></h3>
+          <p>국내 첫 수의 신대체요법 집중 논의의 장을 병원이 주최했고, 패널 토론에서 학술 교류의 필요성을 강조했습니다.</p>
+        </div>
+      </li>
+      <li class="press-item">
+        <time datetime="2024-12-08">2024. 12. 8</time>
+        <span class="outlet">뉴스펫</span>
+        <div>
+          <h3><a href="https://www.newspet.co.kr/news/articleView.html?idxno=9753" target="_blank" rel="noopener">스마트동물병원 이태호 원장, ISVPS 국제 인증의 자격 취득</a></h3>
+          <p>ISVPS 국제 소동물 외과·내과 인증의 자격 취득 소식입니다.</p>
+        </div>
+      </li>
+<!-- PRESS:LIST:END -->
+    </ul>
+    <p class="press-note">각 링크는 해당 언론사 페이지로 연결됩니다. 기사 본문의 저작권은 각 언론사에 있습니다.</p>
+  </div>
+</section>
+
 <!-- ═══════════ NOTES ═══════════ -->
 <section id="notes" class="notes">
   <div class="wrap">
@@ -877,6 +967,7 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
         <a href="#care">진료 분야</a>
         <a href="#cv">약력</a>
         <a href="#video">영상</a>
+        <a href="#press">보도</a>
         <a href="#notes">기록</a>
         <a href="#contact">오시는 길</a>
       </nav>
