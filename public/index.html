@@ -117,17 +117,12 @@ section{padding:104px 0}
 
 .serif{font-family:"Noto Serif KR","Nanum Myeongjo","AppleMyungjo",Georgia,"Times New Roman",serif}
 h1,h2,h3,.num,.hanja{font-family:"Noto Serif KR","Nanum Myeongjo","AppleMyungjo",Georgia,serif;font-weight:600}
-h2{font-size:clamp(1.5rem,3.2vw,2.05rem);line-height:1.45;letter-spacing:-.02em}
+h2{font-size:clamp(1.5rem,3.2vw,2.1rem);line-height:1.45;letter-spacing:-.02em;text-wrap:balance}
 h3{font-size:1.06rem;line-height:1.5;letter-spacing:-.015em;font-weight:600}
 
 /* section heading motif */
 .sec-head{margin-bottom:52px;max-width:64ch}
-.kicker{
-  display:flex;align-items:center;gap:12px;
-  font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:18px;
-}
-.kicker::before{content:"";width:26px;height:1px;background:var(--gold-2);flex:none}
+.sec-head::before{content:"";display:block;width:34px;height:2px;background:var(--gold-2);margin-bottom:22px}
 .sec-head p.lede{color:var(--ink-2);margin-top:18px;font-size:1.02rem;max-width:56ch}
 
 /* ============ header ============ */
@@ -144,6 +139,7 @@ header.stuck{border-bottom-color:var(--line)}
 .brand .nm{font-family:"Noto Serif KR",serif;font-weight:600;font-size:1.1rem;letter-spacing:.02em}
 .brand small{color:var(--ink-3);font-size:.74rem;letter-spacing:.06em}
 @media(max-width:520px){.brand small{display:none}}
+.links{display:contents}
 .nav a.link{
   color:var(--ink-2);font-size:.885rem;padding:9px 13px;border-radius:7px;transition:.2s;
   position:relative;
@@ -154,13 +150,27 @@ header.stuck{border-bottom-color:var(--line)}
   background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .25s;
 }
 .nav a.link:hover::after{transform:scaleX(1)}
-@media(max-width:900px){.nav a.link{display:none}}
 .tbtn{
   border:1px solid var(--line-2);background:transparent;color:var(--ink-2);
-  width:35px;height:35px;border-radius:8px;cursor:pointer;font-size:.9rem;
+  width:40px;height:40px;border-radius:8px;cursor:pointer;font-size:.92rem;
   display:grid;place-items:center;transition:.2s;flex:none;margin-left:8px;
 }
 .tbtn:hover{color:var(--gold);border-color:var(--gold-2)}
+.menu-btn{display:none}
+@media(max-width:900px){
+  .menu-btn{display:grid}
+  .links{display:block;position:absolute;left:0;right:0;top:100%;
+    background:var(--paper);border-bottom:1px solid var(--line);
+    box-shadow:var(--shadow);padding:10px 20px 16px;
+    opacity:0;visibility:hidden;transform:translateY(-6px);transition:.22s}
+  .links.open{opacity:1;visibility:visible;transform:none}
+  .nav a.link{display:block;padding:13px 8px;font-size:.95rem;border-bottom:1px solid var(--line)}
+  .nav a.link:last-child{border-bottom:0}
+  .nav a.link::after{display:none}
+}
+header{position:sticky}
+.nav{position:relative}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
 
 /* ============ hero ============ */
 .hero{position:relative;padding:88px 0 96px;overflow:hidden}
@@ -248,7 +258,7 @@ header.stuck{border-bottom-color:var(--line)}
   .fact:nth-child(2n){border-right:0}
   .fact:nth-last-child(-n+2){border-bottom:0}
 }
-.fact .n{font-family:"Noto Serif KR",serif;font-size:1.95rem;font-weight:600;color:var(--gold);line-height:1.2;letter-spacing:.01em}
+.fact .n{font-family:"Noto Serif KR",serif;font-size:1.95rem;font-weight:600;color:var(--gold);line-height:1.2;letter-spacing:.01em;font-variant-numeric:tabular-nums}
 .fact .n small{font-size:.5em;font-weight:400;margin-left:2px}
 .fact .l{margin-top:8px;font-size:.85rem;color:var(--ink-2)}
 .facts-note{font-size:.76rem;color:var(--ink-3);padding:0 0 26px;margin-top:-6px}
@@ -256,19 +266,12 @@ header.stuck{border-bottom-color:var(--line)}
 
 /* ============ principles ============ */
 .principles{background:var(--paper)}
-.plist{list-style:none;border-top:1px solid var(--line)}
-.plist li{
-  display:grid;grid-template-columns:88px 1fr;gap:26px;align-items:start;
-  padding:30px 0;border-bottom:1px solid var(--line);
-}
-@media(max-width:640px){.plist li{grid-template-columns:52px 1fr;gap:16px;padding:24px 0}}
-.plist .idx{
-  font-family:"Noto Serif KR",serif;font-size:1.6rem;font-weight:400;
-  color:var(--gold-2);letter-spacing:.04em;line-height:1.3;
-}
-@media(max-width:640px){.plist .idx{font-size:1.15rem}}
-.plist h3{margin-bottom:7px}
-.plist p{color:var(--ink-2);font-size:.95rem;max-width:62ch}
+.plist{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 64px;border-top:1px solid var(--line-2)}
+@media(max-width:760px){.plist{grid-template-columns:1fr;gap:0}}
+.plist li{padding:34px 0 30px;border-bottom:1px solid var(--line)}
+.plist h3{font-size:1.13rem;margin-bottom:10px;text-wrap:balance}
+.plist h3::before{content:"";display:inline-block;width:9px;height:9px;border:1.5px solid var(--gold-2);border-radius:50%;margin-right:12px;vertical-align:.08em}
+.plist p{color:var(--ink-2);font-size:.94rem;max-width:56ch}
 .src-note{
   margin-top:26px;font-size:.82rem;color:var(--ink-3);
   padding-left:16px;border-left:2px solid var(--line-2);
@@ -355,17 +358,16 @@ header.stuck{border-bottom-color:var(--line)}
 
 /* ============ notes ============ */
 /* press */
-.press-list{list-style:none;margin-top:8px}
-.press-item{display:grid;grid-template-columns:110px 92px 1fr;gap:20px;align-items:baseline;
-  padding:22px 4px;border-top:1px solid var(--line)}
-.press-item:last-child{border-bottom:1px solid var(--line)}
-@media(max-width:640px){.press-item{grid-template-columns:1fr;gap:6px;padding:18px 2px}}
-.press-item time{font-family:"Noto Serif KR",Georgia,serif;font-size:.88rem;color:var(--ink-3);letter-spacing:.04em}
-.press-item .outlet{font-size:.75rem;font-weight:700;color:var(--gold);letter-spacing:.08em;white-space:nowrap}
-.press-item h3{font-size:1.02rem;font-weight:600;line-height:1.55}
+.press-list{list-style:none;margin-top:10px;border-top:1px solid var(--line-2);padding-top:14px;display:grid;gap:2px}
+.press-item{display:grid;grid-template-columns:150px 1fr;gap:26px;align-items:baseline;padding:19px 0}
+@media(max-width:640px){.press-item{grid-template-columns:1fr;gap:5px;padding:15px 0}}
+.press-item time{display:block;font-family:"Noto Serif KR",Georgia,serif;font-size:.9rem;color:var(--ink);letter-spacing:.03em;font-variant-numeric:tabular-nums}
+.press-item .outlet{display:block;font-size:.72rem;font-weight:700;color:var(--gold);letter-spacing:.1em;margin-top:4px}
+@media(max-width:640px){.press-item time,.press-item .outlet{display:inline}.press-item .outlet{margin-left:10px}}
+.press-item h3{font-size:1.02rem;font-weight:600;line-height:1.6;text-wrap:balance}
 .press-item h3 a{border-bottom:1px solid transparent;transition:.2s}
 .press-item h3 a:hover{color:var(--gold);border-bottom-color:var(--gold-2)}
-.press-item p{font-size:.88rem;color:var(--ink-2);margin-top:5px}
+.press-item p{font-size:.87rem;color:var(--ink-2);margin-top:6px;max-width:62ch}
 .press-note{margin-top:22px;font-size:.82rem;color:var(--ink-3)}
 .notes{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .note-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
@@ -420,6 +422,14 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
 /* skip link */
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:16px;top:12px;z-index:99;background:var(--gold);color:#fff;padding:9px 16px;border-radius:7px}
+/* scroll reveal */
+@media(prefers-reduced-motion:no-preference){
+  .js .rv{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
+  .js .rv.in{opacity:1;transform:none}
+  .js .hero-grid>div{animation:heroIn .8s cubic-bezier(.16,1,.3,1) both}
+  .js .hero-grid>div:last-child{animation-delay:.12s}
+  @keyframes heroIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -430,14 +440,17 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
 <header id="hdr">
   <div class="wrap nav">
     <a href="#top" class="brand"><span class="nm">이태호</span><small>수의사 · Taeho Lee, DVM</small></a>
-    <a class="link" href="#philosophy">진료 철학</a>
-    <a class="link" href="#story">소개</a>
-    <a class="link" href="#care">진료 분야</a>
-    <a class="link" href="#cv">약력</a>
-    <a class="link" href="#video">영상</a>
-    <a class="link" href="#press">보도</a>
-    <a class="link" href="#contact">오시는 길</a>
+    <nav class="links" id="navLinks" aria-label="주 메뉴">
+      <a class="link" href="#philosophy">진료 철학</a>
+      <a class="link" href="#story">소개</a>
+      <a class="link" href="#care">진료 분야</a>
+      <a class="link" href="#cv">약력</a>
+      <a class="link" href="#video">영상</a>
+      <a class="link" href="#press">보도</a>
+      <a class="link" href="#contact">오시는 길</a>
+    </nav>
     <button class="tbtn" id="themeBtn" aria-label="화면 테마 전환" title="화면 테마 전환">◐</button>
+    <button class="tbtn menu-btn" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">☰</button>
   </div>
 </header>
 
@@ -525,7 +538,6 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
 <section id="philosophy" class="principles">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">Principles</div>
       <h2>생명을 대하는 네 가지 약속</h2>
       <p class="lede">
         동물은 스스로 병원에 오겠다고 말한 적이 없습니다.
@@ -534,36 +546,12 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
       </p>
     </div>
 
-    <ol class="plist">
-      <li>
-        <div class="idx">01</div>
-        <div>
-          <h3>동물이 겪는 고통 그 자체를 중요하게 봅니다</h3>
-          <p>치료의 성패를 검사 수치나 생존 기간으로만 세지 않습니다. 그 시간을 아이가 어떤 상태로 보내는지가 판단의 중심에 있습니다.</p>
-        </div>
-      </li>
-      <li>
-        <div class="idx">02</div>
-        <div>
-          <h3>동물을 사람의 목적을 위한 수단으로 대하지 않습니다</h3>
-          <p>개가 사람과 비슷하기 때문에 실험동물로 쓰이면서, 동시에 사람과 다르기 때문에 사람 대신 쓰인다는 논리는 앞뒤가 맞지 않습니다. 진료에서도 같은 기준을 지킵니다.</p>
-        </div>
-      </li>
-      <li>
-        <div class="idx">03</div>
-        <div>
-          <h3>보호자님의 현실을 외면하지 않습니다</h3>
-          <p>가능한 모든 검사와 치료를 나열하는 것이 최선의 진료는 아닙니다. 경제적 여건과 돌볼 수 있는 시간은 절대 가볍게 볼 수 없는 조건이며, 그 안에서 가장 나은 선택지를 함께 찾습니다.</p>
-        </div>
-      </li>
-      <li>
-        <div class="idx">04</div>
-        <div>
-          <h3>결정의 책임을 검사 결과나 인공지능에 넘기지 않습니다</h3>
-          <p>검사와 도구는 판단을 도울 뿐입니다. 무엇을 권하고 무엇을 권하지 않을지는 진료한 사람이 이름을 걸고 설명해야 하는 몫이라고 생각합니다.</p>
-        </div>
-      </li>
-    </ol>
+    <ul class="plist">
+      <li><h3>동물이 겪는 고통 그 자체를 중요하게 봅니다</h3><p>치료의 성패를 검사 수치나 생존 기간으로만 세지 않습니다. 그 시간을 아이가 어떤 상태로 보내는지가 판단의 중심에 있습니다.</p></li>
+      <li><h3>동물을 사람의 목적을 위한 수단으로 대하지 않습니다</h3><p>개가 사람과 비슷하기 때문에 실험동물로 쓰이면서, 동시에 사람과 다르기 때문에 사람 대신 쓰인다는 논리는 앞뒤가 맞지 않습니다. 진료에서도 같은 기준을 지킵니다.</p></li>
+      <li><h3>보호자님의 현실을 외면하지 않습니다</h3><p>가능한 모든 검사와 치료를 나열하는 것이 최선의 진료는 아닙니다. 경제적 여건과 돌볼 수 있는 시간은 절대 가볍게 볼 수 없는 조건이며, 그 안에서 가장 나은 선택지를 함께 찾습니다.</p></li>
+      <li><h3>결정의 책임을 검사 결과나 인공지능에 넘기지 않습니다</h3><p>검사와 도구는 판단을 도울 뿐입니다. 무엇을 권하고 무엇을 권하지 않을지는 진료한 사람이 이름을 걸고 설명해야 하는 몫이라고 생각합니다.</p></li>
+    </ul>
 
     <p class="src-note">
       이 약속들은 유튜브 <a href="https://youtu.be/pNnq5LXs-ic" target="_blank" rel="noopener">「동물에 대한 인식은 아직도 멀었습니다」</a>
@@ -576,7 +564,6 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
 <section id="story" class="story">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">About</div>
       <h2>왜 계속 이 이야기를 하는가</h2>
     </div>
 
@@ -609,7 +596,7 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
         <p>
           진료실에서 만나는 질문은 대개 의학적인 것만이 아닙니다.
           여기서 멈추는 것이 맞는지, 이 치료가 아이를 위한 것인지 보호자를 위한 것인지,
-          비용을 감당하지 못하는 자신이 나쁜 보호자인 것은 아닌지 —
+          비용을 감당하지 못하는 자신이 나쁜 보호자인 것은 아닌지.
           그런 질문들이 검사 결과보다 먼저 놓여 있습니다.
         </p>
         <p>
@@ -632,7 +619,6 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
 <section id="care">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">Clinical Focus</div>
       <h2>주요 진료 분야</h2>
       <p class="lede">
         내과를 중심으로 진료합니다. 각 분야에서 학회·연구회 활동을 함께 하고 있어,
@@ -691,7 +677,6 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
 <section id="cv" class="cv">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">Profile</div>
       <h2>약력 및 학술 활동</h2>
     </div>
 
@@ -733,7 +718,6 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
 <section id="video">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">On Screen</div>
       <h2>영상으로 남긴 진료실 밖의 설명</h2>
       <p class="lede">
         유튜브 <b>수의사 이태호</b> 채널에서 보호자님이 자주 묻는 질문을 한 편에 하나씩 정리합니다.
@@ -807,7 +791,6 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
 <section id="press">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">Press</div>
       <h2>언론이 기록한 활동</h2>
       <p class="lede">
         진료실 밖에서의 활동이 언론에 보도된 기록입니다.
@@ -818,128 +801,112 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
     <ul class="press-list">
 <!-- PRESS:LIST:START -->
       <li class="press-item">
-        <time datetime="2026-08-24">2026. 8. 24</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2026-08-24">2026. 8. 24</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/practice/companion-animal/294172" target="_blank" rel="noopener">'개원 VS 평생 페이닥터?' 커리어토크까지 진행한 제3회 벳아너스 CES 성료</a></h3>
           <p>벳아너스 학술위원장으로 증례교류심포지엄을 이끌며 저년차 수의사들의 임상 공부에 대한 조언을 전했습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2026-03-24">2026. 3. 24</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2026-03-24">2026. 3. 24</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/association/277586" target="_blank" rel="noopener">대한수의사회 설채현 대변인 임명‥회원·대국민 홍보기능 강화</a></h3>
           <p>대한수의사회 학술홍보위원회 위원장 위촉 소식이 함께 보도되었습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2026-03-10">2026. 3. 10</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2026-03-10">2026. 3. 10</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/academy/276006" target="_blank" rel="noopener">2026 춘계 서울수의컨퍼런스 28~29일 개최…사전등록 25일까지</a></h3>
           <p>서울시수의사회 춘계 컨퍼런스의 전문 강의 연자로 소개되었습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2026-02-26">2026. 2. 26</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2026-02-26">2026. 2. 26</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/academy/274711" target="_blank" rel="noopener">큰 병원? 작은 병원? 초보 수의사 고민에 답한 선배들, 2026 카하 스타터 성료</a></h3>
           <p>신입 수의사 대상 카하 스타터 진로 토크에서 "병원의 규모보다 그 안에서 얼마나 성장할 수 있는가가 중요하다"고 조언했습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2026-01-15">2026. 1. 15</time>
-        <span class="outlet">뉴스1</span>
+        <div class="pmeta"><time datetime="2026-01-15">2026. 1. 15</time><span class="outlet">뉴스1</span></div>
         <div>
           <h3><a href="https://www.news1.kr/industry/general-industry/6040139" target="_blank" rel="noopener">스마트한 '육각형 수의사' 이태호, 시그니처로 이름 바꾼 이유</a></h3>
           <p>15년간의 스마트동물병원 신사본원을 시그니처 동물의료센터로 바꾸며 진료 철학을 이야기한 인터뷰입니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2025-11-27">2025. 11. 27</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2025-11-27">2025. 11. 27</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/practice/companion-animal/265032" target="_blank" rel="noopener">[신간] 개와 고양이 내과학 – 진단과 치료 알고리즘</a></h3>
           <p>『개와 고양이 내과학 – 진단과 치료 알고리즘』의 공동 역자 4인 중 한 명으로 번역에 참여했습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2025-10-09">2025. 10. 9</time>
-        <span class="outlet">뉴스1</span>
+        <div class="pmeta"><time datetime="2025-10-09">2025. 10. 9</time><span class="outlet">뉴스1</span></div>
         <div>
           <h3><a href="https://www.news1.kr/society/general-society/5935734" target="_blank" rel="noopener">배까고 자는 강아지, 이유는…수면자세로 본 건강상태 영상 인기</a></h3>
           <p>수면 자세로 살펴보는 반려견 건강 상태를 다룬 유튜브 강의가 소개되었습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2025-09-17">2025. 9. 17</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2025-09-17">2025. 9. 17</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/practice/companion-animal/257822" target="_blank" rel="noopener">줄기세포, 뇌신경계 집중 논의‥제2회 벳아너스 CES 개최</a></h3>
           <p>학술위원장으로서 임상 경험을 학술로 발전시키는 증례 교류의 취지를 밝혔습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2025-08-01">2025. 8. 1</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2025-08-01">2025. 8. 1</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/association/253384" target="_blank" rel="noopener">KAHA 17대 집행부 실행이사진 "카하 키즈로서 받은 혜택, 카하 발전으로 갚는다"</a></h3>
           <p>한국동물병원협회 정책기획위원회 위원장으로서 집행부 출범과 위원회 방향을 밝혔습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2025-05-15">2025. 5. 15</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2025-05-15">2025. 5. 15</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/academy/246118" target="_blank" rel="noopener">FASAVA 2025 대회 준비 순항…조직위도 강화</a></h3>
           <p>아시아·태평양 소동물수의사대회(FASAVA 2025) 기획위원회 공동위원장으로 위촉되었습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2025-05-08">2025. 5. 8</time>
-        <span class="outlet">데일리개원</span>
+        <div class="pmeta"><time datetime="2025-05-08">2025. 5. 8</time><span class="outlet">데일리개원</span></div>
         <div>
           <h3><a href="https://www.dailygaewon.com/news/articleView.html?idxno=16642" target="_blank" rel="noopener">스마트동물병원 신사본원 '제1회 VHR' 개최 "뜨거운 관심 속 국내 첫 신대체요법 집중 논의"</a></h3>
           <p>국내 첫 수의 신대체요법 집중 논의의 장을 병원이 주최했고, 패널 토론에서 학술 교류의 필요성을 강조했습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2025-01-03">2025. 1. 3</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2025-01-03">2025. 1. 3</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/academy/233148" target="_blank" rel="noopener">V-학술레터 구독자 1천명 돌파…월 1회→3회로 발행 확대</a></h3>
           <p>벳아너스 학술위원장으로서 수의학 논문 소개 레터의 확대 방향을 밝혔습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2024-12-10">2024. 12. 10</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2024-12-10">2024. 12. 10</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/industry/231152" target="_blank" rel="noopener">벳아너스 송년의 밤 개최…1년간 신규 병원 11개 가입</a></h3>
           <p>회원 병원 성과공유 시간에 외부 활동과 병원 경영을 함께 하는 시간 관리 노하우를 강연했습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2024-12-08">2024. 12. 8</time>
-        <span class="outlet">뉴스펫</span>
+        <div class="pmeta"><time datetime="2024-12-08">2024. 12. 8</time><span class="outlet">뉴스펫</span></div>
         <div>
           <h3><a href="https://www.newspet.co.kr/news/articleView.html?idxno=9753" target="_blank" rel="noopener">스마트동물병원 이태호 원장, ISVPS 국제 인증의 자격 취득</a></h3>
           <p>ISVPS 국제 소동물 외과·내과 인증의 자격 취득 소식입니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2024-04-18">2024. 4. 18</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2024-04-18">2024. 4. 18</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/academy/210619" target="_blank" rel="noopener">반려동물 임상 학술지 '더와이벳' 3호 발간‥이번 주제는 '신장'</a></h3>
           <p>신장을 주제로 한 특집호에 필진으로 참여해 원고를 제공했습니다.</p>
         </div>
       </li>
       <li class="press-item">
-        <time datetime="2017-03-10">2017. 3. 10</time>
-        <span class="outlet">데일리벳</span>
+        <div class="pmeta"><time datetime="2017-03-10">2017. 3. 10</time><span class="outlet">데일리벳</span></div>
         <div>
           <h3><a href="https://www.dailyvet.co.kr/news/college/73637" target="_blank" rel="noopener">충남대 수의대 동문 허찬·이태호 원장, 모교에 장학금 기부</a></h3>
           <p>모교인 충남대학교 수의과대학에 장학기금을 전달했습니다.</p>
@@ -955,7 +922,6 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
 <section id="notes" class="notes">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">Notes</div>
       <h2>매일 읽고, 정리해 둡니다</h2>
       <p class="lede">
         신장과 혈액투석, 응급중환자의학, 심장학, 종양학 분야의 최신 논문을 매일 확인하고
@@ -978,7 +944,6 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
 <section id="contact">
   <div class="wrap">
     <div class="sec-head">
-      <div class="kicker">Contact</div>
       <h2>진료 문의 및 오시는 길</h2>
     </div>
 
@@ -1011,7 +976,7 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
           <li><span class="k">주소</span><span class="v">서울특별시 강남구 도산대로 213<span class="sub">B1 · 1층 · 3층</span>
             <a href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%20%EA%B0%95%EB%82%A8%EA%B5%AC%20%EB%8F%84%EC%82%B0%EB%8C%80%EB%A1%9C%20213" target="_blank" rel="noopener">지도에서 보기 →</a></span></li>
           <li><span class="k">대표전화</span><span class="v"><a class="tel-big" href="tel:025490275">02-549-0275</a><span class="sub">상담 <a href="tel:050714060275">0507-1406-0275</a></span></span></li>
-          <li><span class="k">진료시간</span><span class="v"><strong>365일 24시간 응급진료</strong><span class="sub">일반진료 10:00–21:00 · 심야진료 21:00–10:00</span></span></li>
+          <li><span class="k">진료시간</span><span class="v"><strong>365일 24시간 응급진료</strong><span class="sub">일반진료 10:00-21:00 · 심야진료 21:00-10:00</span></span></li>
           <li><span class="k">채널</span><span class="v"><span class="rows">
             <a href="https://www.youtube.com/@%EC%9D%B4%ED%83%9C%ED%98%B8%EC%88%98%EC%9D%98%EC%82%AC" target="_blank" rel="noopener">유튜브 ↗</a>
             <a href="https://signatureamc.co.kr" target="_blank" rel="noopener">병원 홈페이지 ↗</a>
@@ -1071,6 +1036,35 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
   onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
 
   document.getElementById('yr').textContent=new Date().getFullYear();
+
+  var mb=document.getElementById('menuBtn'), links=document.getElementById('navLinks');
+  mb.addEventListener('click',function(){
+    var open=links.classList.toggle('open');
+    mb.setAttribute('aria-expanded',open);
+    mb.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');
+    mb.textContent=open?'✕':'☰';
+  });
+  links.addEventListener('click',function(e){
+    if(e.target.closest('a')){ links.classList.remove('open'); mb.setAttribute('aria-expanded','false'); mb.textContent='☰'; }
+  });
+
+  root.classList.add('js');
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window){
+    var sel='.sec-head,.plist li,.care-list li,.vid,.press-item,.note-card,.fact,.cv-grid>div,.story-grid>div,.contact-grid>div,.more,.press-note,.src-note';
+    var els=Array.prototype.slice.call(document.querySelectorAll(sel));
+    els.forEach(function(el){ el.classList.add('rv'); });
+    els.forEach(function(el){
+      var k=el.parentNode;
+      if(!k.__rvI) k.__rvI=0;
+      el.style.setProperty('--d',(Math.min(k.__rvI++,5)*0.07)+'s');
+    });
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    Array.prototype.forEach.call(document.querySelectorAll('.rv'),function(el){el.classList.add('in')});
+  }
 })();
 </script>
 
