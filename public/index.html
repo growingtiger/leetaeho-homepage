@@ -1049,21 +1049,27 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
   });
 
   root.classList.add('js');
-  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window){
+  function armReveal(){
     var sel='.sec-head,.plist li,.care-list li,.vid,.press-item,.note-card,.fact,.cv-grid>div,.story-grid>div,.contact-grid>div,.more,.press-note,.src-note';
     var els=Array.prototype.slice.call(document.querySelectorAll(sel));
-    els.forEach(function(el){ el.classList.add('rv'); });
     els.forEach(function(el){
       var k=el.parentNode;
       if(!k.__rvI) k.__rvI=0;
       el.style.setProperty('--d',(Math.min(k.__rvI++,5)*0.07)+'s');
+      el.classList.add('rv');
     });
     var io=new IntersectionObserver(function(es){
       es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
     },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
     els.forEach(function(el){ io.observe(el); });
-  } else {
-    Array.prototype.forEach.call(document.querySelectorAll('.rv'),function(el){el.classList.add('in')});
+  }
+  // 리빌은 탭이 실제로 보일 때만 활성화 — 숨김 상태로 렌더링하는
+  // 크롤러·미리보기 봇은 콘텐츠를 그대로 본다 (rv 클래스 자체를 안 붙임)
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window){
+    if(document.visibilityState==='visible'){ armReveal(); }
+    else document.addEventListener('visibilitychange', function h(){
+      if(document.visibilityState==='visible'){ document.removeEventListener('visibilitychange',h); armReveal(); }
+    });
   }
 })();
 </script>
