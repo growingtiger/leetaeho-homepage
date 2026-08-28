@@ -299,12 +299,8 @@ header{position:sticky}
   padding:34px 0;border-bottom:1px solid var(--line);align-items:start;
 }
 @media(max-width:800px){.care-list li{grid-template-columns:1fr;gap:12px;padding:26px 0}}
-.care-list .ttl{display:flex;align-items:baseline;gap:12px}
-.care-list .ttl .en{
-  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
-  font-weight:700;flex:none;
-}
-.care-list h3{font-size:1.18rem}
+.care-list .ttl h3{font-size:1.18rem}
+.care-list .ttl h3::before{content:"";display:inline-block;width:18px;height:2px;background:var(--gold-2);margin-right:14px;vertical-align:.32em}
 .care-list .body p{color:var(--ink-2);font-size:.95rem}
 .care-list .body .role{
   margin-top:12px;font-size:.82rem;color:var(--ink-3);
@@ -628,7 +624,7 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
 
     <ul class="care-list">
       <li>
-        <div class="ttl"><span class="en">01</span><h3>심장 · 순환기</h3></div>
+        <div class="ttl"><h3>심장 · 순환기</h3></div>
         <div class="body">
           <p>
             판막질환과 심부전, 심장사상충 감염처럼 진행 단계에 따라 치료 시점이 달라지는 질환을 봅니다.
@@ -638,7 +634,7 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
         </div>
       </li>
       <li>
-        <div class="ttl"><span class="en">02</span><h3>종양 · 항암 진료</h3></div>
+        <div class="ttl"><h3>종양 · 항암 진료</h3></div>
         <div class="body">
           <p>
             혈액 종양과 고형암은 접근이 다릅니다. 수술과 조직검사 결과를 바탕으로 약을 선택하고,
@@ -649,7 +645,7 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
         </div>
       </li>
       <li>
-        <div class="ttl"><span class="en">03</span><h3>신장 · 비뇨기 및 체외혈액정화</h3></div>
+        <div class="ttl"><h3>신장 · 비뇨기 및 체외혈액정화</h3></div>
         <div class="body">
           <p>
             급성·만성 신장질환의 내과적 관리와, 혈액투석을 포함한 신대체요법이 필요한 시점의 판단을 다룹니다.
@@ -659,7 +655,7 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
         </div>
       </li>
       <li>
-        <div class="ttl"><span class="en">04</span><h3>노령성 복합질환 · 내과 전반</h3></div>
+        <div class="ttl"><h3>노령성 복합질환 · 내과 전반</h3></div>
         <div class="body">
           <p>
             쿠싱증후군과 당뇨, 갑상선기능저하증이 함께 오고 여기에 심장이나 콩팥 문제가 겹치는 경우는 드물지 않습니다.
