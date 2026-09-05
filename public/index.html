@@ -292,6 +292,17 @@ header{position:sticky}
   font-family:"Noto Serif KR",serif;font-size:1.06rem;line-height:1.8;color:var(--ink);
 }
 
+/* ============ photos ============ */
+figure.photo{margin:0}
+figure.photo .ph{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper-3);box-shadow:var(--shadow)}
+figure.photo img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+figure.photo figcaption{margin-top:10px;font-size:.8rem;color:var(--ink-3);line-height:1.6}
+figure.photo figcaption a{color:var(--ink-2);border-bottom:1px solid var(--line-2)}
+.photo-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
+@media(max-width:760px){.photo-row{grid-template-columns:1fr;gap:22px}}
+.press-photo{max-width:760px;margin:0 0 44px}
+.press-photo img{aspect-ratio:16/9}
+
 /* ============ care ============ */
 .care-list{list-style:none;border-top:1px solid var(--line)}
 .care-list li{
@@ -618,6 +629,17 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
         </p>
       </div>
     </div>
+
+    <div class="photo-row">
+      <figure class="photo">
+        <div class="ph"><img src="press/news1-2026-interview.jpg" alt="인터뷰 중인 이태호 수의사" width="1200" height="799" loading="lazy"></div>
+        <figcaption>병원 이름을 시그니처 동물의료센터로 바꾼 이유를 이야기한 2026년 1월 뉴스1 인터뷰. 사진 ⓒ 뉴스1 · <a href="https://www.news1.kr/industry/general-industry/6040139" target="_blank" rel="noopener">기사 보기 ↗</a></figcaption>
+      </figure>
+      <figure class="photo">
+        <div class="ph"><img src="press/news1-2026-icu.jpg" alt="입원실에서 동료 수의사와 이야기하는 이태호 수의사" width="1200" height="799" loading="lazy"></div>
+        <figcaption>입원 환자 앞에서 동료 수의사와 치료 방향을 상의하는 모습. 사진 ⓒ 뉴스1 · <a href="https://www.news1.kr/industry/general-industry/6040139" target="_blank" rel="noopener">기사 보기 ↗</a></figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -814,6 +836,11 @@ footer{background:var(--paper);border-top:1px solid var(--line);padding:56px 0 4
         강의와 학회 활동, 인터뷰를 중심으로 모았습니다.
       </p>
     </div>
+
+    <figure class="photo press-photo">
+      <div class="ph"><img src="press/dailyvet-2026-ces.jpg" alt="벳아너스 증례교류심포지엄에서 발언하는 이태호 수의사" width="1200" height="720" loading="lazy"></div>
+      <figcaption>2026년 8월 제3회 벳아너스 증례교류심포지엄(CES)에서. 학술위원장으로 심포지엄을 이끌었습니다. 사진 출처 데일리벳 · <a href="https://www.dailyvet.co.kr/news/practice/companion-animal/294172" target="_blank" rel="noopener">기사 보기 ↗</a></figcaption>
+    </figure>
 
     <ul class="press-list">
 <!-- PRESS:LIST:START -->
