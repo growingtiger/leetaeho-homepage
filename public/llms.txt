@@ -14,5 +14,5 @@
 
 ## 함께 진료하는 수의사
 - [안운찬 — 혈액투석·신장비뇨기·응급중환자](https://www.ahnwoonchan.com/)
-- [송우진 — 내과, 한국수의내과전문의](https://songwoojin.vercel.app/)
+- [송우진 — 내과, 한국수의내과전문의](https://songwoojin.co.kr/)
 - [시그니처 동물의료센터](https://signatureamc.co.kr/)
