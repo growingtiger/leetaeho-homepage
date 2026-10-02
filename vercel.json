@@ -56,5 +56,40 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "leetaeho.vercel.app"
+        }
+      ],
+      "destination": "https://leetaeho.co.kr/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "leetaeho-homepage.vercel.app"
+        }
+      ],
+      "destination": "https://leetaeho.co.kr/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.leetaeho.co.kr"
+        }
+      ],
+      "destination": "https://leetaeho.co.kr/$1",
+      "permanent": true
+    }
   ]
 }

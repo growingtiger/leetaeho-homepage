@@ -2,8 +2,8 @@
 > 시그니처 동물의료센터(서울 강남구 도산대로 213, 02-549-0275, 365일 24시간) 대표원장. 개와 고양이의 내과: 심장·종양·신장·노령성 복합질환. 건국대학교 수의과대학 임상내과학 겸임교수. 국제 소동물 내과 인증의(ISVPS GPCert).
 
 ## 페이지
-- [소개·진료 분야·약력·논문·강의](https://leetaeho.vercel.app/)
-- [강아지 기관 허탈 스텐트 — 31마리 추적 기록](https://leetaeho.vercel.app/tracheal-stent): 제1저자 논문 J Vet Clin 2025;42(1):7-15 해설. 1년 이상 생존 80%(추적 지속 환자 기준), 합병증 23%, 나이별 차이 없음.
+- [소개·진료 분야·약력·논문·강의](https://leetaeho.co.kr/)
+- [강아지 기관 허탈 스텐트 — 31마리 추적 기록](https://leetaeho.co.kr/tracheal-stent): 제1저자 논문 J Vet Clin 2025;42(1):7-15 해설. 1년 이상 생존 80%(추적 지속 환자 기준), 합병증 23%, 나이별 차이 없음.
 
 ## 논문 (제1저자)
 - Lee T 외. A retrospective study of tracheal stent placement in dogs with collapsing trachea. J Vet Clin 2025;42(1):7-15. doi:10.17555/jvc.2025.42.1.7

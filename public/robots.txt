@@ -4,4 +4,4 @@ Allow: /
 User-agent: Yeti
 Allow: /
 
-Sitemap: https://leetaeho.vercel.app/sitemap.xml
+Sitemap: https://leetaeho.co.kr/sitemap.xml
