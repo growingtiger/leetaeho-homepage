@@ -114,6 +114,8 @@ a{color:inherit}
 .apply-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:48px;align-items:start}
 .contact{border:1px dashed color-mix(in srgb,var(--paper) 40%,transparent);padding:24px;display:grid;gap:10px;font-size:.95rem}
 .contact b{font-family:var(--serif);font-size:1.1rem}
+.cta{display:inline-block;margin-top:8px;background:var(--gold);color:#201a12;font-weight:600;text-decoration:none;padding:12px 22px;justify-self:start}
+.cta:hover{filter:brightness(1.05)}
 .apply ol{margin:0;padding-left:1.2em;display:grid;gap:6px;color:color-mix(in srgb,var(--paper) 85%,transparent)}
 footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
 
@@ -208,7 +210,7 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
         <p class="price">110만 원<small>1인, 부가세 포함</small></p>
         <dl>
           <dt>장소</dt><dd>시그니처 동물의료센터 (서울 강남구 도산대로 213)</dd>
-          <dt>정원</dt><dd>5명</dd>
+          <dt>정원</dt><dd>기수당 5명, 선착순</dd>
           <dt>시간</dt><dd>10:00–18:00, 점심 제공</dd>
           <dt>준비물</dt><dd>노트북, Claude 유료 구독 계정</dd>
           <dt>포함</dt><dd>사전 질문지로 요청사항 접수, 교육 후 4주간 단톡방 질문</dd>
@@ -284,18 +286,19 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
   <div class="wrap">
     <div class="apply-grid">
       <div style="display:grid;gap:18px">
-        <p class="label">신청</p>
-        <h2>과정 1은 5명이 차면 마감합니다</h2>
-        <p>원장 한 명이 다섯 분을 직접 봐 드릴 수 있는 인원으로 정했습니다. 첫 기수 날짜는 신청하신 분들과 조율해 정합니다.</p>
+        <p class="label">신청 · 선착순</p>
+        <h2>5명이 모이면 한 기수가 열립니다</h2>
+        <p>과정 1은 신청 순서대로 5명씩 한 기수를 만듭니다. 1기 5명이 차면 다음 신청부터 2기 대기자가 되고, 2기도 5명이 모이면 날짜를 정해 연락드립니다.</p>
         <ol>
-          <li>성함, 병원 이름, 희망 과정(1 또는 2)을 회신해 주십시오.</li>
-          <li>사전 질문지 링크와 노트북 준비 안내문을 보내 드립니다.</li>
-          <li>질문지 답변을 보고 원장님 병원에서 만들 것을 정해 회신드립니다.</li>
+          <li>신청서에 희망 과정과 사전 질문 답변을 적어 보내 주십시오.</li>
+          <li>접수 순서와 몇 기인지 바로 안내됩니다.</li>
+          <li>기수가 차면 날짜와 노트북 준비 안내문을 문자로 보내 드립니다.</li>
         </ol>
       </div>
       <div class="contact">
-        <b>신청 방법</b>
-        <span>이 페이지 링크를 받으신 카카오톡이나 문자로 회신해 주십시오.</span>
+        <b>신청서</b>
+        <span>신청과 사전 질문을 한 번에 받습니다. 5분 정도 걸립니다.</span>
+        <a class="cta" href="/ai-class/apply">신청서 작성하기</a>
       </div>
     </div>
   </div>

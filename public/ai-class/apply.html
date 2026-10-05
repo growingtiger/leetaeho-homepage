@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>AI 실전 교육 신청서</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 진료 기록지처럼 왼쪽 시각 열 + 오른쪽 내용 열. 이태호 수의사 홈페이지의 종이·먹·금색 톤을 잇는다. */
+:root{
+  --paper:#fdfaf3; --paper-2:#f6efe1; --ink:#2a251f; --ink-2:#5b5245; --ink-3:#8b8070;
+  --line:#e6dcc8; --sage:#6f8550; --plum:#8e5f80; --gold:#a8802f; --gold-wash:rgba(184,143,62,.12); --navy:#26355c;
+  --serif:"Noto Serif KR","AppleMyungjo",Georgia,serif;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --max:1040px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#15120e; --paper-2:#1d1913; --ink:#f0e8da; --ink-2:#c3b7a2; --ink-3:#948976;
+  --line:#352d22; --sage:#a3b886; --plum:#c79bbb; --gold:#d6ae67; --gold-wash:rgba(214,174,103,.12); --navy:#9db0e0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#15120e; --paper-2:#1d1913; --ink:#f0e8da; --ink-2:#c3b7a2; --ink-3:#948976;
+  --line:#352d22; --sage:#a3b886; --plum:#c79bbb; --gold:#d6ae67; --gold-wash:rgba(214,174,103,.12); --navy:#9db0e0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:20px}
+section{padding-block:72px;border-top:1px solid var(--line)}
+h1,h2,h3{font-family:var(--serif);font-weight:700;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(1.55rem,3.2vw,2.1rem);line-height:1.35}
+h3{font-size:1.2rem;line-height:1.4}
+p{margin:0}
+.label{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.lead{color:var(--ink-2);font-size:1.05rem;max-width:62ch}
+.sec-head{display:grid;gap:14px;margin-bottom:40px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* hero */
+.hero{padding-block:88px 64px;border-top:0}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:56px;align-items:end}
+.hero h1{font-size:clamp(2rem,5.4vw,3.5rem);line-height:1.22}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .lead{margin-top:24px}
+.who{border-left:2px solid var(--gold);padding-left:20px;display:grid;gap:6px;font-size:.95rem;color:var(--ink-2)}
+.who strong{font-family:var(--serif);font-size:1.15rem;color:var(--ink)}
+.facts{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:44px}
+.fact{display:grid}
+.fact b{font-family:var(--serif);font-size:2.2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.fact span{font-size:.85rem;color:var(--ink-3)}
+
+/* day log */
+.log{display:grid;gap:0;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:96px minmax(0,1fr) minmax(0,1.3fr);gap:24px;padding-block:18px;border-bottom:1px solid var(--line);align-items:baseline}
+.row time{font-family:var(--mono);font-size:.95rem;color:var(--gold);font-variant-numeric:tabular-nums}
+.row h3{font-size:1.05rem}
+.row p{color:var(--ink-2);font-size:.95rem}
+
+/* build chart */
+.chart-box{overflow-x:auto;padding-bottom:4px}
+.chart{min-width:640px}
+.chart svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:18px;font-size:.85rem;color:var(--ink-2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.tools{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.tools li{font-family:var(--mono);font-size:.82rem;border:1px solid var(--line);padding:6px 12px;color:var(--ink-2)}
+.prog-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:44px}
+.prog-list h3{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.08em;color:var(--ink-3);margin-bottom:10px}
+.prog-list ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:.93rem}
+.prog-list li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted var(--line);padding-bottom:5px}
+.prog-list li span{font-family:var(--mono);font-size:.75rem;color:var(--ink-3);white-space:nowrap}
+
+/* courses */
+.courses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.course{border:1px solid var(--line);background:var(--paper-2);padding:32px;display:grid;gap:18px;align-content:start}
+.course.alt{background:transparent}
+.price{font-family:var(--serif);font-size:2rem;font-weight:700;font-variant-numeric:tabular-nums}
+.price small{font-family:var(--sans);font-size:.85rem;font-weight:400;color:var(--ink-3);margin-left:6px}
+.course dl{margin:0;display:grid;grid-template-columns:84px minmax(0,1fr);gap:8px 14px;font-size:.93rem}
+.course dt{color:var(--ink-3)}
+.course dd{margin:0}
+.fit{font-size:.93rem;color:var(--ink-2);border-top:1px solid var(--line);padding-top:16px}
+.fit b{color:var(--ink)}
+
+/* schedule */
+.sched{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px}
+.sched ol{list-style:none;margin:0;padding:0;display:grid}
+.sched li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;padding-block:11px;border-bottom:1px solid var(--line);font-size:.95rem}
+.sched li time{font-family:var(--mono);font-size:.85rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.sched li.break{color:var(--ink-3)}
+.takeaway{display:grid;gap:16px;align-content:start}
+.takeaway ul{margin:0;padding-left:1.1em;display:grid;gap:8px;color:var(--ink-2)}
+
+/* faq */
+.faq{display:grid;gap:0;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line);padding-block:18px}
+.faq summary{cursor:pointer;font-family:var(--serif);font-weight:600;font-size:1.05rem;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--mono);color:var(--gold)}
+.faq details[open] summary::after{content:"−"}
+.faq details p{margin-top:10px;color:var(--ink-2);max-width:66ch}
+
+/* apply */
+.apply{background:var(--ink);color:var(--paper);border-top:0}
+.apply .label{color:var(--gold)}
+.apply h2{color:var(--paper)}
+.apply p{color:color-mix(in srgb,var(--paper) 78%,transparent);max-width:60ch}
+.apply-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:48px;align-items:start}
+.contact{border:1px dashed color-mix(in srgb,var(--paper) 40%,transparent);padding:24px;display:grid;gap:10px;font-size:.95rem}
+.contact b{font-family:var(--serif);font-size:1.1rem}
+.apply ol{margin:0;padding-left:1.2em;display:grid;gap:6px;color:color-mix(in srgb,var(--paper) 85%,transparent)}
+footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
+
+@media (max-width:820px){
+  .hero-grid,.courses,.sched,.apply-grid{grid-template-columns:minmax(0,1fr)}
+  .hero-grid{gap:36px}
+  .row{grid-template-columns:72px minmax(0,1fr)}
+  .row p{grid-column:2}
+  .prog-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  section{padding-block:56px}
+}
+@media (max-width:480px){
+  .prog-list{grid-template-columns:minmax(0,1fr)}
+  .course{padding:24px}
+  .sched li{grid-template-columns:92px minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+<style>
+.form-wrap{max-width:720px;margin:0 auto;padding-inline:20px;padding-block:56px 80px}
+.form-wrap h1{font-size:clamp(1.7rem,4vw,2.3rem);line-height:1.3;margin-top:14px}
+.form-wrap .lead{margin-top:16px}
+form{display:grid;gap:36px;margin-top:40px}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:18px}
+legend{font-family:var(--serif);font-weight:700;font-size:1.15rem;margin-bottom:6px;padding:0}
+.f{display:grid;gap:6px}
+.f > span{font-size:.92rem;font-weight:500}
+.f small{color:var(--ink-3);font-size:.82rem}
+input[type=text],input[type=tel],select,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:10px 12px;width:100%;border-radius:0}
+textarea{min-height:110px;resize:vertical;line-height:1.6}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:0;border-color:var(--gold)}
+.choice{display:flex;flex-wrap:wrap;gap:8px}
+.choice label{display:flex;align-items:center;gap:8px;border:1px solid var(--line);padding:9px 14px;cursor:pointer;font-size:.93rem}
+.choice input{accent-color:var(--gold);margin:0}
+.choice label:has(input:checked){border-color:var(--gold);background:var(--gold-wash)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;color:var(--ink-2)}
+.agree input{margin-top:5px;accent-color:var(--gold)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+button{font:inherit;font-weight:600;background:var(--ink);color:var(--paper);border:0;padding:14px 28px;cursor:pointer;justify-self:start}
+button:disabled{opacity:.5;cursor:default}
+.err{color:#b3261e;font-size:.9rem}
+.done{border:1px solid var(--gold);background:var(--gold-wash);padding:28px;display:grid;gap:12px;margin-top:40px}
+.done h2{font-size:1.4rem}
+.copybox{white-space:pre-wrap;font-family:var(--mono);font-size:.8rem;background:var(--paper);border:1px solid var(--line);padding:14px;max-height:260px;overflow:auto}
+.c1only[hidden]{display:none}
+@media (max-width:560px){.two{grid-template-columns:minmax(0,1fr)}}
+</style>
+<style>body{margin:0}</style>
+</head>
+<body>
+<main class="form-wrap">
+  <p class="label">원장을 위한 AI 실전 교육 · 신청서</p>
+  <h1>신청서와 사전 질문지</h1>
+  <p class="lead">과정 1(하루 실습)은 선착순 5명으로 한 기수를 엽니다. 5명이 차면 다음 신청부터 다음 기수 대기자가 되고, 대기자가 5명이 되면 그 기수 날짜를 정해 연락드립니다. 따로 통화하지 않으니 원하시는 내용을 질문지에 자세히 적어 주십시오.</p>
+
+  <form id="f" novalidate>
+    <fieldset>
+      <legend>신청 과정</legend>
+      <div class="choice" role="radiogroup">
+        <label><input type="radio" name="course" value="1" checked> 과정 1 · 하루 집중 실습 (110만 원)</label>
+        <label><input type="radio" name="course" value="2"> 과정 2 · 병원 방문 세팅 (550만 원)</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>원장님과 병원</legend>
+      <div class="two">
+        <label class="f"><span>성함 *</span><input type="text" id="name" name="name" autocomplete="name" required></label>
+        <label class="f"><span>휴대폰 번호 *</span><input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="010-0000-0000" required></label>
+      </div>
+      <div class="two">
+        <label class="f"><span>병원 이름 *</span><input type="text" id="hospital" name="hospital" required></label>
+        <label class="f"><span>지역</span><input type="text" id="region" name="region" placeholder="예: 서울 송파구"></label>
+      </div>
+      <div class="two">
+        <label class="f"><span>병원 형태</span>
+          <select id="type" name="type"><option value="">선택</option><option>1차 동물병원</option><option>2차·의뢰 센터</option><option>24시간 병원</option><option>기타</option></select></label>
+        <label class="f"><span>수의사 수 / 직원 수</span><input type="text" id="size" name="size" placeholder="예: 수의사 4명, 직원 12명"></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>AI와 노트북</legend>
+      <div class="f"><span>지금 쓰시는 AI (여러 개 선택)</span>
+        <div class="choice">
+          <label><input type="checkbox" name="ai" value="없음"> 없음</label>
+          <label><input type="checkbox" name="ai" value="ChatGPT"> ChatGPT</label>
+          <label><input type="checkbox" name="ai" value="Claude"> Claude</label>
+          <label><input type="checkbox" name="ai" value="Gemini"> Gemini</label>
+          <label><input type="checkbox" name="ai" value="기타"> 기타</label>
+        </div>
+      </div>
+      <div class="f c1only" id="laptopRow"><span>가져오실 노트북</span>
+        <div class="choice">
+          <label><input type="radio" name="laptop" value="맥북"> 맥북</label>
+          <label><input type="radio" name="laptop" value="윈도우"> 윈도우 노트북</label>
+          <label><input type="radio" name="laptop" value="미정"> 아직 정하지 못함</label>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>만들고 싶은 것</legend>
+      <label class="f"><span>병원에서 매주 시간을 가장 많이 빼앗는 일</span>
+        <small>종이, 엑셀, 단톡방으로 관리하는 것이 있다면 함께 적어 주십시오.</small>
+        <textarea id="pain" name="pain"></textarea></label>
+      <label class="f"><span id="wantLabel">교육 당일 만들어 가고 싶은 것</span>
+        <small>예: 우리 병원 수액 계산기, 수술 후 보호자 안내 페이지, 입원실 체크리스트, 직원 근무표, 블로그 초안 도우미</small>
+        <textarea id="want" name="want"></textarea></label>
+      <label class="f"><span>그 프로그램을 쓸 사람</span>
+        <select id="users" name="users"><option value="">선택</option><option>원장 혼자</option><option>수의사들</option><option>직원 전체</option><option>보호자</option></select></label>
+      <label class="f"><span>궁금한 점이나 요청사항</span><textarea id="ask" name="ask"></textarea></label>
+    </fieldset>
+
+    <div class="hp" aria-hidden="true"><label>웹사이트 <input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+    <label class="agree"><input type="checkbox" id="agree"> <span>교육 신청 접수와 연락을 위해 성함, 휴대폰 번호, 병원 정보를 수집하는 데 동의합니다. 수집한 정보는 교육 안내에만 쓰고 해당 기수 교육이 끝나고 6개월 뒤 지웁니다.</span></label>
+    <p class="err" id="err" hidden></p>
+    <button type="submit" id="btn">신청하기</button>
+  </form>
+
+  <div class="done" id="done" hidden>
+    <h2 id="doneTitle">접수되었습니다</h2>
+    <p id="doneText"></p>
+  </div>
+
+  <div class="done" id="manual" hidden>
+    <h2>답변을 보내 주십시오</h2>
+    <p>지금은 자동 접수가 되지 않습니다. 아래 내용을 복사해 이 링크를 받으신 카카오톡이나 문자로 보내 주시면, 받은 순서대로 선착순 번호를 드립니다.</p>
+    <div class="copybox" id="copyText"></div>
+    <button type="button" id="copyBtn">복사하기</button>
+  </div>
+</main>
+
+<script>
+(function(){
+  var f=document.getElementById("f"), err=document.getElementById("err"), btn=document.getElementById("btn");
+  function val(n){var el=f.elements[n];if(!el)return"";if(el.length!==undefined&&el.tagName===undefined){var o=[];for(var i=0;i<el.length;i++)if(el[i].checked)o.push(el[i].value);return el[0]&&el[0].type==="radio"?(o[0]||""):o;}return el.value.trim();}
+  function course(){return val("course")||"1";}
+  function sync(){var c1=course()==="1";document.getElementById("laptopRow").hidden=!c1;document.getElementById("wantLabel").textContent=c1?"교육 당일 만들어 가고 싶은 것":"병원에 세팅하고 싶은 것 (최대 3가지)";}
+  f.addEventListener("change",sync);sync();
+  function collect(){return{course:course(),name:val("name"),phone:val("phone"),hospital:val("hospital"),region:val("region"),type:val("type"),size:val("size"),ai:val("ai"),laptop:course()==="1"?val("laptop"):"",pain:val("pain"),want:val("want"),users:val("users"),ask:val("ask"),website:val("website"),agree:document.getElementById("agree").checked};}
+  function asText(d){var L=[["희망 과정",d.course==="1"?"과정 1 하루 집중 실습":"과정 2 병원 방문 세팅"],["성함",d.name],["휴대폰",d.phone],["병원",d.hospital],["지역",d.region],["병원 형태",d.type],["규모",d.size],["쓰는 AI",[].concat(d.ai).join(", ")],["노트북",d.laptop],["시간을 빼앗는 일",d.pain],["만들고 싶은 것",d.want],["쓸 사람",d.users],["요청사항",d.ask]];return "[AI 교육 신청]\n"+L.filter(function(x){return x[1]&&String(x[1]).length}).map(function(x){return x[0]+": "+x[1]}).join("\n");}
+  function manual(d){f.hidden=true;document.getElementById("copyText").textContent=asText(d);document.getElementById("manual").hidden=false;window.scrollTo(0,0);}
+  document.getElementById("copyBtn").addEventListener("click",function(){var t=document.getElementById("copyText").textContent,b=this;function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById("copyText"));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="선택됨 · 길게 눌러 복사";}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){b.textContent="복사했습니다";},sel);}else sel();});
+  f.addEventListener("submit",function(e){
+    e.preventDefault();err.hidden=true;var d=collect();
+    if(!d.name||!d.phone||!d.hospital){err.textContent="성함, 휴대폰 번호, 병원 이름을 적어 주십시오.";err.hidden=false;return;}
+    if(!d.agree){err.textContent="개인정보 수집에 동의해 주셔야 접수할 수 있습니다.";err.hidden=false;return;}
+    btn.disabled=true;btn.textContent="접수 중";
+    fetch("/api/ai-apply",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(d)}).then(function(r){return r.json().then(function(j){return{s:r.status,j:j}})}).then(function(x){
+      if(x.s!==200||!x.j.ok){manual(d);return;}
+      var j=x.j,t;
+      if(j.course==="1"){t=j.cohort+"기 "+j.seat+"번째 자리로 접수되었습니다. ";t+=j.cohort>1?"앞선 기수가 마감되어 "+j.cohort+"기 대기자로 등록되었습니다. "+j.cohort+"기 5명이 모이면 날짜를 정해 문자로 연락드립니다.":(j.seat<5?"5명이 모이면 날짜를 정해 문자로 연락드립니다.":"1기 5명이 모두 모였습니다. 날짜를 정해 곧 문자로 연락드립니다.");}
+      else{t="방문 세팅 신청 "+j.order+"번으로 접수되었습니다. 질문지 내용을 보고 세팅 항목과 일정을 문자로 회신드립니다.";}
+      f.hidden=true;document.getElementById("doneText").textContent=t+" 노트북 준비 안내문은 문자로 따로 보내 드립니다.";document.getElementById("done").hidden=false;window.scrollTo(0,0);
+    }).catch(function(){manual(d);});
+  });
+})();
+</script>
+</body>
+</html>
