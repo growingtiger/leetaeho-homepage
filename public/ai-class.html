@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>원장을 위한 AI 실전 교육</title>
+<meta name="description" content="수의사·동물병원 원장 대상 AI 실전 교육. 하루 집중 실습과 병원 방문 세팅.">
+<meta property="og:title" content="원장을 위한 AI 실전 교육">
+<meta property="og:description" content="코드를 쓸 줄 모르는 임상 수의사가 직접 만든 병원 프로그램 25개, 그 방법을 원장님 병원에 맞춰 세팅해 드립니다.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 진료 기록지처럼 왼쪽 시각 열 + 오른쪽 내용 열. 이태호 수의사 홈페이지의 종이·먹·금색 톤을 잇는다. */
+:root{
+  --paper:#fdfaf3; --paper-2:#f6efe1; --ink:#2a251f; --ink-2:#5b5245; --ink-3:#8b8070;
+  --line:#e6dcc8; --sage:#6f8550; --plum:#8e5f80; --gold:#a8802f; --gold-wash:rgba(184,143,62,.12); --navy:#26355c;
+  --serif:"Noto Serif KR","AppleMyungjo",Georgia,serif;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --max:1040px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#15120e; --paper-2:#1d1913; --ink:#f0e8da; --ink-2:#c3b7a2; --ink-3:#948976;
+  --line:#352d22; --sage:#a3b886; --plum:#c79bbb; --gold:#d6ae67; --gold-wash:rgba(214,174,103,.12); --navy:#9db0e0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#15120e; --paper-2:#1d1913; --ink:#f0e8da; --ink-2:#c3b7a2; --ink-3:#948976;
+  --line:#352d22; --sage:#a3b886; --plum:#c79bbb; --gold:#d6ae67; --gold-wash:rgba(214,174,103,.12); --navy:#9db0e0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:20px}
+section{padding-block:72px;border-top:1px solid var(--line)}
+h1,h2,h3{font-family:var(--serif);font-weight:700;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(1.55rem,3.2vw,2.1rem);line-height:1.35}
+h3{font-size:1.2rem;line-height:1.4}
+p{margin:0}
+.label{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.lead{color:var(--ink-2);font-size:1.05rem;max-width:62ch}
+.sec-head{display:grid;gap:14px;margin-bottom:40px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* hero */
+.hero{padding-block:88px 64px;border-top:0}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:56px;align-items:end}
+.hero h1{font-size:clamp(2rem,5.4vw,3.5rem);line-height:1.22}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .lead{margin-top:24px}
+.who{border-left:2px solid var(--gold);padding-left:20px;display:grid;gap:6px;font-size:.95rem;color:var(--ink-2)}
+.who strong{font-family:var(--serif);font-size:1.15rem;color:var(--ink)}
+.facts{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:44px}
+.fact{display:grid}
+.fact b{font-family:var(--serif);font-size:2.2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.fact span{font-size:.85rem;color:var(--ink-3)}
+
+/* day log */
+.log{display:grid;gap:0;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:96px minmax(0,1fr) minmax(0,1.3fr);gap:24px;padding-block:18px;border-bottom:1px solid var(--line);align-items:baseline}
+.row time{font-family:var(--mono);font-size:.95rem;color:var(--gold);font-variant-numeric:tabular-nums}
+.row h3{font-size:1.05rem}
+.row p{color:var(--ink-2);font-size:.95rem}
+
+/* build chart */
+.chart-box{overflow-x:auto;padding-bottom:4px}
+.chart{min-width:640px}
+.chart svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:18px;font-size:.85rem;color:var(--ink-2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.tools{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.tools li{font-family:var(--mono);font-size:.82rem;border:1px solid var(--line);padding:6px 12px;color:var(--ink-2)}
+.prog-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:44px}
+.prog-list h3{font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.08em;color:var(--ink-3);margin-bottom:10px}
+.prog-list ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:.93rem}
+.prog-list li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted var(--line);padding-bottom:5px}
+.prog-list li span{font-family:var(--mono);font-size:.75rem;color:var(--ink-3);white-space:nowrap}
+
+/* courses */
+.courses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.course{border:1px solid var(--line);background:var(--paper-2);padding:32px;display:grid;gap:18px;align-content:start}
+.course.alt{background:transparent}
+.price{font-family:var(--serif);font-size:2rem;font-weight:700;font-variant-numeric:tabular-nums}
+.price small{font-family:var(--sans);font-size:.85rem;font-weight:400;color:var(--ink-3);margin-left:6px}
+.course dl{margin:0;display:grid;grid-template-columns:84px minmax(0,1fr);gap:8px 14px;font-size:.93rem}
+.course dt{color:var(--ink-3)}
+.course dd{margin:0}
+.fit{font-size:.93rem;color:var(--ink-2);border-top:1px solid var(--line);padding-top:16px}
+.fit b{color:var(--ink)}
+
+/* schedule */
+.sched{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px}
+.sched ol{list-style:none;margin:0;padding:0;display:grid}
+.sched li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;padding-block:11px;border-bottom:1px solid var(--line);font-size:.95rem}
+.sched li time{font-family:var(--mono);font-size:.85rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.sched li.break{color:var(--ink-3)}
+.takeaway{display:grid;gap:16px;align-content:start}
+.takeaway ul{margin:0;padding-left:1.1em;display:grid;gap:8px;color:var(--ink-2)}
+
+/* faq */
+.faq{display:grid;gap:0;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line);padding-block:18px}
+.faq summary{cursor:pointer;font-family:var(--serif);font-weight:600;font-size:1.05rem;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--mono);color:var(--gold)}
+.faq details[open] summary::after{content:"−"}
+.faq details p{margin-top:10px;color:var(--ink-2);max-width:66ch}
+
+/* apply */
+.apply{background:var(--ink);color:var(--paper);border-top:0}
+.apply .label{color:var(--gold)}
+.apply h2{color:var(--paper)}
+.apply p{color:color-mix(in srgb,var(--paper) 78%,transparent);max-width:60ch}
+.apply-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:48px;align-items:start}
+.contact{border:1px dashed color-mix(in srgb,var(--paper) 40%,transparent);padding:24px;display:grid;gap:10px;font-size:.95rem}
+.contact b{font-family:var(--serif);font-size:1.1rem}
+.apply ol{margin:0;padding-left:1.2em;display:grid;gap:6px;color:color-mix(in srgb,var(--paper) 85%,transparent)}
+footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
+
+@media (max-width:820px){
+  .hero-grid,.courses,.sched,.apply-grid{grid-template-columns:minmax(0,1fr)}
+  .hero-grid{gap:36px}
+  .row{grid-template-columns:72px minmax(0,1fr)}
+  .row p{grid-column:2}
+  .prog-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  section{padding-block:56px}
+}
+@media (max-width:480px){
+  .prog-list{grid-template-columns:minmax(0,1fr)}
+  .course{padding:24px}
+  .sched li{grid-template-columns:92px minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+<style>body{margin:0}</style>
+</head>
+<body>
+
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="label">수의사·동물병원 원장 대상 · 오프라인 실습</p>
+        <h1 style="margin-top:18px">AI를 쓰는 수의사가<br><em>AI를 쓰지 않는 수의사</em>를<br>대체합니다.</h1>
+        <p class="lead">코드를 쓸 줄 모르는 임상 수의사가 진료·운영·경영에 쓰는 프로그램 25개를 직접 만들어 매일 쓰고 있습니다. 그 방법을 원장님 병원 사정에 맞춰 세팅해 드립니다.</p>
+      </div>
+      <div class="who">
+        <strong>이태호 수의사</strong>
+        <span>시그니처 동물의료센터 대표원장</span>
+        <span>건국대학교 수의과대학 임상내과학 겸임교수</span>
+        <span>국제 소동물 내과 인증의(ISVPS GPCert)</span>
+        <span>한국동물병원협회 정책기획위원회 위원장</span>
+      </div>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>25</b><span>직접 만들어 쓰는 웹앱·홈페이지</span></div>
+      <div class="fact"><b>7</b><span>업무에 오래 써 온 AI 도구</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="day">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">시그니처 동물의료센터의 하루</p>
+      <h2>원장이 출근하기 전부터 AI가 일하고 있습니다</h2>
+      <p class="lead">아래는 실제로 매일 돌아가는 일입니다. 채팅창에 질문하는 수준을 넘어, 병원 일을 대신하는 프로그램을 원장이 직접 만들어 씁니다.</p>
+    </div>
+    <div class="log">
+      <div class="row"><time>05:00</time><h3>밤사이 나온 논문 브리핑</h3><p>관심 분야 신규 논문을 PubMed에서 찾아 요약하고, 카카오톡으로 받습니다. 인스타그램 카드 초안까지 함께 만들어집니다.</p></div>
+      <div class="row"><time>진료 전</time><h3>사전문진 확인</h3><p>보호자가 내원 전에 휴대폰으로 적어 보낸 증상과 병력을 진료 시작 전에 미리 읽습니다.</p></div>
+      <div class="row"><time>진료 후</time><h3>녹음이 차트가 됩니다</h3><p>진료 녹음을 SOAP 차트로 정리하고, 보호자에게 보낼 진료 요약 카카오톡 문안을 붙입니다.</p></div>
+      <div class="row"><time>수술·투석</time><h3>종이 기록지 대신 앱</h3><p>마취 기록지와 혈액투석 기록지를 수술방·회복실·PC 어디서나 함께 적고, 활력징후는 그래프로 그려집니다.</p></div>
+      <div class="row"><time>수시로</time><h3>계산기 29종</h3><p>체중을 한 번 넣으면 수액, 전해질 교정, 수혈량 계산에 모두 반영됩니다.</p></div>
+      <div class="row"><time>운영</time><h3>마약류·혈액 재고·근무표</h3><p>마약류 사용 기록과 NIMS 보고 대기함, 수혈 혈액 재고, 테크니션 월별 근무표 자동 배정을 앱으로 관리합니다.</p></div>
+      <div class="row"><time>원장실</time><h3>경영대장과 인재관리</h3><p>병원 지표와 직원 계약·면담 기록을 모아, 누구를 언제 챙길지 알려 줍니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="built">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">직접 만든 프로그램</p>
+      <h2>진료실과 원장실에서 쓰는 25개</h2>
+      <p class="lead">프로그램은 Claude Code로 만들었습니다. 그 밖의 일에는 여러 AI를 용도별로 나눠 오래 써 왔고, 교육에서는 어떤 일에 어떤 도구가 맞는지도 함께 말씀드립니다.</p>
+    </div>
+    <ul class="tools" aria-label="사용 중인 AI 도구">
+      <li>Claude · Claude Code</li><li>ChatGPT</li><li>Gemini</li><li>NotebookLM</li><li>Gamma</li><li>Genspark</li><li>Plaud</li>
+    </ul>
+    <div class="prog-list" id="plist"></div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">두 가지 과정</p>
+      <h2>직접 배우시거나, 맡기시거나</h2>
+      <p class="lead">두 과정 모두 원장님 병원에서 다음 날부터 쓸 프로그램을 남기는 것이 목표입니다.</p>
+    </div>
+    <div class="courses">
+      <article class="course">
+        <p class="label">과정 1</p>
+        <h3>하루 집중 실습</h3>
+        <p class="price">110만 원<small>1인, 부가세 포함</small></p>
+        <dl>
+          <dt>장소</dt><dd>시그니처 동물의료센터 (서울 강남구 도산대로 213)</dd>
+          <dt>정원</dt><dd>5명</dd>
+          <dt>시간</dt><dd>10:00–18:00, 점심 제공</dd>
+          <dt>준비물</dt><dd>노트북, Claude 유료 구독 계정</dd>
+          <dt>포함</dt><dd>사전 설문과 15분 통화, 2주 뒤 온라인 점검 90분, 4주간 단톡방 질문</dd>
+        </dl>
+        <p class="fit"><b>이런 분께 권합니다.</b> 노트북을 가져와 강의를 들으며 직접 세팅하고, 이후에도 스스로 고쳐 쓰고 싶은 원장님.</p>
+      </article>
+      <article class="course alt">
+        <p class="label">과정 2</p>
+        <h3>병원 방문 세팅</h3>
+        <p class="price">550만 원<small>병원 1곳, 부가세 포함</small></p>
+        <dl>
+          <dt>장소</dt><dd>원장님 병원 (서울·경기 출장비 포함)</dd>
+          <dt>방문</dt><dd>하루, 최대 8시간</dd>
+          <dt>제공</dt><dd>맞춤 프로그램 최대 3개, 자동화 1개, 직원 사용법 안내 60분</dd>
+          <dt>포함</dt><dd>방문 전 60분 진단 통화, 4주간 오류 수정과 작은 수정, 2주 차 온라인 점검</dd>
+        </dl>
+        <p class="fit"><b>이런 분께 권합니다.</b> 컴퓨터나 AI가 익숙하지 않아, 배우기보다 병원에 맞게 다 만들어 두기를 원하시는 원장님.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">과정 1 시간표</p>
+      <h2>오전에는 따라 하고, 오후에는 각자 만듭니다</h2>
+    </div>
+    <div class="sched">
+      <ol>
+        <li><time>10:00–10:30</time><span>AI를 쓰는 수의사의 하루</span></li>
+        <li><time>10:30–11:30</time><span>시그니처에서 매일 도는 프로그램 시연</span></li>
+        <li><time>11:30–12:30</time><span>첫 세팅과 병원 규칙 파일 만들기</span></li>
+        <li class="break"><time>12:30–13:30</time><span>점심</span></li>
+        <li><time>13:30–14:30</time><span>첫 웹앱 만들고 휴대폰에 띄우기</span></li>
+        <li><time>14:30–16:30</time><span>우리 병원 프로그램 만들기 (1:1 순회)</span></li>
+        <li class="break"><time>16:30–16:45</time><span>휴식</span></li>
+        <li><time>16:45–17:30</time><span>사람이 없어도 도는 자동화</span></li>
+        <li><time>17:30–18:00</time><span>만든 것 보여주기, 다음 2주 계획</span></li>
+      </ol>
+      <div class="takeaway">
+        <h3>돌아가실 때 손에 있는 것</h3>
+        <ul>
+          <li>휴대폰 홈 화면에서 열리는 우리 병원 웹앱 1개</li>
+          <li>우리 병원을 아는 AI의 규칙 파일 (병원 이름, 진료과, 문체, 금지 사항)</li>
+          <li>매일 정해진 시간에 저절로 도는 작업 1개</li>
+          <li>다른 원장님 4명이 만든 프로그램에서 얻은 다음 아이디어</li>
+        </ul>
+        <p class="lead" style="font-size:.95rem">무엇을 만들지는 교육 전 사전 설문과 통화로 미리 정합니다. 당일 오후를 설명 듣는 데 쓰지 않으시도록 하기 위해서입니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">자주 묻는 질문</p>
+      <h2>신청 전에 확인하실 것</h2>
+    </div>
+    <div class="faq">
+      <details open><summary>코딩을 전혀 모르는데 따라갈 수 있을까요?</summary><p>네. 강사도 코드를 직접 쓰지 않습니다. 원하는 것을 한국어로 설명하고, 결과를 보고 고쳐 달라고 말하는 방식으로 만듭니다.</p></details>
+      <details><summary>AI 구독료는 수강료에 포함되나요?</summary><p>포함되지 않습니다. 교육에서 쓰는 Claude Code는 무료 요금제에서는 쓸 수 없어 유료 구독이 필요합니다. 개인 원장님은 Pro 또는 Max 요금제로 직접 가입하시면 됩니다. 가입 방법은 신청 후 단계별 안내문으로 보내 드립니다.</p></details>
+      <details><summary>맥이 아니라 윈도우 노트북이어도 되나요?</summary><p>됩니다. 윈도우는 설치할 프로그램이 하나 더 있으며 안내문에 함께 적어 드립니다. 병원 전산팀이 프로그램 설치를 막아 둔 노트북은 피해 주십시오.</p></details>
+      <details><summary>우리 병원 차트 프로그램과 연결되나요?</summary><p>차트 프로그램(EMR)과 직접 연결하는 작업은 두 과정 모두에 포함되지 않습니다. 차트 내용을 붙여 넣거나 파일로 내려받아 쓰는 방식은 실습에서 다룹니다.</p></details>
+      <details><summary>보호자 개인정보는 어떻게 다루나요?</summary><p>교육 시연은 모두 가짜 환자 데이터로 합니다. 실습용으로 가져오시는 양식에서도 보호자 이름과 연락처는 지우고 가져와 주십시오. 병원 규칙 파일에 개인정보 처리 원칙을 넣는 방법을 함께 다룹니다.</p></details>
+      <details><summary>서울·경기 밖에서도 방문 세팅이 되나요?</summary><p>됩니다. 서울·경기 밖은 교통비와 숙박비를 실비로 별도 청구합니다.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="apply" id="apply">
+  <div class="wrap">
+    <div class="apply-grid">
+      <div style="display:grid;gap:18px">
+        <p class="label">신청</p>
+        <h2>과정 1은 5명이 차면 마감합니다</h2>
+        <p>원장 한 명이 다섯 분을 직접 봐 드릴 수 있는 인원으로 정했습니다. 첫 기수 날짜는 신청하신 분들과 조율해 정합니다.</p>
+        <ol>
+          <li>성함, 병원 이름, 희망 과정(1 또는 2)을 회신해 주십시오.</li>
+          <li>사전 설문지와 노트북 준비 안내문을 보내 드립니다.</li>
+          <li>15분 통화로 원장님 병원에서 만들 것을 정합니다.</li>
+        </ol>
+      </div>
+      <div class="contact">
+        <b>신청 방법</b>
+        <span>이 페이지 링크를 받으신 카카오톡이나 문자로 회신해 주십시오.</span>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="wrap">시그니처 동물의료센터 · 서울 강남구 도산대로 213 · 이태호 수의사</div></footer>
+
+<script>
+(function(){
+  var G=[
+    ["진료",["진료 녹음 차트","보호자 사전문진","마취 기록지","혈액투석 기록지","수의 임상 계산기 29종","건강검진 결과서"]],
+    ["운영",["마약류 관리","수혈 혈액 재고","테크니션 근무표","의뢰환자 관리","미용실 예약","스튜디오 예약"]],
+    ["경영·학술",["원장실 경영대장","인재관리","수의학 데일리 브리핑","논문 번역기","한국동물병원협회 회원 앱","AAHA CON 참관 수첩"]],
+    ["홍보·개인",["이태호 수의사 홈페이지","동료 수의사 홈페이지 1","동료 수의사 홈페이지 2","케이스 카드 제작기","유튜브 채널 기획실","유튜브 댓글 답글","개인 건강 기록"]]
+  ];
+  document.getElementById("plist").innerHTML=G.map(function(g){
+    return '<div><h3>'+g[0]+' '+g[1].length+'</h3><ul>'+g[1].map(function(n){return '<li>'+n+'</li>'}).join("")+'</ul></div>';
+  }).join("");
+})();
+</script>
+
+</body>
+</html>
