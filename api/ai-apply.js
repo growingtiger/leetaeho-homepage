@@ -123,7 +123,8 @@ module.exports = async (req, res) => {
     }
     await store.writeJson(`${NS}/apps/${String(rec.no).padStart(4, "0")}.json`, rec);
     await store.writeJson(INDEX, idx);
-    res.status(200).json({ ok: true, course: rec.course, order: rec.order, cohort: rec.cohort || null, seat: rec.seat || null });
+    // 순서·기수는 원장 명단에서만 본다(2026-10-07 원장 지시). 신청자에게는 돌려주지 않는다.
+    res.status(200).json({ ok: true, course: rec.course });
   } catch (e) {
     res.status(500).json({ ok: false, error: "save" });
   }
