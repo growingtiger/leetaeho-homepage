@@ -217,7 +217,7 @@ button:disabled{opacity:.5;cursor:default}
       <label class="f"><span>병원에서 매주 시간을 가장 많이 빼앗는 일</span>
         <small>종이, 엑셀, 단톡방으로 관리하는 것이 있다면 함께 적어 주십시오.</small>
         <textarea id="pain" name="pain"></textarea></label>
-      <label class="f"><span id="wantLabel">교육 당일 만들어 가고 싶은 것</span>
+      <label class="f"><span id="wantLabel">"이런 프로그램이 있었으면" 싶은 것</span>
         <small>예: 우리 병원 수액 계산기, 수술 후 보호자 안내 페이지, 입원실 체크리스트, 직원 근무표, 블로그 초안 도우미</small>
         <textarea id="want" name="want"></textarea></label>
       <label class="f"><span>그 프로그램을 쓸 사람</span>
@@ -251,7 +251,7 @@ button:disabled{opacity:.5;cursor:default}
   var f=document.getElementById("f"), err=document.getElementById("err"), btn=document.getElementById("btn");
   function val(n){var el=f.elements[n];if(!el)return"";if(el.length!==undefined&&el.tagName===undefined){var o=[];for(var i=0;i<el.length;i++)if(el[i].checked)o.push(el[i].value);return el[0]&&el[0].type==="radio"?(o[0]||""):o;}return el.value.trim();}
   function course(){return val("course")||"1";}
-  function sync(){var c1=course()==="1";document.getElementById("laptopRow").hidden=!c1;document.getElementById("wantLabel").textContent=c1?"교육 당일 만들어 가고 싶은 것":"병원에 세팅하고 싶은 것 (최대 3가지)";}
+  function sync(){var c1=course()==="1";document.getElementById("laptopRow").hidden=!c1;document.getElementById("wantLabel").textContent=c1?"\"이런 프로그램이 있었으면\" 싶은 것 (교육 당일 만들어 가실 것)":"\"이런 프로그램이 있었으면\" 싶은 것 (최대 3가지)";}
   f.addEventListener("change",sync);sync();
   function collect(){return{course:course(),name:val("name"),phone:val("phone"),hospital:val("hospital"),region:val("region"),type:val("type"),size:val("size"),ai:val("ai"),laptop:course()==="1"?val("laptop"):"",pain:val("pain"),want:val("want"),users:val("users"),ask:val("ask"),website:val("website"),agree:document.getElementById("agree").checked,agree2:document.getElementById("agree2").checked};}
   function asText(d){var L=[["희망 과정",d.course==="1"?"과정 1 하루 집중 실습":"과정 2 병원 방문 세팅"],["성함",d.name],["휴대폰",d.phone],["병원",d.hospital],["지역",d.region],["병원 형태",d.type],["규모",d.size],["쓰는 AI",[].concat(d.ai).join(", ")],["노트북",d.laptop],["시간을 빼앗는 일",d.pain],["만들고 싶은 것",d.want],["쓸 사람",d.users],["요청사항",d.ask],["동의","개인정보 수집, 교육 내용 재판매 금지"]];return "[AI 교육 신청]\n"+L.filter(function(x){return x[1]&&String(x[1]).length}).map(function(x){return x[0]+": "+x[1]}).join("\n");}
