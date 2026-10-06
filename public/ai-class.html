@@ -174,6 +174,12 @@ table.cost tr.sum td{border-bottom:2px solid var(--ink);font-weight:700;padding-
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";font-family:var(--mono);color:var(--gold)}
 .faq details[open] summary::after{content:"−"}
+.refund{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:12px}
+.refund table{border-collapse:collapse;width:100%;font-size:.9rem}
+.refund th,.refund td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left}
+.refund th{color:var(--ink);font-weight:600}
+.refund td:last-child{white-space:nowrap;color:var(--ink);font-weight:600}
+@media (max-width:640px){.refund{grid-template-columns:minmax(0,1fr)}}
 .faq details p{margin-top:10px;color:var(--ink-2);max-width:66ch}
 
 /* apply */
@@ -515,6 +521,21 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
       <details><summary>맥이 아니라 윈도우 노트북이어도 되나요?</summary><p>가능합니다. 윈도우는 설치할 프로그램이 하나 더 있으며 안내문에 함께 적어 드립니다. 병원 전산팀이 프로그램 설치를 막아 둔 노트북은 피해 주십시오.</p></details>
       <details><summary>우리 병원 차트 프로그램과 연결되나요?</summary><p>차트 프로그램(EMR)과 직접 연결하는 작업은 두 과정 모두에 포함되지 않습니다. 차트 내용을 붙여 넣거나 파일로 내려받아 쓰는 방식은 실습에서 다룹니다.</p></details>
       <details><summary>보호자 개인정보는 어떻게 다루나요?</summary><p>교육 시연은 모두 가짜 환자 데이터로 합니다. 실습용으로 가져오시는 양식에서도 보호자 이름과 연락처는 지우고 가져와 주십시오. 병원 규칙 파일에 개인정보 처리 원칙을 넣는 방법을 함께 다룹니다.</p></details>
+      <details><summary>언제 결제하고, 취소하면 환불되나요?</summary>
+        <p><b>결제 시점</b> 과정 1은 기수 5명과 날짜가 확정되면 입금 안내를 드리고, 3일 안에 입금해 주시면 자리가 확정됩니다. 과정 2는 세팅 항목이 확정되면 대금의 50%, 방문을 마친 날 나머지 50%를 받습니다.</p>
+        <div class="refund"><table>
+          <tr><th>과정 1 하루 집중 실습</th><th>환불</th></tr>
+          <tr><td>교육일 7일 전까지 취소</td><td>전액</td></tr>
+          <tr><td>교육일 6일 전부터 3일 전까지 취소</td><td>50%</td></tr>
+          <tr><td>교육일 2일 전부터 당일, 불참</td><td>환불 없음</td></tr>
+        </table>
+        <table>
+          <tr><th>과정 2 병원 방문 세팅</th><th>환불</th></tr>
+          <tr><td>세팅 항목 확정 전 취소</td><td>전액</td></tr>
+          <tr><td>확정 후 방문일 7일 전까지 취소</td><td>받은 금액의 50%</td></tr>
+          <tr><td>방문일 6일 전부터 당일 취소</td><td>환불 없음</td></tr>
+        </table></div>
+        <p>과정 1은 교육일 3일 전까지 말씀해 주시면 환불 대신 다음 기수로 한 번 옮기실 수 있고, 같은 병원 수의사가 대신 참석하셔도 됩니다. 과정 2는 방문일 7일 전까지 한 번 날짜를 바꾸실 수 있습니다. 강사 사정으로 교육이나 방문이 취소되면 전액 환불하거나 원하시는 날짜로 옮겨 드립니다. 환불은 요청하신 날부터 7영업일 안에 입금하신 계좌로 돌려드립니다.</p></details>
       <details><summary>교육 내용으로 강의나 세팅 서비스를 해도 되나요?</summary><p>안 됩니다. 교육 자료와 강의 내용은 수강하신 원장님 병원 안에서만 쓰실 수 있습니다. 녹화·녹음, 자료 공유, 같은 내용으로 강의나 세팅 서비스를 판매하는 일은 금지하며, 신청서에서 이 내용에 동의하셔야 접수됩니다.</p></details>
       <details><summary>서울·경기 밖에서도 방문 세팅이 되나요?</summary><p>가능합니다. 서울·경기 밖은 교통비와 숙박비를 실비로 별도 청구합니다.</p></details>
     </div>
