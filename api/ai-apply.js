@@ -17,12 +17,20 @@ const NS = "ai-class/7c2e91d04b6a";
 const INDEX = NS + "/index.json";
 const PER_COHORT = 5;
 const HOSTS = ["leetaeho.co.kr", "www.leetaeho.co.kr", "leetaeho.vercel.app", "leetaeho-homepage.vercel.app"];
-// 관리 비밀번호의 SHA-256. 비밀번호 자체는 저장소에 두지 않는다.
+// 관리 비밀번호. Vercel 환경변수 AI_CLASS_ADMIN_KEY가 있으면 그것을 쓰고(원장이 직접 정함),
+// 없으면 처음 만든 비밀번호의 SHA-256과 비교한다. 비밀번호 자체는 저장소에 두지 않는다.
 const ADMIN_HASH = "06d0f0a4bbb203d563b41c8690b320f6043678b0955afe5551a9426e86f9da8e";
 
 const LIMITS = { name: 40, hospital: 80, region: 40, phone: 30, type: 40, size: 80, laptop: 20, ai: 200, pain: 1500, want: 1500, users: 40, ask: 1500 };
 
 function sha(s) { return crypto.createHash("sha256").update(String(s)).digest("hex"); }
+
+function adminOk(key) {
+  if (!key) return false;
+  const envKey = store.clean(process.env.AI_CLASS_ADMIN_KEY);
+  const want = envKey ? sha(envKey) : ADMIN_HASH;
+  return crypto.timingSafeEqual(Buffer.from(sha(key)), Buffer.from(want));
+}
 
 function kst(d) { return new Date(d.getTime() + 9 * 3600 * 1000).toISOString().replace("Z", "+09:00"); }
 
@@ -48,7 +56,7 @@ module.exports = async (req, res) => {
   if (req.method === "GET") {
     if (!req.query || !req.query.list) { res.status(200).json({ ok: true, enabled: store.enabled() }); return; }
     const key = String(req.headers["x-admin-key"] || "");
-    if (!key || sha(key) !== ADMIN_HASH) { res.status(401).json({ ok: false }); return; }
+    if (!adminOk(key)) { res.status(401).json({ ok: false }); return; }
     if (!store.enabled()) { res.status(503).json({ ok: false, error: "storage" }); return; }
     const idx = await readIndex();
     const items = [];
