@@ -120,6 +120,10 @@ table.cost tr.sum td{border-bottom:2px solid var(--ink);font-weight:700;padding-
 .pdlg-h button{font:inherit;font-size:.85rem;background:transparent;color:var(--ink);border:1px solid var(--line);padding:6px 14px;cursor:pointer}
 .pdlg img{width:100%;height:auto;border:1px solid var(--line);display:block}
 .pdlg-no{padding:40px 0;text-align:center;color:var(--ink-3);border:1px dashed var(--line)}
+.why{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px}
+.why-body{display:grid;gap:16px;font-family:var(--serif);font-size:1.08rem;line-height:1.85;max-width:62ch}
+.why-body .sign{font-size:1rem;color:var(--ink-2);text-align:right}
+@media (max-width:820px){.why{grid-template-columns:minmax(0,1fr);gap:16px}}
 .brand-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
 .brand-grid>div{padding:24px 28px 24px 0;border-bottom:1px solid var(--line);display:grid;gap:8px;align-content:start}
 .brand-grid>div:nth-child(odd){border-right:1px solid var(--line)}
@@ -238,6 +242,20 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
     </div>
     <div class="worry-answer">
       <p>저도 코드를 쓸 줄 모릅니다. 마취 기록지도, 근무표도 처음에는 "이런 게 있으면 좋겠다"는 생각 하나였습니다. 그 생각을 말로 설명했더니 매일 쓰는 프로그램이 됐습니다. 같은 자리에서 시작했기 때문에, 원장님이 어디서 막히고 무엇부터 하면 되는지 압니다. AI가 수의사를 대체하지는 않습니다. 다만 AI를 쓰는 수의사가 쓰지 않는 수의사의 자리를 가져갈 것이라고 저는 생각합니다. 하루면 원장님 병원에서 내일부터 쓸 첫 프로그램을 만들 수 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="why">
+      <p class="label">이 강의를 여는 이유</p>
+      <div class="why-body">
+        <p>직접 써 보니 생각보다 훨씬 유용했습니다. 매일 아침 관심 분야 논문 요약이 도착하고, 종이 기록지가 사라지고, 근무표가 저절로 짜이는 것을 보면서 "이걸 나만 쓰기엔 아깝다"는 생각이 들었습니다.</p>
+        <p>주변 원장님들께 보여 드리면 다들 관심은 많으셨습니다. 그런데 어디서부터 시작해야 할지 몰라, 어려워 보여서 미뤄 두고 계셨습니다. 저도 처음에는 그랬습니다.</p>
+        <p>그래서 강의를 열기로 했습니다. 관심은 있었지만 어려워서 시작하지 못하셨던 원장님들이, 하루 만에 우리 병원 첫 프로그램을 손에 쥐고 돌아가실 수 있도록 돕겠습니다.</p>
+        <p class="sign">이태호 드림</p>
+      </div>
     </div>
   </div>
 </section>
