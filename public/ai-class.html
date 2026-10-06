@@ -7,7 +7,7 @@
 <title>원장을 위한 AI 실전 교육</title>
 <meta name="description" content="수의사·동물병원 원장 대상 AI 실전 교육. 하루 집중 실습과 병원 방문 세팅.">
 <meta property="og:title" content="원장을 위한 AI 실전 교육">
-<meta property="og:description" content="코드를 쓸 줄 모르는 임상 수의사가 직접 만든 병원 프로그램 24개, 그 방법을 원장님 병원에 맞춰 세팅해 드립니다.">
+<meta property="og:description" content="코드를 쓸 줄 모르는 임상 수의사가 직접 만든 병원 프로그램 25개, 그 방법을 원장님 병원에 맞춰 세팅해 드립니다.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -102,6 +102,19 @@ table.cost tr.sum td{border-bottom:2px solid var(--ink);font-weight:700;padding-
 .diff-grid p{font-size:.93rem;color:var(--ink-2)}
 @media (max-width:900px){.diff-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.diff-grid>div:nth-child(3){padding-left:0;border-left:0}.diff-grid>div{border-bottom:1px solid var(--line)}}
 @media (max-width:520px){.diff-grid{grid-template-columns:minmax(0,1fr)}.diff-grid>div,.diff-grid>div+div{padding-left:0;border-left:0}}
+.pbtn{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:10px;width:100%;box-sizing:border-box}
+.pbtn span{font-family:var(--mono);font-size:.7rem;color:var(--gold);white-space:nowrap;align-self:center}
+.pbtn:hover{color:var(--gold)}
+.pbtn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.pdlg{border:0;padding:0;max-width:min(1000px,94vw);width:100%;background:var(--paper);color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
+.pdlg::backdrop{background:rgba(20,16,10,.6)}
+.pdlg-in{padding:22px;display:grid;gap:16px}
+.pdlg-h{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.pdlg-h b{font-family:var(--serif);font-size:1.25rem}
+.pdlg-h p{color:var(--ink-2);font-size:.93rem;margin-top:4px}
+.pdlg-h button{font:inherit;font-size:.85rem;background:transparent;color:var(--ink);border:1px solid var(--line);padding:6px 14px;cursor:pointer}
+.pdlg img{width:100%;height:auto;border:1px solid var(--line);display:block}
+.pdlg-no{padding:40px 0;text-align:center;color:var(--ink-3);border:1px dashed var(--line)}
 .brand-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
 .brand-grid>div{padding:24px 28px 24px 0;border-bottom:1px solid var(--line);display:grid;gap:8px;align-content:start}
 .brand-grid>div:nth-child(odd){border-right:1px solid var(--line)}
@@ -188,7 +201,7 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
       <div>
         <p class="label">수의사·동물병원 원장 대상 · 오프라인 실습</p>
         <h1 style="margin-top:18px">AI를 쓰는 수의사가<br><em>AI를 쓰지 않는 수의사</em>를<br>대체합니다.</h1>
-        <p class="lead">코드를 쓸 줄 모르는 임상 수의사가 진료·운영·경영·마케팅에 쓰는 프로그램 24개를 직접 만들어 매일 쓰고 있습니다. 그 방법을 원장님 병원 사정에 맞춰 세팅해 드립니다.</p>
+        <p class="lead">코드를 쓸 줄 모르는 임상 수의사가 진료·운영·경영·마케팅에 쓰는 프로그램 25개를 직접 만들어 매일 쓰고 있습니다. 그 방법을 원장님 병원 사정에 맞춰 세팅해 드립니다.</p>
       </div>
       <div class="who">
         <img class="portrait" src="/portrait.58d8dfc1.jpg" alt="이태호 수의사" width="720" height="960">
@@ -282,14 +295,14 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
       </div>
       <div class="value">
         <div class="v">
-          <b>월 약 386만 원어치</b>
-          <span>한 달 38만 원으로 하는 일을 돈으로 바꾸면 10배쯤 됩니다</span>
+          <b>월 약 1,080만 원어치</b>
+          <span>한 달 38만 원으로 하는 일을 돈으로 바꾸면 28배가 넘습니다</span>
           <small>아래 두 가지를 더했습니다. 모두 적게 잡은 값입니다.</small>
         </div>
         <div class="v">
-          <b class="sm">월 약 166만 원</b>
-          <span>프로그램 24개를 개발자에게 맡겼다면 드는 인건비를 5년에 나눈 값</span>
-          <small>프로그램 하나에 개발자 10일씩만 잡아 240일, 한국인공지능·소프트웨어산업협회가 발표한 2026년 적용 SW기술자 일평균임금 414,762원을 곱하면 약 9,950만 원입니다. 외주 회사의 이윤과 관리비는 넣지 않았습니다.</small>
+          <b class="sm">월 약 864만 원</b>
+          <span>프로그램 25개를 개발자에게 맡겼다면 드는 인건비를 1년에 나눈 값</span>
+          <small>프로그램 하나에 개발자 10일씩만 잡아 250일, 한국인공지능·소프트웨어산업협회가 발표한 2026년 적용 SW기술자 일평균임금 414,762원을 곱하면 약 1억 370만 원입니다. 두 달 동안 만든 것을 1년 동안 쓴다고 보고 나눴습니다. 외주 회사의 이윤과 관리비는 넣지 않았습니다.</small>
         </div>
         <div class="v">
           <b class="sm">월 213시간, 약 220만 원</b>
@@ -307,13 +320,15 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
   <div class="wrap">
     <div class="sec-head">
       <p class="label">직접 만든 프로그램</p>
-      <h2>진료실과 원장실에서 쓰는 24개</h2>
+      <h2>진료실과 원장실에서 쓰는 25개</h2>
       <p class="lead">프로그램은 Claude Code로 만들었습니다. 그 밖의 일에는 여러 AI를 용도별로 나눠 오래 써 왔고, 교육에서는 어떤 일에 어떤 도구가 맞는지도 함께 말씀드립니다.</p>
     </div>
     <ul class="tools" aria-label="사용 중인 AI 도구">
       <li>Claude · Claude Code</li><li>ChatGPT</li><li>Gemini</li><li>NotebookLM</li><li>Gamma</li><li>Genspark</li><li>Plaud</li>
     </ul>
     <div class="prog-list" id="plist"></div>
+    <p class="note">이름을 누르면 실제 화면을 볼 수 있습니다. 화면은 환자·직원 정보가 없는 빈 상태로 찍었고, 개인정보가 담긴 프로그램은 교육 당일 시연으로 보여 드립니다.</p>
+    <dialog id="pdlg" class="pdlg"><div class="pdlg-in"><div class="pdlg-h"><div><b id="pdlgT"></b><p id="pdlgD"></p></div><button type="button" id="pdlgX" aria-label="닫기">닫기</button></div><img id="pdlgI" alt="" hidden><p id="pdlgN" class="pdlg-no" hidden>화면은 교육 당일 시연으로 보여 드립니다.</p></div></dialog>
   </div>
 </section>
 
@@ -332,6 +347,8 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
           <li>충남대학교 수의과대학 수의내과학 석사</li>
           <li>ISVPS GPCert (국제 소동물 내과 인증의)</li>
         </ul>
+        <h3>유튜브</h3>
+        <ul><li><a class="ext" href="https://www.youtube.com/@%EC%9D%B4%ED%83%9C%ED%98%B8%EC%88%98%EC%9D%98%EC%82%AC" target="_blank" rel="noopener">유튜브 채널 「수의사 이태호」</a><br>구독자 1.1만 명, 영상 67편(쇼츠 제외), 2026년 10월 5일 기준</li></ul>
         <h3>저서·번역</h3>
         <ul><li>『개와 고양이의 내과학 진단과 치료 알고리즘』 번역 (OKVET)</li><li>국내외 학술지 논문 6편 (제1저자·공저)</li></ul>
       </div>
@@ -395,6 +412,7 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
           <dt>장소</dt><dd>시그니처 동물의료센터 (서울 강남구 도산대로 213)</dd>
           <dt>정원</dt><dd>기수당 5명, 선착순</dd>
           <dt>시간</dt><dd>10:00–18:00, 점심 제공</dd>
+          <dt>일정</dt><dd>한 달에 한 번. 5명이 모이면 날짜를 함께 정합니다</dd>
           <dt>준비물</dt><dd>노트북, Claude 유료 구독 계정</dd>
           <dt>포함</dt><dd>사전 질문지로 미리 정한 우리 병원 과제, 병원 규칙 파일과 부탁 문장 예시</dd>
         </dl>
@@ -407,6 +425,7 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
         <dl>
           <dt>장소</dt><dd>원장님 병원 (서울·경기 출장비 포함)</dd>
           <dt>방문</dt><dd>하루, 최대 8시간</dd>
+          <dt>일정</dt><dd>한 달에 한 병원, 신청 순서대로</dd>
           <dt>제공</dt><dd>맞춤 프로그램 최대 3개, 자동화 1개, 직원 사용법 안내 60분</dd>
           <dt>포함</dt><dd>사전 질문지로 정한 프로그램을 방문 당일 완성해 병원 PC와 휴대폰에 설치</dd>
         </dl>
@@ -471,16 +490,17 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
       <div style="display:grid;gap:18px">
         <p class="label">신청 · 선착순</p>
         <h2>5명이 모이면 한 기수가 열립니다</h2>
-        <p>과정 1은 신청 순서대로 5명씩 한 기수를 만듭니다. 1기 5명이 차면 다음 신청부터 2기 대기자가 되고, 2기도 5명이 모이면 날짜를 정해 연락드립니다.</p>
+        <p>두 과정 모두 선착순입니다. 과정 1은 신청 순서대로 5명씩 한 기수를 만들고, 5명이 차면 단톡방을 열어 다섯 분이 모두 되는 날짜를 함께 고릅니다. 과정 2는 신청 순서대로 차례가 오면 원장님과 날짜를 맞춥니다.</p>
+        <p>진료를 계속 보는 현업 수의사라 과정 1은 한 달에 한 번, 과정 2는 한 달에 한 병원만 진행합니다.</p>
         <ol>
           <li>신청서에 희망 과정과 사전 질문 답변을 적어 보내 주십시오.</li>
           <li>접수 순서와 몇 기인지 바로 안내됩니다.</li>
-          <li>기수가 차면 날짜와 노트북 준비 안내문을 문자로 보내 드립니다.</li>
+          <li>기수가 차거나 차례가 오면 단톡방에서 날짜를 정하고, 노트북 준비 안내문을 보내 드립니다.</li>
         </ol>
       </div>
       <div class="contact">
         <b>신청서</b>
-        <span>신청과 사전 질문을 한 번에 받습니다. 5분 정도 걸립니다.</span>
+        <span>신청과 사전 질문을 한 번에 받습니다.</span>
         <a class="cta" href="/ai-class/apply">신청서 작성하기</a>
       </div>
     </div>
@@ -491,15 +511,17 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
 
 <script>
 (function(){
-  var G=[
-    ["진료",["진료 녹음 차트","보호자 사전문진","마취 기록지","혈액투석 기록지","수의 임상 계산기 29종","건강검진 결과서"]],
-    ["운영",["마약류 관리","수혈 혈액 재고","테크니션 근무표","의뢰환자 관리","미용실 예약","스튜디오 예약"]],
-    ["경영·학술",["원장실 경영대장","인재관리","수의학 데일리 브리핑","논문 번역기","한국동물병원협회 회원 앱","AAHA CON 참관 수첩"]],
-    ["마케팅·개인",["이태호 수의사 홈페이지","동료 수의사 홈페이지 1","동료 수의사 홈페이지 2","케이스 카드 제작기","유튜브 채널 기획실","개인 건강 기록"]]
-  ];
-  document.getElementById("plist").innerHTML=G.map(function(g){
-    return '<div><h3>'+g[0]+' '+g[1].length+'</h3><ul>'+g[1].map(function(n){return '<li>'+n+'</li>'}).join("")+'</ul></div>';
-  }).join("");
+  var G=[["진료", [{"n": "진료 녹음 차트", "d": "진료 녹음을 SOAP 차트와 보호자 카카오톡 문안으로 정리합니다.", "i": ""}, {"n": "보호자 사전문진", "d": "보호자가 내원 전에 휴대폰으로 증상과 병력을 적어 보냅니다.", "i": "/ai-class/shots/intake.jpg"}, {"n": "마취 기록지", "d": "종이 마취 기록지를 수술방·회복실·PC에서 함께 적고, 활력징후를 그래프로 그립니다.", "i": "/ai-class/shots/anes.jpg"}, {"n": "혈액투석 기록지", "d": "투석 기록을 여러 기기에서 함께 적고 회차별 추이를 봅니다.", "i": "/ai-class/shots/hd.jpg"}, {"n": "수의 임상 계산기 29종", "d": "체중을 한 번 넣으면 수액, 전해질, 약물, 수혈량 계산에 모두 반영됩니다.", "i": "/ai-class/shots/calc.jpg"}, {"n": "건강검진 결과서", "d": "차트와 영상 사진으로 보호자용 건강검진 결과서 초안을 만듭니다.", "i": ""}]], ["운영", [{"n": "마약류 관리", "d": "마약류 사용 기록과 NIMS 보고 대기함을 관리합니다.", "i": "/ai-class/shots/narcotics.jpg"}, {"n": "리셉 알림 보드", "d": "1층 접수와 진료실을 잇는 실시간 전달판. 새 알림은 소리로 읽어 줍니다.", "i": "/ai-class/shots/recep.jpg"}, {"n": "수혈 혈액 재고", "d": "수혈용 혈액 팩과 공혈동물을 관리합니다.", "i": "/ai-class/shots/blood.jpg"}, {"n": "테크니션 근무표", "d": "휴무 규칙에 맞춰 월별 근무표를 자동으로 배정합니다.", "i": "/ai-class/shots/techshift.jpg"}, {"n": "의뢰환자 관리", "d": "의뢰 환자와 의뢰 병원, 회신 여부를 관리합니다.", "i": ""}, {"n": "미용실 예약", "d": "종이 미용 예약 차트를 대신합니다.", "i": "/ai-class/shots/grooming.jpg"}, {"n": "스튜디오 예약", "d": "별도 공간의 겹치는 예약을 막습니다.", "i": "/ai-class/shots/studio.jpg"}]], ["경영·학술", [{"n": "원장실 경영대장", "d": "매출, 객단가, 내원, 손익을 한 화면에서 봅니다.", "i": ""}, {"n": "인재관리", "d": "직원 계약, 면담 기록과 챙길 사람 알림을 모읍니다.", "i": "/ai-class/shots/people.jpg"}, {"n": "수의학 데일리 브리핑", "d": "매일 새벽 관심 분야 신규 논문을 찾아 요약합니다.", "i": "/ai-class/shots/briefing.jpg"}, {"n": "논문 번역기", "d": "영어 논문 PDF를 한국어 논문처럼 옮깁니다.", "i": "/ai-class/shots/papers.jpg"}, {"n": "한국동물병원협회 회원 앱", "d": "협회 회원용 앱. 소식, 교육, 계산기를 담았습니다.", "i": ""}, {"n": "AAHA CON 참관 수첩", "d": "해외 학회 세션을 한글로 정리하고 추천합니다.", "i": "/ai-class/shots/aaha.jpg"}]], ["마케팅·개인", [{"n": "이태호 수의사 홈페이지", "d": "직접 만든 개인 홈페이지. 보도, 논문, 영상을 매주 반영합니다.", "i": "/ai-class/shots/home.jpg"}, {"n": "동료 수의사 홈페이지 1", "d": "동료 원장님의 개인 홈페이지입니다.", "i": ""}, {"n": "동료 수의사 홈페이지 2", "d": "동료 원장님의 개인 홈페이지입니다.", "i": ""}, {"n": "케이스 카드 제작기", "d": "수술 증례를 인스타그램 카드로 정리합니다.", "i": "/ai-class/shots/cases.jpg"}, {"n": "유튜브 채널 기획실", "d": "채널 조회수 데이터로 다음 영상을 기획합니다.", "i": ""}, {"n": "개인 건강 기록", "d": "원장 개인용 건강 기록 앱입니다.", "i": ""}]]];
+  var box=document.getElementById("plist");
+  box.innerHTML=G.map(function(g,gi){return '<div><h3>'+g[0]+' '+g[1].length+'</h3><ul>'+g[1].map(function(it,ii){return '<li><button type="button" class="pbtn" data-g="'+gi+'" data-i="'+ii+'">'+it.n+(it.i?'<span>화면 보기</span>':'')+'</button></li>'}).join("")+'</ul></div>'}).join("");
+  var dlg=document.getElementById("pdlg");
+  box.addEventListener("click",function(e){var b=e.target.closest(".pbtn");if(!b)return;var it=G[+b.dataset.g][1][+b.dataset.i];
+    document.getElementById("pdlgT").textContent=it.n;document.getElementById("pdlgD").textContent=it.d;
+    var im=document.getElementById("pdlgI"),no=document.getElementById("pdlgN");
+    if(it.i){im.src=it.i;im.alt=it.n+" 화면";im.hidden=false;no.hidden=true;}else{im.hidden=true;im.removeAttribute("src");no.hidden=false;}
+    if(dlg.showModal)dlg.showModal();else dlg.setAttribute("open","");});
+  document.getElementById("pdlgX").addEventListener("click",function(){dlg.close?dlg.close():dlg.removeAttribute("open");});
+  dlg.addEventListener("click",function(e){if(e.target===dlg)dlg.close();});
 })();
 </script>
 

@@ -164,7 +164,7 @@ button:disabled{opacity:.5;cursor:default}
 <main class="form-wrap">
   <p class="label">원장을 위한 AI 실전 교육 · 신청서</p>
   <h1>신청서와 사전 질문지</h1>
-  <p class="lead">과정 1(하루 실습)은 선착순 5명으로 한 기수를 엽니다. 5명이 차면 다음 신청부터 다음 기수 대기자가 되고, 대기자가 5명이 되면 그 기수 날짜를 정해 연락드립니다. 따로 통화하지 않으니 원하시는 내용을 질문지에 자세히 적어 주십시오.</p>
+  <p class="lead">두 과정 모두 선착순입니다. 과정 1(하루 실습)은 5명이 모이면 한 기수가 열리고, 단톡방에서 다섯 분이 모두 되는 날짜를 함께 고릅니다. 과정 2(방문 세팅)는 신청 순서대로 한 달에 한 병원씩 진행합니다. 현업 진료의라 과정 1도 한 달에 한 번만 엽니다. 따로 통화하지 않으니 원하시는 내용을 질문지에 자세히 적어 주십시오.</p>
 
   <form id="f" novalidate>
     <fieldset>
@@ -265,8 +265,8 @@ button:disabled{opacity:.5;cursor:default}
     fetch("/api/ai-apply",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(d)}).then(function(r){return r.json().then(function(j){return{s:r.status,j:j}})}).then(function(x){
       if(x.s!==200||!x.j.ok){manual(d);return;}
       var j=x.j,t;
-      if(j.course==="1"){t=j.cohort+"기 "+j.seat+"번째 자리로 접수되었습니다. ";t+=j.cohort>1?"앞선 기수가 마감되어 "+j.cohort+"기 대기자로 등록되었습니다. "+j.cohort+"기 5명이 모이면 날짜를 정해 문자로 연락드립니다.":(j.seat<5?"5명이 모이면 날짜를 정해 문자로 연락드립니다.":"1기 5명이 모두 모였습니다. 날짜를 정해 곧 문자로 연락드립니다.");}
-      else{t="방문 세팅 신청 "+j.order+"번으로 접수되었습니다. 질문지 내용을 보고 세팅 항목과 일정을 문자로 회신드립니다.";}
+      if(j.course==="1"){t=j.cohort+"기 "+j.seat+"번째 자리로 접수되었습니다. ";t+=j.cohort>1?"앞선 기수가 마감되어 "+j.cohort+"기 대기자로 등록되었습니다. "+j.cohort+"기 5명이 모이면 단톡방을 열어 날짜를 함께 정합니다. 과정 1은 한 달에 한 번 진행합니다.":(j.seat<5?"5명이 모이면 단톡방을 열어 날짜를 함께 정합니다.":"1기 5명이 모두 모였습니다. 곧 단톡방을 열어 날짜를 함께 정합니다.");}
+      else{t="방문 세팅 "+j.order+"번째 순서로 접수되었습니다. 한 달에 한 병원씩 신청 순서대로 진행하며, 차례가 오면 연락드려 날짜를 함께 정합니다.";}
       f.hidden=true;document.getElementById("doneText").textContent=t+" 노트북 준비 안내문은 문자로 따로 보내 드립니다.";document.getElementById("done").hidden=false;window.scrollTo(0,0);
     }).catch(function(){manual(d);});
   });
