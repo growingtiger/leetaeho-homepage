@@ -21,6 +21,10 @@ const HOSTS = ["leetaeho.co.kr", "www.leetaeho.co.kr", "leetaeho.vercel.app", "l
 // 없으면 처음 만든 비밀번호의 SHA-256과 비교한다. 비밀번호 자체는 저장소에 두지 않는다.
 const ADMIN_HASH = "06d0f0a4bbb203d563b41c8690b320f6043678b0955afe5551a9426e86f9da8e";
 
+// 원장 맥의 신청 알림(~/ai-assistant/ai_class_alert.py)이 쓰는 읽기 전용 열쇠의 SHA-256.
+// 이름·병원·과정·순서만 돌려주고 연락처와 답변은 주지 않는다.
+const NOTIFY_HASH = "263fff00e310bdee13c2209774b0872d185f4b1ab9b390e71392cf74b1c99567";
+
 const LIMITS = { name: 40, hospital: 80, region: 40, phone: 30, type: 40, size: 80, laptop: 20, ai: 200, pain: 1500, want: 1500, users: 40, ask: 1500 };
 
 function sha(s) { return crypto.createHash("sha256").update(String(s)).digest("hex"); }
@@ -54,6 +58,22 @@ module.exports = async (req, res) => {
   res.setHeader("cache-control", "no-store");
 
   if (req.method === "GET") {
+    if (req.query && req.query.notify) {
+      const nk = String(req.headers["x-notify-key"] || "");
+      if (!nk || !crypto.timingSafeEqual(Buffer.from(sha(nk)), Buffer.from(NOTIFY_HASH))) { res.status(401).json({ ok: false }); return; }
+      if (!store.enabled()) { res.status(503).json({ ok: false, error: "storage" }); return; }
+      const idx = await readIndex();
+      const after = Math.max(0, parseInt(req.query.after, 10) || 0);
+      const items = [];
+      for (let n = after + 1; n <= idx.total; n++) {
+        try {
+          const a = await store.readJson(`${NS}/apps/${String(n).padStart(4, "0")}.json`);
+          if (a) items.push({ no: a.no, at: a.at, name: a.name, hospital: a.hospital, region: a.region, course: a.course, order: a.order, cohort: a.cohort || null, seat: a.seat || null });
+        } catch (e) { /* 건너뛴다 */ }
+      }
+      res.status(200).json({ ok: true, total: idx.total, items });
+      return;
+    }
     if (!req.query || !req.query.list) { res.status(200).json({ ok: true, enabled: store.enabled() }); return; }
     const key = String(req.headers["x-admin-key"] || "");
     if (!adminOk(key)) { res.status(401).json({ ok: false }); return; }
