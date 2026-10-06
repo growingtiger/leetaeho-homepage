@@ -172,6 +172,7 @@ th{font-weight:600;color:var(--ink-3);font-size:.78rem;letter-spacing:.04em}
 td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
 td.long{max-width:280px;white-space:pre-wrap}
 .pill{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:2px 8px;border:1px solid var(--gold);color:var(--gold)}
+.kt{font:inherit;font-size:.72rem;margin-top:6px;background:transparent;border:1px solid var(--gold);color:var(--gold);padding:3px 8px;cursor:pointer;white-space:nowrap}
 .pill.full{background:var(--gold);color:var(--paper)}
 </style>
 <style>body{margin:0}[hidden]{display:none!important}</style>
@@ -187,8 +188,27 @@ td.long{max-width:280px;white-space:pre-wrap}
 <script>
 (function(){
   var out=document.getElementById("out"),err=document.getElementById("err");
+
+  function msg(a){
+    var hi=(a.name||"")+" 원장님, 안녕하세요. 시그니처 동물의료센터 이태호입니다.\n\n";
+    var t;
+    if(a.course==="1"){
+      if(a.seat<5){
+        t="'원장을 위한 AI 실전 교육' 신청이 잘 접수되었습니다. 원장님은 "+a.cohort+"기 "+a.seat+"번째로 신청해 주셨습니다.\n\n한 기수는 5명이 모이면 열립니다. 5명이 채워지면 단톡방을 만들어 모두 가능한 날짜를 함께 정하겠습니다. 진료를 계속 보고 있어 하루 실습은 한 달에 한 번만 진행하는 점 양해 부탁드립니다.\n\n적어 주신 사전 질문은 잘 읽어 보겠습니다. 날짜가 정해지면 노트북 준비 안내문도 함께 보내 드리겠습니다. 조금만 기다려 주십시오.\n\n감사합니다.";
+      }else{
+        t="'원장을 위한 AI 실전 교육' 신청이 잘 접수되었습니다. 원장님이 "+a.cohort+"기 다섯 번째로 신청해 주셔서 "+a.cohort+"기 모집이 마감되었습니다.\n\n곧 단톡방에 초대해 다섯 분이 모두 가능한 날짜를 함께 정하겠습니다. 날짜가 정해지면 노트북 준비 안내문도 보내 드리겠습니다.\n\n적어 주신 사전 질문은 잘 읽어 보겠습니다. 조금만 기다려 주십시오.\n\n감사합니다.";
+      }
+    }else{
+      t="병원 방문 세팅 신청이 잘 접수되었습니다. 원장님은 "+a.order+"번째 순서로 신청해 주셨습니다.\n\n진료를 계속 보고 있어 방문 세팅은 한 달에 한 병원씩, 신청 순서대로 찾아뵙고 있습니다. 차례가 되면 먼저 연락드려 날짜를 맞추겠습니다.\n\n적어 주신 업무와 요청사항을 보고 세팅할 항목을 미리 정리해 두겠습니다. 조금만 기다려 주십시오.\n\n감사합니다.";
+    }
+    return hi+t;
+  }
+  var MSG={};
+  out.addEventListener("click",function(e){var b=e.target.closest(".kt");if(!b)return;var t=MSG[b.dataset.no];
+    function done(){b.textContent="복사했습니다";setTimeout(function(){b.textContent="카톡 문안 복사"},1600);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){prompt("복사해 주십시오",t);});}else{prompt("복사해 주십시오",t);}});
   function esc(t){var d=document.createElement("div");d.textContent=t==null?"":String(t);return d.innerHTML;}
-  function row(a,c1){return "<tr><td class=num>"+(c1?a.seat+"/5":a.order)+"</td><td class=num>"+esc(a.at.slice(5,16).replace("T"," "))+"</td><td>"+esc(a.name)+"</td><td>"+esc(a.hospital)+"<br><small>"+esc(a.region)+" "+esc(a.type)+"</small></td><td class=num>"+esc(a.phone)+"</td><td>"+esc(a.laptop||"")+"<br><small>"+esc(a.ai)+"</small></td><td class=long>"+esc(a.want)+"</td><td class=long>"+esc(a.pain)+"</td><td class=long>"+esc(a.ask)+"</td></tr>";}
+  function row(a,c1){MSG[a.no]=msg(a);return "<tr><td class=num>"+(c1?a.seat+"/5":a.order)+"<br><button type=button class=kt data-no='"+a.no+"'>카톡 문안 복사</button></td><td class=num>"+esc(a.at.slice(5,16).replace("T"," "))+"</td><td>"+esc(a.name)+"</td><td>"+esc(a.hospital)+"<br><small>"+esc(a.region)+" "+esc(a.type)+"</small></td><td class=num>"+esc(a.phone)+"</td><td>"+esc(a.laptop||"")+"<br><small>"+esc(a.ai)+"</small></td><td class=long>"+esc(a.want)+"</td><td class=long>"+esc(a.pain)+"</td><td class=long>"+esc(a.ask)+"</td></tr>";}
   var TH="<tr><th>순번</th><th>접수</th><th>성함</th><th>병원</th><th>연락처</th><th>노트북·AI</th><th>만들고 싶은 것</th><th>시간 뺏는 일</th><th>요청사항</th></tr>";
   function load(k){
     fetch("/api/ai-apply?list=1",{headers:{"x-admin-key":k}}).then(function(r){return r.json().then(function(j){return{s:r.status,j:j}})}).then(function(x){
