@@ -228,6 +228,7 @@ button:disabled{opacity:.5;cursor:default}
     <div class="hp" aria-hidden="true"><label>웹사이트 <input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
 
     <label class="agree"><input type="checkbox" id="agree"> <span>교육 신청 접수와 연락을 위해 성함, 휴대폰 번호, 병원 정보를 수집하는 데 동의합니다. 수집한 정보는 교육 안내에만 쓰고 해당 기수 교육이 끝나고 6개월 뒤 지웁니다.</span></label>
+    <label class="agree"><input type="checkbox" id="agree2"> <span>교육 자료와 강의 내용은 우리 병원 안에서만 쓰고, 녹화·녹음·공유하거나 같은 내용으로 강의·세팅 서비스를 판매하지 않겠습니다.</span></label>
     <p class="err" id="err" hidden></p>
     <button type="submit" id="btn">신청하기</button>
   </form>
@@ -252,8 +253,8 @@ button:disabled{opacity:.5;cursor:default}
   function course(){return val("course")||"1";}
   function sync(){var c1=course()==="1";document.getElementById("laptopRow").hidden=!c1;document.getElementById("wantLabel").textContent=c1?"교육 당일 만들어 가고 싶은 것":"병원에 세팅하고 싶은 것 (최대 3가지)";}
   f.addEventListener("change",sync);sync();
-  function collect(){return{course:course(),name:val("name"),phone:val("phone"),hospital:val("hospital"),region:val("region"),type:val("type"),size:val("size"),ai:val("ai"),laptop:course()==="1"?val("laptop"):"",pain:val("pain"),want:val("want"),users:val("users"),ask:val("ask"),website:val("website"),agree:document.getElementById("agree").checked};}
-  function asText(d){var L=[["희망 과정",d.course==="1"?"과정 1 하루 집중 실습":"과정 2 병원 방문 세팅"],["성함",d.name],["휴대폰",d.phone],["병원",d.hospital],["지역",d.region],["병원 형태",d.type],["규모",d.size],["쓰는 AI",[].concat(d.ai).join(", ")],["노트북",d.laptop],["시간을 빼앗는 일",d.pain],["만들고 싶은 것",d.want],["쓸 사람",d.users],["요청사항",d.ask]];return "[AI 교육 신청]\n"+L.filter(function(x){return x[1]&&String(x[1]).length}).map(function(x){return x[0]+": "+x[1]}).join("\n");}
+  function collect(){return{course:course(),name:val("name"),phone:val("phone"),hospital:val("hospital"),region:val("region"),type:val("type"),size:val("size"),ai:val("ai"),laptop:course()==="1"?val("laptop"):"",pain:val("pain"),want:val("want"),users:val("users"),ask:val("ask"),website:val("website"),agree:document.getElementById("agree").checked,agree2:document.getElementById("agree2").checked};}
+  function asText(d){var L=[["희망 과정",d.course==="1"?"과정 1 하루 집중 실습":"과정 2 병원 방문 세팅"],["성함",d.name],["휴대폰",d.phone],["병원",d.hospital],["지역",d.region],["병원 형태",d.type],["규모",d.size],["쓰는 AI",[].concat(d.ai).join(", ")],["노트북",d.laptop],["시간을 빼앗는 일",d.pain],["만들고 싶은 것",d.want],["쓸 사람",d.users],["요청사항",d.ask],["동의","개인정보 수집, 교육 내용 재판매 금지"]];return "[AI 교육 신청]\n"+L.filter(function(x){return x[1]&&String(x[1]).length}).map(function(x){return x[0]+": "+x[1]}).join("\n");}
   function manual(d){f.hidden=true;document.getElementById("copyText").textContent=asText(d);document.getElementById("manual").hidden=false;window.scrollTo(0,0);}
   document.getElementById("copyBtn").addEventListener("click",function(){var t=document.getElementById("copyText").textContent,b=this;function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById("copyText"));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="선택됨 · 길게 눌러 복사";}
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){b.textContent="복사했습니다";},sel);}else sel();});
@@ -261,6 +262,7 @@ button:disabled{opacity:.5;cursor:default}
     e.preventDefault();err.hidden=true;var d=collect();
     if(!d.name||!d.phone||!d.hospital){err.textContent="성함, 휴대폰 번호, 병원 이름을 적어 주십시오.";err.hidden=false;return;}
     if(!d.agree){err.textContent="개인정보 수집에 동의해 주셔야 접수할 수 있습니다.";err.hidden=false;return;}
+    if(!d.agree2){err.textContent="교육 내용 재판매 금지에 동의해 주셔야 접수할 수 있습니다.";err.hidden=false;return;}
     btn.disabled=true;btn.textContent="접수 중";
     fetch("/api/ai-apply",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(d)}).then(function(r){return r.json().then(function(j){return{s:r.status,j:j}})}).then(function(x){
       if(x.s!==200||!x.j.ok){manual(d);return;}

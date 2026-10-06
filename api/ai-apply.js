@@ -75,7 +75,7 @@ module.exports = async (req, res) => {
   if (body.website) { res.status(200).json({ ok: true, no: 0 }); return; } // 자동 입력 방지용 빈칸
 
   const a = pick(body);
-  if (!a.name || !a.hospital || !a.phone || body.agree !== true) {
+  if (!a.name || !a.hospital || !a.phone || body.agree !== true || body.agree2 !== true) {
     res.status(400).json({ ok: false, error: "required" }); return;
   }
   if (!store.enabled()) { res.status(503).json({ ok: false, error: "storage" }); return; }
@@ -83,7 +83,7 @@ module.exports = async (req, res) => {
   try {
     const idx = await readIndex();
     idx.total += 1;
-    const rec = { no: idx.total, at: kst(new Date()), ...a };
+    const rec = { no: idx.total, at: kst(new Date()), ...a, agreedNoResale: true };
     if (a.course === "1") {
       idx.c1 += 1;
       rec.order = idx.c1;
