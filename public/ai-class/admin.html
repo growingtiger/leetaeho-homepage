@@ -207,8 +207,18 @@ td.long{max-width:280px;white-space:pre-wrap}
   out.addEventListener("click",function(e){var b=e.target.closest(".kt");if(!b)return;var t=MSG[b.dataset.no];
     function done(){b.textContent="복사했습니다";setTimeout(function(){b.textContent="카톡 문안 복사"},1600);}
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){prompt("복사해 주십시오",t);});}else{prompt("복사해 주십시오",t);}});
+
+  function payMsg(a){
+    var hi=(a.name||"")+" 원장님, 안녕하세요. 이태호입니다.\n\n";
+    if(a.course==="1") return hi+"'원장을 위한 AI 실전 교육' "+a.cohort+"기 날짜가 [날짜]로 확정되었습니다.\n\n교육비 1,100,000원(부가세 포함)을 [입금 기한]까지 아래 계좌로 보내 주시면 자리가 확정됩니다.\n[은행] [계좌번호] 예금주 주식회사 더벳로드\n\n세금계산서를 받으실 사업자등록번호와 이메일을 함께 알려 주십시오. 노트북 준비 안내문은 따로 보내 드리겠습니다.\n\n감사합니다.";
+    return hi+"병원 방문 세팅 날짜가 [날짜]로, 세팅 항목이 확정되었습니다.\n\n대금 5,500,000원(부가세 포함) 가운데 50%인 2,750,000원을 [입금 기한]까지 아래 계좌로 보내 주십시오. 나머지 50%는 방문을 마친 날 받습니다.\n[은행] [계좌번호] 예금주 주식회사 더벳로드\n\n세금계산서를 받으실 사업자등록번호와 이메일을 함께 알려 주십시오.\n\n감사합니다.";
+  }
+  var PAY={};
+  out.addEventListener("click",function(e){var b=e.target.closest(".kp");if(!b)return;var t=PAY[b.dataset.no];
+    function done(){b.textContent="복사했습니다";setTimeout(function(){b.textContent="입금 안내 복사"},1600);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){prompt("복사해 주십시오",t);});}else{prompt("복사해 주십시오",t);}});
   function esc(t){var d=document.createElement("div");d.textContent=t==null?"":String(t);return d.innerHTML;}
-  function row(a,c1){MSG[a.no]=msg(a);return "<tr><td class=num>"+(c1?a.seat+"/5":a.order)+"<br><button type=button class=kt data-no='"+a.no+"'>카톡 문안 복사</button></td><td class=num>"+esc(a.at.slice(5,16).replace("T"," "))+"</td><td>"+esc(a.name)+"</td><td>"+esc(a.hospital)+"<br><small>"+esc(a.region)+" "+esc(a.type)+"</small></td><td class=num>"+esc(a.phone)+"</td><td>"+esc(a.laptop||"")+"<br><small>"+esc(a.ai)+"</small></td><td class=long>"+esc(a.want)+"</td><td class=long>"+esc(a.pain)+"</td><td class=long>"+esc(a.ask)+"</td></tr>";}
+  function row(a,c1){MSG[a.no]=msg(a);PAY[a.no]=payMsg(a);return "<tr><td class=num>"+(c1?a.seat+"/5":a.order)+"<br><button type=button class=kt data-no='"+a.no+"'>카톡 문안 복사</button><br><button type=button class='kt kp' data-no='"+a.no+"'>입금 안내 복사</button></td><td class=num>"+esc(a.at.slice(5,16).replace("T"," "))+"</td><td>"+esc(a.name)+"</td><td>"+esc(a.hospital)+"<br><small>"+esc(a.region)+" "+esc(a.type)+"</small></td><td class=num>"+esc(a.phone)+"</td><td>"+esc(a.laptop||"")+"<br><small>"+esc(a.ai)+"</small></td><td class=long>"+esc(a.want)+"</td><td class=long>"+esc(a.pain)+"</td><td class=long>"+esc(a.ask)+"</td></tr>";}
   var TH="<tr><th>순번</th><th>접수</th><th>성함</th><th>병원</th><th>연락처</th><th>노트북·AI</th><th>만들고 싶은 것</th><th>시간 뺏는 일</th><th>요청사항</th></tr>";
   function load(k){
     fetch("/api/ai-apply?list=1",{headers:{"x-admin-key":k}}).then(function(r){return r.json().then(function(j){return{s:r.status,j:j}})}).then(function(x){
