@@ -528,9 +528,14 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
     if(it.p&&it.p.length){var ul=document.createElement("ul");it.p.forEach(function(x){var li=document.createElement("li");li.textContent=x;ul.appendChild(li);});D.appendChild(ul);}
     var im=document.getElementById("pdlgI"),no=document.getElementById("pdlgN");
     if(it.i){im.src=it.i;im.alt=it.n+" 화면";im.hidden=false;no.hidden=true;}else{im.hidden=true;im.removeAttribute("src");no.hidden=false;}
-    if(dlg.showModal)dlg.showModal();else dlg.setAttribute("open","");});
-  document.getElementById("pdlgX").addEventListener("click",function(){dlg.close?dlg.close():dlg.removeAttribute("open");});
-  dlg.addEventListener("click",function(e){if(e.target===dlg)dlg.close();});
+    if(dlg.showModal)dlg.showModal();else dlg.setAttribute("open","");
+    try{history.pushState({pdlg:1},"");}catch(_){}});
+  function shut(){if(dlg.open){dlg.close?dlg.close():dlg.removeAttribute("open");}}
+  function closeDlg(){if(history.state&&history.state.pdlg){history.back();}else{shut();}}
+  window.addEventListener("popstate",function(){shut();});
+  dlg.addEventListener("cancel",function(e){e.preventDefault();closeDlg();});
+  document.getElementById("pdlgX").addEventListener("click",closeDlg);
+  dlg.addEventListener("click",function(e){if(e.target===dlg)closeDlg();});
 })();
 </script>
 
