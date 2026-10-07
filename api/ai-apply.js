@@ -90,6 +90,24 @@ module.exports = async (req, res) => {
 
   if (req.method !== "POST") { res.status(405).end(); return; }
 
+  // 원장 전용: 신청 기록 고치기(이름 오타 등). 헤더 x-admin-key 필요.
+  if (req.query && req.query.fix) {
+    if (!adminOk(String(req.headers["x-admin-key"] || ""))) { res.status(401).json({ ok: false }); return; }
+    let b = req.body;
+    if (typeof b === "string") { try { b = JSON.parse(b); } catch (e) { b = null; } }
+    const no = parseInt(b && b.no, 10);
+    const allowed = ["name", "hospital", "region", "phone"];
+    if (!no || !b.fields || typeof b.fields !== "object") { res.status(400).json({ ok: false }); return; }
+    const path = `${NS}/apps/${String(no).padStart(4, "0")}.json`;
+    const rec = await store.readJson(path);
+    if (!rec) { res.status(404).json({ ok: false }); return; }
+    for (const k of allowed) if (typeof b.fields[k] === "string") rec[k] = b.fields[k].trim().slice(0, LIMITS[k]);
+    rec.editedAt = kst(new Date());
+    await store.writeJson(path, rec);
+    res.status(200).json({ ok: true, rec: { no: rec.no, name: rec.name, hospital: rec.hospital } });
+    return;
+  }
+
   const origin = String(req.headers.origin || "");
   if (origin) {
     let host = "";
