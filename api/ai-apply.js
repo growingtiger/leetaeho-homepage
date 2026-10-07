@@ -25,9 +25,17 @@ const ADMIN_HASH = "06d0f0a4bbb203d563b41c8690b320f6043678b0955afe5551a9426e86f9
 // 이름·병원·과정·순서만 돌려주고 연락처와 답변은 주지 않는다.
 const NOTIFY_HASH = "263fff00e310bdee13c2209774b0872d185f4b1ab9b390e71392cf74b1c99567";
 
-const LIMITS = { name: 40, hospital: 80, region: 40, phone: 30, type: 40, size: 80, laptop: 20, ai: 200, pain: 1500, want: 1500, users: 40, ask: 1500 };
+// 원장 맥의 관리 작업(기수 재배정·구두 신청 추가 등)용 열쇠의 SHA-256. 비밀번호와 따로 둔다.
+const OPS_HASH = "ee293cd94f1e0400cf77900c41cc959de75329835a1807c7db2db32586d4d203";
+
+const LIMITS = { note: 200, name: 40, hospital: 80, region: 40, phone: 30, type: 40, size: 80, laptop: 20, ai: 200, pain: 1500, want: 1500, users: 40, ask: 1500 };
 
 function sha(s) { return crypto.createHash("sha256").update(String(s)).digest("hex"); }
+
+function opsOk(key) {
+  if (!key) return false;
+  return crypto.timingSafeEqual(Buffer.from(sha(key)), Buffer.from(OPS_HASH));
+}
 
 function adminOk(key) {
   if (!key) return false;
@@ -92,11 +100,38 @@ module.exports = async (req, res) => {
 
   // 원장 전용: 신청 기록 고치기(이름 오타 등). 헤더 x-admin-key 필요.
   if (req.query && req.query.fix) {
-    if (!adminOk(String(req.headers["x-admin-key"] || ""))) { res.status(401).json({ ok: false }); return; }
+    if (!adminOk(String(req.headers["x-admin-key"] || "")) && !opsOk(String(req.headers["x-ops-key"] || ""))) { res.status(401).json({ ok: false }); return; }
     let b = req.body;
     if (typeof b === "string") { try { b = JSON.parse(b); } catch (e) { b = null; } }
+    b = b || {};
+    // 기수 재배정·구두 신청 추가·기수 닫기 (원장 관리 작업)
+    if (b.op === "plan") {
+      const idx = await readIndex();
+      const recs = {};
+      for (let n = 1; n <= idx.total; n++) {
+        const r0 = await store.readJson(`${NS}/apps/${String(n).padStart(4, "0")}.json`);
+        if (r0) recs[n] = r0;
+      }
+      for (const m of (b.add || [])) {
+        idx.total += 1; idx.c1 += 1;
+        recs[idx.total] = { no: idx.total, at: kst(new Date()), course: "1", order: idx.c1, name: String(m.name || "").slice(0, 40), hospital: String(m.hospital || "").slice(0, 80), region: String(m.region || "").slice(0, 40), phone: "", note: String(m.note || "구두 신청").slice(0, 200), manual: true, cohort: m.cohort };
+      }
+      for (const [no, c] of Object.entries(b.assign || {})) if (recs[no]) recs[no].cohort = c;
+      for (const [no, t] of Object.entries(b.notes || {})) if (recs[no]) recs[no].note = String(t).slice(0, 200);
+      for (const [no, nm] of Object.entries(b.names || {})) if (recs[no]) recs[no].name = String(nm).slice(0, 40);
+      if (Array.isArray(b.closed)) idx.closed = b.closed;
+      idx.cc = {};
+      Object.values(recs).filter((r0) => r0.course === "1").sort((x, y) => x.no - y.no).forEach((r0) => {
+        idx.cc[r0.cohort] = (idx.cc[r0.cohort] || 0) + 1; r0.seat = idx.cc[r0.cohort];
+      });
+      for (const r0 of Object.values(recs)) await store.writeJson(`${NS}/apps/${String(r0.no).padStart(4, "0")}.json`, r0);
+      await store.writeJson(INDEX, idx);
+      res.status(200).json({ ok: true, index: idx });
+      return;
+    }
+    if (typeof b === "string") { try { b = JSON.parse(b); } catch (e) { b = null; } }
     const no = parseInt(b && b.no, 10);
-    const allowed = ["name", "hospital", "region", "phone"];
+    const allowed = ["name", "hospital", "region", "phone", "note"];
     if (!no || !b.fields || typeof b.fields !== "object") { res.status(400).json({ ok: false }); return; }
     const path = `${NS}/apps/${String(no).padStart(4, "0")}.json`;
     const rec = await store.readJson(path);
@@ -133,8 +168,14 @@ module.exports = async (req, res) => {
     if (a.course === "1") {
       idx.c1 += 1;
       rec.order = idx.c1;
-      rec.cohort = Math.ceil(idx.c1 / PER_COHORT);
-      rec.seat = ((idx.c1 - 1) % PER_COHORT) + 1;
+      // 기수 배정: 닫힌 기수(예: VIP 전용)는 건너뛰고, 5명이 안 찬 가장 앞 기수에 넣는다.
+      if (!idx.cc) { idx.cc = {}; for (let n = 1; n < idx.c1; n++) { const c = Math.ceil(n / PER_COHORT); idx.cc[c] = (idx.cc[c] || 0) + 1; } }
+      const closed = idx.closed || [];
+      let k = 1;
+      while (closed.includes(k) || (idx.cc[k] || 0) >= PER_COHORT) k++;
+      idx.cc[k] = (idx.cc[k] || 0) + 1;
+      rec.cohort = k;
+      rec.seat = idx.cc[k];
     } else {
       idx.c2 += 1;
       rec.order = idx.c2;
