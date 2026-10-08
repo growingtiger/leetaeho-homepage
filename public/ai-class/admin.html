@@ -205,7 +205,9 @@ td.long{min-width:200px;max-width:280px;white-space:pre-wrap}
   function msg(a){
     var hi=(a.name||"")+" 원장님, 안녕하세요. 시그니처 동물의료센터 이태호입니다.\n\n";
     var t;
-    if(a.course==="1"){
+    if(a.course==="1"&&String(a.cohort)==="0"){
+      t="'원장을 위한 AI 실전 교육'에 신청해 주셔서 감사합니다.\n\n희망하신 시기에 맞춰 대기자 명단에 올려 두었습니다. 그 무렵 열리는 기수가 정해지면 연락드려 날짜를 함께 맞추겠습니다.\n\n감사합니다.";
+    }else if(a.course==="1"){
       if(a.seat<5){
         t="'원장을 위한 AI 실전 교육' 신청이 잘 접수되었습니다.\n\n선착순으로 5명이 모이면 한 기수가 열립니다. 기수가 다 차면 몇 기로 진행되는지 알려 드리고, 단톡방을 만들어 모두 가능한 날짜를 함께 정하겠습니다. 진료를 계속 보고 있어 하루 실습은 한 달에 한 번만 진행하는 점 양해 부탁드립니다.\n\n적어 주신 사전 질문은 잘 읽어 보겠습니다. 날짜가 정해지면 노트북 준비 안내문도 함께 보내 드리겠습니다. 조금만 기다려 주십시오.\n\n감사합니다.";
       }else{
@@ -250,8 +252,9 @@ td.long{min-width:200px;max-width:280px;white-space:pre-wrap}
       document.getElementById("lf").hidden=true;document.getElementById("bar").hidden=false;var t=new Date();document.getElementById("upd").textContent=t.getHours()+":"+String(t.getMinutes()).padStart(2,"0")+" 기준";
       var items=x.j.items,h="",groups={};
       items.filter(function(a){return a.course==="1"}).forEach(function(a){(groups[a.cohort]=groups[a.cohort]||[]).push(a)});
-      Object.keys(groups).sort(function(a,b){return a-b}).forEach(function(c){var g=groups[c],full=g.length>=5;
+      Object.keys(groups).filter(function(c){return c!=="0"}).sort(function(a,b){return a-b}).forEach(function(c){var g=groups[c],full=g.length>=5;
         h+="<section class=coh><h2>과정 1 · "+c+"기 <span class='pill"+(full?" full":"")+"'>"+(full?"마감 5/5":"모집 중 "+g.length+"/5")+"</span></h2><div class=tbl><table>"+TH+g.map(function(a){return row(a,true)}).join("")+"</table></div></section>";});
+      if(groups["0"]){var w=groups["0"];h+="<section class=coh><h2>과정 1 · 대기자 <span class=pill>"+w.length+"명</span></h2><div class=tbl><table>"+TH+w.map(function(a){return row(a,false)}).join("")+"</table></div></section>";}
       var c2=items.filter(function(a){return a.course==="2"});
       h+="<section class=coh><h2>과정 2 · 방문 세팅 <small>"+c2.length+"건</small></h2>"+(c2.length?"<div class=tbl><table>"+TH+c2.map(function(a){return row(a,false)}).join("")+"</table></div>":"<p class=lead>아직 신청이 없습니다.</p>")+"</section>";
       if(!items.length)h="<section class=coh><p class=lead>아직 신청이 없습니다.</p></section>";
