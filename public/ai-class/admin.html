@@ -267,6 +267,9 @@ td.long{min-width:200px;max-width:280px;white-space:pre-wrap}
   document.getElementById("lo").addEventListener("click",function(){try{sessionStorage.removeItem("aik");localStorage.removeItem("aik")}catch(e){}CUR="";out.innerHTML="";document.getElementById("key").value="";document.getElementById("bar").hidden=true;document.getElementById("lf").hidden=false;});
   document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&CUR)load(CUR);});
   try{var k=sessionStorage.getItem("aik")||localStorage.getItem("aik");if(localStorage.getItem("aik"))document.getElementById("keep").checked=true;if(k){document.getElementById("key").value=k;load(k);}}catch(e){}
+  /* 뒤로가기로 앱이 닫히지 않게 한다 (2026-10-08 원장 골든룰) */
+  history.replaceState({app:1,base:1},"");history.pushState({app:1},"");
+  window.addEventListener("popstate",function(e){var st=e.state||{};if(!st.app||st.base){history.pushState({app:1},"");window.scrollTo({top:0,behavior:"smooth"});}});
   if("serviceWorker" in navigator){navigator.serviceWorker.register("/ai-class/admin-sw.js",{scope:"/ai-class/admin"}).catch(function(){});}
 })();
 </script>

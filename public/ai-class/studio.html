@@ -149,8 +149,17 @@ function open(k){
   }).catch(function(){$("err").textContent="연결되지 않았습니다. 인터넷 연결을 확인해 주십시오.";$("err").hidden=false});
 }
 $("lf").addEventListener("submit",function(e){e.preventDefault();open($("key").value.trim())});
-document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){document.querySelectorAll("nav button").forEach(function(x){x.classList.toggle("on",x===b)});
-  ["coh","mat","out"].forEach(function(t){$("tab-"+t).hidden=t!==b.dataset.tab});window.scrollTo(0,0)}});
+/* 뒤로가기로 앱이 닫히지 않게 한다 (2026-10-08 원장 골든룰). 화면 이동마다 기록을 남기고,
+   맨 처음 화면에서 뒤로가기를 누르면 첫 탭으로 돌아오거나 그 자리에 머문다. */
+var TAB="coh";
+function showTab(t){TAB=t;document.querySelectorAll("nav button").forEach(function(x){x.classList.toggle("on",x.dataset.tab===t)});["coh","mat","out"].forEach(function(k){$("tab-"+k).hidden=k!==t})}
+function go(t,mat){if(t===TAB&&(mat||null)===curMat)return;history.pushState({app:1,tab:t,mat:mat||null},"");showTab(t);curMat=mat||null;if(t==="mat")renderMat();window.scrollTo(0,0)}
+history.replaceState({app:1,base:1},"");history.pushState({app:1,tab:"coh",mat:null},"");
+window.addEventListener("popstate",function(e){var st=e.state||{};
+  if(!st.app||st.base){var t=TAB,m=curMat;history.pushState({app:1,tab:"coh",mat:null},"");
+    if(t!=="coh"||m){curMat=null;showTab("coh");renderMat();window.scrollTo(0,0)}else toast("앱을 닫으려면 홈 화면으로 나가 주십시오");return}
+  showTab(st.tab||"coh");curMat=st.mat||null;if((st.tab||"coh")==="mat")renderMat();window.scrollTo(0,0)});
+document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){go(b.dataset.tab,null)}});
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&KEY&&!dirty&&!saving&&!curMat){
   api("/api/ai-studio?state=1").then(function(r){return r.json()}).then(function(j){if(j.ok&&j.rev!==REV){REV=j.rev;S=norm(j.state);render()}}).catch(function(){});
   api("/api/ai-apply?list=1").then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.items){APPS=j.items;renderCoh()}}).catch(function(){})}});
@@ -202,13 +211,14 @@ $("tab-coh").addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target
 function mats(){return S.materials.filter(function(m){return!m.deleted})}
 function renderMat(){
   if(curMat){renderEditor();return}
+  S.materials.forEach(function(m){if(!m.deleted&&!m.title&&!m.body&&!(m.files||[]).length){m.deleted=true;touch()}});
   var ms=mats().filter(function(m){return matFilter==="전체"||m.kind===matFilter}).sort(function(a,b){return(b.updated||"")<(a.updated||"")?-1:1});
   var h='<div class="sec"><div class="bar" style="justify-content:space-between"><h2 style="font-family:var(--serif);font-size:1.15rem;margin:0">강의 자료</h2><button id="newm">새 자료</button></div><p class="lead" style="margin-top:6px">슬라이드 파일, 대본, 실습 과제, 단톡방 안내 문안을 여기에 모아 둡니다. 파일은 3MB까지 붙일 수 있습니다.</p>';
   h+='<div class="filters">'+["전체"].concat(KINDS).map(function(k){return'<button data-k="'+k+'" class="'+(k===matFilter?"on":"")+'">'+k+'</button>'}).join("")+'</div><div class="list">';
   ms.forEach(function(m){var fl=(m.files||[]).length;h+='<button class="item" data-id="'+m.id+'"><span class="k">'+esc(m.kind)+'</span><small>'+esc((m.updated||"").slice(5,10).replace("-","."))+'</small><b>'+esc(m.title||"제목 없음")+'</b><small>'+(fl?"첨부 "+fl+"개":"")+'</small></button>'});
   if(!ms.length)h+='<p class="lead">자료가 없습니다.</p>';
   h+='</div></div>';$("tab-mat").innerHTML=h;
-  $("newm").onclick=function(){var m={id:uid(),title:"",kind:matFilter==="전체"?"대본·노트":matFilter,body:"",files:[],updated:new Date().toISOString()};S.materials.push(m);curMat=m.id;touch();renderMat()};
+  $("newm").onclick=function(){var m={id:uid(),title:"",kind:matFilter==="전체"?"대본·노트":matFilter,body:"",files:[],updated:new Date().toISOString()};S.materials.push(m);touch();go("mat",m.id)};
 }
 function renderEditor(){
   var m=S.materials.find(function(x){return x.id===curMat});if(!m){curMat=null;renderMat();return}
@@ -220,8 +230,8 @@ function renderEditor(){
   $("tab-mat").innerHTML=h;
   function up(){m.updated=new Date().toISOString();touch()}
   $("mt").oninput=function(){m.title=this.value;up()};$("mk").onchange=function(){m.kind=this.value;up()};$("mb").oninput=function(){m.body=this.value;up()};
-  $("back").onclick=function(){if(!m.title&&!m.body&&!(m.files||[]).length){m.deleted=true;touch()}curMat=null;renderMat()};
-  $("del").onclick=function(){if(confirm("이 자료를 지울까요?")){m.deleted=true;curMat=null;touch();renderMat()}};
+  $("back").onclick=function(){history.back()};
+  $("del").onclick=function(){if(confirm("이 자료를 지울까요?")){m.deleted=true;touch();history.back()}};
   $("cp").onclick=function(){var t=(m.title?m.title+"\n\n":"")+m.body;navigator.clipboard.writeText(m.body).then(function(){toast("본문을 복사했습니다")},function(){prompt("복사해 주십시오",t)})};
   $("tab-mat").querySelectorAll("[data-open]").forEach(function(b){b.onclick=function(){openFile(b.dataset.open,(m.files.find(function(f){return f.id===b.dataset.open})||{}).name)}});
   $("tab-mat").querySelectorAll("[data-rm]").forEach(function(b){b.onclick=function(){var f=m.files.find(function(x){return x.id===b.dataset.rm});if(f&&confirm(f.name+" 파일을 뺄까요?")){f.deleted=true;up();renderEditor()}}});
@@ -232,7 +242,7 @@ function renderEditor(){
 }
 function openFile(id,name){var w=window.open("","_blank");api("/api/ai-studio?file="+id).then(function(r){if(!r.ok)throw 0;return r.blob()}).then(function(b){var u=URL.createObjectURL(b);
   if(w){w.location=u}else{var a=document.createElement("a");a.href=u;a.download=name||"file";a.click()}}).catch(function(){if(w)w.close();toast("파일을 열지 못했습니다")})}
-$("tab-mat").addEventListener("click",function(e){var it=e.target.closest(".item");if(it){curMat=it.dataset.id;renderMat();return}var k=e.target.closest("[data-k]");if(k){matFilter=k.dataset.k;renderMat()}});
+$("tab-mat").addEventListener("click",function(e){var it=e.target.closest(".item");if(it){go("mat",it.dataset.id);return}var k=e.target.closest("[data-k]");if(k){matFilter=k.dataset.k;renderMat()}});
 
 /* ---------- 결과물 ---------- */
 function renderOut(){
