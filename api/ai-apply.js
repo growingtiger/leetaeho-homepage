@@ -82,6 +82,21 @@ module.exports = async (req, res) => {
       res.status(200).json({ ok: true, total: idx.total, items });
       return;
     }
+    // 원장 맥의 관리 열쇠로 신청서 답변을 읽는다(교육 준비용 시제품 제작, 2026-10-09 원장 허락). 연락처는 주지 않는다.
+    if (req.query && req.query.answers) {
+      if (!opsOk(String(req.headers["x-ops-key"] || ""))) { res.status(401).json({ ok: false }); return; }
+      if (!store.enabled()) { res.status(503).json({ ok: false, error: "storage" }); return; }
+      const idx = await readIndex();
+      const items = [];
+      for (let n = 1; n <= idx.total; n++) {
+        try {
+          const a = await store.readJson(`${NS}/apps/${String(n).padStart(4, "0")}.json`);
+          if (a) { const { phone, ...rest } = a; items.push(rest); }
+        } catch (e) { /* 건너뛴다 */ }
+      }
+      res.status(200).json({ ok: true, items });
+      return;
+    }
     if (!req.query || !req.query.list) { res.status(200).json({ ok: true, enabled: store.enabled() }); return; }
     const key = String(req.headers["x-admin-key"] || "");
     if (!adminOk(key)) { res.status(401).json({ ok: false }); return; }
