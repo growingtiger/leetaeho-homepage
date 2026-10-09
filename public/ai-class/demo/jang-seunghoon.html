@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:">
+<meta name="theme-color" content="#14233c">
+<title>의뢰환자 보드 · 라인동물의료센터 시제품</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eceef1; --panel:#ffffff; --line:#d5d9df; --line2:#e4e7eb;
+  --ink:#14233c; --ink2:#3d4a5f; --mute:#6b7585;
+  --navy:#14233c; --navy2:#24395a;
+  --wait:#a8640c; --wait-bg:#fbf1e0;
+  --done:#2c6a4a; --done-bg:#e5f0ea;
+  --alarm:#b3261e; --alarm-bg:#fbe9e7;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-text-size-adjust:100%;overflow-x:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* top strip */
+.strip{background:var(--navy);color:#c9d2df;font-size:11.5px;letter-spacing:.01em}
+.strip .in{max-width:1280px;margin:0 auto;padding:6px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.strip b{color:#fff;font-weight:500}
+.notice-demo{background:#dfe3e9;color:var(--ink2);font-size:11.5px;text-align:center;padding:4px 16px;border-bottom:1px solid var(--line)}
+
+header.top{background:var(--panel);border-bottom:1px solid var(--line)}
+header.top .in{max-width:1280px;margin:0 auto;padding:14px 16px 0}
+.title-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-size:19px;margin:0;font-weight:700;letter-spacing:-.01em}
+h1 small{font-weight:400;color:var(--mute);font-size:12.5px;margin-left:8px;letter-spacing:0}
+.clock{font-family:var(--mono);font-size:12.5px;color:var(--ink2)}
+nav.tabs{display:flex;gap:0;margin-top:10px;overflow-x:auto;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:9px 12px 10px;font-size:14px;color:var(--mute);cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-current="page"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+
+main{max-width:1280px;margin:0 auto;padding:16px 16px 28px}
+
+/* summary line */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:var(--panel);margin-bottom:14px}
+.kpi{padding:10px 12px;border-left:1px solid var(--line2)}
+.kpi:first-child{border-left:0}
+.kpi .k{font-size:11.5px;color:var(--mute)}
+.kpi .v{font-family:var(--mono);font-size:22px;font-weight:600;line-height:1.2}
+.kpi .v.alarm{color:var(--alarm)}
+.kpi .s{font-size:11px;color:var(--mute)}
+@media (max-width:520px){.kpis{grid-template-columns:repeat(2,1fr)}.kpi:nth-child(3){border-left:0}.kpi:nth-child(n+3){border-top:1px solid var(--line2)}}
+
+/* status markers: text + shape */
+.st{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.01em;white-space:nowrap}
+.st i{display:inline-block;width:9px;height:9px;border:1.5px solid currentColor}
+.st.s0{color:var(--ink2)}
+.st.s1{color:var(--navy2)} .st.s1 i{background:currentColor}
+.st.s2{color:var(--wait)} .st.s2 i{background:linear-gradient(135deg,currentColor 50%,transparent 50%)}
+.st.s3{color:var(--done)} .st.s3 i{border-radius:50%;background:currentColor}
+
+/* status tabs (mobile) */
+.stabs{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:var(--panel);margin-bottom:12px}
+.stabs button{border:0;background:none;padding:8px 4px 7px;border-left:1px solid var(--line2);cursor:pointer;text-align:center;border-bottom:3px solid transparent}
+.stabs button:first-child{border-left:0}
+.stabs button .n{display:block;font-family:var(--mono);font-size:18px;font-weight:600;line-height:1.2}
+.stabs button .l{display:block;font-size:12px;color:var(--mute)}
+.stabs button[aria-selected="true"]{border-bottom-color:var(--ink);background:#f6f7f9}
+.stabs button[aria-selected="true"] .l{color:var(--ink);font-weight:600}
+
+.board{display:block}
+.col{display:none}
+.col.active{display:block}
+.col-h{display:none}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.toolbar .sp{flex:1}
+.search{flex:1;min-width:0;max-width:320px;border:1px solid var(--line);background:var(--panel);padding:8px 10px;border-radius:2px}
+
+@media (min-width:1024px){
+  .stabs{display:none}
+  .board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start}
+  .col{display:block;background:#e3e6ea;border:1px solid var(--line);min-height:300px}
+  .col-h{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line);background:var(--panel)}
+  .col-h .n{font-family:var(--mono);font-weight:600;font-size:15px}
+  .col .list{padding:8px}
+}
+
+/* case row */
+.case{display:block;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ink2);padding:10px 12px;margin-bottom:8px;cursor:pointer;border-radius:2px}
+.case:hover{border-color:#aab2be}
+.case.s1{border-left-color:var(--navy2)}
+.case.s2{border-left-color:var(--wait)}
+.case.s3{border-left-color:var(--done)}
+.case.over{border-left-color:var(--alarm);background:#fffaf9}
+.case .r1{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.case .pet{font-weight:600;font-size:15px}
+.case .pet span{font-weight:400;color:var(--mute);font-size:12.5px;margin-left:4px}
+.case .id{font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.case .why{font-size:13.5px;color:var(--ink2);margin:3px 0 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.case .meta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--mute)}
+.case .meta .num{color:var(--ink2)}
+.urg{font-size:11.5px;font-weight:600;padding:0 5px;border:1px solid currentColor;border-radius:2px;line-height:18px}
+.urg.u2{color:var(--alarm)} .urg.u1{color:var(--ink)} .urg.u0{color:var(--mute);font-weight:500}
+.flag{display:inline-block;margin-top:6px;font-size:12px;font-weight:600;color:var(--alarm);background:var(--alarm-bg);padding:1px 6px}
+.empty{color:var(--mute);font-size:13px;padding:18px 4px;text-align:center}
+
+/* panels / forms */
+.panel{background:var(--panel);border:1px solid var(--line);padding:16px;border-radius:2px}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.sec-h h2{font-size:17px;margin:0}
+.sec-h p{margin:0;color:var(--mute);font-size:12.5px}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:700px){.grid{grid-template-columns:1fr 1fr}.grid .full{grid-column:1/-1}.grid.g3{grid-template-columns:1fr 1fr 1fr}}
+fieldset{border:0;padding:0;margin:0 0 18px}
+legend{font-size:12px;font-weight:600;color:var(--mute);letter-spacing:.04em;padding:0 0 8px;border-bottom:1px solid var(--line2);width:100%;margin-bottom:12px}
+label.f{display:block;font-size:12.5px;color:var(--ink2)}
+label.f > span{display:block;margin-bottom:4px}
+input[type=text],input[type=date],select,textarea{width:100%;border:1px solid var(--line);background:#fbfbfc;padding:9px 10px;border-radius:2px;min-width:0}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--navy2);outline-offset:1px}
+textarea{resize:vertical;min-height:72px;line-height:1.6}
+.seg{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.seg label{flex:1;text-align:center;font-size:13px;padding:8px 4px;cursor:pointer;border-left:1px solid var(--line);background:#fbfbfc}
+.seg label:first-child{border-left:0}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked){background:var(--navy);color:#fff;font-weight:600}
+
+.btn{border:1px solid var(--navy);background:var(--navy);color:#fff;padding:9px 14px;border-radius:2px;cursor:pointer;font-size:14px;font-weight:500;white-space:nowrap}
+.btn.ghost{background:var(--panel);color:var(--navy)}
+.btn.sm{padding:6px 10px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:default}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* detail */
+.dgrid{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:1024px){.dgrid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
+.back{background:none;border:0;padding:0;color:var(--ink2);font-size:13.5px;cursor:pointer;margin-bottom:10px}
+dl.info{display:grid;grid-template-columns:88px 1fr;gap:6px 10px;margin:0;font-size:14px}
+dl.info dt{color:var(--mute);font-size:12.5px;padding-top:1px}
+dl.info dd{margin:0}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);margin:14px 0 4px;border:1px solid var(--line)}
+.flow button{border:0;border-left:1px solid var(--line2);background:#fbfbfc;padding:8px 2px;font-size:12px;cursor:pointer;color:var(--mute)}
+.flow button:first-child{border-left:0}
+.flow button .num{display:block;font-size:11px}
+.flow button.past{color:var(--ink2)}
+.flow button.cur{background:var(--navy);color:#fff;font-weight:600}
+.timeline{font-size:12.5px;color:var(--mute);margin-top:6px}
+.timeline .num{color:var(--ink2)}
+.letter{width:100%;min-height:420px;font-size:14px;line-height:1.75;background:#fff;border:1px solid var(--line);padding:14px}
+
+/* stats */
+.stat-wrap svg{display:block;max-width:100%;height:auto}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin:6px 0 10px}
+.legend i{display:inline-block;width:12px;height:10px;margin-right:5px;vertical-align:-1px}
+table.t{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:14px}
+table.t th,table.t td{padding:8px 6px;border-bottom:1px solid var(--line2);text-align:right}
+table.t th{font-size:12px;color:var(--mute);font-weight:500}
+table.t th:first-child,table.t td:first-child{text-align:left}
+table.t td.num{font-family:var(--mono)}
+@media (max-width:420px){table.t .hide-s{display:none}}
+
+/* data tools */
+.data-tools{margin-top:18px;font-size:12.5px;color:var(--mute);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.data-tools .btn{font-size:12.5px;padding:5px 9px}
+
+footer{border-top:1px solid var(--line);background:var(--panel);color:var(--mute);font-size:12px}
+footer .in{max-width:1280px;margin:0 auto;padding:12px 16px 18px}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:13.5px;padding:9px 14px;border-radius:2px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:calc(100% - 32px);text-align:center;z-index:9}
+.toast.on{opacity:1}
+[hidden]{display:none!important}
+
+@media print{
+  body{background:#fff}
+  .strip,.notice-demo,header.top,footer,.no-print,.toast{display:none!important}
+  main{padding:0;max-width:none}
+  .print-only{display:block!important;white-space:pre-wrap;font-family:var(--sans);font-size:12pt;line-height:1.8;color:#000}
+  .screen-only{display:none!important}
+}
+.print-only{display:none}
+</style>
+</head>
+<body>
+<div class="strip no-print"><div class="in"><span><b>라인동물의료센터</b> · 장승훈 원장님을 위한 시제품</span><span>의뢰환자 보드 v0.1</span></div></div>
+<div class="notice-demo no-print">예시 데이터입니다. 실제 환자·병원 정보가 아닙니다.</div>
+<header class="top no-print">
+  <div class="in">
+    <div class="title-row">
+      <h1>의뢰환자 보드<small>접수부터 회신까지 한 판에서</small></h1>
+      <span class="clock" id="clock"></span>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="화면">
+      <button data-v="board">보드</button>
+      <button data-v="new">의뢰 접수</button>
+      <button data-v="stats">병원별 현황</button>
+      <button data-v="notice">공지 작성</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main"></main>
+<div class="print-only" id="printArea"></div>
+
+<footer class="no-print"><div class="in">원장을 위한 AI 실전 교육 · 교육 당일 원장님 계정으로 옮겨 병원에 맞게 고칩니다</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+
+<script>
+(function(){
+"use strict";
+var KEY="line-referral-board-v1";
+var STATUS=["접수","진료 중","회신 대기","회신 완료"];
+var URG=["일반","우선","응급"];
+var CENTER="라인동물의료센터";
+var VETS=["내과 김○○","내과 한○○","외과 이○○","외과 오○○","영상의학 최○○","응급의학 정○○","안과 윤○○","신경 서○○"];
+var DAY=86400000;
+
+function today0(){var d=new Date();d.setHours(0,0,0,0);return d;}
+function iso(d){var y=d.getFullYear(),m=d.getMonth()+1,dd=d.getDate();return y+"-"+(m<10?"0":"")+m+"-"+(dd<10?"0":"")+dd;}
+function ago(n){return iso(new Date(today0().getTime()-n*DAY));}
+function parse(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
+function diff(a,b){return Math.round((parse(b)-parse(a))/DAY);}
+function kdate(s){if(!s)return "";var d=parse(s);return (d.getMonth()+1)+"월 "+d.getDate()+"일";}
+function fdate(s){return s?s.replace(/-/g,"."):"";}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+
+/* ---------- seed (가상) ---------- */
+function seed(){
+  var H=[
+    {id:"A",name:"○○동물병원 A",area:"고양 일산동구"},
+    {id:"B",name:"○○동물병원 B",area:"고양 일산서구"},
+    {id:"C",name:"○○동물병원 C",area:"고양 덕양구"},
+    {id:"D",name:"○○동물병원 D",area:"파주"},
+    {id:"E",name:"○○동물병원 E",area:"김포"},
+    {id:"F",name:"○○동물병원 F",area:"서울 은평구"}
+  ];
+  function c(no,h,rv,name,sp,br,age,reason,vet,d,u,s,waitAgo,doneAgo,tests,dx,tx,plan){
+    return {id:"R"+no,hosp:h,refVet:rv,pet:{name:name,species:sp,breed:br,age:age},reason:reason,vet:vet,date:ago(d),urg:u,status:s,
+      waitAt:waitAgo==null?"":ago(waitAgo),doneAt:doneAgo==null?"":ago(doneAgo),tests:tests||"",dx:dx||"",tx:tx||"",plan:plan||""};
+  }
+  var C=[
+    c("2601","A","김○○","코코","개","말티즈","12세","심잡음 청진, 무증상","내과 김○○",38,0,3,33,31,
+      "흉부 방사선, 심장 초음파, 혈압 측정, NT-proBNP","이첨판 점액종성 변성(MMVD), ACVIM stage B2","피모벤단 투여 시작","3개월 후 심장 초음파 재평가. 보호자께 수면 시 호흡수 측정 방법 안내함"),
+    c("2602","C","박○○","나비","고양이","코리안 숏헤어","9세","3개월간 체중 감소, 다음·다뇨","내과 한○○",30,0,3,26,22,
+      "CBC, 혈청화학, 총 T4, 요검사, 혈압 측정","갑상선기능항진증","메티마졸 저용량으로 시작","2~3주 후 T4와 신장 수치 재검. 결과는 다시 공유드리겠습니다"),
+    c("2603","B","이○○","보리","개","골든 리트리버","7세","급성 헛구역질, 복부 팽만","외과 이○○",25,2,3,21,19,
+      "복부 방사선, CBC, 혈청화학, 젖산, 심전도","위확장-염전(GDV)","응급 위 정복 및 위고정술 시행, 4일 입원","실밥 제거는 원장님 병원에서 부탁드립니다(수술 후 10~14일)"),
+    c("2604","D","정○○","두부","개","포메라니안","3세","우측 뒷다리 간헐적 파행","외과 오○○",20,0,3,9,5,
+      "정형외과 검사, 후지 방사선","우측 슬개골 내측 탈구 3등급","활차구 성형술 및 경골조면 전위술 시행","수술 후 6주 운동 제한, 6주 차 방사선 재평가"),
+    c("2605","A","김○○","루이","고양이","페르시안","6세","배뇨 곤란, 무뇨 의심","응급의학 정○○",12,2,2,7,null,
+      "혈청화학, 전해질, 요검사, 복부 방사선·초음파","요도 폐색(요도 마개 의심)","요도 카테터 장착, 수액 처치, 3일 입원","처방식 전환과 음수량 늘리기 권고"),
+    c("2606","E","최○○","초코","개","토이 푸들","10세","복부 초음파상 비장 종괴","외과 이○○",10,1,2,5,null,
+      "복부 초음파, 흉부 방사선, 복부 CT","비장 종괴(병리 결과 대기)","비장 적출술 시행","병리 결과 수령 후 최종 회신 예정"),
+    c("2607","F","한○○","달이","고양이","러시안 블루","13세","크레아티닌 상승, 체중 감소","내과 한○○",8,0,2,2,null,
+      "CBC, 혈청화학, SDMA, 요검사(요비중·UPC), 혈압 측정, 복부 초음파","만성 신장병 의심, IRIS 병기 결정 위해 재검 필요","수액 처치, 신장 처방식 안내","2주 후 재검 결과로 병기 확정"),
+    c("2608","B","이○○","몽이","개","시추","8세","좌안 각막 혼탁, 눈물 증가","안과 윤○○",6,1,1,null,null,
+      "쉬르머 눈물 검사, 형광 염색, 안압 측정","","",""),
+    c("2609","C","박○○","하루","개","웰시 코기","5세","3일간 반복 경련","신경 서○○",4,2,1,null,null,
+      "신경학적 검사, 혈청화학","","",""),
+    c("2610","D","정○○","콩이","개","비숑 프리제","11세","혈청 칼슘 상승","내과 김○○",3,1,1,null,null,
+      "이온화 칼슘, 혈청화학","","",""),
+    c("2611","E","최○○","레오","고양이","먼치킨","2세","호흡이 빠르고 노력성","응급의학 정○○",1,2,0,null,null,"","","",""),
+    c("2612","A","윤○○","별이","개","진도 믹스","4세","교통사고 후 좌측 앞다리 체중 부하 불가","외과 오○○",0,2,0,null,null,"","","","")
+  ];
+  return {hospitals:H,cases:C,seq:2612,savedAt:""};
+}
+
+/* ---------- storage ---------- */
+var db;
+function load(){try{var s=localStorage.getItem(KEY);if(s){db=JSON.parse(s);if(db&&db.cases&&db.hospitals)return;}}catch(e){}db=seed();}
+function save(){db.savedAt=new Date().toISOString();try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){toast("이 브라우저에서는 저장이 막혀 있습니다");}}
+function hosp(id){for(var i=0;i<db.hospitals.length;i++)if(db.hospitals[i].id===id)return db.hospitals[i];return {id:id,name:id,area:""};}
+function getCase(id){for(var i=0;i<db.cases.length;i++)if(db.cases[i].id===id)return db.cases[i];return null;}
+function waitDays(c){return c.status===2&&c.waitAt?diff(c.waitAt,iso(today0())):0;}
+function overdue(c){return c.status===2&&waitDays(c)>3;}
+
+/* ---------- ui helpers ---------- */
+var $main=document.getElementById("main");
+var tt;
+function toast(m){var t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){t.classList.remove("on");},2200);}
+function stTag(s){return '<span class="st s'+s+'"><i aria-hidden="true"></i>'+String(s+1).padStart(2,"0")+" "+STATUS[s]+"</span>";}
+function urgTag(u){return '<span class="urg u'+u+'">'+URG[u]+"</span>";}
+function copy(text){
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(function(){toast("복사했습니다");},fallback);}else fallback();
+  function fallback(){var ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("복사했습니다");}catch(e){toast("복사가 막혀 있습니다. 직접 선택해 복사해 주세요");}document.body.removeChild(ta);}
+}
+function tick(){var d=new Date();var w="일월화수목금토"[d.getDay()];document.getElementById("clock").textContent=iso(d).replace(/-/g,".")+" ("+w+") "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");}
+
+/* ---------- router (뒤로가기로 앱이 닫히지 않게) ---------- */
+var cur={view:"board",col:0};
+function go(st,replace){
+  st.app=1;
+  if(replace)history.replaceState(st,"");else history.pushState(st,"");
+  render(st);window.scrollTo(0,0);
+}
+window.addEventListener("popstate",function(e){
+  var st=e.state||{};
+  if(!st.app||st.base){
+    if(cur.view!=="board"||cur.col){history.pushState({app:1,view:"board",col:0},"");render({view:"board",col:0});window.scrollTo(0,0);}
+    else{history.pushState({app:1,view:"board",col:0},"");toast("앱을 닫으려면 홈 화면으로 나가 주십시오");}
+    return;
+  }
+  render(st);
+});
+document.getElementById("tabs").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  var v=b.getAttribute("data-v");if(v===cur.view&&v!=="board")return;
+  go({view:v,col:v==="board"?(cur.col||0):0});
+});
+
+function render(st){
+  cur={view:st.view||"board",col:st.col||0,id:st.id||null,scope:st.scope||"month"};
+  var tabV=cur.view==="detail"?"board":cur.view==="edit"?"new":cur.view;
+  Array.prototype.forEach.call(document.querySelectorAll("#tabs button"),function(b){
+    if(b.getAttribute("data-v")===tabV)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
+  });
+  if(cur.view==="board")renderBoard();
+  else if(cur.view==="new")renderForm(null);
+  else if(cur.view==="edit")renderForm(getCase(cur.id));
+  else if(cur.view==="detail")renderDetail(getCase(cur.id));
+  else if(cur.view==="stats")renderStats();
+  else if(cur.view==="notice")renderNotice();
+  else renderBoard();
+}
+
+/* ---------- board ---------- */
+function caseRow(c){
+  var h=hosp(c.hosp),od=overdue(c),wd=waitDays(c);
+  var extra="";
+  if(c.status===2)extra=od?'<span class="flag">회신 대기 3일 초과 · <span class="num">'+wd+'</span>일째</span>':'<div class="meta" style="margin-top:4px"><span>회신 대기 <span class="num">'+wd+'</span>일째</span></div>';
+  if(c.status===3)extra='<div class="meta" style="margin-top:4px"><span>회신 소요 <span class="num">'+diff(c.date,c.doneAt)+'</span>일</span></div>';
+  return '<button class="case s'+c.status+(od?" over":"")+'" data-id="'+c.id+'">'+
+    '<div class="r1"><span class="pet">'+esc(c.pet.name)+'<span>'+esc(c.pet.species)+' · '+esc(c.pet.breed)+' · '+esc(c.pet.age)+'</span></span><span class="id">'+esc(c.id)+'</span></div>'+
+    '<div class="why">'+esc(c.reason)+'</div>'+
+    '<div class="meta">'+urgTag(c.urg)+'<span>'+esc(h.name)+'</span><span>'+esc(c.vet)+'</span><span class="num">'+fdate(c.date)+'</span></div>'+extra+'</button>';
+}
+function renderBoard(){
+  var q=(cur.q||"").trim();
+  var list=db.cases.filter(function(c){if(!q)return true;var h=hosp(c.hosp);return (c.pet.name+c.pet.breed+c.reason+h.name+c.vet+c.refVet+c.id).indexOf(q)>-1;});
+  var cols=[[],[],[],[]];
+  list.forEach(function(c){cols[c.status].push(c);});
+  cols.forEach(function(a,i){a.sort(function(x,y){
+    if(i===2){return waitDays(y)-waitDays(x);}
+    if(i<2&&y.urg!==x.urg)return y.urg-x.urg;
+    return x.date<y.date?1:x.date>y.date?-1:0;});});
+  var all=db.cases, tm=iso(today0()).slice(0,7);
+  var thisMonth=all.filter(function(c){return c.date.slice(0,7)===tm;}).length;
+  var open=all.filter(function(c){return c.status<3;}).length;
+  var od=all.filter(overdue).length;
+  var urgOpen=all.filter(function(c){return c.status<2&&c.urg===2;}).length;
+  var h='<div class="kpis">'+
+    '<div class="kpi"><div class="k">이번 달 접수</div><div class="v">'+thisMonth+'</div><div class="s">전체 '+all.length+'건</div></div>'+
+    '<div class="kpi"><div class="k">미회신</div><div class="v">'+open+'</div><div class="s">회신 완료 전</div></div>'+
+    '<div class="kpi"><div class="k">응급 진행 중</div><div class="v">'+urgOpen+'</div><div class="s">접수·진료 중</div></div>'+
+    '<div class="kpi"><div class="k">회신 지연</div><div class="v'+(od?" alarm":"")+'">'+od+'</div><div class="s">대기 3일 초과</div></div></div>';
+  h+='<div class="toolbar no-print"><input class="search" id="q" type="text" placeholder="검색 (환자·병원·담당)" value="'+esc(q)+'" aria-label="검색"><span class="sp"></span><button class="btn" id="addBtn">새 의뢰 접수</button></div>';
+  h+='<div class="stabs" role="tablist">';
+  for(var i=0;i<4;i++)h+='<button role="tab" data-col="'+i+'" aria-selected="'+(cur.col===i)+'"><span class="n">'+cols[i].length+'</span><span class="l">'+STATUS[i]+'</span></button>';
+  h+='</div><div class="board">';
+  for(i=0;i<4;i++){
+    h+='<section class="col'+(cur.col===i?" active":"")+'" aria-label="'+STATUS[i]+'"><div class="col-h">'+stTag(i)+'<span class="n">'+cols[i].length+'</span></div><div class="list">';
+    h+=cols[i].length?cols[i].map(caseRow).join(""):'<div class="empty">'+STATUS[i]+' 단계 환자가 없습니다</div>';
+    h+='</div></section>';
+  }
+  h+='</div>'+dataTools();
+  $main.innerHTML=h;
+  var qi=document.getElementById("q");
+  qi.addEventListener("input",function(){cur.q=qi.value;var pos=qi.selectionStart;renderBoard();var n=document.getElementById("q");n.focus();try{n.setSelectionRange(pos,pos);}catch(e){}});
+  document.getElementById("addBtn").onclick=function(){go({view:"new"});};
+  Array.prototype.forEach.call($main.querySelectorAll(".stabs button"),function(b){b.onclick=function(){var c=+b.getAttribute("data-col");if(c!==cur.col)go({view:"board",col:c});};});
+  Array.prototype.forEach.call($main.querySelectorAll(".case"),function(b){b.onclick=function(){go({view:"detail",id:b.getAttribute("data-id"),col:cur.col});};});
+  bindDataTools();
+}
+
+function dataTools(){
+  var t=db.savedAt?new Date(db.savedAt):null;
+  return '<div class="data-tools no-print">이 기기(브라우저)에만 저장됩니다'+(t?' · 마지막 저장 <span class="num">'+iso(t).replace(/-/g,".")+" "+String(t.getHours()).padStart(2,"0")+":"+String(t.getMinutes()).padStart(2,"0")+'</span>':"")+
+    '<span style="flex:1"></span><button class="btn ghost" id="expBtn">JSON 내보내기</button><button class="btn ghost" id="impBtn">가져오기</button><button class="btn ghost" id="rstBtn">예시로 초기화</button></div>';
+}
+function bindDataTools(){
+  document.getElementById("expBtn").onclick=function(){
+    var blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
+    var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="referral-board-"+iso(today0())+".json";
+    document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},500);toast("파일로 내보냈습니다");
+  };
+  document.getElementById("impBtn").onclick=function(){document.getElementById("importFile").click();};
+  document.getElementById("rstBtn").onclick=function(){if(confirm("지금 기기에 저장된 내용을 지우고 예시 데이터로 되돌릴까요?")){db=seed();save();render(cur);toast("예시 데이터로 되돌렸습니다");}};
+}
+document.getElementById("importFile").addEventListener("change",function(){
+  var f=this.files&&this.files[0];if(!f)return;var r=new FileReader();var inp=this;
+  r.onload=function(){try{var d=JSON.parse(r.result);if(!d||!Array.isArray(d.cases)||!Array.isArray(d.hospitals))throw 0;
+    if(!confirm("가져온 파일("+d.cases.length+"건)로 지금 내용을 바꿀까요?"))return;db=d;save();render(cur);toast("가져왔습니다");}
+    catch(e){toast("이 보드에서 내보낸 JSON 파일이 아닙니다");}inp.value="";};
+  r.readAsText(f);
+});
+
+/* ---------- form (접수/수정) ---------- */
+function opt(arr,sel){return arr.map(function(v){return '<option'+(v===sel?" selected":"")+'>'+esc(v)+'</option>';}).join("");}
+function renderForm(c){
+  var isNew=!c;
+  c=c||{hosp:"",refVet:"",pet:{name:"",species:"개",breed:"",age:""},reason:"",vet:VETS[0],date:iso(today0()),urg:0};
+  var hopts=db.hospitals.map(function(h){return '<option value="'+h.id+'"'+(h.id===c.hosp?" selected":"")+'>'+esc(h.name)+' ('+esc(h.area)+')</option>';}).join("");
+  var h=(isNew?"":'<button class="back no-print" id="back">← 상세로</button>')+
+  '<div class="panel" style="max-width:860px"><div class="sec-h"><h2>'+(isNew?"의뢰 접수 등록":"의뢰 정보 수정 · "+esc(c.id))+'</h2><p>접수 후 보드의 &lsquo;01 접수&rsquo; 칸에 올라갑니다</p></div>'+
+  '<form id="f" autocomplete="off">'+
+  '<fieldset><legend>의뢰한 곳</legend><div class="grid">'+
+    '<label class="f"><span>의뢰 병원</span><select name="hosp" required><option value="">선택</option>'+hopts+'<option value="__new">+ 새 병원 추가</option></select></label>'+
+    '<label class="f"><span>의뢰 수의사</span><input type="text" name="refVet" value="'+esc(c.refVet)+'" placeholder="예: 김○○" required></label>'+
+    '<label class="f full" id="newHospWrap" hidden><span>새 병원 이름 · 지역</span><input type="text" name="newHosp" placeholder="예: ○○동물병원 G, 고양 일산동구"></label>'+
+  '</div></fieldset>'+
+  '<fieldset><legend>환자</legend><div class="grid">'+
+    '<label class="f"><span>이름</span><input type="text" name="pname" value="'+esc(c.pet.name)+'" required></label>'+
+    '<label class="f"><span>종</span><select name="species">'+opt(["개","고양이","기타"],c.pet.species)+'</select></label>'+
+    '<label class="f"><span>품종</span><input type="text" name="breed" value="'+esc(c.pet.breed)+'"></label>'+
+    '<label class="f"><span>나이</span><input type="text" name="age" value="'+esc(c.pet.age)+'" placeholder="예: 7세, 8개월"></label>'+
+    '<label class="f full"><span>의뢰 사유</span><textarea name="reason" rows="3" required>'+esc(c.reason)+'</textarea></label>'+
+  '</div></fieldset>'+
+  '<fieldset><legend>우리 쪽 접수</legend><div class="grid">'+
+    '<label class="f"><span>담당 수의사</span><select name="vet">'+opt(VETS,c.vet)+'</select></label>'+
+    '<label class="f"><span>접수일</span><input type="date" name="date" value="'+esc(c.date)+'" required></label>'+
+    '<div class="f full"><span style="display:block;font-size:12.5px;color:var(--ink2);margin-bottom:4px">긴급도</span><div class="seg" role="radiogroup">'+
+      [2,1,0].map(function(u){return '<label><input type="radio" name="urg" value="'+u+'"'+(c.urg===u?" checked":"")+'>'+URG[u]+'</label>';}).join("")+'</div></div>'+
+  '</div></fieldset>'+
+  '<div class="actions"><button class="btn" type="submit">'+(isNew?"접수 등록":"저장")+'</button><button class="btn ghost" type="button" id="cancel">취소</button></div>'+
+  '</form></div>';
+  $main.innerHTML=h;
+  var f=document.getElementById("f");
+  f.hosp.addEventListener("change",function(){document.getElementById("newHospWrap").hidden=f.hosp.value!=="__new";});
+  document.getElementById("cancel").onclick=function(){history.back();};
+  if(!isNew)document.getElementById("back").onclick=function(){history.back();};
+  f.addEventListener("submit",function(e){
+    e.preventDefault();
+    var hid=f.hosp.value;
+    if(hid==="__new"){
+      var raw=f.newHosp.value.trim();if(!raw){toast("새 병원 이름을 적어 주세요");return;}
+      var parts=raw.split(",");hid="H"+(db.hospitals.length+1)+"-"+Date.now().toString(36).slice(-3);
+      db.hospitals.push({id:hid,name:parts[0].trim(),area:(parts[1]||"").trim()});
+    }
+    var data={hosp:hid,refVet:f.refVet.value.trim(),pet:{name:f.pname.value.trim(),species:f.species.value,breed:f.breed.value.trim(),age:f.age.value.trim()},
+      reason:f.reason.value.trim(),vet:f.vet.value,date:f.date.value,urg:+(f.querySelector("input[name=urg]:checked")||{value:0}).value};
+    if(isNew){
+      db.seq=(db.seq||2600)+1;
+      var nc=Object.assign({id:"R"+db.seq,status:0,waitAt:"",doneAt:"",tests:"",dx:"",tx:"",plan:""},data);
+      db.cases.push(nc);save();toast(nc.pet.name+" 접수했습니다");
+      history.replaceState({app:1,view:"detail",id:nc.id},"");render({view:"detail",id:nc.id});window.scrollTo(0,0);
+    }else{
+      Object.assign(c,data);save();toast("저장했습니다");history.back();
+    }
+  });
+}
+
+/* ---------- detail + 회신서 ---------- */
+function letterText(c){
+  var h=hosp(c.hosp);var p=c.pet;
+  var L=[];
+  L.push(h.name+" "+c.refVet+" 원장님께");
+  L.push("");
+  L.push("안녕하십니까, "+CENTER+" "+c.vet+" 수의사입니다.");
+  L.push(kdate(c.date)+"에 의뢰해 주신 "+p.name+"("+[p.species,p.breed,p.age].filter(Boolean).join(", ")+")의 진료 결과를 아래와 같이 회신드립니다.");
+  L.push("");
+  L.push("1. 의뢰 사유");L.push("   "+(c.reason||"-"));L.push("");
+  L.push("2. 시행한 검사");L.push("   "+(c.tests||"(검사 내용을 입력해 주세요)"));L.push("");
+  L.push("3. 진단");L.push("   "+(c.dx||"(진단을 입력해 주세요)"));L.push("");
+  L.push("4. 치료");L.push("   "+(c.tx||"(치료 내용을 입력해 주세요)"));L.push("");
+  L.push("5. 향후 계획");L.push("   "+(c.plan||"(향후 계획을 입력해 주세요)"));L.push("");
+  L.push("귀한 환자를 믿고 보내 주셔서 감사합니다. 이후 경과가 바뀌면 다시 말씀드리겠습니다.");
+  L.push("검사 결과지와 영상이 필요하시면 회신 주십시오. 바로 보내 드리겠습니다.");
+  L.push("");
+  L.push(fdate(iso(today0())));
+  L.push(CENTER+" "+c.vet+" 드림");
+  return L.join("\n");
+}
+function renderDetail(c){
+  if(!c){go({view:"board"},true);return;}
+  var h=hosp(c.hosp),p=c.pet;
+  var flow='<div class="flow" role="group" aria-label="상태 변경">';
+  for(var i=0;i<4;i++)flow+='<button data-s="'+i+'" class="'+(i===c.status?"cur":i<c.status?"past":"")+'"'+(i===c.status?' aria-pressed="true"':' aria-pressed="false"')+'><span class="num">'+String(i+1).padStart(2,"0")+'</span>'+STATUS[i]+'</button>';
+  flow+='</div>';
+  var tl='<div class="timeline">접수 <span class="num">'+fdate(c.date)+'</span>'+(c.waitAt?' · 회신 대기 시작 <span class="num">'+fdate(c.waitAt)+'</span>':"")+(c.doneAt?' · 회신 완료 <span class="num">'+fdate(c.doneAt)+'</span> (<span class="num">'+diff(c.date,c.doneAt)+'</span>일)':"")+'</div>';
+  var od=overdue(c);
+  var html='<button class="back no-print" id="back">← 보드로</button>'+
+  '<div class="dgrid"><div>'+
+   '<div class="panel"><div class="sec-h"><h2>'+esc(p.name)+' <span style="font-weight:400;color:var(--mute);font-size:14px">'+esc(p.species)+' · '+esc(p.breed)+' · '+esc(p.age)+'</span></h2><span class="id num" style="font-size:12px;color:var(--mute)">'+esc(c.id)+'</span></div>'+
+   '<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">'+stTag(c.status)+urgTag(c.urg)+(od?'<span class="flag" style="margin:0">회신 대기 3일 초과 · '+waitDays(c)+'일째</span>':"")+'</div>'+
+   flow+tl+
+   '<dl class="info" style="margin-top:14px"><dt>의뢰 병원</dt><dd>'+esc(h.name)+' <span style="color:var(--mute);font-size:12.5px">'+esc(h.area)+'</span></dd>'+
+   '<dt>의뢰 수의사</dt><dd>'+esc(c.refVet)+' 원장</dd><dt>의뢰 사유</dt><dd>'+esc(c.reason)+'</dd>'+
+   '<dt>담당</dt><dd>'+esc(c.vet)+'</dd><dt>접수일</dt><dd class="num">'+fdate(c.date)+'</dd></dl>'+
+   '<div class="actions"><button class="btn ghost sm" id="editBtn">접수 정보 수정</button><button class="btn ghost sm" id="delBtn">삭제</button></div></div>'+
+   '<div class="panel" style="margin-top:14px"><div class="sec-h"><h2>진료 기록</h2><p>입력하면 회신서 초안에 바로 들어갑니다</p></div>'+
+   '<div class="grid" id="rec">'+
+    '<label class="f full"><span>시행한 검사</span><textarea name="tests" rows="2">'+esc(c.tests)+'</textarea></label>'+
+    '<label class="f full"><span>진단</span><textarea name="dx" rows="2">'+esc(c.dx)+'</textarea></label>'+
+    '<label class="f full"><span>치료</span><textarea name="tx" rows="2">'+esc(c.tx)+'</textarea></label>'+
+    '<label class="f full"><span>향후 계획</span><textarea name="plan" rows="2">'+esc(c.plan)+'</textarea></label>'+
+   '</div></div>'+
+  '</div><div>'+
+   '<div class="panel"><div class="sec-h"><h2>회신서 초안</h2><p>템플릿 조합 · 외부 전송 없음 · 직접 고쳐 써도 됩니다</p></div>'+
+   '<textarea class="letter screen-only" id="letter" aria-label="회신서 초안"></textarea>'+
+   '<div class="actions"><button class="btn" id="cpBtn">복사</button><button class="btn ghost" id="prBtn">인쇄</button><button class="btn ghost" id="regen">기록으로 다시 만들기</button>'+
+   (c.status<3?'<button class="btn ghost" id="sentBtn">회신 보냄 → 완료 처리</button>':'')+'</div></div>'+
+  '</div></div>';
+  $main.innerHTML=html;
+  var letter=document.getElementById("letter");var dirty=false;
+  letter.value=letterText(c);
+  letter.addEventListener("input",function(){dirty=true;});
+  document.getElementById("back").onclick=function(){history.back();};
+  document.getElementById("editBtn").onclick=function(){go({view:"edit",id:c.id});};
+  document.getElementById("delBtn").onclick=function(){if(confirm(p.name+" 의뢰 기록을 이 기기에서 지울까요?")){db.cases=db.cases.filter(function(x){return x!==c;});save();toast("지웠습니다");history.back();}};
+  Array.prototype.forEach.call(document.querySelectorAll("#rec textarea"),function(t){
+    t.addEventListener("input",function(){c[t.name]=t.value;save();if(!dirty)letter.value=letterText(c);});
+  });
+  document.getElementById("regen").onclick=function(){dirty=false;letter.value=letterText(c);toast("기록으로 다시 만들었습니다");};
+  document.getElementById("cpBtn").onclick=function(){copy(letter.value);};
+  document.getElementById("prBtn").onclick=function(){document.getElementById("printArea").textContent=letter.value;window.print();};
+  Array.prototype.forEach.call(document.querySelectorAll(".flow button"),function(b){b.onclick=function(){setStatus(c,+b.getAttribute("data-s"));};});
+  var sb=document.getElementById("sentBtn");if(sb)sb.onclick=function(){setStatus(c,3);};
+}
+function setStatus(c,s){
+  if(s===c.status)return;
+  var t=iso(today0());
+  if(s>=2&&!c.waitAt)c.waitAt=t;
+  if(s<2)c.waitAt="";
+  if(s===3)c.doneAt=t;else c.doneAt="";
+  c.status=s;save();toast(c.pet.name+" → "+STATUS[s]);
+  history.replaceState({app:1,view:"detail",id:c.id,col:s},"");render({view:"detail",id:c.id,col:s});
+}
+
+/* ---------- stats ---------- */
+function renderStats(){
+  var scope=cur.scope||"month",tm=iso(today0()).slice(0,7);
+  var cs=db.cases.filter(function(c){return scope==="all"||c.date.slice(0,7)===tm;});
+  var rows=db.hospitals.map(function(h){
+    var mine=cs.filter(function(c){return c.hosp===h.id;});
+    var done=mine.filter(function(c){return c.status===3&&c.doneAt;});
+    var avg=done.length?done.reduce(function(a,c){return a+diff(c.date,c.doneAt);},0)/done.length:null;
+    return {h:h,n:mine.length,done:done.length,od:mine.filter(overdue).length,rate:mine.length?Math.round(done.length/mine.length*100):null,avg:avg};
+  }).sort(function(a,b){return b.n-a.n||a.h.name.localeCompare(b.h.name);});
+  var max=Math.max(1,Math.max.apply(null,rows.map(function(r){return r.n;})));
+  var tot=cs.length,totDone=cs.filter(function(c){return c.status===3;}).length;
+  var allDone=cs.filter(function(c){return c.status===3&&c.doneAt;});
+  var totAvg=allDone.length?(allDone.reduce(function(a,c){return a+diff(c.date,c.doneAt);},0)/allDone.length):null;
+
+  // SVG: 병원별 가로 막대 (전체 건수 = 옅은 막대, 회신 완료 = 진한 막대). 화면 폭에 맞춰 1:1로 그려 글자가 작아지지 않게 한다
+  function chart(W){
+    var narrow=W<560,rowH=narrow?50:40,top=8,labelW=narrow?0:170,numW=narrow?44:70,barW=W-labelW-numW-8,H=top+rows.length*rowH+24;
+    var svg='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="병원별 의뢰 건수와 회신 완료 건수">';
+    for(var g=0;g<=max;g++){var gx=labelW+barW*g/max;if(!narrow)svg+='<line x1="'+gx+'" x2="'+gx+'" y1="'+top+'" y2="'+(H-22)+'" stroke="#e4e7eb"/>';svg+='<text x="'+gx+'" y="'+(H-6)+'" font-size="11" text-anchor="'+(g===0?"start":"middle")+'" fill="#6b7585" font-family="IBM Plex Mono, monospace">'+g+'</text>';}
+    rows.forEach(function(r,i){
+      var y=top+i*rowH,bw=barW*r.n/max,dw=barW*r.done/max,by=narrow?y+22:y+8;
+      if(narrow){svg+='<text x="0" y="'+(y+14)+'" font-size="13" fill="#14233c">'+esc(r.h.name)+'<tspan fill="#6b7585" font-size="11"> '+esc(r.h.area)+'</tspan></text>';}
+      else{svg+='<text x="0" y="'+(y+17)+'" font-size="13" fill="#14233c">'+esc(r.h.name)+'</text><text x="0" y="'+(y+31)+'" font-size="11" fill="#6b7585">'+esc(r.h.area)+'</text>';}
+      if(narrow)for(var g2=1;g2<=max;g2++){var gx2=labelW+barW*g2/max;svg+='<line x1="'+gx2+'" x2="'+gx2+'" y1="'+(by-3)+'" y2="'+(by+19)+'" stroke="#e4e7eb"/>';}
+      svg+='<rect x="'+labelW+'" y="'+by+'" width="'+bw+'" height="16" fill="#cdd4de"/>';
+      if(dw)svg+='<rect x="'+labelW+'" y="'+by+'" width="'+dw+'" height="16" fill="#14233c"/>';
+      svg+='<text x="'+(W-2)+'" y="'+(by+13)+'" font-size="12.5" text-anchor="end" fill="#14233c" font-family="IBM Plex Mono, monospace">'+r.done+'/'+r.n+'</text>';
+    });
+    return svg+'</svg>';
+  }
+  var svg='';
+
+  var h='<div class="panel"><div class="sec-h"><h2>병원별 현황</h2>'+
+   '<div class="seg" style="min-width:200px" role="radiogroup" aria-label="기간"><label><input type="radio" name="sc" value="month"'+(scope==="month"?" checked":"")+'>이번 달</label><label><input type="radio" name="sc" value="all"'+(scope==="all"?" checked":"")+'>전체</label></div></div>'+
+   '<div class="kpis" style="margin-bottom:10px"><div class="kpi"><div class="k">의뢰</div><div class="v">'+tot+'</div><div class="s">'+(scope==="month"?tm.replace("-",".")+" 접수":"누적")+'</div></div>'+
+   '<div class="kpi"><div class="k">회신율</div><div class="v">'+(tot?Math.round(totDone/tot*100):0)+'<small style="font-size:13px">%</small></div><div class="s">완료 '+totDone+'건</div></div>'+
+   '<div class="kpi"><div class="k">평균 회신</div><div class="v">'+(totAvg==null?"–":totAvg.toFixed(1))+'<small style="font-size:13px">일</small></div><div class="s">접수일 → 회신 완료</div></div>'+
+   '<div class="kpi"><div class="k">의뢰 병원</div><div class="v">'+rows.filter(function(r){return r.n;}).length+'</div><div class="s">등록 '+db.hospitals.length+'곳</div></div></div>'+
+   '<div class="legend"><span><i style="background:#14233c"></i>회신 완료</span><span><i style="background:#cdd4de"></i>미회신 포함 전체 의뢰</span></div>'+
+   '<div class="stat-wrap" id="chartWrap">'+(tot?svg:'<div class="empty">이 기간에 접수된 의뢰가 없습니다. &lsquo;전체&rsquo;로 바꿔 보세요</div>')+'</div>'+
+   '<table class="t"><thead><tr><th>의뢰 병원</th><th>건수</th><th>회신율</th><th>평균 회신</th><th class="hide-s">지연</th></tr></thead><tbody>'+
+   rows.map(function(r){return '<tr><td>'+esc(r.h.name)+'</td><td class="num">'+r.n+'</td><td class="num">'+(r.rate==null?"–":r.rate+"%")+'</td><td class="num">'+(r.avg==null?"–":r.avg.toFixed(1)+"일")+'</td><td class="num hide-s"'+(r.od?' style="color:var(--alarm);font-weight:600"':"")+'>'+(r.od?r.od+"건":"–")+'</td></tr>';}).join("")+
+   '</tbody></table>'+
+   '<p style="font-size:12px;color:var(--mute);margin:12px 0 0">회신율 = 회신 완료 ÷ 의뢰 건수. 평균 회신 일수는 회신 완료 건만 셉니다. 지연 = 회신 대기 3일 초과.</p></div>';
+  $main.innerHTML=h;
+  if(tot){var draw=function(){var cw=document.getElementById("chartWrap");if(cw&&cur.view==="stats")cw.innerHTML=chart(Math.max(280,Math.floor(cw.clientWidth)));};draw();window.onresize=draw;}else window.onresize=null;
+  Array.prototype.forEach.call(document.querySelectorAll("input[name=sc]"),function(r){r.onchange=function(){go({view:"stats",scope:r.value});};});
+}
+
+/* ---------- 공지 작성 ---------- */
+var NT={
+  "근무 변경":{f:["대상 / 변경 일자","변경 내용","대체 근무자"],build:function(v){return ["[근무 변경 안내]","",v.what?v.what+"":"","","- 대상·일자: "+v.a,"- 변경 내용: "+v.b,"- 대체 근무자: "+v.c,"","해당되시는 분은 확인 후 답장 부탁드립니다."];}},
+  "장비 점검":{f:["장비명 / 위치","점검 일시","점검 중 대체 방법"],build:function(v){return ["[장비 점검 안내]","",v.what,"","- 장비: "+v.a,"- 일시: "+v.b,"- 점검 중에는: "+v.c,"","점검 시간에 예정된 검사·수술 있으면 미리 일정 조정 부탁드립니다."];}},
+  "교육 안내":{f:["주제 / 강사","일시 / 장소","대상 / 준비물"],build:function(v){return ["[교육 안내]","",v.what,"","- 주제·강사: "+v.a,"- 일시·장소: "+v.b,"- 대상·준비물: "+v.c,"","근무 중인 분은 교대 조율해서 참석 부탁드립니다. 불참 시 미리 말씀 주세요."];}},
+  "수술방 일정":{f:["일자 / 수술실","수술 일정(환자·술식·시간)","준비 사항"],build:function(v){return ["[수술방 일정 공유]","",v.what,"","- 일자·수술실: "+v.a,"- 일정: "+v.b,"- 준비 사항: "+v.c,"","소독·기구 준비는 전날 마감 전까지 확인 부탁드립니다."];}},
+  "마약류 관리":{f:["점검 일자 / 담당","점검 범위","협조 요청 사항"],build:function(v){return ["[마약류 관리 안내]","",v.what,"","- 일자·담당: "+v.a,"- 범위: "+v.b,"- 요청: "+v.c,"","사용 기록과 실재고가 맞지 않는 건은 바로 담당자에게 알려 주세요."];}},
+  "기타":{f:["항목 1","항목 2","항목 3"],build:function(v){return ["[공지]","",v.what,"",v.a?"- "+v.a:"",v.b?"- "+v.b:"",v.c?"- "+v.c:""];}}
+};
+var nDraft={type:"근무 변경",what:"",a:"",b:"",c:"",who:"",ack:true};
+function renderNotice(){
+  var t=NT[nDraft.type];
+  var h='<div class="dgrid"><div class="panel"><div class="sec-h"><h2>공지 작성</h2><p>직원 단톡방용 문안 · 템플릿 조합</p></div>'+
+  '<form id="nf" autocomplete="off"><div class="grid">'+
+   '<label class="f full"><span>공지 종류</span><select name="type">'+opt(Object.keys(NT),nDraft.type)+'</select></label>'+
+   '<label class="f full"><span>핵심 내용 (한두 문장)</span><textarea name="what" rows="3" placeholder="예: 10월 셋째 주 야간 근무표가 일부 바뀝니다.">'+esc(nDraft.what)+'</textarea></label>'+
+   t.f.map(function(lab,i){var k="abc"[i];return '<label class="f full"><span>'+lab+'</span><input type="text" name="'+k+'" value="'+esc(nDraft[k])+'"></label>';}).join("")+
+   '<label class="f"><span>작성자</span><input type="text" name="who" value="'+esc(nDraft.who)+'" placeholder="예: 원장 장승훈"></label>'+
+   '<label class="f" style="display:flex;align-items:end;gap:8px;padding-bottom:9px"><input type="checkbox" name="ack"'+(nDraft.ack?" checked":"")+' style="width:18px;height:18px"> 확인 답장 요청 문구 넣기</label>'+
+  '</div></form></div>'+
+  '<div class="panel"><div class="sec-h"><h2>문안</h2><p>그대로 복사해 붙여 넣으면 됩니다</p></div><textarea class="letter" id="nout" style="min-height:320px" aria-label="공지 문안"></textarea>'+
+  '<div class="actions"><button class="btn" id="ncp">복사</button><button class="btn ghost" id="nclr">비우기</button></div></div></div>';
+  $main.innerHTML=h;
+  var nf=document.getElementById("nf"),out=document.getElementById("nout");
+  function build(){
+    var lines=NT[nDraft.type].build(nDraft).filter(function(x){return !/^- [^:]*:\s*$/.test(x);});
+    if(nDraft.ack)lines.push("","확인하신 분은 ‘확인’ 답장 부탁드립니다.");
+    if(nDraft.who)lines.push("","- "+nDraft.who);
+    out.value=lines.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+  }
+  nf.addEventListener("input",function(e){
+    var el=e.target;if(el.name==="type")return;
+    nDraft[el.name]=el.type==="checkbox"?el.checked:el.value;build();
+  });
+  nf.type.addEventListener("change",function(){nDraft.type=nf.type.value;nDraft.a=nDraft.b=nDraft.c="";renderNotice();});
+  document.getElementById("ncp").onclick=function(){copy(out.value);};
+  document.getElementById("nclr").onclick=function(){nDraft={type:nDraft.type,what:"",a:"",b:"",c:"",who:nDraft.who,ack:true};renderNotice();};
+  build();
+}
+
+/* ---------- start ---------- */
+load();
+if(!db.savedAt)save();
+tick();setInterval(tick,30000);
+history.replaceState({app:1,base:1},"");
+history.pushState({app:1,view:"board",col:0},"");
+render({view:"board",col:0});
+})();
+</script>
+</body>
+</html>

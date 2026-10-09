@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<title>치과 차트 · 청주i동물병원</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* 치과 차트지: 흰 종이, 짙은 청색 괘선, 붉은 기호는 소견에만 */
+:root{
+  --paper:#ffffff; --ink:#0f2747; --ink-2:#3d5274; --ink-3:#7686a0;
+  --rule:#1d3d6b; --hair:#cdd6e3; --hair-2:#e7ecf3; --wash:#f4f7fb;
+  --red:#b42318; --red-wash:#fdf1ef;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* 머리 */
+.demo-note{font-size:11.5px;color:var(--ink-3);text-align:center;padding:6px 16px;border-bottom:1px solid var(--hair-2);letter-spacing:.01em}
+.mast{border-bottom:2px solid var(--rule)}
+.mast .wrap{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-top:14px;padding-bottom:10px}
+.mast .for{font-size:12px;color:var(--ink-2);margin:0 0 2px}
+.mast h1{margin:0;font-size:21px;font-weight:600;letter-spacing:-.01em}
+.mast h1 small{font-family:var(--mono);font-weight:400;font-size:12px;color:var(--ink-3);margin-left:8px;letter-spacing:.06em}
+.mast .store{font-size:11.5px;color:var(--ink-3);text-align:right;max-width:200px;line-height:1.45}
+.mast h1 small{white-space:nowrap}
+@media (max-width:560px){.mast .wrap{display:block}.mast .store{text-align:left;max-width:none;margin-top:4px}.mast h1{font-size:20px}}
+
+/* 공통 버튼 */
+.btn{appearance:none;border:1px solid var(--rule);background:#fff;color:var(--ink);padding:8px 14px;border-radius:3px;font-size:14px;line-height:1.3;min-height:38px}
+.btn:hover{background:var(--wash)}
+.btn.primary{background:var(--rule);color:#fff}
+.btn.primary:hover{background:#163257}
+.btn.quiet{border-color:var(--hair)}
+.btn.danger{border-color:var(--hair);color:var(--red)}
+.btn:focus-visible,.seg button:focus-visible,.row:focus-visible{outline:2px solid var(--rule);outline-offset:2px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 0;border-bottom:1px solid var(--hair)}
+.bar .sp{flex:1}
+.back{border:0;background:none;padding:8px 4px;color:var(--ink-2);font-size:14px;min-height:38px}
+.back:hover{color:var(--ink)}
+
+/* 구획 제목: 차트지의 번호 붙은 칸 */
+.sec{padding:18px 0 6px}
+.sec>h2{display:flex;align-items:baseline;gap:8px;margin:0 0 10px;font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.02em;border-bottom:1px solid var(--rule);padding-bottom:5px}
+.sec>h2 .n{font-family:var(--mono);font-weight:500;color:var(--ink-3)}
+.sec>h2 .aside{margin-left:auto;font-weight:400;font-size:12px;color:var(--ink-3)}
+
+/* 목록 */
+.list-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:16px 0 4px}
+.list-head h2{font-size:16px;margin:0 auto 0 0;font-weight:600}
+.rows{border-top:1px solid var(--rule);margin-top:10px}
+.row{display:grid;grid-template-columns:92px 1fr auto;gap:4px 14px;align-items:baseline;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--hair);padding:12px 2px}
+.row:hover{background:var(--wash)}
+.row .d{font-family:var(--mono);font-size:13px;color:var(--ink-2)}
+.row .nm{font-weight:600}
+.row .nm span{font-weight:400;color:var(--ink-2);font-size:13.5px;margin-left:6px}
+.row .sp-tag{font-size:12px;color:var(--ink-2);border:1px solid var(--hair);padding:1px 7px;border-radius:2px}
+.row .sm{grid-column:2/4;font-size:13px;color:var(--ink-2)}
+.row .sm b{color:var(--red);font-weight:500}
+.store-box{margin:22px 0 8px;padding:14px 0;border-top:1px solid var(--hair);font-size:13.5px;color:var(--ink-2)}
+.store-box p{margin:0 0 10px}
+.store-box .btns{display:flex;flex-wrap:wrap;gap:8px}
+
+/* 차트 화면 */
+.chart-grid{display:block}
+@media (min-width:960px){
+  .chart-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:0 36px;align-items:start}
+  .chart-grid .left{position:sticky;top:8px}
+}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--hair);border-left:1px solid var(--hair)}
+@media (min-width:600px){.fields{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.f{border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:5px 8px 6px;min-width:0}
+.f label,.f .lb{display:block;font-size:11px;color:var(--ink-3);letter-spacing:.02em;line-height:1.4}
+.f input,.f select{width:100%;border:0;padding:2px 0;background:transparent;font-size:15px;min-height:28px;outline:none}
+.f input:focus,.f select:focus{background:var(--wash)}
+.f.wide{grid-column:1/-1}
+.f .ro{font-size:15px;padding:2px 0;min-height:28px}
+
+.svgbox{border:1px solid var(--hair);padding:6px 4px 2px;background:#fff}
+.svgbox svg{display:block;width:100%;height:auto;max-height:78vh}
+.tooth{cursor:pointer}
+.tooth:focus{outline:none}
+.tooth:focus-visible .shape{stroke-width:2.4}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink-2);padding:8px 2px 0}
+.legend b{font-family:var(--mono);color:var(--red);font-weight:600;margin-right:3px}
+.bulk{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:13px;color:var(--ink-2);padding:10px 2px 0}
+
+.summary{margin:0;padding:0;list-style:none;border-top:1px solid var(--hair)}
+.summary li{padding:7px 2px;border-bottom:1px solid var(--hair);font-size:14.5px}
+.summary li .k{display:inline-block;min-width:78px;color:var(--ink-2);font-size:13px}
+.summary .num{font-family:var(--mono);font-size:14px}
+.summary li.none{color:var(--ink-3)}
+.copyline{display:flex;gap:8px;padding:8px 0 0}
+
+table.ft{width:100%;border-collapse:collapse;font-size:13.5px}
+table.ft th{font-weight:500;font-size:11.5px;color:var(--ink-3);text-align:left;border-bottom:1px solid var(--rule);padding:4px 6px}
+table.ft td{border-bottom:1px solid var(--hair);padding:6px;vertical-align:top}
+table.ft td.tn{font-family:var(--mono);font-weight:600;white-space:nowrap}
+table.ft td.cd{font-family:var(--mono);color:var(--red);white-space:nowrap}
+table.ft tr.click{cursor:pointer}
+table.ft tr.click:hover td{background:var(--wash)}
+.empty{font-size:13.5px;color:var(--ink-3);padding:8px 2px}
+
+.checks{display:flex;flex-wrap:wrap;gap:4px 16px;padding:4px 2px 8px}
+.checks label{display:flex;align-items:center;gap:6px;font-size:14px;min-height:34px}
+.checks input{width:17px;height:17px;accent-color:var(--rule)}
+textarea{width:100%;border:1px solid var(--hair);border-radius:2px;padding:8px 10px;font-size:14.5px;line-height:1.6;resize:vertical;background:#fff}
+textarea:focus{outline:none;border-color:var(--rule)}
+.ta-label{display:block;font-size:11.5px;color:var(--ink-3);margin:10px 0 4px}
+.danger-zone{padding:22px 0 8px;display:flex;justify-content:flex-end}
+
+/* 치아 소견 창 */
+.scrim{position:fixed;inset:0;background:rgba(15,39,71,.28);z-index:40}
+.sheet-t{position:fixed;z-index:41;background:#fff;left:0;right:0;bottom:0;max-height:88vh;overflow:auto;border-top:2px solid var(--rule);padding:0 16px 20px;box-shadow:0 -6px 24px rgba(15,39,71,.12)}
+@media (min-width:760px){
+  .sheet-t{left:auto;top:0;bottom:0;width:430px;max-height:none;border-top:0;border-left:2px solid var(--rule);box-shadow:-6px 0 24px rgba(15,39,71,.12)}
+}
+.st-head{position:sticky;top:0;background:#fff;display:flex;align-items:center;gap:8px;padding:12px 0 10px;border-bottom:1px solid var(--hair);z-index:1}
+.st-head .no{font-family:var(--mono);font-size:26px;font-weight:600;line-height:1}
+.st-head .nm{font-size:13px;color:var(--ink-2);line-height:1.35}
+.st-head .sp{flex:1}
+.st-head .nav{min-width:38px;padding:8px 10px}
+.grp{padding:12px 0 2px}
+.grp .gl{font-size:12px;color:var(--ink-2);margin-bottom:6px;display:flex;gap:8px}
+.grp .gl .src{margin-left:auto;color:var(--ink-3);font-size:11px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{border:1px solid var(--hair);background:#fff;border-radius:2px;padding:6px 10px;min-height:36px;min-width:44px;font-family:var(--sans);font-size:13.5px;color:var(--ink)}
+.seg button.on{border-color:var(--red);color:var(--red);background:var(--red-wash);font-weight:600}
+.seg button.on::before{content:"✓ ";font-family:var(--sans)}
+.seg button.none.on{border-color:var(--rule);color:var(--ink);background:var(--wash);font-weight:500}
+.seg button.none.on::before{content:""}
+.def{font-size:12.5px;color:var(--ink-2);margin-top:6px;min-height:1.2em}
+.st-foot{display:flex;gap:8px;padding-top:16px}
+.st-foot .btn{flex:1}
+
+/* 보호자 안내문 */
+.notice-wrap{max-width:720px}
+.opts{display:flex;flex-wrap:wrap;gap:2px 16px;padding:6px 0}
+.opts label{display:flex;align-items:center;gap:6px;font-size:14px;min-height:34px}
+.opts input{width:17px;height:17px;accent-color:var(--rule)}
+#noticeText{min-height:520px;font-size:15px;line-height:1.75;padding:14px 16px}
+.notice-print,.notice-head{display:none}
+.notice-head .demo-mini{font-size:10px;color:var(--ink-3)}
+.notice-head .nh{font-size:17px;font-weight:600;border-bottom:2px solid var(--rule);padding-bottom:6px;margin:4px 0 14px;display:flex;justify-content:space-between;align-items:baseline}
+.notice-head .nh span{font-size:13px;font-weight:400;color:var(--ink-2)}
+
+/* 인쇄용 A4 */
+.a4{width:100%;max-width:210mm;margin:16px auto 24px;border:1px solid var(--hair);padding:12mm 11mm;background:#fff}
+.a4 .h{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--rule);padding-bottom:6px}
+.a4 .h .t{font-size:18px;font-weight:600}
+.a4 .h .t small{font-family:var(--mono);font-weight:400;font-size:11px;color:var(--ink-3);margin-left:6px;letter-spacing:.06em}
+.a4 .h .hos{font-size:12px;color:var(--ink-2);text-align:right}
+.a4 .pt{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-left:1px solid var(--hair);border-top:1px solid var(--hair);margin-top:8px}
+.a4 .pt div{border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:3px 6px;font-size:12.5px;min-width:0}
+.a4 .pt div span{display:block;font-size:10px;color:var(--ink-3)}
+.a4 .body{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin-top:8px}
+@media (min-width:700px){.a4 .body{grid-template-columns:minmax(0,92mm) minmax(0,1fr)}}
+.a4 .body svg{width:100%;height:auto;display:block}
+.a4 h3{font-size:11.5px;font-weight:600;margin:8px 0 4px;border-bottom:1px solid var(--rule);padding-bottom:2px}
+.a4 .s{font-size:12px;margin:0;padding-left:0;list-style:none}
+.a4 .s li{padding:1px 0}
+.a4 table.ft{font-size:11.5px}
+.a4 table.ft td,.a4 table.ft th{padding:2px 4px}
+.a4 .memo{font-size:12px;white-space:pre-wrap;margin:0}
+.a4 .sign{display:flex;justify-content:flex-end;gap:24px;font-size:12px;margin-top:14px;padding-top:6px;border-top:1px solid var(--hair)}
+.a4 .sign span{display:inline-block;min-width:110px;border-bottom:1px solid var(--ink-3)}
+.a4 .demo-mini{font-size:10px;color:var(--ink-3);margin-bottom:4px}
+.a4 .lg{font-size:10.5px;color:var(--ink-2);margin-top:2px}
+.a4 .lg b{font-family:var(--mono);color:var(--red)}
+
+/* 바닥글 */
+.foot{border-top:1px solid var(--hair);margin-top:32px;padding:14px 16px 28px;text-align:center;font-size:12px;color:var(--ink-3);line-height:1.6}
+.foot .ref{display:block;font-size:11px;margin-top:4px}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 16px;border-radius:3px;font-size:13.5px;z-index:60;max-width:calc(100% - 32px);text-align:center}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+@page{size:A4;margin:10mm}
+@media print{
+  body{font-size:12px}
+  .demo-note,.mast,.bar,.foot,.toast,.scrim,.sheet-t,.noprint{display:none!important}
+  .wrap{padding:0;max-width:none}
+  .a4{border:0;margin:0;padding:0;max-width:none}
+  .a4 .body{grid-template-columns:92mm 1fr}
+  .notice-print{display:block;white-space:pre-wrap;font-size:13px;line-height:1.75}
+  #noticeText,.opts,body[data-view="notice"] .sec>h2{display:none!important}
+  .notice-head{display:block}
+  body[data-view="list"] main,body[data-view="chart"] main{display:block}
+}
+</style>
+</head>
+<body data-view="list">
+<div class="demo-note">예시 데이터입니다. 실제 환자 정보가 아닙니다</div>
+<header class="mast">
+  <div class="wrap">
+    <div>
+      <p class="for">청주i동물병원 · 박병민 원장님을 위한 시제품</p>
+      <h1>치과 차트<small>DENTAL CHART</small></h1>
+    </div>
+    <div class="store">기록은 이 기기의 이 브라우저에만 저장됩니다</div>
+  </div>
+</header>
+
+<main class="wrap" id="main"></main>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="sheet-t" id="sheet" role="dialog" aria-modal="true" aria-labelledby="stNo" hidden></aside>
+
+<footer class="foot">
+  원장을 위한 AI 실전 교육 · 교육 당일 원장님 계정으로 옮겨 병원에 맞게 고칩니다
+  <span class="ref">치아 번호: Modified Triadan System (Floyd, J Vet Dent 1991) · 약어와 단계: AVDC Nomenclature (결손 O·치석 지수 CI는 차트 관용 기호)</span>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<input type="file" id="importFile" accept="application/json,.json" class="sr" tabindex="-1" aria-hidden="true">
+
+<script>
+(function(){
+"use strict";
+
+/* ───────── 치아 체계 (Modified Triadan) ─────────
+   사분면 1 위턱 오른쪽, 2 위턱 왼쪽, 3 아래턱 왼쪽, 4 아래턱 오른쪽.
+   끝 두 자리: 01–03 앞니, 04 송곳니, 05–08 작은어금니, 09–11 큰어금니.
+   개 42개: 위턱 사분면 01–10, 아래턱 사분면 01–11.
+   고양이 30개: 위턱 01–04·06–09, 아래턱 01–04·07–09. */
+var POS = {
+  dog:{U:[1,2,3,4,5,6,7,8,9,10], L:[1,2,3,4,5,6,7,8,9,10,11]},
+  cat:{U:[1,2,3,4,6,7,8,9],      L:[1,2,3,4,7,8,9]}
+};
+/* 도식에서 치아 하나가 차지하는 상대 길이(호를 따라) */
+var WEIGHT = {
+  dog:{U:{1:.7,2:.7,3:.75,4:1.2,5:.7,6:1,7:1.1,8:1.7,9:1.3,10:.9},
+       L:{1:.62,2:.62,3:.66,4:1.15,5:.6,6:.9,7:1,8:1.1,9:1.8,10:1,11:.55}},
+  cat:{U:{1:.6,2:.6,3:.65,4:1.25,6:.75,7:1.25,8:1.9,9:.6},
+       L:{1:.6,2:.6,3:.62,4:1.2,7:1.15,8:1.35,9:1.6}}
+};
+function teethOf(sp){
+  var out=[];
+  [1,2].forEach(function(q){POS[sp].U.forEach(function(p){out.push(q*100+p);});});
+  [3,4].forEach(function(q){POS[sp].L.forEach(function(p){out.push(q*100+p);});});
+  return out;
+}
+var QNAME={1:"위턱 오른쪽",2:"위턱 왼쪽",3:"아래턱 왼쪽",4:"아래턱 오른쪽"};
+function cls(n){var p=n%100;return p<=3?"앞니":p===4?"송곳니":p<=8?"작은어금니":"큰어금니";}
+function clsEn(n){var p=n%100;return p<=3?"I"+p:p===4?"C":p<=8?"P"+(p-4):"M"+(p-8);}
+function toothName(n){return QNAME[Math.floor(n/100)]+" "+cls(n)+" ("+clsEn(n)+")";}
+
+/* ───────── 소견 항목 (AVDC 약어) ───────── */
+var FIELDS=[
+  {k:"missing",label:"결손",src:"차트 관용 기호",opts:[["","있음"],["O","결손 (O)"]],
+   def:{"O":"치아가 보이지 않음(결손). 방사선 확인 여부는 메모에 적습니다."}},
+  {k:"ext",label:"발치",src:"AVDC: X / XS / XSS",opts:[["","—"],["X","X"],["XS","XS"],["XSS","XSS"]],
+   def:{"X":"단순 발치(closed extraction)","XS":"치아 분할 후 단순 발치","XSS":"외과적(개방) 발치"}},
+  {k:"fx",label:"파절",src:"AVDC: T/FX",opts:[["","—"],["EF","EF"],["UCF","UCF"],["CCF","CCF"],["UCRF","UCRF"],["CCRF","CCRF"],["RF","RF"]],
+   def:{"EF":"법랑질 파절","UCF":"치수 노출 없는 치관 파절","CCF":"치수 노출된 치관 파절","UCRF":"치수 노출 없는 치관-치근 파절","CCRF":"치수 노출된 치관-치근 파절","RF":"치근 파절"}},
+  {k:"pd",label:"치주 단계",src:"AVDC: PD0–PD4",opts:[["","—"],["PD0","PD0"],["PD1","PD1"],["PD2","PD2"],["PD3","PD3"],["PD4","PD4"]],
+   def:{"PD0":"임상적으로 정상","PD1":"치은염만 있음, 부착 소실 없음","PD2":"초기 치주염: 부착 소실 25% 미만 또는 치근분지부 1단계","PD3":"중등도 치주염: 부착 소실 25–50% 또는 치근분지부 2단계","PD4":"진행된 치주염: 부착 소실 50% 초과 또는 치근분지부 3단계"}},
+  {k:"ci",label:"치석 지수",src:"치석 지수 (관용 기호)",opts:[["","—"],["CI0","CI0"],["CI1","CI1"],["CI2","CI2"],["CI3","CI3"]],
+   def:{"CI0":"치석 없음","CI1":"치관 협측면 1/3 미만을 덮는 치은연상 치석","CI2":"치관 협측면 1/3–2/3, 치은연하 치석 약간","CI3":"치관 협측면 2/3 초과 또는 치은연하로 확장"}},
+  {k:"mob",label:"동요도",src:"AVDC: M0–M3",opts:[["","—"],["M0","M0"],["M1","M1"],["M2","M2"],["M3","M3"]],
+   def:{"M0":"생리적 동요(0.2 mm 이하)","M1":"0.2 mm 초과 0.5 mm 이하","M2":"0.5 mm 초과 1 mm 이하","M3":"1 mm 초과 또는 축 방향(수직) 동요"}},
+  {k:"tr",label:"흡수성 병변 단계",src:"AVDC: TR1–TR5",cat:true,opts:[["","—"],["TR1","TR1"],["TR2","TR2"],["TR3","TR3"],["TR4","TR4"],["TR5","TR5"]],
+   def:{"TR1":"백악질(±법랑질)의 경미한 경조직 소실","TR2":"상아질까지 소실, 치수강에는 미도달","TR3":"치수강까지 도달, 치아 대부분은 유지","TR4":"광범위한 소실로 치아 형태가 무너짐","TR5":"불규칙한 방사선 불투과 잔존물만 보이고 잇몸이 완전히 덮음"}},
+  {k:"trt",label:"흡수성 병변 유형",src:"AVDC: T1–T3",cat:true,opts:[["","—"],["T1","T1"],["T2","T2"],["T3","T3"]],
+   def:{"T1":"국소 방사선 투과, 치주인대 공간은 정상","T2":"치주인대 공간이 일부에서 좁아지거나 소실되고, 치아 일부의 방사선 불투과도가 감소","T3":"T1과 T2 소견이 한 치아에 함께 있음"}}
+];
+function lvl(v){return v?parseInt(v.replace(/\D/g,""),10):0;}
+
+/* 도식 위 기호 우선순위 */
+function codeOf(f,sp){
+  if(!f) return null;
+  var main=null, extra=0;
+  var cands=[];
+  if(f.missing) cands.push("O");
+  if(f.ext) cands.push(f.ext);
+  if(f.fx) cands.push(f.fx);
+  if(sp==="cat"&&f.tr) cands.push(f.tr);
+  if(f.pd&&lvl(f.pd)>=1) cands.push(f.pd);
+  if(f.mob&&lvl(f.mob)>=1) cands.push(f.mob);
+  if(f.note&&f.note.trim()) cands.push("*");
+  if(!cands.length){
+    if(f.ci&&lvl(f.ci)>=1) return {code:f.ci,more:false,minor:true};
+    return null;
+  }
+  main=cands[0]; extra=cands.length-1;
+  if(main==="*") return {code:"*",more:false};
+  return {code:main,more:extra>0};
+}
+function hasFinding(f,sp){return !!codeOf(f,sp);}
+
+/* ───────── 저장 ───────── */
+var KEY="cji-dental-chart-v1";
+var db={records:[]};
+function load(){
+  try{var s=localStorage.getItem(KEY); if(s){var o=JSON.parse(s); if(o&&Array.isArray(o.records)){db=o;return;}}}catch(e){}
+  db={records:seed()}; save();
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}}
+var saveT=null;
+function saveSoon(){clearTimeout(saveT);saveT=setTimeout(save,250);}
+function rec(id){for(var i=0;i<db.records.length;i++) if(db.records[i].id===id) return db.records[i]; return null;}
+function uid(){return "r"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+
+function blank(sp){
+  return {id:uid(),species:sp,chartNo:"",name:"",breed:"",sex:"",age:"",weight:"",owner:"",
+    date:todayISO(),vet:"박병민",recheck:"",
+    proc:{scale:true,subg:false,polish:true,rad:true,block:false},
+    asa:"",anStart:"",anEnd:"",anNote:"",note:"",teeth:{},updated:Date.now()};
+}
+function seed(){
+  var a=blank("dog");
+  Object.assign(a,{id:"demo-bori",chartNo:"D-0412",name:"보리",breed:"말티즈",sex:"수컷(중성화)",age:"11세",weight:"3.4",owner:"김하늘",
+    date:"2026-10-06",recheck:"2026-10-20",asa:"II",anStart:"10:05",anEnd:"11:20",
+    proc:{scale:true,subg:true,polish:true,rad:true,block:true},
+    anNote:"마취 중 특이사항 없음. 체온 유지 패드 사용. 회복 양호, 오후 퇴원.",
+    note:"전반적 치석 CI2. 위턱 오른쪽 작은어금니 부위 치주 손상 심함."});
+  a.teeth={
+    "104":{pd:"PD1",ci:"CI1"},"204":{pd:"PD1",ci:"CI1"},
+    "106":{pd:"PD4",ci:"CI2",mob:"M2",ext:"X"},
+    "107":{pd:"PD4",ci:"CI3",mob:"M3",ext:"X"},
+    "108":{pd:"PD2",ci:"CI2"},
+    "208":{pd:"PD3",ci:"CI2",note:"치근분지부 2단계, 재진 시 재평가"},
+    "209":{ci:"CI2"},"109":{ci:"CI2"},
+    "305":{missing:"O"},"405":{missing:"O"},
+    "409":{pd:"PD4",ci:"CI3",mob:"M3",ext:"XS"},
+    "309":{pd:"PD2",ci:"CI2"}
+  };
+  var b=blank("dog");
+  Object.assign(b,{id:"demo-kong",chartNo:"D-0398",name:"콩이",breed:"진돗개 믹스",sex:"암컷(중성화)",age:"5세",weight:"14.2",owner:"이준서",
+    date:"2026-09-29",recheck:"2026-10-13",asa:"I",anStart:"14:10",anEnd:"15:35",
+    proc:{scale:true,subg:false,polish:true,rad:true,block:true},
+    anNote:"마취 안정적. 회복 양호.",
+    note:"딱딱한 뼈 간식 섭취 이력. 위턱 열육치 판상 파절."});
+  b.teeth={
+    "108":{fx:"CCF",pd:"PD1",ext:"XSS",note:"판상 파절, 치수 노출. 협측 판막 거상 후 발치, 봉합"},
+    "208":{fx:"UCF",note:"방사선상 근단 이상 없음. 6개월 후 방사선 재확인"},
+    "204":{fx:"EF"},
+    "109":{ci:"CI1"},"209":{ci:"CI1"}
+  };
+  var c=blank("cat");
+  Object.assign(c,{id:"demo-nabi",chartNo:"C-0157",name:"나비",breed:"코리안 숏헤어",sex:"암컷(중성화)",age:"9세",weight:"4.1",owner:"박서윤",
+    date:"2026-10-02",recheck:"2026-10-16",asa:"II",anStart:"09:40",anEnd:"11:05",
+    proc:{scale:true,subg:true,polish:true,rad:true,block:true},
+    anNote:"마취 중 특이사항 없음. 회복 시 체온 관리.",
+    note:"전악 방사선에서 아래턱 작은어금니·큰어금니 흡수성 병변 확인."});
+  c.teeth={
+    "307":{tr:"TR4",trt:"T2",ext:"XSS",note:"치관 대부분 소실"},
+    "407":{tr:"TR3",trt:"T1",ext:"XSS"},
+    "309":{tr:"TR2",trt:"T2",note:"치관 절제(crown amputation) 시행"},
+    "201":{missing:"O"},
+    "209":{pd:"PD2",ci:"CI1"},"109":{pd:"PD1",ci:"CI1"},
+    "104":{ci:"CI1"},"204":{ci:"CI1"}
+  };
+  [a,b,c].forEach(function(r){r.updated=Date.parse(r.date);});
+  return [a,b,c];
+}
+
+/* ───────── 유틸 ───────── */
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function pad(n){return n<10?"0"+n:""+n;}
+function todayISO(){var d=new Date();return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+var WD=["일","월","화","수","목","금","토"];
+function krDate(iso,withYear){
+  if(!iso) return "";
+  var p=iso.split("-"); if(p.length!==3) return iso;
+  var d=new Date(+p[0],+p[1]-1,+p[2]);
+  return (withYear?p[0]+"년 ":"")+(+p[1])+"월 "+(+p[2])+"일("+WD[d.getDay()]+")";
+}
+function hasBatchim(w){var c=w.charCodeAt(w.length-1);return c>=0xAC00&&c<=0xD7A3&&(c-0xAC00)%28>0;}
+function josa(w,pair){var x=pair.split("/");return w+(hasBatchim(w)?x[0]:x[1]);}
+function $(s,el){return (el||document).querySelector(s);}
+function $$(s,el){return Array.prototype.slice.call((el||document).querySelectorAll(s));}
+var toastT=null;
+function toast(msg){var t=$("#toast");t.textContent=msg;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true;},2400);}
+function copyText(s){
+  if(navigator.clipboard&&window.isSecureContext){return navigator.clipboard.writeText(s).then(function(){toast("복사했습니다");},fallback);}
+  fallback();
+  function fallback(){var ta=document.createElement("textarea");ta.value=s;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();
+    try{document.execCommand("copy");toast("복사했습니다");}catch(e){toast("복사하지 못했습니다. 직접 선택해 복사해 주십시오");} document.body.removeChild(ta);}
+}
+function sortTeeth(arr,sp){var order=teethOf(sp);return arr.slice().sort(function(a,b){return order.indexOf(+a)-order.indexOf(+b);});}
+function findingTeeth(r){return sortTeeth(Object.keys(r.teeth).filter(function(k){return hasFinding(r.teeth[k],r.species);}),r.species);}
+
+/* ───────── 요약 ───────── */
+function summarize(r){
+  var T=r.teeth, sp=r.species, keys=sortTeeth(Object.keys(T).filter(function(k){return teethOf(sp).indexOf(+k)>=0;}),sp);
+  var out=[];
+  function pick(fn){return keys.filter(function(k){return fn(T[k]||{});});}
+  var ext=pick(function(f){return !!f.ext;});
+  if(ext.length){
+    var types={}; ext.forEach(function(k){(types[T[k].ext]=types[T[k].ext]||[]).push(k);});
+    var detail=Object.keys(types).length>1||!types.X?" ("+Object.keys(types).map(function(t){return t+": "+types[t].join(", ");}).join(" / ")+")":"";
+    out.push({k:"발치",v:ext.length+"개: "+ext.join(", ")+detail});
+  }
+  var mis=pick(function(f){return !!f.missing;});
+  if(mis.length) out.push({k:"결손(O)",v:mis.length+"개: "+mis.join(", ")});
+  var fx=pick(function(f){return !!f.fx;});
+  if(fx.length) out.push({k:"파절",v:fx.length+"개: "+fx.map(function(k){return k+" "+T[k].fx;}).join(", ")});
+  if(sp==="cat"){
+    var tr=pick(function(f){return !!f.tr;});
+    if(tr.length) out.push({k:"흡수성 병변",v:tr.length+"개: "+tr.map(function(k){return k+" "+T[k].tr+(T[k].trt?"·"+T[k].trt:"");}).join(", ")});
+  }
+  var pdParts=[];
+  ["PD4","PD3","PD2","PD1"].forEach(function(s){var t=pick(function(f){return f.pd===s;}); if(t.length) pdParts.push(s+" "+t.join(", "));});
+  if(pdParts.length) out.push({k:"치주 단계",v:pdParts.join(" / ")});
+  var mob=keys.filter(function(k){return lvl(T[k].mob)>=1;});
+  if(mob.length) out.push({k:"동요도",v:mob.map(function(k){return k+" "+T[k].mob;}).join(", ")});
+  var ciParts=[];
+  ["CI3","CI2","CI1"].forEach(function(s){var t=pick(function(f){return f.ci===s;}); if(t.length) ciParts.push(s+" "+t.length+"개");});
+  if(ciParts.length) out.push({k:"치석 지수",v:ciParts.join(", ")+" (기록한 치아 기준)"});
+  var notes=pick(function(f){return f.note&&f.note.trim();});
+  if(notes.length) out.push({k:"치아 메모",v:notes.map(function(k){return k+" "+T[k].note.trim();}).join(" / ")});
+  return out;
+}
+function summaryText(r){
+  var s=summarize(r);
+  var head=r.name?(r.name+" ("+(r.species==="dog"?"개":"고양이")+(r.breed?", "+r.breed:"")+") "+krDate(r.date,true)+" 구강 소견"):"구강 소견";
+  if(!s.length) return head+"\n기록된 치아 소견 없음";
+  return head+"\n"+s.map(function(x){return "· "+x.k+" — "+x.v;}).join("\n");
+}
+
+/* ───────── 도식 (SVG) ───────── */
+var W=360,H=600,CX=180;
+function archPath(jaw){
+  var up=jaw==="U", P=[];
+  var a=up?72:60, b=up?56:60, y0=up?36:H-36, side=up?162:150, flare=up?34:24;
+  for(var i=0;i<=48;i++){var t=i/48*Math.PI/2;var dy=b*(1-Math.cos(t));P.push([CX-a*Math.sin(t), up?y0+dy:y0-dy]);}
+  var ex=CX-a, ey=up?y0+b:y0-b;
+  for(var j=1;j<=48;j++){var s=j/48;P.push([ex-flare*s, up?ey+side*s:ey-side*s]);}
+  var L=[0];for(var k=1;k<P.length;k++){L.push(L[k-1]+Math.hypot(P[k][0]-P[k-1][0],P[k][1]-P[k-1][1]));}
+  return {P:P,L:L,total:L[L.length-1],up:up};
+}
+function at(arc,d){
+  var L=arc.L,P=arc.P,i=1;while(i<L.length-1&&L[i]<d)i++;
+  var t=(d-L[i-1])/((L[i]-L[i-1])||1);
+  var x=P[i-1][0]+(P[i][0]-P[i-1][0])*t, y=P[i-1][1]+(P[i][1]-P[i-1][1])*t;
+  var tx=P[i][0]-P[i-1][0], ty=P[i][1]-P[i-1][1], n=Math.hypot(tx,ty)||1;
+  return {x:x,y:y,tx:tx/n,ty:ty/n};
+}
+function layout(sp){
+  var res=[];
+  ["U","L"].forEach(function(jaw){
+    var arc=archPath(jaw), pos=POS[sp][jaw], w=WEIGHT[sp][jaw];
+    var sum=pos.reduce(function(s,p){return s+w[p];},0), gap0=3, unit=(arc.total-gap0-4)/sum, cum=gap0;
+    var qL=jaw==="U"?1:4, qR=jaw==="U"?2:3;
+    var cy=arc.up?150:H-150;
+    pos.forEach(function(p,idx){
+      var d=cum+w[p]*unit/2; cum+=w[p]*unit;
+      var g=at(arc,d);
+      [qL,qR].forEach(function(q){
+        var mirror=(q===qR);
+        var x=mirror?2*CX-g.x:g.x, tx=mirror?-g.tx:g.tx, ty=g.ty;
+        var nx=-ty, ny=tx; // 법선
+        if(nx*(x-CX)+ny*(g.y-cy)<0){nx=-nx;ny=-ny;}
+        res.push({n:q*100+p,p:p,jaw:jaw,x:x,y:g.y,tx:tx,ty:ty,nx:nx,ny:ny,len:w[p]*unit-2.6,unit:unit,idx:idx});
+      });
+    });
+  });
+  return res;
+}
+function depthOf(t,sp){
+  var p=t.p, k=Math.min(1.15,Math.max(.8,t.unit/26));
+  var carn=(t.jaw==="U"&&p===8)||(t.jaw==="L"&&p===9);
+  var d=p<=3?12:p===4?17:carn?19:p<=8?14:(sp==="cat"?11:17);
+  return d*k;
+}
+function f1(v){return Math.round(v*10)/10;}
+function chartSVG(r,opt){
+  opt=opt||{};
+  var sp=r.species, L=layout(sp), s=[];
+  s.push('<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="'+(sp==="dog"?"개 치아 42개":"고양이 치아 30개")+' 도식" font-family="IBM Plex Mono, ui-monospace, Menlo, monospace">');
+  // 바탕 괘선
+  s.push('<g stroke="#1d3d6b" fill="none">');
+  s.push('<line x1="'+CX+'" y1="8" x2="'+CX+'" y2="'+(H-8)+'" stroke-width=".6" stroke-dasharray="2 3" opacity=".55"/>');
+  s.push('<line x1="12" y1="'+(H/2)+'" x2="'+(W-12)+'" y2="'+(H/2)+'" stroke-width=".8"/>');
+  s.push('</g>');
+  s.push('<g fill="#3d5274" font-size="9.5" letter-spacing=".08em">');
+  s.push('<text x="14" y="'+(H/2-7)+'">R 환자 오른쪽</text><text x="'+(W-14)+'" y="'+(H/2-7)+'" text-anchor="end">환자 왼쪽 L</text>');
+  s.push('<text x="'+CX+'" y="'+(H/2-7)+'" text-anchor="middle" font-size="9">위턱 MAXILLA</text>');
+  s.push('<text x="'+CX+'" y="'+(H/2+15)+'" text-anchor="middle" font-size="9">아래턱 MANDIBLE</text>');
+  s.push('<text x="14" y="'+(H/2+15)+'">400</text><text x="'+(W-14)+'" y="'+(H/2+15)+'" text-anchor="end">300</text>');
+  s.push('<text x="14" y="18">100</text><text x="'+(W-14)+'" y="18" text-anchor="end">200</text>');
+  s.push('</g>');
+  L.forEach(function(t){
+    var f=r.teeth[t.n]||null, c=codeOf(f,sp), sel=opt.selected===t.n;
+    var dp=depthOf(t,sp), lw=Math.max(5,t.len), ang=Math.atan2(t.ty,t.tx)*180/Math.PI;
+    var missing=f&&f.missing, ext=f&&f.ext, active=c&&!c.minor;
+    var stroke=active||(c&&c.minor)?"#b42318":"#1d3d6b";
+    var fill=sel?"#e3eaf4":(active?"#fdf1ef":"#ffffff");
+    var sw=sel?2.2:(active?1.4:1);
+    var dash=missing?' stroke-dasharray="2.2 1.8"':"";
+    var shape, p=t.p, isMolar=p>=8;
+    if(p<=4){shape='<ellipse class="shape" cx="0" cy="0" rx="'+f1(lw/2)+'" ry="'+f1(dp/2)+'"/>';}
+    else{shape='<rect class="shape" x="'+f1(-lw/2)+'" y="'+f1(-dp/2)+'" width="'+f1(lw)+'" height="'+f1(dp)+'" rx="'+(p>=9?3:4)+'"/>';}
+    var inner="";
+    if(isMolar&&!missing&&lw>12) inner='<line x1="'+f1(-lw/2+4)+'" y1="0" x2="'+f1(lw/2-4)+'" y2="0" stroke-width=".5" opacity=".6"/>';
+    var xmark="";
+    if(ext){var e=Math.min(lw,dp)/2+2;xmark='<g stroke="#b42318" stroke-width="1.6"><line x1="'+(-e)+'" y1="'+(-e)+'" x2="'+e+'" y2="'+e+'"/><line x1="'+(-e)+'" y1="'+e+'" x2="'+e+'" y2="'+(-e)+'"/></g>';}
+    var lab=dp/2+(t.p<=3?7.5:9), lx=t.x+t.nx*lab, ly=t.y+t.ny*lab+3.2;
+    var stag=(t.p<=3&&t.idx%2===1)?8:0;
+    var cl=dp/2+8+stag, cx=t.x-t.nx*cl, cy=t.y-t.ny*cl+3;
+    var aria=t.n+" "+toothName(t.n)+(c?", 소견 "+(c.code==="*"?"메모":c.code)+(c.more?" 외":""):", 소견 없음");
+    s.push('<g class="tooth" data-n="'+t.n+'"'+(opt.interactive?' tabindex="0" role="button" aria-label="'+esc(aria)+'"':'')+'>');
+    s.push('<circle cx="'+f1(t.x)+'" cy="'+f1(t.y)+'" r="'+f1(Math.max(12,lw/2+3))+'" fill="transparent"/>');
+    s.push('<g transform="translate('+f1(t.x)+' '+f1(t.y)+') rotate('+f1(ang)+')" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+sw+'"'+dash+'>'+shape+inner+xmark+'</g>');
+    s.push('<text x="'+f1(lx)+'" y="'+f1(ly)+'" text-anchor="middle" font-size="'+(t.p<=3?7.6:8.6)+'" fill="'+(active?"#b42318":"#0f2747")+'" font-weight="'+(active?600:400)+'">'+t.n+'</text>');
+    if(c){
+      var txt=(c.code==="*"?"*":c.code)+(c.more?"+":"");
+      s.push('<text x="'+f1(cx)+'" y="'+f1(cy)+'" text-anchor="middle" font-family="IBM Plex Sans KR, Apple SD Gothic Neo, sans-serif" font-size="'+(c.minor?6.8:7.8)+'" font-weight="600" fill="#b42318"'+(c.minor?' opacity=".8"':'')+'>'+esc(txt)+'</text>');
+    }
+    s.push('</g>');
+  });
+  s.push('</svg>');
+  return s.join("");
+}
+var LEGEND='<span><b>X</b>발치(XS 분할, XSS 외과적)</span><span><b>O</b>결손(점선 윤곽)</span><span><b>CCF</b>등 파절 분류</span><span><b>PD3</b>치주 단계</span><span><b>M2</b>동요도</span><span><b>TR3</b>흡수성 병변</span><span><b>CI2</b>치석 지수만 있음(작게)</span><span><b>*</b>메모만 있음</span><span><b>+</b>다른 소견 더 있음</span>';
+
+/* ───────── 화면 ───────── */
+var cur={view:"list",id:null,tooth:null};
+var main=$("#main");
+
+function renderList(){
+  var rs=db.records.slice().sort(function(a,b){return (b.date||"").localeCompare(a.date||"")||b.updated-a.updated;});
+  var h=[];
+  h.push('<div class="list-head"><h2>치과 기록 <span style="font-weight:400;color:var(--ink-3);font-size:13px">'+rs.length+'건</span></h2>');
+  h.push('<button class="btn primary" data-act="new" data-sp="dog">새 차트 · 개</button><button class="btn primary" data-act="new" data-sp="cat">새 차트 · 고양이</button></div>');
+  h.push('<div class="rows">');
+  if(!rs.length) h.push('<p class="empty">아직 기록이 없습니다. 위의 버튼으로 새 차트를 여십시오.</p>');
+  rs.forEach(function(r){
+    var T=r.teeth, k=Object.keys(T);
+    var nX=k.filter(function(x){return T[x].ext;}).length;
+    var nF=findingTeeth(r).length;
+    var pdMax=k.reduce(function(m,x){return Math.max(m,lvl(T[x].pd));},0);
+    var bits=[];
+    if(nX) bits.push('발치 <b>'+nX+'</b>');
+    if(pdMax) bits.push('최고 <b>PD'+pdMax+'</b>');
+    bits.push('소견 치아 '+nF+'개');
+    h.push('<button class="row" data-act="open" data-id="'+esc(r.id)+'"><span class="d">'+esc(r.date||"날짜 없음")+'</span>'+
+      '<span class="nm">'+esc(r.name||"이름 없음")+'<span>'+esc(r.breed)+(r.owner?' · 보호자 '+esc(r.owner):'')+'</span></span>'+
+      '<span class="sp-tag">'+(r.species==="dog"?"개 42":"고양이 30")+'</span>'+
+      '<span class="sm">'+bits.join(' · ')+'</span></button>');
+  });
+  h.push('</div>');
+  h.push('<div class="store-box"><p>기록은 지금 쓰고 계신 이 기기의 이 브라우저에만 저장됩니다. 다른 컴퓨터로 옮기거나 백업하실 때는 파일로 내보내 주십시오.</p>'+
+    '<div class="btns"><button class="btn quiet" data-act="export">JSON 내보내기</button><button class="btn quiet" data-act="import">JSON 가져오기</button><button class="btn quiet" data-act="reseed">예시 기록 다시 넣기</button></div></div>');
+  main.innerHTML=h.join("");
+}
+
+function field(k,label,val,type,extra){
+  return '<div class="f'+(extra&&extra.wide?' wide':'')+'"><label for="f_'+k+'">'+label+'</label><input id="f_'+k+'" data-k="'+k+'" type="'+(type||"text")+'" value="'+esc(val)+'"'+(extra&&extra.ph?' placeholder="'+esc(extra.ph)+'"':'')+(extra&&extra.im?' inputmode="'+extra.im+'"':'')+'></div>';
+}
+function renderChart(r){
+  var h=[];
+  h.push('<div class="bar"><button class="back" data-act="back">← 목록</button><span class="sp"></span>'+
+    '<button class="btn" data-act="notice">보호자 안내문</button><button class="btn" data-act="print">인쇄용 차트</button></div>');
+  h.push('<div class="chart-grid"><div class="left">');
+  h.push('<section class="sec"><h2><span class="n">02</span>치아 도식 <span class="aside">'+(r.species==="dog"?"개 · 42개":"고양이 · 30개")+' · 치아를 누르면 소견 입력</span></h2>');
+  h.push('<div class="svgbox" id="svgbox">'+chartSVG(r,{interactive:true})+'</div>');
+  h.push('<div class="legend">'+LEGEND+'</div>');
+  h.push('<div class="bulk"><span>치석 지수 일괄 입력</span>'+["CI0","CI1","CI2","CI3"].map(function(c){return '<button class="btn quiet" data-act="bulkci" data-v="'+c+'">'+c+'</button>';}).join("")+'<button class="btn quiet" data-act="bulkci" data-v="">지우기</button></div>');
+  h.push('</section></div><div class="right">');
+  // 환자
+  h.push('<section class="sec"><h2><span class="n">01</span>환자 · 시술</h2><div class="fields">');
+  h.push(field("name","이름",r.name)+field("chartNo","차트번호",r.chartNo)+
+    '<div class="f"><span class="lb">종</span><div class="ro">'+(r.species==="dog"?"개":"고양이")+'</div></div>'+
+    field("breed","품종",r.breed)+field("sex","성별",r.sex,"text",{ph:"예: 암컷(중성화)"})+field("age","나이",r.age)+
+    field("weight","체중(kg)",r.weight,"text",{im:"decimal"})+field("owner","보호자",r.owner)+field("vet","담당 수의사",r.vet)+
+    field("date","시술일",r.date,"date")+field("recheck","재진일",r.recheck,"date"));
+  h.push('</div></section>');
+  // 요약
+  h.push('<section class="sec"><h2><span class="n">03</span>구강 소견 요약 <span class="aside">자동 작성</span></h2><div id="sumBox"></div>'+
+    '<div class="copyline"><button class="btn quiet" data-act="copysum">요약 복사</button></div></section>');
+  h.push('<section class="sec"><h2><span class="n">04</span>치아별 소견</h2><div id="ftBox"></div></section>');
+  // 처치·마취
+  var P=r.proc||{};
+  h.push('<section class="sec"><h2><span class="n">05</span>처치 · 마취</h2><div class="checks">'+
+    [["scale","치석 제거(스케일링)"],["subg","치은연하 세정"],["polish","폴리싱"],["rad","전악 치과 방사선"],["block","국소 신경 차단"]].map(function(x){
+      return '<label><input type="checkbox" data-proc="'+x[0]+'"'+(P[x[0]]?' checked':'')+'>'+x[1]+'</label>';}).join("")+'</div>');
+  h.push('<div class="fields">'+
+    '<div class="f"><label for="f_asa">ASA 등급</label><select id="f_asa" data-k="asa">'+["","I","II","III","IV","V"].map(function(v){return '<option value="'+v+'"'+(r.asa===v?' selected':'')+'>'+(v||"—")+'</option>';}).join("")+'</select></div>'+
+    field("anStart","마취 시작",r.anStart,"time")+field("anEnd","마취 종료",r.anEnd,"time")+'</div>');
+  h.push('<label class="ta-label" for="f_anNote">마취 메모 (마취 방법, 모니터링 중 특이사항, 회복 상태)</label><textarea id="f_anNote" data-k="anNote" rows="3">'+esc(r.anNote)+'</textarea>');
+  h.push('<label class="ta-label" for="f_note">전체 구강 메모</label><textarea id="f_note" data-k="note" rows="3">'+esc(r.note)+'</textarea>');
+  h.push('</section>');
+  h.push('<div class="danger-zone"><button class="btn danger" data-act="del">이 기록 삭제</button></div>');
+  h.push('</div></div>');
+  main.innerHTML=h.join("");
+  refreshDerived(r);
+}
+function refreshDerived(r){
+  var sb=$("#sumBox"); if(!sb) return;
+  var s=summarize(r);
+  sb.innerHTML='<ul class="summary">'+(s.length?s.map(function(x){return '<li><span class="k">'+esc(x.k)+'</span><span class="num">'+esc(x.v)+'</span></li>';}).join(""):'<li class="none">아직 기록된 치아 소견이 없습니다</li>')+'</ul>';
+  $("#ftBox").innerHTML=findingTable(r,true);
+}
+function findingCodes(f,sp){
+  var a=[];
+  if(f.missing) a.push("O");if(f.ext) a.push(f.ext);if(f.fx) a.push(f.fx);
+  if(sp==="cat"&&f.tr) a.push(f.tr+(f.trt?"·"+f.trt:""));
+  if(f.pd) a.push(f.pd);if(f.ci) a.push(f.ci);if(f.mob) a.push(f.mob);
+  return a.join(" ");
+}
+function findingTable(r,click){
+  var ks=findingTeeth(r);
+  if(!ks.length) return '<p class="empty">도식에서 치아를 눌러 소견을 입력하십시오.</p>';
+  return '<table class="ft"><thead><tr><th>치아</th><th>위치</th><th>기호</th><th>메모</th></tr></thead><tbody>'+
+    ks.map(function(k){var f=r.teeth[k];return '<tr'+(click?' class="click" data-act="tooth" data-n="'+k+'"':'')+'><td class="tn">'+k+'</td><td>'+esc(QNAME[Math.floor(k/100)]+" "+cls(+k))+'</td><td class="cd">'+esc(findingCodes(f,r.species))+'</td><td>'+esc(f.note||"")+'</td></tr>';}).join("")+
+    '</tbody></table>';
+}
+function redrawSVG(r){var b=$("#svgbox"); if(b) b.innerHTML=chartSVG(r,{interactive:true,selected:cur.tooth}); refreshDerived(r);}
+
+/* 치아 소견 창 */
+function renderSheet(r,n){
+  var sp=r.species, f=r.teeth[n]||{}, list=teethOf(sp), i=list.indexOf(n);
+  var h=[];
+  h.push('<div class="st-head"><button class="btn quiet nav" data-act="prevT" aria-label="이전 치아">‹</button><div><div class="no" id="stNo">'+n+'</div><div class="nm">'+esc(toothName(n))+'</div></div>'+
+    '<button class="btn quiet nav" data-act="nextT" aria-label="다음 치아">›</button><span class="sp"></span><button class="btn" data-act="closeT">닫기</button></div>');
+  FIELDS.forEach(function(F){
+    if(F.cat&&sp!=="cat") return;
+    var v=f[F.k]||"";
+    h.push('<div class="grp"><div class="gl"><span>'+F.label+'</span><span class="src">'+F.src+'</span></div><div class="seg" role="group" aria-label="'+F.label+'">');
+    F.opts.forEach(function(o){
+      var on=(v===o[0]);
+      h.push('<button type="button" class="'+(o[0]===""?"none":"")+(on?" on":"")+'" data-fk="'+F.k+'" data-fv="'+o[0]+'" aria-pressed="'+on+'">'+esc(o[0]===""?(F.k==="missing"?"있음":"—"):o[1])+'</button>');
+    });
+    h.push('</div><div class="def">'+esc(v&&F.def[v]?v+": "+F.def[v]:"")+'</div></div>');
+  });
+  h.push('<div class="grp"><div class="gl"><span>메모</span></div><textarea id="toothNote" rows="3" placeholder="예: 방사선상 치근 흡수 의심">'+esc(f.note||"")+'</textarea></div>');
+  h.push('<div class="st-foot"><button class="btn quiet" data-act="clearT">이 치아 소견 지우기</button><button class="btn primary" data-act="closeT">완료</button></div>');
+  var el=$("#sheet"); el.innerHTML=h.join(""); el.hidden=false; $("#scrim").hidden=false;
+  el.scrollTop=0;
+}
+function closeSheetUI(){$("#sheet").hidden=true;$("#scrim").hidden=true;$("#sheet").innerHTML="";}
+function setTooth(r,n,k,v){
+  var f=r.teeth[n]||{};
+  if(v) f[k]=v; else delete f[k];
+  if(k==="missing"&&v){delete f.ext;}
+  if(k==="ext"&&v){delete f.missing;}
+  if(Object.keys(f).length) r.teeth[n]=f; else delete r.teeth[n];
+  r.updated=Date.now(); saveSoon();
+}
+
+/* 보호자 안내문 */
+var noticeOpts={recover:true,ext:true,food:true,brush:true,meds:true,pain:true,recheck:true};
+function extGroups(r){
+  var ks=sortTeeth(Object.keys(r.teeth).filter(function(k){return r.teeth[k].ext;}),r.species);
+  var g=[],map={};
+  ks.forEach(function(k){var key=QNAME[Math.floor(k/100)]+" "+cls(+k); if(!map[key]){map[key]={name:key,n:0,teeth:[]};g.push(map[key]);} map[key].n++;map[key].teeth.push(k);});
+  return {list:ks,groups:g};
+}
+function buildNotice(r){
+  var o=noticeOpts, pet=r.name||"아이", owner=r.owner?r.owner+" 보호자님":"보호자님";
+  var E=extGroups(r), P=r.proc||{}, L=[];
+  L.push(owner+", 청주i동물병원입니다.");
+  L.push("");
+  L.push((r.date?krDate(r.date)+", ":"오늘 ")+pet+"의 치과 처치를 마쳤습니다."+(o.recover?" 전신마취 상태에서 진행했고, 마취에서 잘 깨어나 회복했습니다.":""));
+  L.push("");
+  L.push("[오늘 한 처치]");
+  var pr=[];
+  if(P.scale) pr.push("치석 제거(스케일링)"+(P.polish?"와 폴리싱":""));
+  else if(P.polish) pr.push("치아 표면 폴리싱");
+  if(P.subg) pr.push("잇몸 아래 치석과 염증 조직 세정");
+  if(P.rad) pr.push("치아 전체 방사선 촬영");
+  if(E.list.length) pr.push("발치 "+E.list.length+"개");
+  if(P.block) pr.push("발치·처치 부위 국소 마취(통증 조절)");
+  if(!pr.length) pr.push("구강 검사");
+  pr.forEach(function(x){L.push("· "+x);});
+  if(o.ext){
+    L.push("");
+    L.push("[발치한 치아]");
+    if(E.list.length){
+      L.push("모두 "+E.list.length+"개입니다.");
+      E.groups.forEach(function(g){L.push("· "+g.name+" "+g.n+"개 ("+g.teeth.join(", ")+")");});
+      L.push("잇몸이 아무는 동안 침에 피가 살짝 비칠 수 있습니다.");
+    } else L.push("오늘은 뽑은 치아가 없습니다.");
+  }
+  var home=[];
+  if(o.food) home.push(E.list.length?"재진 때까지 사료를 물에 불리거나 습식 사료처럼 부드러운 음식으로 주십시오.":"오늘 저녁은 평소보다 적은 양을 부드럽게 주시고, 잘 먹으면 내일부터 평소대로 주셔도 됩니다.");
+  if(o.food&&E.list.length) home.push("딱딱한 간식, "+(r.species==="cat"?"건사료 알갱이, 덴탈 간식":"뼈, 개껌, 씹는 장난감")+"은 재진 때까지 쉬어 주십시오.");
+  if(o.brush) home.push(E.list.length?"양치는 재진에서 잇몸 상태를 확인한 뒤 다시 시작해 주십시오.":"양치는 잇몸이 편안해지면 다시 시작해 주십시오. 꾸준한 양치가 치석이 다시 생기는 것을 가장 잘 막습니다.");
+  if(o.meds) home.push("처방해 드린 약이 있다면 안내받은 방법대로 빠짐없이 먹여 주십시오.");
+  if(o.recover) home.push("마취 영향으로 오늘 하루는 평소보다 처지거나 잠을 많이 잘 수 있습니다.");
+  if(home.length){L.push("");L.push("[집에서 이렇게 돌봐 주십시오]");home.forEach(function(x){L.push("· "+x);});}
+  if(o.pain){
+    L.push("");L.push("[이런 모습이 보이면 병원으로 연락 주십시오]");
+    ["밥을 먹지 않거나 한쪽으로만 씹을 때","앞발로 입을 자꾸 문지르거나 입 주변을 만지지 못하게 할 때","침에 피가 계속 섞여 나오거나 얼굴이 부을 때","기운 없는 모습이 다음 날까지 이어질 때"].forEach(function(x){L.push("· "+x);});
+  }
+  if(o.recheck){
+    L.push("");L.push("[재진]");
+    L.push(r.recheck?krDate(r.recheck)+"에 내원해 주십시오. "+(E.list.length?"발치 부위와 ":"")+"잇몸 상태를 확인하겠습니다.":"재진 날짜는 병원에서 따로 안내해 드리겠습니다.");
+  }
+  L.push("");
+  L.push("궁금하신 점은 언제든 병원으로 편하게 연락 주십시오.");
+  L.push("청주i동물병원"+(r.vet?" 수의사 "+r.vet:"")+" 드림");
+  return L.join("\n");
+}
+function renderNotice(r){
+  var h=[];
+  h.push('<div class="bar"><button class="back" data-act="back">← 차트</button><span class="sp"></span>'+
+    '<button class="btn" data-act="copyNotice">복사</button><button class="btn primary" data-act="printNow">인쇄</button></div>');
+  h.push('<div class="notice-wrap"><section class="sec"><h2><span class="n">—</span>보호자 안내문 · '+esc(r.name||"")+' <span class="aside">차트 기록으로 자동 작성, 아래에서 직접 고칠 수 있습니다</span></h2>');
+  h.push('<div class="opts noprint">'+[["recover","마취 회복 문장"],["ext","발치한 치아"],["food","부드러운 음식"],["brush","양치 재개"],["meds","처방약 안내"],["pain","통증 관찰"],["recheck","재진일"]].map(function(x){
+    return '<label><input type="checkbox" data-nopt="'+x[0]+'"'+(noticeOpts[x[0]]?' checked':'')+'>'+x[1]+'</label>';}).join("")+'</div>');
+  h.push('<label class="sr" for="noticeText">안내문 본문</label><textarea id="noticeText" rows="24"></textarea>');
+  h.push('<div class="notice-head"><div class="demo-mini">예시 데이터입니다. 실제 환자 정보가 아닙니다</div><div class="nh">청주i동물병원<span>'+esc(r.name||"")+' 치과 처치 안내</span></div></div><div class="notice-print" id="noticePrint"></div>');
+  h.push('</section></div>');
+  main.innerHTML=h.join("");
+  var t=buildNotice(r); $("#noticeText").value=t; $("#noticePrint").textContent=t;
+}
+
+/* 인쇄용 A4 */
+function renderPrint(r){
+  var h=[], s=summarize(r), P=r.proc||{};
+  h.push('<div class="bar"><button class="back" data-act="back">← 차트</button><span class="sp"></span><button class="btn primary" data-act="printNow">인쇄 (A4)</button></div>');
+  h.push('<article class="a4"><div class="demo-mini">예시 데이터입니다. 실제 환자 정보가 아닙니다</div>');
+  h.push('<div class="h"><div class="t">치과 차트<small>DENTAL CHART</small></div><div class="hos">청주i동물병원<br>담당 '+esc(r.vet||"")+'</div></div>');
+  var cells=[["이름",r.name],["종 · 품종",(r.species==="dog"?"개":"고양이")+(r.breed?" · "+r.breed:"")],["성별 · 나이",[r.sex,r.age].filter(Boolean).join(" · ")],["체중",r.weight?r.weight+" kg":""],
+    ["차트번호",r.chartNo],["보호자",r.owner],["시술일",krDate(r.date,true)],["재진일",krDate(r.recheck,true)]];
+  h.push('<div class="pt">'+cells.map(function(c){return '<div><span>'+c[0]+'</span>'+esc(c[1]||"")+'</div>';}).join("")+'</div>');
+  h.push('<div class="body"><div>'+chartSVG(r,{})+'<div class="lg">'+LEGEND.replace(/<span>/g,"").replace(/<\/span>/g,"  ")+'</div></div><div>');
+  h.push('<h3>구강 소견 요약</h3><ul class="s">'+(s.length?s.map(function(x){return '<li><b style="font-weight:500">'+esc(x.k)+'</b> — '+esc(x.v)+'</li>';}).join(""):'<li>기록된 소견 없음</li>')+'</ul>');
+  h.push('<h3>치아별 소견</h3>'+findingTable(r,false));
+  var pr=[["scale","스케일링"],["subg","치은연하 세정"],["polish","폴리싱"],["rad","전악 방사선"],["block","국소 신경 차단"]].filter(function(x){return P[x[0]];}).map(function(x){return x[1];});
+  h.push('<h3>처치 · 마취</h3><p class="memo">처치: '+esc(pr.join(", ")||"—")+'\nASA '+esc(r.asa||"—")+' · 마취 '+esc(r.anStart||"—")+' – '+esc(r.anEnd||"—")+'\n'+esc(r.anNote||"")+'</p>');
+  if(r.note) h.push('<h3>메모</h3><p class="memo">'+esc(r.note)+'</p>');
+  h.push('</div></div>');
+  h.push('<div class="sign"><div>작성 <span>&nbsp;'+esc(r.vet||"")+'</span></div><div>확인 <span>&nbsp;</span></div></div>');
+  h.push('</article>');
+  main.innerHTML=h.join("");
+}
+
+/* ───────── 이동과 뒤로가기 ───────── */
+function apply(st){
+  var view=st.view||"list", r=st.id?rec(st.id):null;
+  if(view!=="list"&&!r){view="list";}
+  var sameChart=(cur.view==="chart"&&view==="chart"&&cur.id===st.id);
+  cur={view:view,id:r?r.id:null,tooth:st.tooth||null};
+  document.body.setAttribute("data-view",view);
+  if(view==="list"){renderList();}
+  else if(view==="chart"){ if(!sameChart) renderChart(r); else redrawSVG(r); }
+  else if(view==="notice"){renderNotice(r);}
+  else if(view==="print"){renderPrint(r);}
+  if(view==="chart"&&cur.tooth){renderSheet(r,cur.tooth); redrawSVG(r);}
+  else{ if(!$("#sheet").hidden){closeSheetUI(); if(view==="chart") redrawSVG(r);} }
+  if(!sameChart) window.scrollTo(0,0);
+}
+function go(view,id){var st={app:1,view:view,id:id||null};history.pushState(st,"");apply(st);}
+function openTooth(n){var st={app:1,view:"chart",id:cur.id,tooth:n};history.pushState(st,"");apply(st);}
+function switchTooth(n){var st={app:1,view:"chart",id:cur.id,tooth:n};history.replaceState(st,"");apply(st);}
+window.addEventListener("popstate",function(e){
+  var st=e.state||{};
+  if(!st.app||st.base){
+    var atHome=(cur.view==="list"&&!cur.tooth);
+    history.pushState({app:1,view:"list"},"");
+    apply({view:"list"});
+    if(atHome) toast("앱을 닫으려면 홈 화면으로 나가 주십시오");
+    return;
+  }
+  apply(st);
+});
+
+/* ───────── 이벤트 ───────── */
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-act],[data-fk],.tooth");
+  if(!t) return;
+  if(t.classList.contains("tooth")&&t.closest("#svgbox")){openTooth(+t.getAttribute("data-n"));return;}
+  var r=cur.id?rec(cur.id):null;
+  if(t.hasAttribute("data-fk")&&r&&cur.tooth){
+    var k=t.getAttribute("data-fk"),v=t.getAttribute("data-fv");
+    setTooth(r,cur.tooth,k,v); renderSheet(r,cur.tooth); redrawSVG(r); return;
+  }
+  var act=t.getAttribute("data-act");
+  switch(act){
+    case "new": var nr=blank(t.getAttribute("data-sp")); db.records.push(nr); save(); go("chart",nr.id); break;
+    case "open": go("chart",t.getAttribute("data-id")); break;
+    case "back": history.back(); break;
+    case "notice": go("notice",cur.id); break;
+    case "print": go("print",cur.id); break;
+    case "printNow": window.print(); break;
+    case "tooth": openTooth(+t.getAttribute("data-n")); break;
+    case "closeT": history.back(); break;
+    case "prevT": case "nextT":
+      var list=teethOf(r.species), i=list.indexOf(cur.tooth), j=(i+(act==="nextT"?1:-1)+list.length)%list.length; switchTooth(list[j]); break;
+    case "clearT": delete r.teeth[cur.tooth]; r.updated=Date.now(); save(); renderSheet(r,cur.tooth); redrawSVG(r); break;
+    case "bulkci":
+      var v2=t.getAttribute("data-v");
+      teethOf(r.species).forEach(function(n){var f=r.teeth[n]||{}; if(f.missing) return; if(v2) f.ci=v2; else delete f.ci; if(Object.keys(f).length) r.teeth[n]=f; else delete r.teeth[n];});
+      r.updated=Date.now(); save(); redrawSVG(r); toast(v2?"결손 치아를 뺀 모든 치아에 "+v2+"를 넣었습니다":"치석 지수를 모두 지웠습니다"); break;
+    case "copysum": copyText(summaryText(r)); break;
+    case "copyNotice": copyText($("#noticeText").value); break;
+    case "del":
+      if(confirm((r.name||"이 기록")+" 기록을 이 기기에서 지울까요? 되돌릴 수 없습니다.")){db.records=db.records.filter(function(x){return x.id!==r.id;}); save(); go("list");}
+      break;
+    case "export": exportJSON(); break;
+    case "import": $("#importFile").click(); break;
+    case "reseed":
+      var sd=seed(), have=db.records.map(function(x){return x.id;});
+      sd.forEach(function(s){var i2=have.indexOf(s.id); if(i2>=0) db.records[db.records.map(function(x){return x.id;}).indexOf(s.id)]=s; else db.records.push(s);});
+      save(); renderList(); toast("예시 기록 3건을 처음 상태로 넣었습니다"); break;
+  }
+});
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"&&cur.tooth){history.back();return;}
+  if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("tooth")){e.preventDefault();openTooth(+e.target.getAttribute("data-n"));}
+});
+$("#scrim").addEventListener("click",function(){if(cur.tooth) history.back();});
+document.addEventListener("input",function(e){
+  var t=e.target, r=cur.id?rec(cur.id):null;
+  if(t.id==="noticeText"){var np=$("#noticePrint"); if(np) np.textContent=t.value; return;}
+  if(!r) return;
+  if(t.id==="toothNote"&&cur.tooth){setTooth(r,cur.tooth,"note",t.value); clearTimeout(window.__nt); window.__nt=setTimeout(function(){redrawSVG(r);},300); return;}
+  var k=t.getAttribute("data-k");
+  if(k){r[k]=t.value; r.updated=Date.now(); saveSoon(); if(k==="name"||k==="date"||k==="breed") refreshDerived(r);}
+});
+document.addEventListener("change",function(e){
+  var t=e.target, r=cur.id?rec(cur.id):null;
+  if(t.hasAttribute("data-nopt")&&r){noticeOpts[t.getAttribute("data-nopt")]=t.checked; var s=buildNotice(r); $("#noticeText").value=s; $("#noticePrint").textContent=s; return;}
+  if(t.hasAttribute("data-proc")&&r){r.proc=r.proc||{}; r.proc[t.getAttribute("data-proc")]=t.checked; r.updated=Date.now(); saveSoon(); return;}
+  if(t.tagName==="SELECT"&&t.getAttribute("data-k")&&r){r[t.getAttribute("data-k")]=t.value; saveSoon();}
+});
+
+function exportJSON(){
+  var d=new Date(), name="치과차트_백업_"+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+".json";
+  var blob=new Blob([JSON.stringify({app:"cji-dental-chart",version:1,exported:new Date().toISOString(),records:db.records},null,2)],{type:"application/json"});
+  var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},500);
+  toast(name+" 파일로 내보냈습니다");
+}
+$("#importFile").addEventListener("change",function(){
+  var file=this.files&&this.files[0]; if(!file) return;
+  var fr=new FileReader();
+  fr.onload=function(){
+    try{
+      var o=JSON.parse(fr.result), arr=Array.isArray(o)?o:o.records;
+      if(!Array.isArray(arr)) throw 0;
+      var ok=arr.filter(function(x){return x&&typeof x.id==="string"&&(x.species==="dog"||x.species==="cat")&&x.teeth&&typeof x.teeth==="object";});
+      if(!ok.length) throw 0;
+      if(!confirm(ok.length+"건을 불러옵니다. 같은 기록이 있으면 불러온 내용으로 바꿉니다. 계속할까요?")) return;
+      ok.forEach(function(x){var i=db.records.map(function(y){return y.id;}).indexOf(x.id); if(i>=0) db.records[i]=x; else db.records.push(x);});
+      save(); renderList(); toast(ok.length+"건을 불러왔습니다");
+    }catch(err){toast("이 앱에서 내보낸 JSON 파일이 아닙니다");}
+  };
+  fr.readAsText(file);
+  this.value="";
+});
+
+/* ───────── 시작 ───────── */
+window.addEventListener("pagehide",save);
+document.addEventListener("visibilitychange",function(){if(document.hidden) save();});
+load();
+history.replaceState({app:1,base:1},"");
+history.pushState({app:1,view:"list"},"");
+apply({view:"list"});
+
+/* 점검용: 주소 끝에 #selftest */
+if(location.hash==="#selftest"){
+  var res={};
+  res.dogCount=teethOf("dog").length; res.catCount=teethOf("cat").length;
+  res.dogSVG=(function(){var d=document.createElement("div");d.innerHTML=chartSVG(blank("dog"),{});return d.querySelectorAll(".tooth").length;})();
+  res.catSVG=(function(){var d=document.createElement("div");d.innerHTML=chartSVG(blank("cat"),{});return d.querySelectorAll(".tooth").length;})();
+  res.catTeeth=teethOf("cat").join(",");
+  res.dogTeeth=teethOf("dog").join(",");
+  res.records=db.records.length;
+  res.boriSummary=summaryText(rec("demo-bori"));
+  res.nabiSummary=summaryText(rec("demo-nabi"));
+  res.notice=buildNotice(rec("demo-bori"));
+  var pre=document.createElement("pre");pre.id="selftest";pre.textContent=JSON.stringify(res,null,1);document.body.appendChild(pre);
+}
+/* 점검용: #shot=view:id[:tooth] 로 특정 화면 열기, #layout 으로 가로 넘침 점검 */
+var mShot=/^#shot=(\w+):([\w-]+)(?::(\d+))?$/.exec(location.hash);
+if(mShot){var st0={app:1,view:mShot[1],id:mShot[2]}; history.pushState(st0,""); apply(st0); if(mShot[3]) openTooth(+mShot[3]);}
+if(location.hash==="#layout"){
+  var rep=[], vw=document.documentElement.clientWidth;
+  function chk(label){
+    var sw=document.documentElement.scrollWidth, wide=[];
+    $$("body *").forEach(function(el){var b=el.getBoundingClientRect(); if(b.width>0&&b.right>vw+1&&!el.closest("svg")) wide.push(el.tagName+"."+el.className+" "+Math.round(b.right));});
+    rep.push(label+": vw="+vw+" sw="+sw+(wide.length?" OVER "+wide.slice(0,5).join(" | "):" ok"));
+  }
+  chk("list");
+  ["demo-bori","demo-kong","demo-nabi"].forEach(function(id){
+    go("chart",id); chk("chart "+id);
+    openTooth(id==="demo-nabi"?307:108); chk("tooth "+id);
+    history.replaceState({app:1,view:"chart",id:id},""); apply({view:"chart",id:id});
+    go("notice",id); chk("notice "+id);
+    go("print",id); chk("print "+id);
+  });
+  go("list");
+  var pre2=document.createElement("pre");pre2.id="layout";pre2.textContent=rep.join("\n");document.body.appendChild(pre2);
+}
+window.__dental={teethOf:teethOf,layout:layout,summaryText:summaryText,buildNotice:buildNotice,go:go,openTooth:openTooth,cur:function(){return cur;}};
+})();
+</script>
+</body>
+</html>

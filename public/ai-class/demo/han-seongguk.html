@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>케이스 노트 · 청담장튼튼내과동물병원</title>
+<meta name="theme-color" content="#f3f0e8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=Noto+Sans+KR:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#f3f0e8; --sheet:#fbfaf6; --ink:#1e2524; --ink-2:#4c5654; --ink-3:#7f8886;
+  --rule:#dcd7cb; --rule-2:#e9e5db; --teal:#1f4f4b; --teal-wash:rgba(31,79,75,.08);
+  --serif:"Nanum Myeongjo","AppleMyungjo",Georgia,serif;
+  --sans:"Noto Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;
+  --max:1080px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#141817; --sheet:#1a1f1e; --ink:#e7ebe8; --ink-2:#b4bdba; --ink-3:#86908d;
+  --rule:#2d3533; --rule-2:#252c2a; --teal:#86c2b9; --teal-wash:rgba(134,194,185,.10); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#141817; --sheet:#1a1f1e; --ink:#e7ebe8; --ink-2:#b4bdba; --ink-3:#86908d;
+  --rule:#2d3533; --rule-2:#252c2a; --teal:#86c2b9; --teal-wash:rgba(134,194,185,.10); color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.7;word-break:keep-all;overflow-wrap:anywhere;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:16px}
+@media(min-width:720px){.wrap{padding-inline:28px}}
+h1,h2,h3{font-family:var(--serif);font-weight:700;margin:0;letter-spacing:-.01em;line-height:1.35}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--teal)}
+
+/* 머리 */
+.top{border-bottom:1px solid var(--rule);background:var(--paper)}
+.kicker{font-size:12px;color:var(--ink-3);padding-top:14px;letter-spacing:.01em}
+.demo{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.demo b{font-weight:500;color:var(--teal)}
+.brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:14px}
+.brand h1{font-size:28px}
+.brand span{font-size:13px;color:var(--ink-2)}
+.tabs{display:flex;gap:22px;margin-top:14px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{background:none;border:0;padding:8px 0 10px;font-size:14.5px;color:var(--ink-2);border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button[aria-current="page"]{color:var(--ink);border-bottom-color:var(--teal)}
+
+main{padding-block:22px 64px;min-height:60vh}
+.foot{border-top:1px solid var(--rule);padding:18px 0 30px;font-size:12px;color:var(--ink-3)}
+
+/* 공통 */
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule);background:var(--sheet);padding:7px 14px;border-radius:3px;font-size:14px;line-height:1.4;color:var(--ink)}
+.btn:hover{border-color:var(--ink-3)}
+.btn.pri{background:var(--teal);border-color:var(--teal);color:var(--sheet)}
+.btn.ghost{background:none;border-color:transparent;padding-inline:4px;color:var(--ink-2)}
+.btn.ghost:hover{color:var(--ink)}
+.btn.danger{color:#9b3b2f}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--ink-3)}
+.small{font-size:13px}
+.label{font-size:12px;color:var(--ink-3);letter-spacing:.02em}
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:2px}
+.back{margin-bottom:14px}
+.tag{display:inline-block;font-size:12px;color:var(--teal);background:var(--teal-wash);padding:1px 8px;border-radius:2px;line-height:1.7}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:3px;font-size:13.5px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1}
+
+/* 목록 */
+.listhead{display:grid;gap:10px}
+@media(min-width:720px){.listhead{grid-template-columns:1fr 220px auto;align-items:center}}
+.search{width:100%;border:1px solid var(--rule);background:var(--sheet);padding:9px 12px;border-radius:3px;font-size:15px}
+.search:focus,.f input:focus,.f select:focus,.f textarea:focus,select:focus{outline:2px solid var(--teal-wash);border-color:var(--teal)}
+select.sel{border:1px solid var(--rule);background:var(--sheet);padding:9px 10px;border-radius:3px;font-size:14px;width:100%}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.chip{border:1px solid var(--rule);background:none;border-radius:2px;padding:2px 10px;font-size:13px;color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:var(--sheet)}
+.count{margin-top:18px;font-size:13px;color:var(--ink-3)}
+.cases{list-style:none;margin:6px 0 0;padding:0;border-top:1px solid var(--rule)}
+.cases li{border-bottom:1px solid var(--rule)}
+.cases button{all:unset;display:grid;grid-template-columns:76px 1fr;gap:4px 16px;padding:14px 4px;width:100%;box-sizing:border-box;cursor:pointer}
+.cases button:hover{background:var(--teal-wash)}
+.cases button:focus-visible{outline:2px solid var(--teal)}
+.cdate{font-size:12.5px;color:var(--ink-3);padding-top:3px;font-variant-numeric:tabular-nums}
+.cdx{font-family:var(--serif);font-size:17px;font-weight:700;line-height:1.4}
+.cmeta{font-size:13.5px;color:var(--ink-2)}
+.cmeta .tag{margin-right:4px}
+.cbody{grid-column:2}
+@media(min-width:720px){.cases button{grid-template-columns:110px 1fr 1fr}.cbody{grid-column:3}}
+.empty{padding:40px 0;color:var(--ink-3);text-align:center}
+
+/* 상세 */
+.dhead{display:grid;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--rule)}
+.dhead h2{font-size:24px}
+.pt{font-size:14px;color:var(--ink-2)}
+.status{font-size:12px;color:var(--ink-3);border:1px solid var(--rule);padding:0 8px;border-radius:2px;margin-left:6px;vertical-align:2px;font-family:var(--sans);font-weight:400}
+.gen{margin-top:4px}
+.gen .label{display:block;margin-bottom:6px}
+.dgrid{display:grid;gap:0}
+@media(min-width:900px){.dgrid{grid-template-columns:1fr 1fr;column-gap:40px}}
+.block{padding:20px 0;border-bottom:1px solid var(--rule-2)}
+.block h3{font-size:15px;color:var(--teal);margin-bottom:8px}
+.block.wide{grid-column:1/-1}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{text-align:left;font-weight:500;font-size:12px;color:var(--ink-3);border-bottom:1px solid var(--rule);padding:6px 8px 6px 0}
+.tbl td{border-bottom:1px solid var(--rule-2);padding:8px 8px 8px 0;vertical-align:top}
+.tbl td.k{white-space:nowrap;color:var(--ink-3);font-size:12.5px}
+@media(max-width:560px){
+  .tbl.stack thead{display:none}
+  .tbl.stack tr{display:block;padding:10px 0;border-bottom:1px solid var(--rule-2)}
+  .tbl.stack td{display:block;border:0;padding:1px 0}
+  .tbl.stack td[data-h]::before{content:attr(data-h)" · ";color:var(--ink-3);font-size:12px}
+}
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:92px 1fr;gap:12px;padding:6px 0;border-left:0}
+.tl time{font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;padding-top:2px}
+.pre{white-space:pre-line}
+
+/* 편집 */
+.f{display:grid;gap:4px;margin-bottom:12px}
+.f label{font-size:12.5px;color:var(--ink-2)}
+.f input,.f select,.f textarea{border:1px solid var(--rule);background:var(--sheet);padding:8px 10px;border-radius:3px;font-size:15px;width:100%;min-width:0}
+.f textarea{min-height:76px;resize:vertical;line-height:1.6}
+.grid2{display:grid;gap:0 14px;grid-template-columns:1fr 1fr}
+.grid3{display:grid;gap:0 14px;grid-template-columns:1fr 1fr}
+@media(min-width:720px){.grid3{grid-template-columns:2fr 1fr 1fr 1fr 1fr}}
+fieldset{border:0;border-top:1px solid var(--rule);margin:8px 0 0;padding:18px 0 4px;min-width:0}
+legend{font-family:var(--serif);font-weight:700;font-size:16px;padding-right:10px}
+.hint{font-size:12.5px;color:var(--ink-3);margin:-4px 0 12px}
+.erow{display:grid;gap:6px;padding:10px 0;border-bottom:1px dashed var(--rule)}
+.erow input,.erow select,.erow textarea{border:1px solid var(--rule);background:var(--sheet);padding:7px 9px;border-radius:3px;font-size:14.5px;width:100%;min-width:0}
+.erow.test{grid-template-columns:1fr 1fr}
+.erow.test .full{grid-column:1/-1}
+@media(min-width:820px){.erow.test{grid-template-columns:110px 92px 1fr 1fr 1.4fr auto}.erow.test .full{grid-column:auto}}
+.erow.log{grid-template-columns:1fr auto}
+.erow.log textarea{grid-column:1/-1;min-height:56px}
+@media(min-width:820px){.erow.log{grid-template-columns:150px 1fr auto}.erow.log textarea{grid-column:auto}}
+.x{border:0;background:none;color:var(--ink-3);font-size:13px;padding:4px 6px;justify-self:end}
+.x:hover{color:#9b3b2f}
+.savebar{position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--rule);padding:12px 0;margin-top:20px;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+
+/* 문서 */
+.doctabs{display:flex;gap:0;border:1px solid var(--rule);border-radius:3px;overflow:hidden;width:100%;max-width:520px}
+.doctabs button{flex:1;border:0;background:var(--sheet);padding:8px 6px;font-size:13.5px;color:var(--ink-2);border-right:1px solid var(--rule)}
+.doctabs button:last-child{border-right:0}
+.doctabs button[aria-pressed="true"]{background:var(--teal);color:var(--sheet)}
+.paper{background:var(--sheet);border:1px solid var(--rule);margin-top:16px;padding:28px 20px 34px;max-width:760px}
+@media(min-width:720px){.paper{padding:44px 52px 52px}}
+.paper h2{font-size:21px;margin-bottom:4px}
+.paper h3{font-size:15px;color:var(--teal);margin:24px 0 6px}
+.paper p,.paper li{font-size:15px;line-height:1.85}
+.paper ul,.paper ol{margin:0;padding-left:20px}
+.paper .sig{margin-top:28px;font-size:13.5px;color:var(--ink-2)}
+.paper .note{margin-top:18px;padding:12px 14px;background:var(--teal-wash);font-size:13.5px;line-height:1.7}
+.paper .titles li{font-family:var(--serif);font-size:16px;margin-bottom:4px}
+.docbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+/* 검사 정리 */
+.tests{list-style:none;margin:14px 0 0;padding:0;border-top:1px solid var(--rule)}
+.tests>li{border-bottom:1px solid var(--rule)}
+.tests .th{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1fr auto;gap:2px 14px;width:100%;padding:12px 4px;cursor:pointer}
+.tests .th:hover{background:var(--teal-wash)}
+.tests .th:focus-visible{outline:2px solid var(--teal)}
+.tname{font-weight:500}
+.tcat{font-size:12px;color:var(--ink-3);margin-left:6px;font-weight:400}
+.tbar{grid-column:1/-1;display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--ink-3)}
+.tbar svg{flex:1;max-width:260px;height:6px}
+.tlast{font-size:13px;color:var(--ink-2);text-align:right}
+.tdetail{padding:0 4px 14px}
+.sum{display:flex;gap:28px;flex-wrap:wrap;margin-top:6px;font-size:13.5px;color:var(--ink-2)}
+.sum b{display:block;font-family:var(--serif);font-size:24px;color:var(--ink);font-weight:700}
+
+/* 데이터 */
+.dsec{padding:20px 0;border-bottom:1px solid var(--rule-2);max-width:640px}
+.dsec h3{font-size:16px;margin-bottom:6px}
+.dsec p{color:var(--ink-2);font-size:14.5px;margin-bottom:12px}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff;color:#000}
+  .top,.foot,.back,.doctabs,.docbar,.noprint,.toast{display:none!important}
+  main{padding:0}
+  .paper{border:0;padding:0;max-width:none;background:#fff}
+  .paper .note{background:#f2f2f2}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <p class="kicker">청담장튼튼내과동물병원 · 한성국 원장님을 위한 시제품</p>
+    <p class="demo"><b>예시 데이터입니다.</b> 실제 환자 정보가 아닙니다.</p>
+    <div class="brand"><h1>케이스 노트</h1><span>내과 케이스를 모아 두고, 안내문과 콘텐츠 원고로 꺼내 쓰는 진료 수첩</span></div>
+    <nav class="tabs" aria-label="주요 화면">
+      <button type="button" data-tab="list">케이스</button>
+      <button type="button" data-tab="tests">검사 정리</button>
+      <button type="button" data-tab="data">데이터</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap" id="view" tabindex="-1"></main>
+<footer class="foot">
+  <div class="wrap">원장을 위한 AI 실전 교육 · 교육 당일 원장님 계정으로 옮겨 병원에 맞게 고칩니다</div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="casenote-hsg-v1";
+var CONTACT_DEFAULT="궁금하신 점은 병원 카카오톡 채널이나 대표 전화로 편하게 남겨 주세요. 진료 시간 중 확인해 답을 드리겠습니다.";
+
+/* ---------- 예시 데이터 ---------- */
+function sample(){
+  return {
+    contact:CONTACT_DEFAULT,
+    cases:[
+      {id:"c1",date:"2026-09-02",status:"진행 중",name:"보리",species:"고양이",breed:"코리안 숏헤어",age:"14세",weight:"3.6kg",owner:"김OO",
+       complaint:"한두 달 사이 물을 많이 마시고 소변량이 늘었다고 함. 체중이 조금씩 빠지는 느낌.",
+       diagnosis:"만성 신장병",
+       ownerExplain:"콩팥이 노폐물을 걸러내는 힘이 천천히 떨어진 상태입니다. 완치보다는 진행을 늦추고 편하게 지내도록 관리하는 병입니다.",
+       homeCare:"신장 처방식으로 천천히 바꿔 주세요\n물그릇을 여러 곳에 두고 신선한 물을 자주 갈아 주세요\n하루 식사량과 소변 덩어리 크기를 메모해 주세요",
+       warnSigns:"하루 이상 밥을 거의 안 먹을 때\n구토가 반복될 때\n기운이 눈에 띄게 없을 때",
+       nextVisit:"2026-11-04",nextVisitNote:"혈액검사·혈압 재검",
+       tests:[
+         {cat:"혈액",date:"2026-09-02",item:"BUN",result:"상승",note:"크레아티닌과 함께 상승"},
+         {cat:"혈액",date:"2026-09-02",item:"크레아티닌",result:"상승",note:"신장 기능 저하 소견"},
+         {cat:"혈액",date:"2026-09-02",item:"SDMA",result:"상승",note:"크레아티닌 결과와 일치"},
+         {cat:"기타",date:"2026-09-02",item:"요비중",result:"낮음",note:"소변 농축 능력 감소"},
+         {cat:"영상",date:"2026-09-02",item:"복부 초음파",result:"양측 신장 크기 감소",note:"피질 에코 증가, 결석 없음"},
+         {cat:"기타",date:"2026-09-02",item:"혈압",result:"정상 범위 상단",note:"재검으로 추이 확인"}
+       ],
+       logs:[
+         {date:"2026-09-02",text:"초진. 혈액·요검사·복부 초음파. 음수량 관찰과 처방식 상담 시작."},
+         {date:"2026-09-16",text:"식욕 유지. 처방식 적응 중. 음수량 큰 변화 없음."},
+         {date:"2026-10-07",text:"재검. 신장 수치 초진 대비 비슷하게 유지. 같은 관리 계속."}
+       ],
+       outcome:"초진 이후 수치가 큰 변화 없이 유지되고 있으며 식욕과 활력이 안정적임.",
+       tags:["신장","고양이","만성관리","블로그후보"]},
+      {id:"c2",date:"2026-08-21",status:"진행 중",name:"몽이",species:"개",breed:"포메라니안",age:"11세",weight:"4.1kg",owner:"이OO",
+       complaint:"물을 많이 마시고 배가 처져 보임. 옆구리 털이 빠짐.",
+       diagnosis:"부신피질기능항진증(쿠싱 증후군)",
+       ownerExplain:"부신에서 스트레스 호르몬이 지나치게 많이 만들어지는 병입니다. 약으로 호르몬 양을 조절하며, 정기 검사로 약 효과를 맞춰 갑니다.",
+       homeCare:"약은 처방된 시간에 음식과 함께 먹여 주세요\n하루 물 마시는 양을 대략 기록해 주세요\n식욕이 떨어지면 다음 약을 먹이기 전에 병원에 먼저 연락 주세요",
+       warnSigns:"식욕이 갑자기 떨어질 때\n구토·설사가 생길 때\n유난히 기운이 없을 때",
+       nextVisit:"2026-10-16",nextVisitNote:"약 반응 확인 검사",
+       tests:[
+         {cat:"혈액",date:"2026-08-21",item:"ALP",result:"상승",note:"쿠싱에서 흔한 소견"},
+         {cat:"혈액",date:"2026-08-21",item:"콜레스테롤",result:"상승",note:""},
+         {cat:"기타",date:"2026-08-21",item:"요비중",result:"낮음",note:"다음·다뇨와 부합"},
+         {cat:"영상",date:"2026-08-21",item:"복부 초음파",result:"양측 부신 비대",note:"간 비대 동반"},
+         {cat:"기타",date:"2026-08-28",item:"저용량 덱사메타손 억제시험",result:"억제 안 됨",note:"진단에 부합"}
+       ],
+       logs:[
+         {date:"2026-08-21",text:"초진. 혈액·요검사·복부 초음파."},
+         {date:"2026-08-28",text:"호르몬 검사 후 진단. 약물 치료 시작, 복용법 설명."},
+         {date:"2026-09-18",text:"약 반응 확인. 음수량 줄었다고 함. 용량 유지."}
+       ],
+       outcome:"치료 시작 후 음수량과 식욕이 안정되고 있음. 털은 수개월에 걸쳐 회복을 기대.",
+       tags:["내분비","개","블로그후보"]},
+      {id:"c3",date:"2026-09-10",status:"종결",name:"두부",species:"개",breed:"미니어처 슈나우저",age:"8세",weight:"7.8kg",owner:"박OO",
+       complaint:"전날 밤부터 여러 번 구토, 밥을 거부함. 배를 만지면 싫어함.",
+       diagnosis:"급성 췌장염",
+       ownerExplain:"소화 효소를 만드는 췌장에 염증이 생긴 상태입니다. 입원 치료로 고비를 넘겼고, 재발을 막으려면 기름진 음식을 피하는 것이 중요합니다.",
+       homeCare:"저지방 처방식만 급여해 주세요\n간식·사람 음식은 주지 마세요\n한 번에 많이 주기보다 나눠서 급여해 주세요",
+       warnSigns:"구토가 다시 시작될 때\n배를 웅크리거나 아파할 때\n밥을 하루 이상 안 먹을 때",
+       nextVisit:"",nextVisitNote:"증상이 없으면 3개월 뒤 정기 검진 때 뵙겠습니다",
+       tests:[
+         {cat:"혈액",date:"2026-09-10",item:"cPL 신속검사",result:"양성",note:"췌장염 의심 소견"},
+         {cat:"혈액",date:"2026-09-10",item:"CRP",result:"상승",note:"염증 반응"},
+         {cat:"혈액",date:"2026-09-10",item:"전해질",result:"정상 범위",note:""},
+         {cat:"영상",date:"2026-09-10",item:"복부 초음파",result:"췌장 주변 고에코 지방",note:"췌장 저에코, 복수 소량"}
+       ],
+       logs:[
+         {date:"2026-09-10",text:"입원. 수액, 진통, 구토 조절 치료 시작."},
+         {date:"2026-09-12",text:"구토 멈춤. 저지방 처방식 소량부터 급여 시작."},
+         {date:"2026-09-14",text:"식욕 회복, 퇴원."},
+         {date:"2026-09-24",text:"재검. 염증 수치 정상 범위로 회복. 처방식 유지하며 종결."}
+       ],
+       outcome:"입원 4일 후 퇴원, 2주 뒤 재검에서 염증 수치가 정상 범위로 회복됨.",
+       tags:["소화기","개","입원","유튜브후보"]},
+      {id:"c4",date:"2026-07-30",status:"진행 중",name:"나비",species:"고양이",breed:"페르시안",age:"10세",weight:"4.9kg",owner:"최OO",
+       complaint:"물을 많이 마시고 화장실 모래 덩어리가 커짐. 잘 먹는데 살이 빠짐.",
+       diagnosis:"당뇨병",
+       ownerExplain:"몸이 혈당을 제대로 쓰지 못하는 병입니다. 인슐린 주사와 식이 관리로 혈당을 조절하며, 관리를 잘하면 상태가 크게 좋아지는 경우도 있습니다.",
+       homeCare:"인슐린은 식사 직후 정해진 시간에 놓아 주세요\n당뇨 처방식을 급여해 주세요\n주사 시간과 식사량을 기록지에 적어 주세요",
+       warnSigns:"비틀거리거나 떨 때(저혈당 가능성)\n밥을 먹지 않을 때 — 이때는 주사 전에 먼저 연락 주세요\n구토가 반복될 때",
+       nextVisit:"2026-10-15",nextVisitNote:"혈당 곡선 재검",
+       tests:[
+         {cat:"혈액",date:"2026-07-30",item:"혈당",result:"상승",note:""},
+         {cat:"혈액",date:"2026-07-30",item:"프럭토사민",result:"상승",note:"지속적 고혈당 시사"},
+         {cat:"기타",date:"2026-07-30",item:"요당",result:"양성",note:"케톤 음성"},
+         {cat:"기타",date:"2026-08-13",item:"혈당 곡선",result:"목표 범위 근접",note:"용량 유지"}
+       ],
+       logs:[
+         {date:"2026-07-30",text:"진단. 인슐린 주사법 교육, 처방식 시작."},
+         {date:"2026-08-13",text:"혈당 곡선 검사. 목표에 가까워짐."},
+         {date:"2026-09-10",text:"음수량 줄고 체중 소폭 회복."}
+       ],
+       outcome:"인슐린과 식이 관리로 다음·다뇨가 줄고 체중이 회복되는 중.",
+       tags:["내분비","고양이","보호자교육"]},
+      {id:"c5",date:"2026-06-18",status:"진행 중",name:"해피",species:"개",breed:"골든 리트리버",age:"7세",weight:"34kg",owner:"정OO",
+       complaint:"산책을 싫어하고 잠이 늘었음. 사료량은 같은데 살이 찜. 털이 푸석함.",
+       diagnosis:"갑상선기능저하증",
+       ownerExplain:"갑상선 호르몬이 부족해 몸의 대사가 느려진 상태입니다. 매일 호르몬제를 먹으면 활력과 피모가 서서히 돌아옵니다.",
+       homeCare:"호르몬제를 매일 같은 시간에 먹여 주세요\n체중을 2주에 한 번 재서 알려 주세요",
+       warnSigns:"헐떡임·안절부절이 심해질 때\n식욕이 갑자기 크게 늘거나 줄 때",
+       nextVisit:"2026-12-01",nextVisitNote:"정기 호르몬 수치 재검",
+       tests:[
+         {cat:"혈액",date:"2026-06-18",item:"T4",result:"낮음",note:""},
+         {cat:"혈액",date:"2026-06-18",item:"fT4",result:"낮음",note:"T4 결과와 일치"},
+         {cat:"혈액",date:"2026-06-18",item:"TSH",result:"상승",note:"진단 뒷받침"},
+         {cat:"혈액",date:"2026-06-18",item:"콜레스테롤",result:"상승",note:""},
+         {cat:"혈액",date:"2026-07-30",item:"T4",result:"정상 범위",note:"투약 4~6시간 후 채혈해 재검"}
+       ],
+       logs:[
+         {date:"2026-06-18",text:"갑상선 검사 후 진단, 호르몬제 시작."},
+         {date:"2026-07-30",text:"재검. 호르몬 수치 정상 범위. 활력 좋아짐."},
+         {date:"2026-09-01",text:"피모 개선, 체중 감소 시작. 정기 재검 일정으로 전환."}
+       ],
+       outcome:"투약 6주 만에 호르몬 수치가 정상 범위에 들어오고, 활력과 피모가 눈에 띄게 회복됨.",
+       tags:["내분비","개","블로그후보"]},
+      {id:"c6",date:"2026-08-05",status:"종결",name:"콩떡",species:"개",breed:"시츄",age:"6세",weight:"6.2kg",owner:"윤OO",
+       complaint:"한 달 넘게 묽은 변을 봄. 기운과 식욕은 괜찮음.",
+       diagnosis:"식이 반응성 장병증",
+       ownerExplain:"특정 사료 성분에 장이 예민하게 반응해 설사가 이어진 경우입니다. 처방식으로 바꾼 뒤 좋아졌으므로, 지금 사료를 꾸준히 유지하는 것이 치료입니다.",
+       homeCare:"가수분해 처방식만 급여해 주세요\n간식은 병원에서 안내한 것만 주세요\n변 상태를 사진으로 남겨 두시면 진료에 도움이 됩니다",
+       warnSigns:"설사에 피가 섞일 때\n구토가 같이 생길 때\n기운이나 식욕이 떨어질 때",
+       nextVisit:"",nextVisitNote:"변 상태가 계속 좋으면 다음 정기 검진 때 뵙겠습니다",
+       tests:[
+         {cat:"기타",date:"2026-08-05",item:"분변 검사",result:"기생충 음성",note:""},
+         {cat:"혈액",date:"2026-08-05",item:"알부민",result:"정상 범위",note:"단백 소실 소견 없음"},
+         {cat:"혈액",date:"2026-08-05",item:"CRP",result:"정상 범위",note:""},
+         {cat:"영상",date:"2026-08-05",item:"복부 초음파",result:"소장벽 층 구조 유지",note:"뚜렷한 종괴 없음"}
+       ],
+       logs:[
+         {date:"2026-08-05",text:"검사 후 기생충·전신 질환 소견 없어 식이 시험 시작."},
+         {date:"2026-08-19",text:"변 형태 개선."},
+         {date:"2026-09-02",text:"정상 변 유지. 처방식 장기 유지로 종결."}
+       ],
+       outcome:"처방식 교체 2주 만에 변이 좋아졌고, 4주째 정상 변을 유지함.",
+       tags:["소화기","개","식이관리"]}
+    ]
+  };
+}
+
+/* ---------- 저장 ---------- */
+var db;
+function load(){
+  try{var s=localStorage.getItem(KEY);if(s){var d=JSON.parse(s);if(d&&Array.isArray(d.cases))return d;}}catch(e){}
+  return sample();
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){toast("이 브라우저에서는 저장이 막혀 있습니다");}}
+db=load();
+if(!db.contact)db.contact=CONTACT_DEFAULT;
+
+/* ---------- 도구 ---------- */
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function lines(s){return String(s||"").split(/\n+/).map(function(x){return x.trim();}).filter(Boolean);}
+function fmtDate(d){if(!d)return "";var p=d.split("-");if(p.length<3)return d;return p[0]+". "+(+p[1])+". "+(+p[2])+".";}
+function korDate(d){if(!d)return "";var p=d.split("-");if(p.length<3)return d;return (+p[1])+"월 "+(+p[2])+"일";}
+function byId(id){for(var i=0;i<db.cases.length;i++)if(db.cases[i].id===id)return db.cases[i];return null;}
+function uid(){return "c"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function lastDate(c){var d=c.date||"";(c.logs||[]).forEach(function(l){if(l.date&&l.date>d)d=l.date;});(c.tests||[]).forEach(function(t){if(t.date&&t.date>d)d=t.date;});return d;}
+var tt;function toast(m){var el=document.getElementById("toast");el.textContent=m;el.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){el.classList.remove("on");},2200);}
+function copyText(t){
+  function fb(){var a=document.createElement("textarea");a.value=t;a.setAttribute("readonly","");a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand("copy");}catch(e){}document.body.removeChild(a);toast(ok?"복사했습니다":"복사가 막혀 있습니다. 직접 선택해 주세요");}
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(function(){toast("복사했습니다");},fb);}else fb();
+}
+
+/* ---------- 화면 이동 (뒤로가기로 앱이 닫히지 않게) ---------- */
+var cur={view:"list"};
+var ui={q:"",tag:"",dx:"",openTest:""};
+function go(state){cur=state;history.pushState({app:1,s:state},"");render();}
+function goBack(){history.back();}
+window.addEventListener("popstate",function(e){
+  var st=e.state||{};
+  if(!st.app||st.base){
+    var wasList=cur.view==="list";
+    history.pushState({app:1,s:{view:"list"}},"");
+    cur={view:"list"};render();
+    if(wasList)toast("앱을 닫으려면 홈 화면으로 나가 주십시오");
+    return;
+  }
+  cur=st.s||{view:"list"};render();
+});
+history.replaceState({app:1,base:1},"");
+history.pushState({app:1,s:{view:"list"}},"");
+
+document.querySelector(".tabs").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-tab]");if(!b)return;
+  var v=b.getAttribute("data-tab");if(cur.view===v)return;
+  go({view:v});
+});
+
+var V=document.getElementById("view");
+function render(){
+  var tab=cur.view==="tests"?"tests":cur.view==="data"?"data":"list";
+  document.querySelectorAll(".tabs button").forEach(function(b){if(b.getAttribute("data-tab")===tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});
+  if(cur.view==="case"&&!byId(cur.id))cur={view:"list"};
+  if(cur.view==="doc"&&!byId(cur.id))cur={view:"list"};
+  ({list:vList,case:vCase,edit:vEdit,doc:vDoc,tests:vTests,data:vData}[cur.view]||vList)();
+  window.scrollTo(0,0);
+}
+
+/* ---------- 목록 ---------- */
+function allTags(){var m={};db.cases.forEach(function(c){(c.tags||[]).forEach(function(t){m[t]=(m[t]||0)+1;});});return Object.keys(m).sort(function(a,b){return m[b]-m[a]||a.localeCompare(b,"ko");});}
+function allDx(){var m={};db.cases.forEach(function(c){if(c.diagnosis)m[c.diagnosis]=1;});return Object.keys(m).sort(function(a,b){return a.localeCompare(b,"ko");});}
+function matches(c){
+  if(ui.tag&&(c.tags||[]).indexOf(ui.tag)<0)return false;
+  if(ui.dx&&c.diagnosis!==ui.dx)return false;
+  var q=ui.q.trim().toLowerCase();if(!q)return true;
+  var hay=[c.name,c.species,c.breed,c.diagnosis,c.complaint,(c.tags||[]).join(" "),(c.tests||[]).map(function(t){return t.item+" "+t.result;}).join(" ")].join(" ").toLowerCase();
+  return q.split(/\s+/).every(function(w){return hay.indexOf(w)>=0;});
+}
+function vList(){
+  var tags=allTags(),dxs=allDx();
+  if(ui.dx&&dxs.indexOf(ui.dx)<0)ui.dx="";
+  V.innerHTML=
+    '<div class="listhead">'+
+      '<input class="search" id="q" type="search" placeholder="환자 이름, 진단, 검사 항목으로 찾기" value="'+esc(ui.q)+'" aria-label="케이스 검색">'+
+      '<select class="sel" id="dx" aria-label="진단명으로 거르기"><option value="">진단명 전체</option>'+dxs.map(function(d){return '<option'+(d===ui.dx?' selected':'')+'>'+esc(d)+'</option>';}).join("")+'</select>'+
+      '<button class="btn pri" id="new" type="button">새 케이스</button>'+
+    '</div>'+
+    '<div class="chips" role="group" aria-label="태그">'+
+      '<button class="chip" type="button" data-tag="" aria-pressed="'+(!ui.tag)+'">전체</button>'+
+      tags.map(function(t){return '<button class="chip" type="button" data-tag="'+esc(t)+'" aria-pressed="'+(ui.tag===t)+'">'+esc(t)+'</button>';}).join("")+
+    '</div>'+
+    '<p class="count" id="cnt"></p><ul class="cases" id="cl"></ul>';
+  var q=document.getElementById("q");
+  q.addEventListener("input",function(){ui.q=q.value;drawList();});
+  document.getElementById("dx").addEventListener("change",function(e){ui.dx=e.target.value;drawList();});
+  V.querySelector(".chips").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;ui.tag=b.getAttribute("data-tag");V.querySelectorAll(".chip").forEach(function(x){x.setAttribute("aria-pressed",String(x===b));});drawList();});
+  document.getElementById("new").addEventListener("click",function(){go({view:"edit",id:null});});
+  drawList();
+}
+function drawList(){
+  var list=db.cases.filter(matches).sort(function(a,b){return (b.date||"").localeCompare(a.date||"");});
+  document.getElementById("cnt").textContent="케이스 "+list.length+"건"+(list.length!==db.cases.length?" (전체 "+db.cases.length+"건 중)":"");
+  var ul=document.getElementById("cl");
+  if(!list.length){ul.innerHTML='<li class="empty">조건에 맞는 케이스가 없습니다.</li>';return;}
+  ul.innerHTML=list.map(function(c){
+    return '<li><button type="button" data-id="'+esc(c.id)+'">'+
+      '<span class="cdate">'+esc(fmtDate(c.date))+'</span>'+
+      '<span><span class="cdx">'+esc(c.diagnosis||"진단 미정")+'</span><br><span class="cmeta">'+esc(c.name)+' · '+esc([c.species,c.breed,c.age].filter(Boolean).join(" · "))+'</span></span>'+
+      '<span class="cbody cmeta">'+esc(c.complaint||"").slice(0,64)+(String(c.complaint||"").length>64?"…":"")+'<br>'+(c.tags||[]).map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join("")+'</span>'+
+    '</button></li>';
+  }).join("");
+  ul.onclick=function(e){var b=e.target.closest("button[data-id]");if(b)go({view:"case",id:b.getAttribute("data-id")});};
+}
+
+/* ---------- 상세 ---------- */
+function testTable(tests,stack){
+  if(!tests||!tests.length)return '<p class="muted small">기록된 검사가 없습니다.</p>';
+  return '<table class="tbl'+(stack?' stack':'')+'"><thead><tr><th>구분</th><th>날짜</th><th>항목</th><th>결과</th><th>해석 메모</th></tr></thead><tbody>'+
+    tests.map(function(t){return '<tr><td class="k" data-h="구분">'+esc(t.cat)+'</td><td class="k" data-h="날짜">'+esc(fmtDate(t.date))+'</td><td data-h="항목">'+esc(t.item)+'</td><td data-h="결과">'+esc(t.result)+'</td><td data-h="메모">'+esc(t.note)+'</td></tr>';}).join("")+
+    '</tbody></table>';
+}
+function bullets(s){var l=lines(s);return l.length?'<ul style="margin:0;padding-left:18px">'+l.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>':'<p class="muted small">비어 있습니다.</p>';}
+function vCase(){
+  var c=byId(cur.id);
+  V.innerHTML=
+    '<button class="btn ghost back" type="button" id="bk">← 목록</button>'+
+    '<div class="dhead">'+
+      '<p class="label">'+esc(fmtDate(c.date))+' 초진 · 최근 기록 '+esc(fmtDate(lastDate(c)))+'</p>'+
+      '<h2>'+esc(c.diagnosis||"진단 미정")+'<span class="status">'+esc(c.status||"진행 중")+'</span></h2>'+
+      '<p class="pt">'+esc(c.name)+' · '+esc([c.species,c.breed,c.age,c.weight].filter(Boolean).join(" · "))+(c.owner?' · 보호자 '+esc(c.owner):'')+'</p>'+
+      '<div>'+(c.tags||[]).map(function(t){return '<span class="tag" style="margin-right:4px">'+esc(t)+'</span>';}).join("")+'</div>'+
+      '<div class="gen"><span class="label">이 케이스로 문서 만들기</span><div class="row">'+
+        '<button class="btn pri" type="button" data-doc="owner">보호자 안내문</button>'+
+        '<button class="btn" type="button" data-doc="blog">블로그·유튜브 정리</button>'+
+        '<button class="btn" type="button" data-doc="tests">검사 정리표</button>'+
+        '<button class="btn ghost" type="button" id="ed">편집</button>'+
+      '</div></div>'+
+    '</div>'+
+    '<div class="dgrid">'+
+      '<section class="block"><h3>주호소</h3><p>'+esc(c.complaint)+'</p></section>'+
+      '<section class="block"><h3>진단 · 보호자용 설명</h3><p>'+esc(c.ownerExplain||"—")+'</p></section>'+
+      '<section class="block wide"><h3>검사</h3>'+testTable(c.tests,true)+'</section>'+
+      '<section class="block"><h3>치료 경과</h3>'+((c.logs||[]).length?'<ol class="tl">'+c.logs.slice().sort(function(a,b){return (a.date||"").localeCompare(b.date||"");}).map(function(l){return '<li><time>'+esc(fmtDate(l.date))+'</time><span>'+esc(l.text)+'</span></li>';}).join("")+'</ol>':'<p class="muted small">기록이 없습니다.</p>')+
+        (c.outcome?'<p style="margin-top:10px"><span class="label">결과 요약</span><br>'+esc(c.outcome)+'</p>':'')+'</section>'+
+      '<section class="block"><h3>집에서 할 일</h3>'+bullets(c.homeCare)+
+        '<h3 style="margin-top:16px">바로 연락할 증상</h3>'+bullets(c.warnSigns)+
+        '<h3 style="margin-top:16px">다음 내원</h3><p>'+(c.nextVisit?esc(fmtDate(c.nextVisit))+' ':'')+esc(c.nextVisitNote||"")+(!c.nextVisit&&!c.nextVisitNote?'<span class="muted small">미정</span>':'')+'</p></section>'+
+    '</div>';
+  document.getElementById("bk").onclick=goBack;
+  document.getElementById("ed").onclick=function(){go({view:"edit",id:c.id});};
+  V.querySelectorAll("[data-doc]").forEach(function(b){b.onclick=function(){go({view:"doc",id:c.id,doc:b.getAttribute("data-doc")});};});
+}
+
+/* ---------- 편집 ---------- */
+function testRow(t){t=t||{cat:"혈액",date:today()};
+  return '<div class="erow test">'+
+    '<select aria-label="구분" data-k="cat">'+["혈액","영상","기타"].map(function(x){return '<option'+(x===t.cat?' selected':'')+'>'+x+'</option>';}).join("")+'</select>'+
+    '<input type="date" aria-label="검사 날짜" data-k="date" value="'+esc(t.date)+'">'+
+    '<input class="full" aria-label="검사 항목" placeholder="항목 (예: ALP)" data-k="item" value="'+esc(t.item)+'">'+
+    '<input class="full" aria-label="결과" placeholder="결과 (예: 상승)" data-k="result" value="'+esc(t.result)+'">'+
+    '<input class="full" aria-label="해석 메모" placeholder="해석 메모" data-k="note" value="'+esc(t.note)+'">'+
+    '<button class="x" type="button" data-del>삭제</button></div>';}
+function logRow(l){l=l||{date:today()};
+  return '<div class="erow log">'+
+    '<input type="date" aria-label="경과 날짜" data-k="date" value="'+esc(l.date)+'">'+
+    '<textarea aria-label="경과 내용" placeholder="이날 한 처치와 반응" data-k="text">'+esc(l.text)+'</textarea>'+
+    '<button class="x" type="button" data-del>삭제</button></div>';}
+function fld(id,label,val,type,ph){return '<div class="f"><label for="'+id+'">'+label+'</label>'+(type==="ta"?'<textarea id="'+id+'" placeholder="'+esc(ph||"")+'">'+esc(val)+'</textarea>':'<input id="'+id+'" type="'+(type||"text")+'" placeholder="'+esc(ph||"")+'" value="'+esc(val)+'">')+'</div>';}
+function vEdit(){
+  var isNew=!cur.id, c=isNew?{date:today(),status:"진행 중",species:"개",tests:[],logs:[],tags:[]}:JSON.parse(JSON.stringify(byId(cur.id)));
+  V.innerHTML=
+    '<button class="btn ghost back" type="button" id="bk">← '+(isNew?'목록':'케이스로')+'</button>'+
+    '<h2 style="font-size:22px;margin-bottom:6px">'+(isNew?'새 케이스':'케이스 편집')+'</h2>'+
+    '<p class="hint" style="margin:0 0 6px">저장하기 전까지는 바뀌지 않습니다.</p>'+
+    '<form id="fm" novalidate>'+
+    '<fieldset><legend>환자</legend>'+
+      '<div class="grid3">'+fld("f-name","이름",c.name)+
+        '<div class="f"><label for="f-species">종</label><select id="f-species">'+["개","고양이","기타"].map(function(x){return '<option'+(x===c.species?' selected':'')+'>'+x+'</option>';}).join("")+'</select></div>'+
+        fld("f-breed","품종",c.breed)+fld("f-age","나이",c.age,"text","예: 8세")+fld("f-weight","체중",c.weight,"text","예: 4.2kg")+'</div>'+
+      '<div class="grid2">'+fld("f-date","초진일",c.date,"date")+fld("f-owner","보호자 (안내문에만 쓰임)",c.owner)+'</div>'+
+    '</fieldset>'+
+    '<fieldset><legend>주호소 · 진단</legend>'+
+      fld("f-complaint","주호소",c.complaint,"ta")+
+      '<div class="grid2">'+fld("f-dx","진단명",c.diagnosis)+
+        '<div class="f"><label for="f-status">상태</label><select id="f-status">'+["진행 중","종결"].map(function(x){return '<option'+(x===c.status?' selected':'')+'>'+x+'</option>';}).join("")+'</select></div></div>'+
+      fld("f-explain","보호자용 진단 설명",c.ownerExplain,"ta","보호자가 이해할 수 있는 말로 두세 문장")+
+    '</fieldset>'+
+    '<fieldset><legend>검사</legend><p class="hint">혈액·영상·기타 검사를 한 줄씩. 결과는 \'상승\', \'정상 범위\'처럼 적어도 됩니다.</p>'+
+      '<div id="tests">'+(c.tests||[]).map(testRow).join("")+'</div>'+
+      '<button class="btn" type="button" id="addT" style="margin-top:10px">검사 줄 추가</button></fieldset>'+
+    '<fieldset><legend>치료 경과</legend>'+
+      '<div id="logs">'+(c.logs||[]).map(logRow).join("")+'</div>'+
+      '<button class="btn" type="button" id="addL" style="margin-top:10px">경과 추가</button>'+
+      '<div style="margin-top:14px">'+fld("f-outcome","결과 요약 (블로그 정리에 쓰임)",c.outcome,"ta")+'</div></fieldset>'+
+    '<fieldset><legend>보호자 안내</legend>'+
+      fld("f-home","집에서 할 일 (한 줄에 하나)",c.homeCare,"ta")+
+      fld("f-warn","바로 연락할 증상 (한 줄에 하나)",c.warnSigns,"ta")+
+      '<div class="grid2">'+fld("f-next","다음 내원일",c.nextVisit,"date")+fld("f-nextnote","다음 내원 내용",c.nextVisitNote,"text","예: 혈액검사 재검")+'</div>'+
+    '</fieldset>'+
+    '<fieldset><legend>태그</legend>'+fld("f-tags","쉼표로 구분",(c.tags||[]).join(", "),"text","예: 내분비, 블로그후보")+'</fieldset>'+
+    '<div class="savebar">'+(isNew?'':'<button class="btn danger" type="button" id="del" style="margin-right:auto">케이스 삭제</button>')+
+      '<button class="btn" type="button" id="cancel">취소</button><button class="btn pri" type="submit">저장</button></div>'+
+    '</form>';
+  var T=document.getElementById("tests"),L=document.getElementById("logs");
+  document.getElementById("addT").onclick=function(){T.insertAdjacentHTML("beforeend",testRow());T.lastElementChild.querySelector("[data-k=item]").focus();};
+  document.getElementById("addL").onclick=function(){L.insertAdjacentHTML("beforeend",logRow());L.lastElementChild.querySelector("textarea").focus();};
+  document.getElementById("fm").addEventListener("click",function(e){var d=e.target.closest("[data-del]");if(d)d.parentNode.remove();});
+  document.getElementById("bk").onclick=goBack;
+  document.getElementById("cancel").onclick=goBack;
+  if(!isNew)document.getElementById("del").onclick=function(){
+    if(!confirm("이 케이스를 삭제할까요? 되돌릴 수 없습니다."))return;
+    db.cases=db.cases.filter(function(x){return x.id!==c.id;});save();toast("삭제했습니다");
+    history.go(-2);
+  };
+  document.getElementById("fm").onsubmit=function(e){
+    e.preventDefault();
+    function v(id){return document.getElementById(id).value.trim();}
+    function rows(box,keys){return Array.prototype.map.call(box.children,function(r){var o={};keys.forEach(function(k){o[k]=r.querySelector("[data-k="+k+"]").value.trim();});return o;});}
+    var n={id:c.id||uid(),name:v("f-name"),species:v("f-species"),breed:v("f-breed"),age:v("f-age"),weight:v("f-weight"),date:v("f-date"),owner:v("f-owner"),
+      complaint:v("f-complaint"),diagnosis:v("f-dx"),status:v("f-status"),ownerExplain:v("f-explain"),
+      tests:rows(T,["cat","date","item","result","note"]).filter(function(t){return t.item;}),
+      logs:rows(L,["date","text"]).filter(function(l){return l.text;}),
+      outcome:v("f-outcome"),homeCare:document.getElementById("f-home").value,warnSigns:document.getElementById("f-warn").value,
+      nextVisit:v("f-next"),nextVisitNote:v("f-nextnote"),
+      tags:v("f-tags").split(/[,，]/).map(function(x){return x.trim();}).filter(Boolean)};
+    if(!n.name){toast("환자 이름을 적어 주세요");document.getElementById("f-name").focus();return;}
+    if(isNew)db.cases.push(n);else db.cases=db.cases.map(function(x){return x.id===n.id?n:x;});
+    save();toast("저장했습니다");
+    // 편집 화면 기록을 상세 화면으로 바꿔 둔다
+    if(isNew){cur={view:"case",id:n.id};history.replaceState({app:1,s:cur},"");render();}
+    else history.back();
+  };
+}
+
+/* ---------- 문서 생성 (템플릿 조합) ---------- */
+// 마지막 글자의 받침: 0 없음, 8 ㄹ, 그 밖의 숫자 있음. 영문·숫자는 읽는 소리 기준(T4→사, CRP→피).
+function jong(w){w=String(w||"").replace(/\([^)]*\)\s*$/,"").trim();if(!w)return 0;var c=w.charAt(w.length-1),ch=w.charCodeAt(w.length-1);
+  if(ch>=0xAC00&&ch<=0xD7A3)return (ch-0xAC00)%28;var d={"0":21,"1":8,"3":16,"6":1,"7":8,"8":8};if(c in d)return d[c];if(/[0-9]/.test(c))return 0;
+  var L={l:8,r:8,m:16,n:4};c=c.toLowerCase();return L[c]||0;}
+function josa(w,a,b){return jong(w)?a:b;}
+function ro(w){var j=jong(w);return (j===0||j===8)?"로":"으로";}
+function nextSentence(c){
+  var n=(c.nextVisitNote||"").trim();
+  if(c.nextVisit)return korDate(c.nextVisit)+"에 "+(n?n+" 예정입니다.":"다시 뵙겠습니다.")+" 일정이 맞지 않으시면 미리 말씀해 주세요.";
+  if(n)return /[.!?。]$/.test(n)?n:n+".";
+  return "다음 일정은 따로 연락드리겠습니다.";
+}
+function docOwner(c){
+  var nm=c.name||"아이";
+  var home=lines(c.homeCare),warn=lines(c.warnSigns),tests=(c.tests||[]).filter(function(t){return t.note||t.result;});
+  var obj=josa(nm,"을","를");
+  var h='<h2>'+esc(nm)+' 보호자님께</h2><p class="muted small">'+esc(korDate(lastDate(c)))+' 진료 내용 안내</p>'+
+    '<p style="margin-top:16px">오늘 '+esc(nm)+obj+' 진료하면서 확인한 내용과 집에서 도와주실 일을 정리해 드립니다.</p>'+
+    '<h3>진단</h3><p><strong style="font-weight:500">'+esc(c.diagnosis||"추가 검사 후 안내드리겠습니다")+'</strong></p>'+(c.ownerExplain?'<p>'+esc(c.ownerExplain)+'</p>':'')+
+    (tests.length?'<h3>검사에서 확인한 내용</h3><ul>'+tests.map(function(t){return '<li>'+esc(t.item)+': '+esc(t.result)+(t.note?' — '+esc(t.note):'')+'</li>';}).join("")+'</ul>':'')+
+    (home.length?'<h3>집에서 해 주실 일</h3><ol>'+home.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ol>':'')+
+    (warn.length?'<h3>이럴 때는 바로 연락 주세요</h3><ul>'+warn.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>':'')+
+    '<h3>다음 내원</h3><p>'+esc(nextSentence(c))+'</p>'+
+    '<p class="note">'+esc(db.contact||CONTACT_DEFAULT)+'</p>'+
+    '<p class="sig">청담장튼튼내과동물병원 원장 한성국 드림</p>';
+  var t=[nm+" 보호자님께",korDate(lastDate(c))+" 진료 내용 안내","",
+    "오늘 "+nm+obj+" 진료하면서 확인한 내용과 집에서 도와주실 일을 정리해 드립니다.","",
+    "■ 진단",c.diagnosis||"추가 검사 후 안내드리겠습니다"].concat(c.ownerExplain?[c.ownerExplain]:[]);
+  if(tests.length){t.push("","■ 검사에서 확인한 내용");tests.forEach(function(x){t.push("- "+x.item+": "+x.result+(x.note?" — "+x.note:""));});}
+  if(home.length){t.push("","■ 집에서 해 주실 일");home.forEach(function(x,i){t.push((i+1)+". "+x);});}
+  if(warn.length){t.push("","■ 이럴 때는 바로 연락 주세요");warn.forEach(function(x){t.push("- "+x);});}
+  t.push("","■ 다음 내원",nextSentence(c),"",db.contact||CONTACT_DEFAULT,"","청담장튼튼내과동물병원 원장 한성국 드림");
+  return {title:"보호자 안내문",html:h,text:t.join("\n")};
+}
+function docBlog(c){
+  var sp=c.species||"반려동물",who=[c.age,c.breed].filter(Boolean).join(" ")||sp,dx=c.diagnosis||"진단";
+  var mainTest=(c.tests||[]).filter(function(t){return t.cat==="영상";})[0]||(c.tests||[])[0];
+  var titles=[
+    who+" "+sp+"의 "+dx+" — 내원부터 "+(c.status==="종결"?"회복까지":"지금의 관리까지"),
+    dx+", 보호자가 먼저 알아챌 수 있는 신호",
+    (mainTest?mainTest.item+ro(mainTest.item)+" 확인한 ":"")+sp+" "+dx+" 케이스"
+  ];
+  var logs=(c.logs||[]).slice().sort(function(a,b){return (a.date||"").localeCompare(b.date||"");});
+  var d0=c.date;
+  function rel(d){if(!d||!d0)return "";var a=new Date(d0),b=new Date(d);var n=Math.round((b-a)/864e5);return n<=0?"첫날":n<14?n+"일째":Math.round(n/7)+"주째";}
+  var blood=(c.tests||[]).filter(function(t){return t.cat==="혈액";}),img=(c.tests||[]).filter(function(t){return t.cat==="영상";}),etc=(c.tests||[]).filter(function(t){return t.cat==="기타";});
+  function tl(a){return a.map(function(t){return t.item+" "+t.result;}).join(", ");}
+  var testSent=[blood.length?"혈액검사에서는 "+tl(blood)+" 소견이 나왔습니다.":"",img.length?"영상 검사로는 "+img.map(function(t){return t.item+"에서 "+t.result;}).join(", ")+" 소견을 확인했습니다.":"",etc.length?"그 밖에 "+tl(etc)+" 결과를 함께 봤습니다.":""].filter(Boolean);
+  var secs=[
+    ["내원 계기",[who+" "+sp+" 환자입니다. "+(c.complaint||"")]],
+    ["검사",testSent.length?testSent:["검사 내용을 케이스에 추가하면 이곳이 채워집니다."]],
+    ["진단",[dx+ro(dx)+" 진단했습니다."+(c.ownerExplain?" "+c.ownerExplain:"")]],
+    ["치료와 경과",logs.length?logs.map(function(l){return (rel(l.date)?"("+rel(l.date)+") ":"")+l.text;}):["경과 기록을 추가하면 이곳이 채워집니다."]],
+    ["결과",[c.outcome||"결과 요약을 케이스에 적으면 이곳에 들어갑니다."]]
+  ];
+  var h='<p class="label">블로그·유튜브 원고용 케이스 정리</p><h2>'+esc(dx)+'</h2>'+
+    '<h3>제목 후보</h3><ol class="titles">'+titles.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ol>'+
+    secs.map(function(s,i){return '<h3>'+(i+1)+'. '+esc(s[0])+'</h3>'+(s[1].length>1?'<ul>'+s[1].map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>':'<p>'+esc(s[1][0])+'</p>');}).join("")+
+    '<h3>보호자에게 전할 한 줄</h3><p>'+esc(lines(c.warnSigns)[0]?"\""+lines(c.warnSigns)[0]+"\" 같은 변화가 보이면 미루지 말고 진료를 받아 보세요.":"평소와 다른 음수량·식욕·활력 변화가 있으면 진료를 받아 보세요.")+'</p>'+
+    '<div class="note"><strong style="font-weight:500">게시 전 개인정보 확인</strong><br>보호자 이름·연락처·주소는 원고에 넣지 않았습니다. 환자 이름은 보호자 동의를 받은 경우에만 쓰고, 그 외에는 가명으로 바꿔 주세요. 검사 사진과 영상 화면에 차트 번호·보호자 이름이 보이지 않는지 확인해 주세요.</div>';
+  var t=["[블로그·유튜브 원고용 케이스 정리] "+dx,"","제목 후보"].concat(titles.map(function(x,i){return (i+1)+". "+x;}));
+  secs.forEach(function(s,i){t.push("",(i+1)+". "+s[0]);s[1].forEach(function(x){t.push(s[1].length>1?"- "+x:x);});});
+  t.push("","※ 보호자 이름·연락처·주소는 넣지 않았습니다. 환자 이름은 보호자 동의를 받은 경우에만 쓰고, 검사 사진 속 차트 번호·보호자 이름을 가려 주세요.");
+  return {title:"블로그·유튜브 정리",html:h,text:t.join("\n")};
+}
+function docTests(c){
+  var ts=(c.tests||[]).slice().sort(function(a,b){var o={"혈액":0,"영상":1,"기타":2};return (a.date||"").localeCompare(b.date||"")||((o[a.cat]||0)-(o[b.cat]||0));});
+  var h='<p class="label">검사 정리표</p><h2>'+esc(c.name)+' · '+esc(c.diagnosis||"")+'</h2>'+
+    '<p class="muted small">'+esc([c.species,c.breed,c.age,c.weight].filter(Boolean).join(" · "))+' · 초진 '+esc(fmtDate(c.date))+'</p>'+
+    '<div style="margin-top:18px">'+testTable(ts,false)+'</div>'+
+    '<p class="muted small" style="margin-top:14px">검사 '+ts.length+'건 · 혈액 '+ts.filter(function(t){return t.cat==="혈액";}).length+' · 영상 '+ts.filter(function(t){return t.cat==="영상";}).length+' · 기타 '+ts.filter(function(t){return t.cat==="기타";}).length+'</p>';
+  var t=["검사 정리표 — "+c.name+" · "+(c.diagnosis||""),[c.species,c.breed,c.age,c.weight].filter(Boolean).join(" · ")+" · 초진 "+fmtDate(c.date),"","구분\t날짜\t항목\t결과\t해석 메모"]
+    .concat(ts.map(function(x){return [x.cat,fmtDate(x.date),x.item,x.result,x.note].join("\t");}));
+  return {title:"검사 정리표",html:h,text:t.join("\n")};
+}
+function vDoc(){
+  var c=byId(cur.id),kind=cur.doc||"owner";
+  var d=(kind==="blog"?docBlog:kind==="tests"?docTests:docOwner)(c);
+  V.innerHTML=
+    '<button class="btn ghost back" type="button" id="bk">← '+esc(c.name)+' 케이스</button>'+
+    '<div class="doctabs" role="group" aria-label="문서 종류">'+
+      [["owner","보호자 안내문"],["blog","블로그·유튜브"],["tests","검사 정리표"]].map(function(x){return '<button type="button" data-k="'+x[0]+'" aria-pressed="'+(x[0]===kind)+'">'+x[1]+'</button>';}).join("")+
+    '</div>'+
+    '<div class="docbar"><button class="btn pri" type="button" id="cp">글 복사</button><button class="btn" type="button" id="pr">인쇄</button>'+
+      (kind==="owner"?'<span class="muted small" style="align-self:center">카카오톡 채널에 붙여 넣기 좋은 줄글로 복사됩니다</span>':kind==="tests"?'<span class="muted small" style="align-self:center">엑셀에 붙여 넣으면 칸이 나뉩니다</span>':'')+'</div>'+
+    '<article class="paper">'+d.html+'</article>';
+  document.getElementById("bk").onclick=goBack;
+  document.getElementById("cp").onclick=function(){copyText(d.text);};
+  document.getElementById("pr").onclick=function(){window.print();};
+  V.querySelector(".doctabs").onclick=function(e){var b=e.target.closest("button[data-k]");if(!b||b.getAttribute("data-k")===kind)return;
+    cur={view:"doc",id:c.id,doc:b.getAttribute("data-k")};history.replaceState({app:1,s:cur},"");render();};
+}
+
+/* ---------- 검사 정리 ---------- */
+function vTests(){
+  var map={};
+  db.cases.forEach(function(c){(c.tests||[]).forEach(function(t){
+    var k=(t.item||"").trim();if(!k)return;var key=k.toLowerCase().replace(/\s+/g,"");
+    var g=map[key]||(map[key]={item:k,cat:t.cat,rows:[],ids:{}});
+    g.rows.push({c:c,t:t});g.ids[c.id]=1;
+  });});
+  var groups=Object.keys(map).map(function(k){var g=map[k];g.n=Object.keys(g.ids).length;g.rows.sort(function(a,b){return (b.t.date||b.c.date||"").localeCompare(a.t.date||a.c.date||"");});return g;})
+    .sort(function(a,b){return b.n-a.n||a.item.localeCompare(b.item,"ko");});
+  var total=db.cases.length,rowsN=groups.reduce(function(s,g){return s+g.rows.length;},0);
+  var cats={혈액:0,영상:0,기타:0};groups.forEach(function(g){cats[g.cat]=(cats[g.cat]||0)+1;});
+  V.innerHTML=
+    '<h2 style="font-size:22px">검사 정리</h2>'+
+    '<p class="muted small" style="margin-top:4px">모든 케이스의 검사를 항목별로 모았습니다. 항목을 누르면 케이스별 결과가 열립니다.</p>'+
+    '<div class="sum"><span><b>'+groups.length+'</b>검사 항목</span><span><b>'+rowsN+'</b>검사 기록</span><span><b>'+total+'</b>케이스</span><span class="muted" style="align-self:flex-end">혈액 '+cats["혈액"]+' · 영상 '+cats["영상"]+' · 기타 '+cats["기타"]+' 항목</span></div>'+
+    '<div class="row" style="margin-top:16px"><input class="search" id="tq" type="search" placeholder="검사 항목 찾기" value="" aria-label="검사 항목 찾기" style="max-width:360px"></div>'+
+    '<ul class="tests" id="tl"></ul>';
+  var ul=document.getElementById("tl");
+  function draw(q){
+    q=(q||"").trim().toLowerCase();
+    var gs=groups.filter(function(g){return !q||g.item.toLowerCase().indexOf(q)>=0;});
+    if(!gs.length){ul.innerHTML='<li class="empty">해당하는 검사 항목이 없습니다.</li>';return;}
+    ul.innerHTML=gs.map(function(g){
+      var last=g.rows[0],w=Math.max(4,Math.round(g.n/Math.max(1,total)*100)),open=ui.openTest===g.item;
+      return '<li><button class="th" type="button" aria-expanded="'+open+'" data-i="'+esc(g.item)+'">'+
+        '<span class="tname">'+esc(g.item)+'<span class="tcat">'+esc(g.cat)+'</span></span>'+
+        '<span class="tlast">최근 '+esc(last.t.result)+' <span class="muted">· '+esc(fmtDate(last.t.date||last.c.date))+'</span></span>'+
+        '<span class="tbar"><svg viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><rect width="100" height="6" fill="var(--rule-2)"/><rect width="'+w+'" height="6" fill="var(--teal)"/></svg>'+g.n+'케이스'+(g.rows.length>g.n?' · '+g.rows.length+'회':'')+'</span>'+
+      '</button>'+
+      (open?'<div class="tdetail"><table class="tbl stack"><thead><tr><th>날짜</th><th>환자 · 진단</th><th>결과</th><th>해석 메모</th></tr></thead><tbody>'+
+        g.rows.map(function(r){return '<tr><td class="k" data-h="날짜">'+esc(fmtDate(r.t.date||r.c.date))+'</td><td data-h="환자"><a href="#" data-case="'+esc(r.c.id)+'">'+esc(r.c.name)+'</a> · '+esc(r.c.diagnosis)+'</td><td data-h="결과">'+esc(r.t.result)+'</td><td data-h="메모">'+esc(r.t.note)+'</td></tr>';}).join("")+
+      '</tbody></table></div>':'')+'</li>';
+    }).join("");
+  }
+  var tq=document.getElementById("tq");
+  tq.addEventListener("input",function(){draw(tq.value);});
+  ul.onclick=function(e){
+    var a=e.target.closest("[data-case]");if(a){e.preventDefault();go({view:"case",id:a.getAttribute("data-case")});return;}
+    var b=e.target.closest(".th");if(b){var i=b.getAttribute("data-i");ui.openTest=ui.openTest===i?"":i;draw(tq.value);}
+  };
+  draw("");
+}
+
+/* ---------- 데이터 ---------- */
+function vData(){
+  V.innerHTML=
+    '<h2 style="font-size:22px">데이터</h2>'+
+    '<div class="dsec"><h3>이 기기에만 저장됩니다</h3><p>케이스는 지금 쓰는 브라우저 안(localStorage)에만 저장됩니다. 다른 컴퓨터·휴대폰과 자동으로 공유되지 않고, 브라우저 기록을 지우면 함께 지워집니다. 직원끼리 함께 쓰는 버전은 교육 당일 병원 계정에 맞춰 연결합니다.</p>'+
+      '<p class="muted small" style="margin:0">현재 케이스 '+db.cases.length+'건</p></div>'+
+    '<div class="dsec"><h3>내보내기 · 가져오기</h3><p>JSON 파일로 백업해 두었다가 다른 기기에서 가져올 수 있습니다. 가져오면 지금 데이터는 파일 내용으로 바뀝니다.</p>'+
+      '<div class="row"><button class="btn pri" type="button" id="ex">JSON 내보내기</button><button class="btn" type="button" id="im">JSON 가져오기</button><input type="file" id="file" accept="application/json,.json" hidden></div></div>'+
+    '<div class="dsec"><h3>안내문 끝 연락 문구</h3><p>보호자 안내문 맨 아래에 들어갑니다.</p>'+
+      '<div class="f"><label for="ct" class="label">연락 문구</label><textarea id="ct">'+esc(db.contact)+'</textarea></div><button class="btn" type="button" id="cts">문구 저장</button></div>'+
+    '<div class="dsec"><h3>예시 데이터로 되돌리기</h3><p>지금 저장된 케이스를 지우고 처음의 예시 케이스 6건으로 돌아갑니다.</p><button class="btn danger" type="button" id="rs">예시로 되돌리기</button></div>';
+  document.getElementById("ex").onclick=function(){
+    var blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});var u=URL.createObjectURL(blob);
+    var a=document.createElement("a");a.href=u;a.download="case-note-"+today()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},1000);
+    toast("파일로 내보냈습니다");
+  };
+  var f=document.getElementById("file");
+  document.getElementById("im").onclick=function(){f.click();};
+  f.onchange=function(){var file=f.files[0];if(!file)return;var r=new FileReader();r.onload=function(){
+    try{var d=JSON.parse(r.result);if(!d||!Array.isArray(d.cases))throw 0;
+      if(!confirm("케이스 "+d.cases.length+"건을 가져옵니다. 지금 데이터는 바뀝니다. 계속할까요?"))return;
+      db={contact:d.contact||CONTACT_DEFAULT,cases:d.cases.map(function(c){c.id=c.id||uid();c.tests=c.tests||[];c.logs=c.logs||[];c.tags=c.tags||[];return c;})};
+      save();ui={q:"",tag:"",dx:"",openTest:""};toast("가져왔습니다");vData();
+    }catch(e){toast("케이스 노트 파일이 아닙니다");}
+    f.value="";};r.readAsText(file);};
+  document.getElementById("cts").onclick=function(){db.contact=document.getElementById("ct").value.trim()||CONTACT_DEFAULT;save();toast("저장했습니다");};
+  document.getElementById("rs").onclick=function(){if(!confirm("예시 데이터로 되돌릴까요? 지금 케이스는 지워집니다."))return;db=sample();save();ui={q:"",tag:"",dx:"",openTest:""};toast("예시 데이터로 되돌렸습니다");vData();};
+}
+
+render();
+})();
+</script>
+</body>
+</html>
