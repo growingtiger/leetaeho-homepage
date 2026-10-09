@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>노트북 준비 안내 · 원장을 위한 AI 실전 교육</title>
-<meta name="description" content="교육 전에 노트북에 Claude, GitHub, Vercel, Supabase를 준비하는 다섯 단계">
+<meta name="description" content="교육 전에 노트북에 Claude, GitHub, Vercel, Supabase를 준비하는 여섯 단계">
 <meta name="theme-color" content="#26355c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,7 +57,7 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
 <main>
   <p class="lab">원장을 위한 AI 실전 교육 · 교육 전 준비</p>
   <h1>노트북 준비 안내</h1>
-  <p class="lead">교육 당일 오후를 설명 듣는 데 쓰지 않고 바로 만드는 데 쓰시도록, 계정 만들기와 설치를 미리 부탁드립니다. 다섯 단계이고 처음 하시면 40~50분쯤 걸립니다. 단계마다 끝났는지 확인하는 방법을 적어 두었습니다.</p>
+  <p class="lead">교육 당일 오후를 설명 듣는 데 쓰지 않고 바로 만드는 데 쓰시도록, 계정 만들기와 설치를 미리 부탁드립니다. 여섯 단계이고 처음 하시면 1시간 안팎 걸립니다. 단계마다 끝났는지 확인하는 방법을 적어 두었습니다.</p>
 
   <div class="dates">
     <div><b>3기 · 10월 21일(수)</b><span>10월 18일(일)까지</span></div>
@@ -77,7 +77,7 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
     </ol>
   </section>
 
-  <div class="prog"><span id="pt">0 / 5 완료</span><div class="bar"><i id="pb"></i></div></div>
+  <div class="prog"><span id="pt">0 / 6 완료</span><div class="bar"><i id="pb"></i></div></div>
 
   <ol class="steps">
     <li class="step" data-s="1">
@@ -139,6 +139,18 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
         <li>프로젝트는 교육 당일 함께 만듭니다. 미리 만들지 않으셔도 됩니다.</li>
       </ul>
       <label class="ok"><input type="checkbox"><span><b>확인</b> <a href="https://supabase.com/dashboard" target="_blank" rel="noopener">supabase.com/dashboard</a> 를 열었을 때 로그인 화면이 아니라 대시보드가 보이면 끝입니다.</span></label>
+    </li>
+    <li class="step" data-s="6">
+      <div class="hd"><span class="no">06</span><h2>Claude와 GitHub 연결</h2><span class="tag">5~15분</span></div>
+      <p class="why">왜 필요한가요: Claude가 만든 프로그램을 원장님 GitHub 창고에 직접 올리려면, 노트북의 Claude 앱이 원장님 GitHub 계정에 들어갈 수 있어야 합니다. 이 연결을 Claude에게 말로 부탁해서 합니다. 교육에서 하게 될 방식을 미리 한 번 경험해 보시는 셈입니다.</p>
+      <ul>
+        <li>Claude 앱 위쪽 <kbd>Code</kbd> 탭을 엽니다. 작업할 폴더를 고르라고 하면 문서나 바탕화면 폴더를 고릅니다.</li>
+        <li>입력창에 이렇게 적고 보냅니다: <kbd>GitHub CLI를 설치하고 내 GitHub 계정으로 로그인해 줘</kbd></li>
+        <li>Claude가 명령을 실행해도 되는지 물으면 허용하는 버튼을 누릅니다. 맥에서 "‘git’ 명령어는 명령어 라인 개발자 도구가 필요합니다. 도구를 지금 설치하겠습니까?" 창이 뜨면 <kbd>설치</kbd>, 이어서 사용권 계약에서 <kbd>동의</kbd>를 누르고 끝날 때까지 기다립니다. 이 설치는 10분쯤 걸릴 수 있습니다.</li>
+        <li>Claude가 8자리 코드(예: ABCD-1234)를 보여 주면, <a href="https://github.com/login/device" target="_blank" rel="noopener">github.com/login/device</a> 에 그 코드를 넣고 승인합니다.</li>
+      </ul>
+      <p class="note">중간에 막히면 Claude에게 화면에 나온 내용을 그대로 물어보셔도 되고, 그 화면을 찍어 단톡방에 올려 주셔도 됩니다. 이 단계가 끝까지 안 되더라도 교육 당일 함께 마무리하니 걱정하지 않으셔도 됩니다.</p>
+      <label class="ok"><input type="checkbox"><span><b>확인</b> Claude에게 <kbd>GitHub 로그인 상태 확인해 줘</kbd>라고 보냈을 때, 원장님 GitHub 사용자 이름으로 로그인되어 있다고 답하면 끝입니다.</span></label>
     </li>
   </ol>
 
