@@ -3,7 +3,7 @@
 
 ## 페이지
 - [소개·진료 분야·약력·논문·강의](https://leetaeho.co.kr/)
-- [강아지 기관 허탈 스텐트 — 31마리 추적 기록](https://leetaeho.co.kr/tracheal-stent): 제1저자 논문 J Vet Clin 2025;42(1):7-15 해설. 1년 이상 생존 80%(추적 지속 환자 기준), 합병증 23%, 나이별 차이 없음.
+- [강아지 기관 허탈 스텐트 — 31마리 추적 기록](https://leetaeho.co.kr/tracheal-stent): 제1저자 논문 J Vet Clin 2025;42(1):7-15 해설. 1년 이상 생존 80%(추적 지속 환자 기준), 합병증 23%, 나이별 차이 없음. 포메라니안 10마리의 경과와 동반 기도 질환, 스텐트 비용을 정하는 요소(금액 제외).
 
 ## 논문 (제1저자)
 - Lee T 외. A retrospective study of tracheal stent placement in dogs with collapsing trachea. J Vet Clin 2025;42(1):7-15. doi:10.17555/jvc.2025.42.1.7
