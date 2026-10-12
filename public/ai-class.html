@@ -15,8 +15,8 @@
 <style>
 /* Layout: 진료 기록지처럼 왼쪽 시각 열 + 오른쪽 내용 열. 이태호 수의사 홈페이지의 종이·먹·금색 톤을 잇는다. */
 :root{
-  --paper:#fdfaf3; --paper-2:#f6efe1; --ink:#2a251f; --ink-2:#5b5245; --ink-3:#8b8070;
-  --line:#e6dcc8; --sage:#6f8550; --plum:#8e5f80; --gold:#a8802f; --gold-wash:rgba(184,143,62,.12); --navy:#26355c;
+  --paper:#fdfaf3; --paper-2:#f6efe1; --ink:#2a251f; --ink-2:#5b5245; --ink-3:#70685b;
+  --line:#e6dcc8; --sage:#6f8550; --plum:#8e5f80; --gold:#a8802f; --gold-ink:#846525; --gold-inv:#d6ae67; --gold-fill:#906e28; --gold-wash:rgba(184,143,62,.12); --navy:#26355c;
   --serif:"Noto Serif KR","AppleMyungjo",Georgia,serif;
   --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
@@ -24,10 +24,10 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --paper:#15120e; --paper-2:#1d1913; --ink:#f0e8da; --ink-2:#c3b7a2; --ink-3:#948976;
-  --line:#352d22; --sage:#a3b886; --plum:#c79bbb; --gold:#d6ae67; --gold-wash:rgba(214,174,103,.12); --navy:#9db0e0; color-scheme:dark}}
+  --line:#352d22; --sage:#a3b886; --plum:#c79bbb; --gold:#d6ae67; --gold-ink:#d6ae67; --gold-inv:#7d6023; --gold-fill:#d6ae67; --gold-wash:rgba(214,174,103,.12); --navy:#9db0e0; color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#15120e; --paper-2:#1d1913; --ink:#f0e8da; --ink-2:#c3b7a2; --ink-3:#948976;
-  --line:#352d22; --sage:#a3b886; --plum:#c79bbb; --gold:#d6ae67; --gold-wash:rgba(214,174,103,.12); --navy:#9db0e0; color-scheme:dark}
+  --line:#352d22; --sage:#a3b886; --plum:#c79bbb; --gold:#d6ae67; --gold-ink:#d6ae67; --gold-inv:#7d6023; --gold-fill:#d6ae67; --gold-wash:rgba(214,174,103,.12); --navy:#9db0e0; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere}
 .wrap{max-width:var(--max);margin:0 auto;padding-inline:20px}
@@ -36,7 +36,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;text-wrap:balance;margin:0;let
 h2{font-size:clamp(1.55rem,3.2vw,2.1rem);line-height:1.35}
 h3{font-size:1.2rem;line-height:1.4}
 p{margin:0}
-.label{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.label{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink)}
 .lead{color:var(--ink-2);font-size:1.05rem;max-width:62ch}
 .sec-head{display:grid;gap:14px;margin-bottom:40px}
 a{color:inherit}
@@ -46,7 +46,7 @@ a{color:inherit}
 .hero{padding-block:88px 64px;border-top:0}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:56px;align-items:end}
 .hero h1{font-size:clamp(2rem,5.4vw,3.5rem);line-height:1.22}
-.hero h1 em{font-style:normal;color:var(--gold)}
+.hero h1 em{font-style:normal;color:var(--gold-ink)}
 .hero .lead{margin-top:24px}
 .who{border-left:2px solid var(--gold);padding-left:20px;display:grid;gap:6px;font-size:.95rem;color:var(--ink-2)}
 .who strong{font-family:var(--serif);font-size:1.15rem;color:var(--ink)}
@@ -58,7 +58,7 @@ a{color:inherit}
 /* day log */
 .log{display:grid;gap:0;border-top:1px solid var(--line)}
 .row{display:grid;grid-template-columns:96px minmax(0,1fr) minmax(0,1.3fr);gap:24px;padding-block:18px;border-bottom:1px solid var(--line);align-items:baseline}
-.row time{font-family:var(--mono);font-size:.95rem;color:var(--gold);font-variant-numeric:tabular-nums}
+.row time{font-family:var(--mono);font-size:.95rem;color:var(--gold-ink);font-variant-numeric:tabular-nums}
 .row h3{font-size:1.05rem}
 .row p{color:var(--ink-2);font-size:.95rem}
 
@@ -85,7 +85,7 @@ table.cost tr.sum td{border-bottom:2px solid var(--ink);font-weight:700;padding-
 .value{display:grid;gap:0;border-top:1px solid var(--line)}
 .value .v{display:grid;gap:6px;padding-block:22px;border-bottom:1px solid var(--line)}
 .value b.sm{font-size:1.6rem}
-.value b{font-family:var(--serif);font-size:2.3rem;line-height:1.15;color:var(--gold)}
+.value b{font-family:var(--serif);font-size:2.3rem;line-height:1.15;color:var(--gold-ink)}
 .value span{font-size:1rem}
 .value small{font-size:.82rem;color:var(--ink-3);line-height:1.6}
 @media (max-width:820px){.cost-grid{grid-template-columns:minmax(0,1fr);gap:32px}table.cost td:nth-child(2){display:none}}
@@ -105,11 +105,11 @@ table.cost tr.sum td{border-bottom:2px solid var(--ink);font-weight:700;padding-
 .pbtn em{font-style:normal;display:grid;gap:2px}
 .pbtn em small{font-size:.78rem;color:var(--ink-3);font-weight:400}
 .pdlg-d{display:grid;gap:6px;margin-top:8px;font-size:.93rem;color:var(--ink-2);max-width:72ch}
-.pdlg-d p b{display:inline-block;min-width:52px;color:var(--gold);font-weight:600;margin-right:6px}
+.pdlg-d p b{display:inline-block;min-width:52px;color:var(--gold-ink);font-weight:600;margin-right:6px}
 .pdlg-d ul{margin:4px 0 0;padding-left:1.1em;display:grid;gap:4px;color:var(--ink)}
 .pbtn{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:10px;width:100%;box-sizing:border-box}
-.pbtn span{font-family:var(--mono);font-size:.7rem;color:var(--gold);white-space:nowrap;align-self:center}
-.pbtn:hover{color:var(--gold)}
+.pbtn span{font-family:var(--mono);font-size:.7rem;color:var(--gold-ink);white-space:nowrap;align-self:center}
+.pbtn:hover{color:var(--gold-ink)}
 .pbtn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .pdlg{border:0;padding:0;max-width:min(1000px,94vw);width:100%;background:var(--paper);color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
 .pdlg::backdrop{background:rgba(20,16,10,.6)}
@@ -130,7 +130,7 @@ table.cost tr.sum td{border-bottom:2px solid var(--ink);font-weight:700;padding-
 .brand-grid>div:nth-child(odd){border-right:1px solid var(--line)}
 .brand-grid>div:nth-child(even){padding-left:28px;padding-right:0}
 .brand-grid p{color:var(--ink-2);font-size:.95rem}
-.ext{font-size:.88rem;color:var(--gold);text-decoration:underline;text-underline-offset:3px;justify-self:start}
+.ext{font-size:.88rem;color:var(--gold-ink);text-decoration:underline;text-underline-offset:3px;justify-self:start}
 .mk-gal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:32px}
 .mk-gal figure{margin:0;display:grid;gap:8px}
 .mk-gal img{width:100%;height:auto;border:1px solid var(--line);display:block}
@@ -172,7 +172,7 @@ table.cost tr.sum td{border-bottom:2px solid var(--ink);font-weight:700;padding-
 .faq details{border-bottom:1px solid var(--line);padding-block:18px}
 .faq summary{cursor:pointer;font-family:var(--serif);font-weight:600;font-size:1.05rem;list-style:none;display:flex;justify-content:space-between;gap:16px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-family:var(--mono);color:var(--gold)}
+.faq summary::after{content:"+";font-family:var(--mono);color:var(--gold-ink)}
 .faq details[open] summary::after{content:"−"}
 .refund{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:12px}
 .refund table{border-collapse:collapse;width:100%;font-size:.9rem}
@@ -184,7 +184,7 @@ table.cost tr.sum td{border-bottom:2px solid var(--ink);font-weight:700;padding-
 
 /* apply */
 .apply{background:var(--ink);color:var(--paper);border-top:0}
-.apply .label{color:var(--gold)}
+.apply .label{color:var(--gold-inv)}
 .apply h2{color:var(--paper)}
 .apply p{color:color-mix(in srgb,var(--paper) 78%,transparent);max-width:60ch}
 .apply-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:48px;align-items:start}
@@ -193,7 +193,7 @@ table.cost tr.sum td{border-bottom:2px solid var(--ink);font-weight:700;padding-
 .cta{display:inline-block;margin-top:8px;background:var(--gold);color:#201a12;font-weight:600;text-decoration:none;padding:12px 22px;justify-self:start}
 .cta:hover{filter:brightness(1.05)}
 .ask{margin-top:14px;font-size:.88rem;color:color-mix(in srgb,var(--paper) 75%,transparent)}
-.ask a{color:var(--gold);word-break:break-all}
+.ask a{color:var(--gold-inv);word-break:break-all}
 .apply ol{margin:0;padding-left:1.2em;display:grid;gap:6px;color:color-mix(in srgb,var(--paper) 85%,transparent)}
 footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
 
