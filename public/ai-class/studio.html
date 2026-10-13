@@ -80,12 +80,19 @@ td input.memo{padding:5px 7px;font-size:.82rem;min-width:120px}
 .toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:9px 16px;font-size:.85rem;z-index:9}
 .save{font-family:var(--mono);font-size:.72rem;color:var(--ink-3)}
 @media (max-width:640px){.hide-s{display:none}td.c{width:44px}}
+.mrow{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}.mrow label{font-size:.75rem;color:var(--ink-3);display:grid;gap:4px}
+.mrow input,.mrow select{width:auto;min-width:110px;padding:7px 9px;font-size:.9rem}.mrow .grow{flex:1;min-width:180px}.mrow .grow input{width:100%}
+.mnav{display:flex;align-items:center;gap:10px;margin:6px 0 4px}.mnav b{font-family:var(--serif);font-size:1.15rem;min-width:110px;text-align:center}
+.sum{width:100%;border-collapse:collapse;margin-top:12px;background:#fff;border:1px solid var(--line)}.sum td{padding:9px 12px;border-bottom:1px solid var(--line);font-size:.92rem}.sum td.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+.sum tr.t td{font-weight:700;border-top:2px solid var(--ink)}.sum tr.sp td{background:var(--paper-2);font-weight:600}
+.led td.n{text-align:right;font-family:var(--mono);white-space:nowrap}.led .in{color:var(--sage)}.led .out{color:var(--red)}
+.small{font-size:.78rem;color:var(--ink-3);margin-top:8px;line-height:1.6}
 </style>
 </head>
 <body>
 <header id="hd" hidden>
   <div class="top"><h1>AI 교육 준비실</h1><span class="save" id="sv"></span></div>
-  <nav><button data-tab="coh" class="on">기수</button><button data-tab="mat">강의 자료</button><button data-tab="out">결과물</button></nav>
+  <nav><button data-tab="coh" class="on">기수</button><button data-tab="mat">강의 자료</button><button data-tab="out">결과물</button><button data-tab="money">정산</button></nav>
 </header>
 <section class="login" id="login">
   <h2>AI 교육 준비실</h2>
@@ -98,6 +105,7 @@ td input.memo{padding:5px 7px;font-size:.82rem;min-width:120px}
   <div id="tab-coh"></div>
   <div id="tab-mat" hidden></div>
   <div id="tab-out" hidden></div>
+  <div id="tab-money" hidden></div>
 </main>
 <div class="toast" id="toast" hidden></div>
 <script>
@@ -131,7 +139,7 @@ function save(){
     dirty=true;setSave("저장 실패 · 다시 시도");saveT=setTimeout(save,4000);
   }).catch(function(){saving=false;dirty=true;setSave("오프라인 · 연결되면 저장");saveT=setTimeout(save,5000)});
 }
-function norm(s){s=s||{};s.cohorts=s.cohorts||{};s.members=s.members||{};s.visits=s.visits||{};s.materials=s.materials||[];s.links=s.links||[];return s}
+function norm(s){s=s||{};s.cohorts=s.cohorts||{};s.members=s.members||{};s.visits=s.visits||{};s.materials=s.materials||[];s.links=s.links||[];s.ledger=s.ledger||[];s.split=s.split||{me:80,label1:"이태호",label2:"병원"};return s}
 
 /* ---------- 로그인 ---------- */
 function open(k){
@@ -152,7 +160,7 @@ $("lf").addEventListener("submit",function(e){e.preventDefault();open($("key").v
 /* 뒤로가기로 앱이 닫히지 않게 한다 (2026-10-08 원장 골든룰). 화면 이동마다 기록을 남기고,
    맨 처음 화면에서 뒤로가기를 누르면 첫 탭으로 돌아오거나 그 자리에 머문다. */
 var TAB="coh";
-function showTab(t){TAB=t;document.querySelectorAll("nav button").forEach(function(x){x.classList.toggle("on",x.dataset.tab===t)});["coh","mat","out"].forEach(function(k){$("tab-"+k).hidden=k!==t})}
+function showTab(t){TAB=t;document.querySelectorAll("nav button").forEach(function(x){x.classList.toggle("on",x.dataset.tab===t)});["coh","mat","out","money"].forEach(function(k){$("tab-"+k).hidden=k!==t})}
 function go(t,mat){if(t===TAB&&(mat||null)===curMat)return;history.pushState({app:1,tab:t,mat:mat||null},"");showTab(t);curMat=mat||null;if(t==="mat")renderMat();window.scrollTo(0,0)}
 history.replaceState({app:1,base:1},"");history.pushState({app:1,tab:"coh",mat:null},"");
 window.addEventListener("popstate",function(e){var st=e.state||{};
@@ -164,7 +172,7 @@ document.addEventListener("visibilitychange",function(){if(document.visibilitySt
   api("/api/ai-studio?state=1").then(function(r){return r.json()}).then(function(j){if(j.ok&&j.rev!==REV){REV=j.rev;S=norm(j.state);render()}}).catch(function(){});
   api("/api/ai-apply?list=1").then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.items){APPS=j.items;renderCoh()}}).catch(function(){})}});
 
-function render(){renderCoh();renderMat();renderOut()}
+function render(){renderCoh();renderMat();renderOut();renderMoney()}
 
 /* ---------- 기수 ---------- */
 function cohort(no){var c=S.cohorts[no];if(!c){c=S.cohorts[no]={date:"",status:"모집 중",memo:"",tasks:TASKS.map(function(t){return{t:t,done:false}})}}return c}
@@ -258,6 +266,55 @@ function renderOut(){
   $("tab-out").querySelectorAll("[data-x]").forEach(function(b){b.onclick=function(){var l=S.links.find(function(x){return x.id===b.dataset.x});if(l&&confirm(l.title+" 링크를 뺄까요?")){l.deleted=true;touch();renderOut()}}});
 }
 
+
+/* ---------- 정산 (2026-10-13 원장 요청) ----------
+   매월: 남는 금액 = 수입 − 지출 − 부가세 납부 예상(매출세액 − 매입세액). 금액은 모두 부가세 포함으로 적는다.
+   남는 금액을 원장 80% / 병원 20%로 나눈다(설정에서 비율 변경). 법인세·원천징수는 반영하지 않은 참고용. */
+var MONTH=new Date(Date.now()+9*3600e3).toISOString().slice(0,7);
+var CATS_IN=["수강료(과정 1)","방문 세팅(과정 2)","기타 수입"],CATS_OUT=["광고·홍보","장소 사용료","식비·다과","재료·소모품","결제·송금 수수료","기타 지출"];
+function won(n){return (n<0?"−":"")+Math.abs(Math.round(n)).toLocaleString("ko-KR")+"원"}
+function vat(n){return Math.round(n/11)}
+function calc(month){var L=S.ledger.filter(function(x){return !x.deleted&&(x.date||"").slice(0,7)===month}),inc=0,out=0,vin=0,vout=0;
+  L.forEach(function(x){var a=+x.amount||0;if(x.type==="in"){inc+=a;vin+=vat(a)}else{out+=a;if(x.ded)vout+=vat(a)}});
+  var vpay=vin-vout,net=inc-out-vpay,me=Math.round(net*(+S.split.me||0)/100);return{L:L,inc:inc,out:out,vin:vin,vout:vout,vpay:vpay,net:net,me:me,hos:net-me}}
+function renderMoney(){
+  var c=calc(MONTH),sp=S.split;
+  var h='<div class="sec"><h2>정산</h2><p class="lead">수입과 지출을 부가세 포함 금액으로 적으면, 달마다 부가세를 빼고 남는 금액을 '+esc(sp.label1)+' '+esc(sp.me)+'% · '+esc(sp.label2)+' '+(100-(+sp.me||0))+'%로 나눕니다.</p>';
+  h+='<div class="mnav"><button class="sm ghost" data-mm="-1">◀</button><b>'+MONTH.replace("-","년 ")+'월</b><button class="sm ghost" data-mm="1">▶</button></div>';
+  h+='<table class="sum"><tr><td>수입 합계</td><td class="n">'+won(c.inc)+'</td></tr><tr><td>지출 합계</td><td class="n">'+won(c.out)+'</td></tr>'+
+     '<tr><td>매출 부가세 (수입의 1/11)</td><td class="n">'+won(c.vin)+'</td></tr><tr><td>매입 부가세 공제 (세금계산서·카드 지출의 1/11)</td><td class="n">−'+won(c.vout)+'</td></tr>'+
+     '<tr><td>부가세 납부 예상</td><td class="n">'+won(c.vpay)+'</td></tr><tr class="t"><td>남는 금액 (수입 − 지출 − 부가세)</td><td class="n">'+won(c.net)+'</td></tr>'+
+     '<tr class="sp"><td>'+esc(sp.label1)+' '+esc(sp.me)+'%</td><td class="n">'+won(c.me)+'</td></tr><tr class="sp"><td>'+esc(sp.label2)+' '+(100-(+sp.me||0))+'%</td><td class="n">'+won(c.hos)+'</td></tr></table>';
+  h+='<div class="sec"><h2 style="font-size:1rem">기록 추가</h2><div class="mrow">'+
+     '<label>날짜<input type="date" id="ld" value="'+(MONTH===new Date(Date.now()+9*3600e3).toISOString().slice(0,7)?kstToday():MONTH+"-01")+'"></label>'+
+     '<label>구분<select id="lt"><option value="in">수입</option><option value="out">지출</option></select></label>'+
+     '<label>항목<select id="lc"></select></label>'+
+     '<label class="grow">내용<input id="lm" placeholder="예: 3기 박○○ 원장 교육비"></label>'+
+     '<label>금액(부가세 포함)<input id="la" inputmode="numeric" placeholder="1100000"></label>'+
+     '<label id="ldw" hidden style="flex-direction:row;display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--ink-2)"><input type="checkbox" id="ldd" checked style="width:auto;min-width:0"> 세금계산서·카드(부가세 공제)</label>'+
+     '<button id="la_btn">추가</button></div></div>';
+  h+='<div class="sec"><h2 style="font-size:1rem">'+MONTH.replace("-","년 ")+'월 기록 '+c.L.length+'건</h2>';
+  if(c.L.length){h+='<div class="tbl"><table class="led"><tr><th>날짜</th><th>항목</th><th>내용</th><th style="text-align:right">금액</th><th></th></tr>';
+    c.L.slice().sort(function(a,b){return a.date<b.date?-1:1}).forEach(function(x){h+='<tr><td>'+esc(x.date.slice(5).replace("-","/"))+'</td><td>'+(x.type==="in"?'<span class="in">수입</span>':'<span class="out">지출</span>')+' · '+esc(x.cat)+(x.type==="out"&&!x.ded?' <small>(공제 없음)</small>':'')+'</td><td>'+esc(x.memo||"")+'</td><td class="n">'+(x.type==="in"?"":"−")+won(+x.amount||0)+'</td><td><button class="sm ghost" data-ldel="'+x.id+'">빼기</button></td></tr>'});
+    h+='</table></div>'}else h+='<p class="lead">이 달 기록이 없습니다.</p>';
+  h+='</div>';
+  var ms={};S.ledger.forEach(function(x){if(!x.deleted&&x.date)ms[x.date.slice(0,7)]=1});var keys=Object.keys(ms).sort().reverse();
+  if(keys.length){h+='<div class="sec"><h2 style="font-size:1rem">월별 정산</h2><div class="tbl"><table class="led"><tr><th>월</th><th style="text-align:right">수입</th><th style="text-align:right">지출</th><th style="text-align:right">부가세</th><th style="text-align:right">남는 금액</th><th style="text-align:right">'+esc(sp.label1)+'</th><th style="text-align:right">'+esc(sp.label2)+'</th></tr>';
+    var T={inc:0,out:0,vpay:0,net:0,me:0,hos:0};keys.forEach(function(k){var r=calc(k);["inc","out","vpay","net","me","hos"].forEach(function(f){T[f]+=r[f]});
+      h+='<tr><td>'+k.replace("-",".")+'</td><td class="n">'+won(r.inc)+'</td><td class="n">'+won(r.out)+'</td><td class="n">'+won(r.vpay)+'</td><td class="n">'+won(r.net)+'</td><td class="n">'+won(r.me)+'</td><td class="n">'+won(r.hos)+'</td></tr>'});
+    h+='<tr><td><b>합계</b></td><td class="n"><b>'+won(T.inc)+'</b></td><td class="n"><b>'+won(T.out)+'</b></td><td class="n"><b>'+won(T.vpay)+'</b></td><td class="n"><b>'+won(T.net)+'</b></td><td class="n"><b>'+won(T.me)+'</b></td><td class="n"><b>'+won(T.hos)+'</b></td></tr></table></div></div>'}
+  h+='<div class="sec"><h2 style="font-size:1rem">배분 설정</h2><div class="mrow"><label>받는 사람 1<input id="s1" value="'+esc(sp.label1)+'"></label><label>비율(%)<input id="sm" inputmode="numeric" value="'+esc(sp.me)+'" style="min-width:70px;width:80px"></label><label>받는 사람 2<input id="s2" value="'+esc(sp.label2)+'"></label><button class="ghost" id="sbtn">저장</button></div>'+
+     '<p class="small">부가세는 수입·지출 금액의 1/11로 계산한 예상치입니다. 지출 중 세금계산서나 법인카드 영수증이 있는 것만 매입세액으로 공제합니다. 법인세, 원천징수, 카드 수수료 정산 시점 차이는 반영하지 않은 참고용이니 실제 신고와 배분은 세무사와 확인해 주십시오.</p></div></div>';
+  $("tab-money").innerHTML=h;
+  function cats(){var t=$("lt").value;$("lc").innerHTML=(t==="in"?CATS_IN:CATS_OUT).map(function(c){return'<option>'+c+'</option>'}).join("");$("ldw").hidden=t!=="out"}
+  $("lt").onchange=cats;cats();
+  $("la_btn").onclick=function(){var a=parseInt(String($("la").value).replace(/[^0-9]/g,""),10),d=$("ld").value;if(!d||!a){toast("날짜와 금액을 넣어 주십시오");return}
+    S.ledger.push({id:uid(),date:d,type:$("lt").value,cat:$("lc").value,memo:$("lm").value.trim(),amount:a,ded:$("lt").value==="out"?$("ldd").checked:false});
+    MONTH=d.slice(0,7);touch();renderMoney();toast("추가했습니다")};
+  $("tab-money").querySelectorAll("[data-mm]").forEach(function(b){b.onclick=function(){var y=+MONTH.slice(0,4),m=+MONTH.slice(5,7)+(+b.dataset.mm);if(m<1){m=12;y--}if(m>12){m=1;y++}MONTH=y+"-"+String(m).padStart(2,"0");renderMoney()}});
+  $("tab-money").querySelectorAll("[data-ldel]").forEach(function(b){b.onclick=function(){var x=S.ledger.find(function(y){return y.id===b.dataset.ldel});if(x&&confirm((x.memo||x.cat)+" 기록을 뺄까요?")){x.deleted=true;touch();renderMoney()}}});
+  $("sbtn").onclick=function(){var v=parseInt($("sm").value,10);if(!(v>=0&&v<=100)){toast("비율은 0~100 사이로 넣어 주십시오");return}S.split={me:v,label1:$("s1").value.trim()||"이태호",label2:$("s2").value.trim()||"병원"};touch();renderMoney();toast("저장했습니다")};
+}
 try{var k=sessionStorage.getItem("aik")||localStorage.getItem("aik");if(k){$("key").value=k;open(k)}}catch(e){}
 if("serviceWorker" in navigator){navigator.serviceWorker.register("/ai-class/studio-sw.js",{scope:"/ai-class/studio"}).catch(function(){})}
 })();
