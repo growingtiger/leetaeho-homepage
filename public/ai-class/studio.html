@@ -139,7 +139,7 @@ function save(){
     dirty=true;setSave("저장 실패 · 다시 시도");saveT=setTimeout(save,4000);
   }).catch(function(){saving=false;dirty=true;setSave("오프라인 · 연결되면 저장");saveT=setTimeout(save,5000)});
 }
-function norm(s){s=s||{};s.cohorts=s.cohorts||{};s.members=s.members||{};s.visits=s.visits||{};s.materials=s.materials||[];s.links=s.links||[];s.ledger=s.ledger||[];s.split=s.split||{me:80,label1:"이태호",label2:"병원"};return s}
+function norm(s){s=s||{};s.cohorts=s.cohorts||{};s.members=s.members||{};s.visits=s.visits||{};s.materials=s.materials||[];s.links=s.links||[];s.ledger=s.ledger||[];s.split=s.split||{me:80,label1:"이태호",label2:"더벳로드"};return s}
 
 /* ---------- 로그인 ---------- */
 function open(k){
@@ -313,7 +313,7 @@ function renderMoney(){
     MONTH=d.slice(0,7);touch();renderMoney();toast("추가했습니다")};
   $("tab-money").querySelectorAll("[data-mm]").forEach(function(b){b.onclick=function(){var y=+MONTH.slice(0,4),m=+MONTH.slice(5,7)+(+b.dataset.mm);if(m<1){m=12;y--}if(m>12){m=1;y++}MONTH=y+"-"+String(m).padStart(2,"0");renderMoney()}});
   $("tab-money").querySelectorAll("[data-ldel]").forEach(function(b){b.onclick=function(){var x=S.ledger.find(function(y){return y.id===b.dataset.ldel});if(x&&confirm((x.memo||x.cat)+" 기록을 뺄까요?")){x.deleted=true;touch();renderMoney()}}});
-  $("sbtn").onclick=function(){var v=parseInt($("sm").value,10);if(!(v>=0&&v<=100)){toast("비율은 0~100 사이로 넣어 주십시오");return}S.split={me:v,label1:$("s1").value.trim()||"이태호",label2:$("s2").value.trim()||"병원"};touch();renderMoney();toast("저장했습니다")};
+  $("sbtn").onclick=function(){var v=parseInt($("sm").value,10);if(!(v>=0&&v<=100)){toast("비율은 0~100 사이로 넣어 주십시오");return}S.split={me:v,label1:$("s1").value.trim()||"이태호",label2:$("s2").value.trim()||"더벳로드"};touch();renderMoney();toast("저장했습니다")};
 }
 try{var k=sessionStorage.getItem("aik")||localStorage.getItem("aik");if(k){$("key").value=k;open(k)}}catch(e){}
 if("serviceWorker" in navigator){navigator.serviceWorker.register("/ai-class/studio-sw.js",{scope:"/ai-class/studio"}).catch(function(){})}
