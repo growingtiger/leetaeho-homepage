@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>스타터 키트 설치 · 원장을 위한 AI 실전 교육</title>
+<meta name="description" content="말로 주문하면 GitHub·Vercel·Supabase까지 이어 배포되는 환경을 내 노트북에 까는 순서">
+<meta name="theme-color" content="#26355c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--paper:#fdfaf3;--paper-2:#f6efe1;--card:#fff;--ink:#2a251f;--ink-2:#5b5245;--ink-3:#8b8070;--line:#e6dcc8;--gold:#a8802f;--navy:#26355c;--sage:#5f7a43;
+--serif:"Noto Serif KR","AppleMyungjo",serif;--sans:"IBM Plex Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);word-break:keep-all;-webkit-text-size-adjust:100%;line-height:1.7}
+main{max-width:720px;margin:0 auto;padding:max(28px,env(safe-area-inset-top)) 16px 72px}
+.lab{font-size:.78rem;letter-spacing:.14em;color:var(--gold);font-weight:600;margin:0}
+h1{font-family:var(--serif);font-size:1.75rem;line-height:1.35;margin:8px 0 10px;letter-spacing:-.01em}
+.lead{color:var(--ink-2);margin:0;font-size:.98rem}
+.dates{margin:22px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr)}
+.dates div{padding:12px 10px 12px 0}.dates div+div{padding-left:14px;border-left:1px solid var(--line)}
+.dates b{display:block;font-size:.8rem;color:var(--ink-3);font-weight:500}
+.dates span{font-family:var(--serif);font-weight:700;font-size:1.02rem}
+.dates small{display:block;font-size:.78rem;color:var(--gold);font-weight:600}
+.prog{display:flex;align-items:center;gap:12px;margin:26px 0 6px;font-size:.85rem;color:var(--ink-2)}
+.bar{flex:1;height:4px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.step{background:var(--card);border:1px solid var(--line);margin-top:14px;padding:20px 20px 18px;position:relative}
+.shot{margin:14px 0 2px;border:1px solid var(--line);background:#fff}.shot img{display:block;width:100%;height:auto}.shot figcaption{font-size:.78rem;color:var(--ink-3);padding:6px 10px;border-top:1px solid var(--line)}
+.flow{margin-top:26px;background:var(--card);border:1px solid var(--line);padding:18px 20px}.flow h2{font-family:var(--serif);font-size:1.1rem;margin:0 0 6px}.flow>p{margin:0 0 10px;font-size:.92rem;color:var(--ink-2)}.flow ol{margin:0;padding:0;list-style:none;display:grid;gap:0}.flow li{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:.92rem}.flow li b{font-weight:600}.flow li span{color:var(--ink-2)}
+.step.done{border-color:#cdd8bf;background:#fbfcf8}
+.hd{display:flex;align-items:baseline;gap:12px}
+.no{font-family:var(--mono);font-size:.82rem;color:var(--gold)}
+.step h2{font-family:var(--serif);font-size:1.18rem;margin:0;flex:1}
+.tag{font-size:.72rem;color:var(--ink-3);border:1px solid var(--line);padding:1px 8px;white-space:nowrap}
+.why{color:var(--ink-2);font-size:.9rem;margin:6px 0 12px}
+.step ul{margin:0;padding:0 0 0 1.1em;display:grid;gap:6px;font-size:.95rem}
+.step li::marker{color:var(--gold)}
+a{color:var(--navy);font-weight:600;text-underline-offset:3px;overflow-wrap:anywhere}
+.btn{display:inline-block;background:var(--navy);color:#fff;text-decoration:none;padding:3px 10px;font-size:.88rem;margin:0 2px}
+kbd{font-family:var(--sans);font-size:.86rem;background:var(--paper-2);border:1px solid var(--line);padding:0 6px;white-space:nowrap}
+.note{font-size:.86rem;color:var(--ink-2);background:var(--paper-2);padding:10px 12px;margin-top:12px}
+.ok{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:.92rem;cursor:pointer}
+.ok input{width:20px;height:20px;margin-top:2px;accent-color:var(--sage);flex:none}
+.ok b{color:var(--sage)}
+.sub{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.sub h3{font-size:.95rem;margin:0 0 6px}
+.end{margin-top:28px;font-size:.95rem;color:var(--ink-2)}
+.end strong{color:var(--ink)}
+footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:520px){h1{font-size:1.45rem}.dates{grid-template-columns:1fr}.dates div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}.step{padding:18px 16px 16px}}
+</style>
+<style>
+.say{position:relative;background:var(--paper-2);border:1px solid var(--line);padding:14px 16px 14px;margin:12px 0 4px;font-size:.95rem}
+.say p{margin:0 0 10px;overflow-wrap:anywhere}
+.say button{font:inherit;font-size:.85rem;background:var(--navy);color:#fff;border:0;padding:6px 14px;cursor:pointer}
+.chain{display:grid;grid-template-columns:repeat(4,1fr);margin:22px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.chain div{padding:12px 10px 12px 0;font-size:.86rem;color:var(--ink-2)}
+.chain div+div{padding-left:12px;border-left:1px solid var(--line)}
+.chain b{display:block;font-family:var(--serif);font-size:1rem;color:var(--ink)}
+@media (max-width:520px){.chain{grid-template-columns:1fr 1fr}.chain div:nth-child(3){padding-left:0;border-left:0}.chain div:nth-child(n+3){border-top:1px solid var(--line)}}
+</style>
+</head>
+<body>
+<main>
+  <p class="lab">원장을 위한 AI 실전 교육 · 교육 당일</p>
+  <h1>스타터 키트 설치</h1>
+  <p class="lead">이 키트를 깔고 나면, 만들고 싶은 프로그램을 Claude에게 말로 주문하는 것만으로 저장·배포·휴대폰 앱까지 끝납니다. 제가 병원 프로그램을 만드는 방식을 그대로 옮겨 담았습니다.</p>
+
+  <div class="chain">
+    <div><b>Claude</b>말을 듣고 코드를 씁니다</div>
+    <div><b>GitHub</b>코드를 비공개로 보관합니다</div>
+    <div><b>Vercel</b>주소를 받고 서버를 돌립니다</div>
+    <div><b>Supabase</b>병원 데이터를 보관합니다</div>
+  </div>
+
+  <ol class="steps">
+    <li class="step">
+      <div class="hd"><span class="no">01</span><h2>키트 설치를 맡기기</h2><span class="tag">1분</span></div>
+      <p class="why">Claude 데스크톱 앱에서 <kbd>Code</kbd> 탭을 열고 새 대화에 아래 문장을 그대로 붙여 넣습니다. 내려받기·설치 허락을 물으면 허락해 주십시오.</p>
+      <div class="say"><p id="s1">https://leetaeho.co.kr/ai-class/kit-files/vet-app-kit.zip 을 내려받아 내 홈 폴더에 압축을 풀고, 생긴 vet-app-kit 폴더의 INSTALL.md대로 설치해 줘.</p><button type="button" data-copy="s1">문장 복사</button></div>
+      <p class="why" style="margin-top:10px">Claude가 규칙집과 조립법을 깔고, 필요한 도구(Node, GitHub CLI, Vercel CLI)를 내려받습니다. 관리자 비밀번호는 필요 없습니다.</p>
+    </li>
+    <li class="step">
+      <div class="hd"><span class="no">02</span><h2>GitHub 로그인 승인</h2><span class="tag">1분</span></div>
+      <p class="why">Claude가 <kbd>XXXX-XXXX</kbd> 모양의 코드를 알려 드립니다.</p>
+      <ul>
+        <li><a href="https://github.com/login/device" target="_blank" rel="noopener">github.com/login/device</a> 를 엽니다.</li>
+        <li>'Signed in as (내 아이디)' 옆 <kbd>Continue</kbd>를 누릅니다.</li>
+        <li>코드를 넣고 <kbd>Continue</kbd> → <kbd>Authorize github</kbd>를 누릅니다.</li>
+        <li>"Congratulations, you're all set!"이 보이면 끝입니다.</li>
+      </ul>
+    </li>
+    <li class="step">
+      <div class="hd"><span class="no">03</span><h2>Vercel 로그인 승인</h2><span class="tag">1분</span></div>
+      <p class="why">Claude가 <kbd>https://vercel.com/oauth/device?user_code=…</kbd> 주소를 알려 드립니다.</p>
+      <ul>
+        <li>그 주소를 엽니다(Vercel에 로그인돼 있어야 합니다).</li>
+        <li>화면의 코드가 Claude가 알려 준 코드와 같은지 보고 <kbd>Allow Access</kbd>를 누릅니다. <kbd>Continue</kbd>가 먼저 보이면 Continue를 누른 뒤 Allow Access를 누릅니다.</li>
+        <li>Claude 화면에 "Vercel 로그인: (내 아이디)"가 나오면 끝입니다.</li>
+      </ul>
+    </li>
+    <li class="step">
+      <div class="hd"><span class="no">04</span><h2>Supabase 프로젝트 하나 만들기</h2><span class="tag">3분</span></div>
+      <p class="why">앞으로 만드는 모든 앱이 이 프로젝트 하나를 같이 씁니다. 앱마다 새로 만들지 않습니다.</p>
+      <ul>
+        <li><a href="https://supabase.com/dashboard/new" target="_blank" rel="noopener">supabase.com/dashboard/new</a> 를 엽니다. 처음 가입하신 분은 <b>Create a new organization</b> 화면이 나옵니다. <kbd>Name</kbd>에 병원 이름을 넣고, <kbd>Type</kbd>은 Company, <kbd>Plan</kbd>은 Free 그대로 두고 <kbd>Create organization</kbd>을 누릅니다.</li>
+        <li>이미 Supabase를 쓰고 계신 분은 위 주소 대신 <a href="https://supabase.com/dashboard/organizations" target="_blank" rel="noopener">조직 목록</a>에서 조직을 열고 <kbd>New project</kbd>를 누릅니다.</li>
+        <li><kbd>Project name</kbd>에 미리 적힌 글자를 지우고 <kbd>clinic-apps</kbd>를 넣습니다.</li>
+        <li><kbd>Database password</kbd>는 <kbd>Generate a password</kbd>를 누르고 따로 적어 둡니다.</li>
+        <li><kbd>Region</kbd> 칸 아래 <kbd>Need a specific region?</kbd>을 누르고 <kbd>Northeast Asia (Seoul)</kbd>를 고릅니다. 나중에 바꿀 수 없습니다. 링크나 서울이 보이지 않으면 <kbd>Asia-Pacific</kbd>을 고르셔도 됩니다.</li>
+        <li><kbd>Create new project</kbd>를 누르고 1~2분 기다립니다.</li>
+      </ul>
+    </li>
+    <li class="step">
+      <div class="hd"><span class="no">05</span><h2>열쇠 붙여 넣기</h2><span class="tag">2분</span></div>
+      <p class="why">Claude가 메모장(맥은 텍스트 편집기)으로 <kbd>keys.env</kbd> 파일을 열어 드립니다. 열쇠는 이 파일에만 둡니다. <b>채팅창에는 절대 붙여 넣지 마십시오.</b></p>
+      <ul>
+        <li>방금 만든 프로젝트 화면 주소창에서 <kbd>supabase.com/dashboard/project/</kbd> 뒤의 영문 글자를 복사해 <kbd>SUPABASE_URL=</kbd> 뒤에 붙여 넣습니다.</li>
+        <li><a href="https://supabase.com/dashboard/project/_/settings/api-keys" target="_blank" rel="noopener">API Keys 화면</a>을 열고 프로젝트를 고른 뒤, <kbd>Secret keys</kbd> 칸의 키를 복사해 <kbd>SUPABASE_SECRET_KEY=</kbd> 뒤에 붙여 넣습니다. <kbd>sb_secret_</kbd>로 시작하는 키입니다.</li>
+        <li>저장(맥 <kbd>Command+S</kbd>, 윈도우 <kbd>Ctrl+S</kbd>)하고 Claude에게 "저장했어"라고 말합니다.</li>
+        <li>Claude가 "모두 준비됐습니다"라고 하면 설치가 끝난 것입니다.</li>
+      </ul>
+    </li>
+    <li class="step">
+      <div class="hd"><span class="no">06</span><h2>첫 앱 주문하기</h2><span class="tag">10분</span></div>
+      <p class="why">처음에는 작게 주문하고, 써 보면서 "여기 고쳐 줘"로 키웁니다. 예를 들면 이렇게 말합니다.</p>
+      <div class="say"><p id="s2">진료실 소모품 재고 체크 앱 만들어 줘. 직원 셋이 휴대폰으로 같이 써. 품목, 현재 수량, 최소 수량을 적고, 최소 수량보다 적으면 맨 위에 빨간 글씨로 보여 줘.</p><button type="button" data-copy="s2">예시 복사</button></div>
+      <p class="why" style="margin-top:10px">몇 분 뒤 Claude가 <b>주소와 비밀번호</b>를 알려 드립니다. 휴대폰에서 주소를 열고 비밀번호를 넣은 뒤 홈 화면에 추가하면 앱이 됩니다.</p>
+      <ul>
+        <li>아이폰: Safari 주소창 옆 <kbd>…</kbd>(또는 공유 버튼) → <kbd>공유</kbd> → <kbd>홈 화면에 추가</kbd> → '웹 앱으로 열기' 켜고 추가</li>
+        <li>안드로이드: Chrome 오른쪽 위 점 세 개 → <kbd>설치 및 바로가기 만들기</kbd>(또는 <kbd>홈 화면에 추가</kbd>) → 설치</li>
+      </ul>
+    </li>
+  </ol>
+
+  <div class="flow">
+    <h2>알아 두실 것</h2>
+    <p>Vercel 무료(Hobby) 요금제는 약관상 비상업적 개인 용도만 허용합니다. 병원 업무에 쓰는 앱은 Pro 요금제가 필요합니다(<a href="https://vercel.com/pricing" target="_blank" rel="noopener">vercel.com/pricing</a>).</p>
+    <p>Supabase 무료 프로젝트는 1주일 동안 쓰지 않으면 잠시 멈춥니다. 앱에 "저장 오류"가 뜨면 <a href="https://supabase.com/dashboard/organizations" target="_blank" rel="noopener">조직 목록</a>에서 조직과 프로젝트를 차례로 열고 <kbd>Resume project</kbd>를 누르면 됩니다.</p>
+    <p>시험할 때는 가짜 환자 이름을 쓰십시오. 고칠 때는 "무엇을 눌렀고, 무엇이 보였고, 무엇을 기대했는지"를 말하거나 화면 캡처를 붙이면 빠릅니다.</p>
+  </div>
+
+  <footer>원장을 위한 AI 실전 교육 · 이태호</footer>
+</main>
+<script>
+document.querySelectorAll("[data-copy]").forEach(function(b){b.addEventListener("click",function(){
+  var t=document.getElementById(b.dataset.copy).textContent,old=b.textContent;
+  function done(){b.textContent="복사했습니다";setTimeout(function(){b.textContent=old},1500)}
+  if(navigator.clipboard)navigator.clipboard.writeText(t).then(done,function(){prompt("복사해 주십시오",t)});else prompt("복사해 주십시오",t);
+})});
+</script>
+</body>
+</html>
