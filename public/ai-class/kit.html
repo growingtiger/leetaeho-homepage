@@ -61,6 +61,7 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
 .chain div+div{padding-left:12px;border-left:1px solid var(--line)}
 .chain b{display:block;font-family:var(--serif);font-size:1rem;color:var(--ink)}
 @media (max-width:520px){.chain{grid-template-columns:1fr 1fr}.chain div:nth-child(3){padding-left:0;border-left:0}.chain div:nth-child(n+3){border-top:1px solid var(--line)}}
+.kf{display:flex;gap:8px;margin-top:6px}.kf input{flex:1;font:inherit;font-family:var(--mono);letter-spacing:.06em;padding:9px 12px;border:1px solid var(--line);background:#fff;min-width:0}.kf button{font:inherit;background:var(--navy);color:#fff;border:0;padding:9px 18px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -78,10 +79,15 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
 
   <ol class="steps">
     <li class="step">
-      <div class="hd"><span class="no">01</span><h2>키트 설치를 맡기기</h2><span class="tag">1분</span></div>
-      <p class="why">Claude 데스크톱 앱에서 <kbd>Code</kbd> 탭을 열고 새 대화에 아래 문장을 그대로 붙여 넣습니다. 내려받기·설치 허락을 물으면 허락해 주십시오.</p>
-      <div class="say"><p id="s1">https://leetaeho.co.kr/ai-class/kit-files/vet-app-kit.zip 을 내려받아 내 홈 폴더에 압축을 풀고, 생긴 vet-app-kit 폴더의 INSTALL.md대로 설치해 줘.</p><button type="button" data-copy="s1">문장 복사</button></div>
-      <p class="why" style="margin-top:10px">Claude가 규칙집과 조립법을 깔고, 필요한 도구(Node, GitHub CLI, Vercel CLI)를 내려받습니다. 관리자 비밀번호는 필요 없습니다.</p>
+      <div class="hd"><span class="no">01</span><h2>내 키트 받기</h2><span class="tag">1분</span></div>
+      <p class="why">교육 당일 받으신 개인 코드를 넣어 주십시오. 키트는 원장님마다 따로 만들어 이름이 들어 있고, 코드는 교육 당일에만 열립니다.</p>
+      <form id="kf" class="kf"><input id="kc" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="예: K3-ABCD-EFGH"><button type="submit">확인</button></form>
+      <p id="km" class="why" style="margin:8px 0 0"></p>
+      <div id="kok" hidden>
+        <p class="why">Claude 데스크톱 앱에서 <kbd>Code</kbd> 탭을 열고 새 대화에 아래 문장을 그대로 붙여 넣습니다. 내려받기·설치 허락을 물으면 허락해 주십시오.</p>
+        <div class="say"><p id="s1"></p><button type="button" data-copy="s1">문장 복사</button></div>
+        <p class="why" style="margin-top:10px">Claude가 규칙집과 조립법을 깔고, 필요한 도구(Node, GitHub CLI, Vercel CLI)를 내려받습니다. 관리자 비밀번호는 필요 없습니다.</p>
+      </div>
     </li>
     <li class="step">
       <div class="hd"><span class="no">02</span><h2>GitHub 로그인 승인</h2><span class="tag">1분</span></div>
@@ -151,6 +157,20 @@ document.querySelectorAll("[data-copy]").forEach(function(b){b.addEventListener(
   function done(){b.textContent="복사했습니다";setTimeout(function(){b.textContent=old},1500)}
   if(navigator.clipboard)navigator.clipboard.writeText(t).then(done,function(){prompt("복사해 주십시오",t)});else prompt("복사해 주십시오",t);
 })});
+</script>
+<script>
+(function(){
+  var f=document.getElementById("kf"),c=document.getElementById("kc"),m=document.getElementById("km"),ok=document.getElementById("kok");
+  function norm(v){return String(v||"").toUpperCase().replace(/[^A-Z0-9]/g,"")}
+  function fmt(v){v=norm(v);return v.length===10?v.slice(0,2)+"-"+v.slice(2,6)+"-"+v.slice(6):v}
+  f.addEventListener("submit",function(e){e.preventDefault();var code=fmt(c.value);if(!code)return;m.textContent="확인 중…";ok.hidden=true;
+    fetch("/api/ai-kit?check="+encodeURIComponent(code)).then(function(r){return r.json()}).then(function(j){
+      if(j.ok){m.innerHTML="<b>"+String(j.name).replace(/[<>&]/g,"")+" 원장님 키트입니다.</b>";
+        document.getElementById("s1").textContent="https://leetaeho.co.kr/api/ai-kit?code="+code+" 에서 키트 zip을 내려받아 내 홈 폴더에 압축을 풀고, 생긴 vet-app-kit 폴더의 INSTALL.md대로 설치해 줘.";ok.hidden=false}
+      else if(j.error==="date"){m.textContent="이 코드는 "+j.from+(j.to&&j.to!==j.from?"~"+j.to:"")+"에만 열립니다."}
+      else{m.textContent="코드를 다시 확인해 주십시오."}
+    }).catch(function(){m.textContent="연결이 안 됩니다. 잠시 뒤 다시 눌러 주십시오."})});
+})();
 </script>
 </body>
 </html>
