@@ -145,16 +145,15 @@ function norm(s){s=s||{};s.cohorts=s.cohorts||{};s.members=s.members||{};s.visit
 /* ---------- 로그인 ---------- */
 function open(k){
   $("err").hidden=true;
-  Promise.all([
-    fetch("/api/ai-studio?state=1",{headers:{"x-admin-key":k}}).then(function(r){return r.json().then(function(j){return{s:r.status,j:j}})}),
-    fetch("/api/ai-apply?list=1",{headers:{"x-admin-key":k}}).then(function(r){return r.ok?r.json():{items:[]}}).catch(function(){return{items:[]}})
-  ]).then(function(res){
-    var a=res[0];
+  // 신청 명단은 따로 받아 나중에 채운다 — 준비실 화면은 기다리지 않고 먼저 연다(2026-10-19 로그인 속도)
+  var apps=fetch("/api/ai-apply?list=1",{headers:{"x-admin-key":k}}).then(function(r){return r.ok?r.json():{items:[]}}).catch(function(){return{items:[]}});
+  fetch("/api/ai-studio?state=1",{headers:{"x-admin-key":k}}).then(function(r){return r.json().then(function(j){return{s:r.status,j:j}})}).then(function(a){
     if(a.s===401){$("err").textContent="비밀번호가 맞지 않습니다.";$("err").hidden=false;return}
     if(!a.j.ok){$("err").textContent="불러오지 못했습니다. 잠시 뒤 다시 열어 주십시오.";$("err").hidden=false;return}
-    KEY=k;REV=a.j.rev;S=norm(a.j.state);APPS=res[1].items||[];
+    KEY=k;REV=a.j.rev;S=norm(a.j.state);APPS=APPS||[];
     try{sessionStorage.setItem("aik",k);if($("keep").checked)localStorage.setItem("aik",k)}catch(e){}
     $("login").hidden=true;$("hd").hidden=false;$("app").hidden=false;setSave("불러옴 "+new Date().toTimeString().slice(0,5));render();
+    apps.then(function(j){if(j&&j.items){APPS=j.items;renderCoh()}});
   }).catch(function(){$("err").textContent="연결되지 않았습니다. 인터넷 연결을 확인해 주십시오.";$("err").hidden=false});
 }
 $("lf").addEventListener("submit",function(e){e.preventDefault();open($("key").value.trim())});
