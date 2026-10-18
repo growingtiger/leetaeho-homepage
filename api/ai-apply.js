@@ -30,6 +30,23 @@ const OPS_HASH = "ee293cd94f1e0400cf77900c41cc959de75329835a1807c7db2db32586d4d2
 
 const LIMITS = { note: 200, name: 40, hospital: 80, region: 40, phone: 30, type: 40, size: 80, laptop: 20, ai: 200, pain: 1500, want: 1500, users: 40, ask: 1500 };
 
+// 신청 기록을 한꺼번에 읽는다. 한 장씩 차례로 읽으면 22건에 13초가 걸려 로그인이 느렸다(2026-10-19) → 10건씩 동시에.
+// strict이면 하나라도 읽기에 실패할 때 던진다(고쳐 쓰기 전에 빠진 기록을 덮어쓰지 않게).
+async function readApps(from, to, strict) {
+  const nums = []; for (let n = from; n <= to; n++) nums.push(n);
+  const out = new Array(nums.length);
+  let i = 0;
+  async function worker() {
+    while (i < nums.length) {
+      const k = i++, n = nums[k];
+      try { out[k] = await store.readJson(`${NS}/apps/${String(n).padStart(4, "0")}.json`); }
+      catch (e) { if (strict) throw e; out[k] = null; }
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(10, nums.length) }, worker));
+  return out.filter(Boolean);
+}
+
 function sha(s) { return crypto.createHash("sha256").update(String(s)).digest("hex"); }
 
 function opsOk(key) {
@@ -73,11 +90,8 @@ module.exports = async (req, res) => {
       const idx = await readIndex();
       const after = Math.max(0, parseInt(req.query.after, 10) || 0);
       const items = [];
-      for (let n = after + 1; n <= idx.total; n++) {
-        try {
-          const a = await store.readJson(`${NS}/apps/${String(n).padStart(4, "0")}.json`);
-          if (a) items.push({ no: a.no, at: a.at, name: a.name, hospital: a.hospital, region: a.region, course: a.course, order: a.order, cohort: a.cohort || null, seat: a.seat || null });
-        } catch (e) { /* 건너뛴다 */ }
+      for (const a of await readApps(after + 1, idx.total)) {
+        items.push({ no: a.no, at: a.at, name: a.name, hospital: a.hospital, region: a.region, course: a.course, order: a.order, cohort: a.cohort || null, seat: a.seat || null });
       }
       res.status(200).json({ ok: true, total: idx.total, items });
       return;
@@ -88,12 +102,7 @@ module.exports = async (req, res) => {
       if (!store.enabled()) { res.status(503).json({ ok: false, error: "storage" }); return; }
       const idx = await readIndex();
       const items = [];
-      for (let n = 1; n <= idx.total; n++) {
-        try {
-          const a = await store.readJson(`${NS}/apps/${String(n).padStart(4, "0")}.json`);
-          if (a) { const { phone, ...rest } = a; items.push(rest); }
-        } catch (e) { /* 건너뛴다 */ }
-      }
+      for (const a of await readApps(1, idx.total)) { const { phone, ...rest } = a; items.push(rest); }
       res.status(200).json({ ok: true, items });
       return;
     }
@@ -102,11 +111,7 @@ module.exports = async (req, res) => {
     if (!adminOk(key)) { res.status(401).json({ ok: false }); return; }
     if (!store.enabled()) { res.status(503).json({ ok: false, error: "storage" }); return; }
     const idx = await readIndex();
-    const items = [];
-    for (let n = 1; n <= idx.total; n++) {
-      try { const a = await store.readJson(`${NS}/apps/${String(n).padStart(4, "0")}.json`); if (a) items.push(a); }
-      catch (e) { /* 빠진 번호는 건너뛴다 */ }
-    }
+    const items = await readApps(1, idx.total);
     res.status(200).json({ ok: true, index: idx, items });
     return;
   }
@@ -123,10 +128,7 @@ module.exports = async (req, res) => {
     if (b.op === "plan") {
       const idx = await readIndex();
       const recs = {};
-      for (let n = 1; n <= idx.total; n++) {
-        const r0 = await store.readJson(`${NS}/apps/${String(n).padStart(4, "0")}.json`);
-        if (r0) recs[n] = r0;
-      }
+      for (const r0 of await readApps(1, idx.total, true)) recs[r0.no] = r0;
       for (const m of (b.add || [])) {
         idx.total += 1; idx.c1 += 1;
         recs[idx.total] = { no: idx.total, at: kst(new Date()), course: "1", order: idx.c1, name: String(m.name || "").slice(0, 40), hospital: String(m.hospital || "").slice(0, 80), region: String(m.region || "").slice(0, 40), phone: "", note: String(m.note || "구두 신청").slice(0, 200), manual: true, cohort: m.cohort };
