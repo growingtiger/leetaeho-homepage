@@ -19,7 +19,7 @@ main{max-width:720px;margin:0 auto;padding:max(28px,env(safe-area-inset-top)) 16
 .lab{font-size:.78rem;letter-spacing:.14em;color:var(--gold);font-weight:600;margin:0}
 h1{font-family:var(--serif);font-size:1.75rem;line-height:1.35;margin:8px 0 10px;letter-spacing:-.01em}
 .lead{color:var(--ink-2);margin:0;font-size:.98rem}
-.dates{margin:22px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr)}
+.dates{margin:22px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr)}
 .dates div{padding:12px 10px 12px 0}.dates div+div{padding-left:14px;border-left:1px solid var(--line)}
 .dates b{display:block;font-size:.8rem;color:var(--ink-3);font-weight:500}
 .dates span{font-family:var(--serif);font-weight:700;font-size:1.02rem}
@@ -50,6 +50,7 @@ kbd{font-family:var(--sans);font-size:.86rem;background:var(--paper-2);border:1p
 .end{margin-top:28px;font-size:.95rem;color:var(--ink-2)}
 .end strong{color:var(--ink)}
 footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:640px){.dates{grid-template-columns:1fr 1fr}.dates div:nth-child(3){padding-left:0;border-left:0}.dates div:nth-child(n+3){border-top:1px solid var(--line)}}
 @media (max-width:520px){h1{font-size:1.45rem}.dates{grid-template-columns:1fr}.dates div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}.step{padding:18px 16px 16px}}
 </style>
 </head>
@@ -63,6 +64,7 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
     <div><b>3기 · 10월 21일(수)</b><span>10월 18일(일)까지</span></div>
     <div><b>1기 · 11월 26일(목)</b><span>11월 23일(월)까지</span></div>
     <div><b>2기 · 12월 10일(목)</b><span>12월 7일(월)까지</span></div>
+    <div><b>4기 · 12월 16일(수)</b><span>12월 13일(일)까지</span></div>
   </div>
 
   <section class="flow">
