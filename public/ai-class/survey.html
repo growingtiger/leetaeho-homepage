@@ -129,8 +129,17 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
   }
   f.querySelectorAll('input[name="mode"]').forEach(function(r){r.addEventListener("change",function(){syncMode();if(pick("mode")==="named")el("name").focus()})});
   syncMode();
+  // 휴대폰 키보드의 '이동·완료'(엔터)로 중간에 제출되던 문제(2026-10-21 3기) — 글칸에서 엔터는 다음 칸으로만 넘기고,
+  // 제출은 '보내기' 버튼을 눌렀을 때만 한다.
+  f.querySelectorAll('input[type="text"]').forEach(function(inp){inp.addEventListener("keydown",function(e){
+    if(e.key==="Enter"||e.keyCode===13){e.preventDefault();var all=[].slice.call(f.querySelectorAll('input[type="text"]:not(.hp),textarea'));var i=all.indexOf(inp);if(all[i+1])all[i+1].focus();else inp.blur()}
+  })});
+  var sendBtn=f.querySelector(".send"),viaButton=false;
+  sendBtn.addEventListener("click",function(){viaButton=true});
   f.addEventListener("submit",function(e){
     e.preventDefault();
+    if(!(viaButton||(e.submitter&&e.submitter===sendBtn))){return}
+    viaButton=false;
     var mode=pick("mode");
     if(!mode){m.textContent="맨 위에서 기명 또는 무기명을 골라 주십시오.";f.querySelector('input[name="mode"]').focus();return}
     if(mode==="named"&&!v("name")){m.textContent="기명을 고르셨으니 성함을 적어 주십시오.";el("name").focus();return}
@@ -138,6 +147,8 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
       venue:pick("venue"),notice:pick("notice"),pace:pick("pace"),level:pick("level"),score:pick("score"),best:v("best"),worse:v("worse"),
       made:v("made"),next:v("next"),course2:pick("course2"),quote:v("quote"),publish:pick("publish"),website:v("website")};
     if(!d.overall&&!d.score&&!d.best&&!d.worse){m.textContent="전체 만족도나 의견을 하나 이상 남겨 주십시오.";return}
+    var miss=[["overall","전체 만족도"],["theory","이론"],["practice","실습"],["venue","강의실·자리·인터넷"],["notice","수업 전 안내"],["pace","진행 속도"],["level","난이도"],["score","추천 점수"]].filter(function(x){return !d[x[0]]}).map(function(x){return x[1]});
+    if(miss.length&&!confirm("아직 고르지 않은 항목이 있습니다: "+miss.join(", ")+"\n그래도 지금 보낼까요?")){m.textContent="";return}
     m.textContent="보내는 중…";f.querySelector(".send").disabled=true;
     fetch("/api/ai-review",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(d)})
       .then(function(x){return x.json()}).then(function(j){
