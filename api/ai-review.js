@@ -11,7 +11,9 @@ const store = require("./_store");
 const NS = "ai-class/7c2e91d04b6a/reviews";
 const OPS_HASH = "ee293cd94f1e0400cf77900c41cc959de75329835a1807c7db2db32586d4d203";
 const ADMIN_HASH = "06d0f0a4bbb203d563b41c8690b320f6043678b0955afe5551a9426e86f9da8e";
-const LIMITS = { name: 40, cohort: 10, score: 2, best: 1500, worse: 1500, made: 600, next: 1500, quote: 600, publish: 20 };
+const LIMITS = { name: 40, cohort: 10, score: 2, best: 1500, worse: 1500, made: 600, next: 1500, quote: 600, publish: 20,
+  // 만족도 조사(2026-10-21): 응답 방식과 항목별 점수
+  form: 10, mode: 10, overall: 1, theory: 1, practice: 1, venue: 1, notice: 1, pace: 10, level: 10, course2: 10 };
 
 function sha(s) { return crypto.createHash("sha256").update(String(s)).digest("hex"); }
 function eq(a, b) { return crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b)); }
@@ -44,7 +46,9 @@ module.exports = async function handler(req, res) {
       if (!b || b.website) { res.status(200).json({ ok: true }); return; } // 자동 입력 걸러내기
       const rec = { at: new Date().toISOString() };
       for (const k of Object.keys(LIMITS)) rec[k] = String(b[k] == null ? "" : b[k]).slice(0, LIMITS[k]);
-      if (!rec.score && !rec.best && !rec.worse) { res.status(400).json({ ok: false, error: "empty" }); return; }
+      // 무기명은 서버에서도 이름을 남기지 않는다. 공개 동의도 "이름과 함께"가 될 수 없다.
+      if (rec.mode === "anon") { rec.name = ""; if (rec.publish === "실명") rec.publish = "익명"; }
+      if (!rec.score && !rec.best && !rec.worse && !rec.overall) { res.status(400).json({ ok: false, error: "empty" }); return; }
       const id = Date.now().toString(36) + crypto.randomBytes(3).toString("hex");
       await store.writeJson(`${NS}/${id}.json`, rec);
       const idx = (await store.readJson(NS + "/index.json")) || { ids: [] };

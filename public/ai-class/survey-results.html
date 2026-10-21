@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>만족도 결과 · AI 실전 교육</title>
+<meta name="theme-color" content="#26355c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--paper:#fdfaf3;--paper-2:#f6efe1;--card:#fff;--ink:#2a251f;--ink-2:#5b5245;--ink-3:#8b8070;--line:#e6dcc8;--gold:#a8802f;--navy:#26355c;
+--serif:"Noto Serif KR","AppleMyungjo",serif;--sans:"IBM Plex Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);word-break:keep-all;line-height:1.65;font-size:16px}
+main{max-width:860px;margin:0 auto;padding:max(24px,env(safe-area-inset-top)) 16px 64px}
+.lab{font-size:.78rem;letter-spacing:.14em;color:var(--gold);font-weight:600;margin:0}
+h1{font-family:var(--serif);font-size:1.5rem;margin:6px 0 4px}
+.sub{color:var(--ink-2);font-size:.92rem;margin:0}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:18px 0 6px}
+.bar select,.bar input{font:inherit;padding:9px 10px;border:1px solid var(--line);background:#fff;min-height:44px}
+button{font:inherit;font-weight:600;background:var(--navy);color:#fff;border:0;padding:10px 16px;min-height:44px;cursor:pointer}
+button.ghost{background:transparent;color:var(--navy);border:1px solid var(--line)}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--line);margin-top:14px}
+.kpi div{padding:12px 12px 12px 0}.kpi div+div{padding-left:14px;border-left:1px solid var(--line)}
+.kpi b{display:block;font-size:.78rem;color:var(--ink-3);font-weight:500}
+.kpi span{font-family:var(--serif);font-size:1.5rem;font-weight:700;font-variant-numeric:tabular-nums}
+.kpi small{font-size:.8rem;color:var(--ink-2)}
+h2{font-family:var(--serif);font-size:1.1rem;margin:30px 0 8px}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th{text-align:left;font-size:.78rem;color:var(--ink-3);font-weight:600;letter-spacing:.04em;padding:6px 8px;border-bottom:1px solid var(--ink)}
+td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.meter{height:6px;background:var(--line);width:120px;display:inline-block;vertical-align:middle;margin-left:8px}.meter i{display:block;height:100%;background:var(--gold)}
+.r{border-top:1px solid var(--line);padding:14px 0}
+.r .who{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;font-size:.88rem;color:var(--ink-2)}
+.r .who b{font-family:var(--serif);font-size:1rem;color:var(--ink)}
+.chip{font-size:.74rem;border:1px solid var(--line);padding:0 7px;color:var(--ink-2)}
+.chip.anon{border-color:var(--navy);color:var(--navy)}
+.r dl{display:grid;grid-template-columns:120px 1fr;gap:4px 12px;margin:8px 0 0;font-size:.93rem}
+.r dt{color:var(--ink-3)}.r dd{margin:0;white-space:pre-wrap}
+.empty{color:var(--ink-3);padding:30px 0;text-align:center}
+#login{margin-top:22px;background:var(--card);border:1px solid var(--line);padding:20px;max-width:420px}
+#login input{width:100%;font:inherit;padding:11px;border:1px solid var(--line);margin:8px 0}
+.err{color:#9b3427;font-size:.9rem}
+[hidden]{display:none!important}
+@media (max-width:620px){.kpi{grid-template-columns:1fr 1fr}.kpi div:nth-child(3){padding-left:0;border-left:0;border-top:1px solid var(--line)}.kpi div:nth-child(4){border-top:1px solid var(--line)}.r dl{grid-template-columns:1fr}.r dt{margin-top:6px}.meter{width:70px}}
+</style>
+</head>
+<body>
+<main>
+  <p class="lab">원장용 · AI 실전 교육</p>
+  <h1>만족도 조사 결과</h1>
+  <p class="sub">수강생 관리와 같은 비밀번호로 엽니다. 무기명 응답은 서버에 이름이 저장되지 않아 여기서도 보이지 않습니다.</p>
+
+  <form id="login" hidden>
+    <label for="pw"><b>관리 비밀번호</b></label>
+    <input type="password" id="pw" autocomplete="current-password">
+    <label style="font-size:.9rem"><input type="checkbox" id="keep" checked> 이 기기에서 로그인 유지</label>
+    <div style="margin-top:10px"><button type="submit">열기</button></div>
+    <p class="err" id="lerr"></p>
+  </form>
+
+  <section id="view" hidden>
+    <div class="bar">
+      <select id="fc" aria-label="기수"><option value="">전체 기수</option></select>
+      <button class="ghost" id="reload" type="button">새로 고침</button>
+      <button class="ghost" id="csv" type="button">CSV 저장</button>
+    </div>
+    <div class="kpi">
+      <div><b>응답</b><span id="kN">0</span><small id="kMode"></small></div>
+      <div><b>전체 만족도</b><span id="kO">–</span><small>/ 5</small></div>
+      <div><b>추천 의향</b><span id="kS">–</span><small>/ 10</small></div>
+      <div><b>NPS</b><span id="kNps">–</span><small id="kNpsD"></small></div>
+    </div>
+    <h2>항목별</h2>
+    <table><thead><tr><th>항목</th><th class="n">평균</th><th class="n">응답</th></tr></thead><tbody id="items"></tbody></table>
+    <h2>속도·난이도·과정 2</h2>
+    <table><thead><tr><th>질문</th><th>분포</th></tr></thead><tbody id="dist"></tbody></table>
+    <h2>응답 하나씩</h2>
+    <div id="list"></div>
+  </section>
+</main>
+<script>
+(function(){
+  var KEY="aik", key="", all=[];
+  function el(id){return document.getElementById(id)}
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function get(){try{return localStorage.getItem(KEY)||sessionStorage.getItem(KEY)||""}catch(e){return""}}
+  function put(k,keep){try{(keep?localStorage:sessionStorage).setItem(KEY,k)}catch(e){}}
+  function load(){
+    return fetch("/api/ai-review?list=1",{headers:{"x-admin-key":key},cache:"no-store"}).then(function(r){
+      if(r.status===401)throw new Error("auth");return r.json()}).then(function(j){
+      all=(j.reviews||[]).filter(function(r){return r.form==="survey"||r.overall});
+      var cs={};all.forEach(function(r){if(r.cohort)cs[r.cohort]=1});
+      var sel=el("fc"),cur=sel.value;sel.length=1;Object.keys(cs).sort().forEach(function(c){var o=document.createElement("option");o.value=c;o.textContent=/^\d+$/.test(c)?c+"기":c;sel.appendChild(o)});
+      if(cur)sel.value=cur;render();
+    });
+  }
+  function avg(a){a=a.filter(function(x){return x!==""&&x!=null}).map(Number);return a.length?(a.reduce(function(s,x){return s+x},0)/a.length):null}
+  function f1(x){return x==null?"–":x.toFixed(1)}
+  function render(){
+    var c=el("fc").value, rs=all.filter(function(r){return!c||r.cohort===c});
+    var anon=rs.filter(function(r){return r.mode==="anon"}).length;
+    el("kN").textContent=rs.length; el("kMode").textContent=rs.length?" 기명 "+(rs.length-anon)+" · 무기명 "+anon:"";
+    el("kO").textContent=f1(avg(rs.map(function(r){return r.overall})));
+    el("kS").textContent=f1(avg(rs.map(function(r){return r.score})));
+    var sc=rs.map(function(r){return r.score}).filter(function(x){return x!==""&&x!=null}).map(Number);
+    if(sc.length){var p=sc.filter(function(x){return x>=9}).length,d=sc.filter(function(x){return x<=6}).length;
+      el("kNps").textContent=Math.round((p-d)/sc.length*100);el("kNpsD").textContent=" 추천 "+p+" · 비추천 "+d+" / "+sc.length}
+    else{el("kNps").textContent="–";el("kNpsD").textContent=""}
+    var items=[["전체 만족도","overall"],["오전 이론","theory"],["오후 실습","practice"],["강의실·자리·인터넷","venue"],["수업 전 안내","notice"]];
+    el("items").innerHTML=items.map(function(it){var vs=rs.map(function(r){return r[it[1]]}).filter(function(x){return x}),a=avg(vs);
+      return "<tr><td>"+it[0]+"</td><td class='n'>"+f1(a)+(a==null?"":"<span class='meter'><i style='width:"+(a/5*100)+"%'></i></span>")+"</td><td class='n'>"+vs.length+"</td></tr>"}).join("");
+    function dist(k,opts){var m={};rs.forEach(function(r){if(r[k])m[r[k]]=(m[r[k]]||0)+1});return opts.map(function(o){return o[1]+" "+(m[o[0]]||0)}).join(" · ")}
+    el("dist").innerHTML="<tr><td>설명 속도</td><td>"+dist("pace",[["느림","느렸다"],["적당","적당했다"],["빠름","빨랐다"]])+"</td></tr>"+
+      "<tr><td>실습 난이도</td><td>"+dist("level",[["쉬움","쉬웠다"],["적당","적당했다"],["어려움","어려웠다"]])+"</td></tr>"+
+      "<tr><td>과정 2 관심</td><td>"+dist("course2",[["있음","있다"],["없음","없다"],["모름","모르겠다"]])+"</td></tr>";
+    if(!rs.length){el("list").innerHTML="<p class='empty'>아직 응답이 없습니다.</p>";return}
+    el("list").innerHTML=rs.slice().reverse().map(function(r){
+      var who=r.mode==="anon"?"<b>무기명</b><span class='chip anon'>무기명</span>":"<b>"+esc(r.name||"이름 없음")+"</b><span class='chip'>기명</span>";
+      var when=r.at?new Date(r.at).toLocaleString("ko-KR",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}):"";
+      var rows=[["전체 만족도",r.overall?r.overall+" / 5":""],["항목","이론 "+(r.theory||"–")+" · 실습 "+(r.practice||"–")+" · 강의실 "+(r.venue||"–")+" · 안내 "+(r.notice||"–")],
+        ["추천 의향",r.score?r.score+" / 10":""],["속도·난이도",[r.pace,r.level].filter(Boolean).join(" · ")],["도움된 것",r.best],["아쉬운 것",r.worse],
+        ["만든 프로그램",r.made],["다음에 만들 것",r.next],["과정 2",r.course2],["한마디",r.quote],["소개 동의",r.publish]];
+      return "<div class='r'><div class='who'>"+who+"<span>"+esc(/^\d+$/.test(r.cohort)?r.cohort+"기":r.cohort||"")+"</span><span>"+esc(when)+"</span></div><dl>"+
+        rows.filter(function(x){return x[1]&&String(x[1]).replace(/[–·\s]|이론|실습|강의실|안내/g,"")}).map(function(x){return "<dt>"+x[0]+"</dt><dd>"+esc(x[1])+"</dd>"}).join("")+"</dl></div>"}).join("");
+  }
+  function toCsv(){
+    var c=el("fc").value, rs=all.filter(function(r){return!c||r.cohort===c});
+    var cols=["at","cohort","mode","name","overall","theory","practice","venue","notice","pace","level","score","best","worse","made","next","course2","quote","publish"];
+    var lines=[cols.join(",")].concat(rs.map(function(r){return cols.map(function(k){return '"'+String(r[k]==null?"":r[k]).replace(/"/g,'""')+'"'}).join(",")}));
+    var b=new Blob(["﻿"+lines.join("\n")],{type:"text/csv"}),a=document.createElement("a");
+    a.href=URL.createObjectURL(b);a.download="ai-class-survey"+(c?"-"+c+"기":"")+".csv";a.click();
+  }
+  function show(){el("login").hidden=true;el("view").hidden=false}
+  el("fc").onchange=render; el("reload").onclick=function(){load().catch(function(){})}; el("csv").onclick=toCsv;
+  el("login").onsubmit=function(e){e.preventDefault();key=el("pw").value.trim();el("lerr").textContent="";
+    load().then(function(){put(key,el("keep").checked);show()}).catch(function(err){el("lerr").textContent=err.message==="auth"?"비밀번호가 맞지 않습니다.":"연결이 안 됩니다. 잠시 뒤 다시 시도해 주십시오."})};
+  key=get();
+  if(key){load().then(show).catch(function(){key="";el("login").hidden=false})}else el("login").hidden=false;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>만족도 조사 · 원장을 위한 AI 실전 교육</title>
+<meta name="theme-color" content="#26355c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--paper:#fdfaf3;--paper-2:#f6efe1;--card:#fff;--ink:#2a251f;--ink-2:#5b5245;--ink-3:#8b8070;--line:#e6dcc8;--gold:#a8802f;--navy:#26355c;--sage:#5f7a43;
+--serif:"Noto Serif KR","AppleMyungjo",serif;--sans:"IBM Plex Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);word-break:keep-all;-webkit-text-size-adjust:100%;line-height:1.7;font-size:16px}
+main{max-width:720px;margin:0 auto;padding:max(28px,env(safe-area-inset-top)) 16px 72px}
+.lab{font-size:.78rem;letter-spacing:.14em;color:var(--gold);font-weight:600;margin:0}
+h1{font-family:var(--serif);font-size:1.75rem;line-height:1.35;margin:8px 0 10px;letter-spacing:-.01em}
+.lead{color:var(--ink-2);margin:0;font-size:.98rem}
+.part{font-family:var(--serif);font-size:1.05rem;margin:30px 0 0;padding-top:14px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:baseline}
+.part span{font-family:var(--mono);font-size:.8rem;color:var(--gold)}
+.q{background:var(--card);border:1px solid var(--line);padding:18px 20px;margin-top:12px}
+.q .t{display:block;font-family:var(--serif);font-weight:700;font-size:1.03rem;margin-bottom:4px}
+.q small{display:block;color:var(--ink-3);font-size:.84rem;margin-bottom:10px}
+.q input[type=text],.q textarea{width:100%;font:inherit;padding:11px 12px;border:1px solid var(--line);background:#fff;color:inherit}
+.q textarea{min-height:100px;resize:vertical}
+.opts{display:flex;gap:6px;flex-wrap:wrap}
+.opts label{border:1px solid var(--line);padding:9px 14px;cursor:pointer;background:#fff;font-size:.95rem;min-height:44px;display:flex;align-items:center}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts label:has(input:checked){background:var(--navy);color:#fff;border-color:var(--navy)}
+.opts label:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:2px}
+.stack{display:grid;gap:6px}.stack label{justify-content:flex-start}
+.mode{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mode label{display:block;border:1px solid var(--line);background:#fff;padding:14px 16px;cursor:pointer}
+.mode label b{display:block;font-family:var(--serif);font-size:1.05rem}
+.mode label span{display:block;font-size:.86rem;color:var(--ink-2);margin-top:2px}
+.mode input{position:absolute;opacity:0;pointer-events:none}
+.mode label:has(input:checked){border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.mode label:has(input:checked) b::after{content:" · 선택";font-family:var(--sans);font-size:.78rem;color:var(--gold);font-weight:600}
+.grid5{display:grid;gap:0;margin-top:4px}
+.row5{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.row5:first-child{border-top:0}
+.row5 .nm{font-size:.95rem}
+.row5 .opts label{padding:6px 0;width:40px;justify-content:center;min-height:40px}
+.scale{display:flex;justify-content:space-between;font-size:.76rem;color:var(--ink-3);margin-top:6px}
+.send{margin-top:20px;width:100%;font:inherit;font-size:1.02rem;background:var(--navy);color:#fff;border:0;padding:15px;cursor:pointer}
+.why{color:var(--ink-2);font-size:.92rem;margin:8px 0 0;text-align:center}
+.done{background:var(--card);border:1px solid var(--line);padding:26px 20px;margin-top:22px;text-align:center}
+.hp{position:absolute;left:-9999px}
+[hidden]{display:none!important}
+footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid var(--line);padding-top:14px}
+@media (max-width:560px){h1{font-size:1.45rem}.mode{grid-template-columns:1fr}.row5{grid-template-columns:1fr}.row5 .opts{justify-content:space-between}.row5 .opts label{width:auto;flex:1}}
+</style>
+</head>
+<body>
+<main>
+  <p class="lab">원장을 위한 AI 실전 교육 · 만족도 조사</p>
+  <h1>오늘 수업, 솔직하게 말씀해 주십시오</h1>
+  <p class="lead">다음 기수의 시간표와 실습 순서를 그대로 고치는 데 씁니다. 3분이면 됩니다. 무기명을 고르시면 성함은 어디에도 저장되지 않습니다.</p>
+
+  <form id="sv" novalidate>
+    <div class="q">
+      <span class="t">응답 방식</span>
+      <div class="mode">
+        <label><input type="radio" name="mode" value="named"><b>기명</b><span>성함을 남깁니다. 강사가 따로 답을 드릴 수 있습니다.</span></label>
+        <label><input type="radio" name="mode" value="anon"><b>무기명</b><span>성함 없이 보냅니다. 누가 썼는지 알 수 없습니다.</span></label>
+      </div>
+    </div>
+    <div class="q" id="nameBox" hidden><label class="t" for="name">성함</label><input type="text" id="name" maxlength="40" autocomplete="name"></div>
+    <div class="q"><span class="t">기수</span><div class="opts" id="cohort">
+      <label><input type="radio" name="cohort" value="1">1기</label><label><input type="radio" name="cohort" value="2">2기</label><label><input type="radio" name="cohort" value="3">3기</label><label><input type="radio" name="cohort" value="4">4기</label><label><input type="radio" name="cohort" value="5">5기</label><label><input type="radio" name="cohort" value="기타">그 밖</label></div></div>
+
+    <h2 class="part"><span>1</span>점수</h2>
+    <div class="q"><span class="t">오늘 수업 전체에 얼마나 만족하십니까?</span>
+      <div class="opts" data-five="overall"></div>
+      <div class="scale"><span>1 매우 불만족</span><span>5 매우 만족</span></div></div>
+    <div class="q"><span class="t">항목별로 매겨 주십시오</span><small>1 = 아쉬움 · 5 = 아주 좋음</small>
+      <div class="grid5">
+        <div class="row5"><span class="nm">오전 이론 (AI로 앱을 만든다는 것)</span><div class="opts" data-five="theory"></div></div>
+        <div class="row5"><span class="nm">오후 실습 (키트 설치·첫 앱 만들기)</span><div class="opts" data-five="practice"></div></div>
+        <div class="row5"><span class="nm">강의실·자리·인터넷</span><div class="opts" data-five="venue"></div></div>
+        <div class="row5"><span class="nm">수업 전 안내 (노트북·키트 코드·찾아오는 길)</span><div class="opts" data-five="notice"></div></div>
+      </div></div>
+    <div class="q"><span class="t">설명 속도는 어떠셨습니까?</span><div class="opts">
+      <label><input type="radio" name="pace" value="느림">느렸다</label><label><input type="radio" name="pace" value="적당">적당했다</label><label><input type="radio" name="pace" value="빠름">빨랐다</label></div></div>
+    <div class="q"><span class="t">실습 난이도는 어떠셨습니까?</span><div class="opts">
+      <label><input type="radio" name="level" value="쉬움">쉬웠다</label><label><input type="radio" name="level" value="적당">적당했다</label><label><input type="radio" name="level" value="어려움">어려웠다</label></div></div>
+    <div class="q"><span class="t">동료 원장님께 이 교육을 권하시겠습니까?</span><small>0 = 전혀 아니다 · 10 = 꼭 권하겠다</small><div class="opts" id="score"></div></div>
+
+    <h2 class="part"><span>2</span>말씀</h2>
+    <div class="q"><label class="t" for="best">가장 도움이 된 것</label><textarea id="best" maxlength="1500"></textarea></div>
+    <div class="q"><label class="t" for="worse">아쉬웠던 것, 바꿨으면 하는 것</label><small>시간 배분, 쉬는 시간, 막혔던 단계 무엇이든 좋습니다.</small><textarea id="worse" maxlength="1500"></textarea></div>
+    <div class="q"><label class="t" for="made">오늘 만드신 프로그램</label><small>이름과 한 줄 설명</small><input type="text" id="made" maxlength="600"></div>
+    <div class="q"><label class="t" for="next">다음에 만들어 보고 싶은 것</label><textarea id="next" maxlength="1500" style="min-height:80px"></textarea></div>
+    <div class="q"><span class="t">병원 방문 세팅(과정 2)에 관심이 있으십니까?</span><div class="opts">
+      <label><input type="radio" name="course2" value="있음">있다</label><label><input type="radio" name="course2" value="없음">없다</label><label><input type="radio" name="course2" value="모름">아직 모르겠다</label></div></div>
+
+    <h2 class="part"><span>3</span>한마디</h2>
+    <div class="q"><label class="t" for="quote">다른 원장님께 한마디</label><small>교육 소개에 실어도 되는 문장이면 더 고맙겠습니다.</small><textarea id="quote" maxlength="600" style="min-height:80px"></textarea></div>
+    <div class="q"><span class="t">위 한마디를 교육 소개에 써도 될까요?</span><div class="opts stack">
+      <label id="pubReal"><input type="radio" name="publish" value="실명">네, 이름과 함께</label>
+      <label><input type="radio" name="publish" value="익명">네, 이름 없이 (예: 서울 ○○동물병원 원장)</label>
+      <label><input type="radio" name="publish" value="비공개" checked>아니요, 강사만 봐 주십시오</label></div></div>
+
+    <input class="hp" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button class="send" type="submit">보내기</button>
+    <p id="msg" class="why" role="status"></p>
+  </form>
+  <div class="done" id="done" hidden><h2 style="font-family:var(--serif);margin:0 0 6px">고맙습니다</h2><p class="why" id="doneMsg" style="margin:0">남겨 주신 말씀은 다음 기수에 그대로 반영하겠습니다.</p></div>
+  <footer>원장을 위한 AI 실전 교육 · 이태호</footer>
+</main>
+<script>
+(function(){
+  function el(id){return document.getElementById(id)}
+  function radio(name,val,label){var l=document.createElement("label");var i=document.createElement("input");i.type="radio";i.name=name;i.value=val;l.appendChild(i);l.appendChild(document.createTextNode(label));return l}
+  document.querySelectorAll("[data-five]").forEach(function(box){for(var i=1;i<=5;i++)box.appendChild(radio(box.dataset.five,String(i),String(i)))});
+  for(var i=0;i<=10;i++)el("score").appendChild(radio("score",String(i),String(i)));
+  var c=new URLSearchParams(location.search).get("c");
+  if(c){var ci=document.querySelector('input[name="cohort"][value="'+c+'"]');if(ci)ci.checked=true}
+  var f=el("sv"),m=el("msg");
+  function pick(n){var x=f.querySelector('input[name="'+n+'"]:checked');return x?x.value:""}
+  function v(id){return el(id).value.trim()}
+  function syncMode(){
+    var anon=pick("mode")==="anon";
+    el("nameBox").hidden=pick("mode")!=="named";
+    if(anon){el("name").value="";var pr=f.querySelector('input[name="publish"][value="실명"]');if(pr.checked)f.querySelector('input[name="publish"][value="익명"]').checked=true}
+    el("pubReal").hidden=anon;
+  }
+  f.querySelectorAll('input[name="mode"]').forEach(function(r){r.addEventListener("change",function(){syncMode();if(pick("mode")==="named")el("name").focus()})});
+  syncMode();
+  f.addEventListener("submit",function(e){
+    e.preventDefault();
+    var mode=pick("mode");
+    if(!mode){m.textContent="맨 위에서 기명 또는 무기명을 골라 주십시오.";f.querySelector('input[name="mode"]').focus();return}
+    if(mode==="named"&&!v("name")){m.textContent="기명을 고르셨으니 성함을 적어 주십시오.";el("name").focus();return}
+    var d={form:"survey",mode:mode,name:mode==="anon"?"":v("name"),cohort:pick("cohort"),overall:pick("overall"),theory:pick("theory"),practice:pick("practice"),
+      venue:pick("venue"),notice:pick("notice"),pace:pick("pace"),level:pick("level"),score:pick("score"),best:v("best"),worse:v("worse"),
+      made:v("made"),next:v("next"),course2:pick("course2"),quote:v("quote"),publish:pick("publish"),website:v("website")};
+    if(!d.overall&&!d.score&&!d.best&&!d.worse){m.textContent="전체 만족도나 의견을 하나 이상 남겨 주십시오.";return}
+    m.textContent="보내는 중…";f.querySelector(".send").disabled=true;
+    fetch("/api/ai-review",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(d)})
+      .then(function(x){return x.json()}).then(function(j){
+        if(j.ok){f.hidden=true;el("done").hidden=false;if(mode==="anon")el("doneMsg").textContent="성함 없이 받았습니다. 남겨 주신 말씀은 다음 기수에 그대로 반영하겠습니다.";window.scrollTo(0,0)}
+        else{m.textContent="보내지 못했습니다. 잠시 뒤 다시 눌러 주십시오.";f.querySelector(".send").disabled=false}
+      }).catch(function(){m.textContent="연결이 안 됩니다. 잠시 뒤 다시 눌러 주십시오.";f.querySelector(".send").disabled=false});
+  });
+})();
+</script>
+</body>
+</html>
