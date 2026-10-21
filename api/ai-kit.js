@@ -49,7 +49,7 @@ module.exports = async function handler(req, res) {
         if (!buf.length || buf.length > 3 * 1024 * 1024) { res.status(413).json({ ok: false, error: "size" }); return; }
         await store.writeBytes(`${NS}/zips/${code}.zip`, buf, "application/zip");
         const prev = idx.codes[code] || {};
-        idx.codes[code] = { name: String(b.name || "").slice(0, 40), cohort: String(b.cohort || "").slice(0, 10), kitId: String(b.kitId || "").slice(0, 20),
+        idx.codes[code] = { name: String(b.name || "").slice(0, 40), title: String(b.title || "원장님").slice(0, 10), cohort: String(b.cohort || "").slice(0, 10), kitId: String(b.kitId || "").slice(0, 20),
           from: String(b.from || ""), to: String(b.to || ""), size: buf.length, downloads: prev.downloads || [] };
       } else if (q.window) {
         if (!idx.codes[code]) { res.status(404).json({ ok: false, error: "code" }); return; }
@@ -74,7 +74,7 @@ module.exports = async function handler(req, res) {
       res.status(403).json({ ok: false, error: "date", from: ent.from, to: ent.to });
       return;
     }
-    if (q.check) { res.status(200).json({ ok: true, name: ent.name, cohort: ent.cohort }); return; }
+    if (q.check) { res.status(200).json({ ok: true, name: ent.name, title: ent.title || "원장님", cohort: ent.cohort }); return; }
 
     const bytes = await store.readBytes(`${NS}/zips/${code}.zip`);
     if (!bytes) { res.status(404).json({ ok: false, error: "file" }); return; }

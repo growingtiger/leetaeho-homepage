@@ -165,7 +165,7 @@ document.querySelectorAll("[data-copy]").forEach(function(b){b.addEventListener(
   function fmt(v){v=norm(v);return v.length===10?v.slice(0,2)+"-"+v.slice(2,6)+"-"+v.slice(6):v}
   f.addEventListener("submit",function(e){e.preventDefault();var code=fmt(c.value);if(!code)return;m.textContent="확인 중…";ok.hidden=true;
     fetch("/api/ai-kit?check="+encodeURIComponent(code)).then(function(r){return r.json()}).then(function(j){
-      if(j.ok){m.innerHTML="<b>"+String(j.name).replace(/[<>&]/g,"")+" 원장님 키트입니다.</b>";
+      if(j.ok){m.innerHTML="<b>"+String(j.name).replace(/[<>&]/g,"")+" "+String(j.title||"원장님").replace(/[<>&]/g,"")+" 키트입니다.</b>";
         document.getElementById("s1").textContent="https://leetaeho.co.kr/api/ai-kit?code="+code+" 에서 키트 zip을 내려받아 내 홈 폴더에 압축을 풀고, 생긴 vet-app-kit 폴더의 INSTALL.md대로 설치해 줘.";ok.hidden=false}
       else if(j.error==="date"){m.textContent="이 코드는 "+j.from+(j.to&&j.to!==j.from?"~"+j.to:"")+"에만 열립니다."}
       else{m.textContent="코드를 다시 확인해 주십시오."}
