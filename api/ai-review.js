@@ -47,6 +47,7 @@ module.exports = async function handler(req, res) {
       const rec = { at: new Date().toISOString() };
       for (const k of Object.keys(LIMITS)) rec[k] = String(b[k] == null ? "" : b[k]).slice(0, LIMITS[k]);
       // 무기명은 서버에서도 이름을 남기지 않는다. 공개 동의도 "이름과 함께"가 될 수 없다.
+      if (rec.form === "survey") rec.mode = "anon"; // 만족도 조사는 무기명으로만 받는다(2026-10-22 원장 지시)
       if (rec.mode === "anon") { rec.name = ""; if (rec.publish === "실명") rec.publish = "익명"; }
       if (!rec.score && !rec.best && !rec.worse && !rec.overall) { res.status(400).json({ ok: false, error: "empty" }); return; }
       const id = Date.now().toString(36) + crypto.randomBytes(3).toString("hex");

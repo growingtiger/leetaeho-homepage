@@ -57,16 +57,11 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
 <main>
   <p class="lab">원장을 위한 AI 실전 교육 · 만족도 조사</p>
   <h1>오늘 수업, 솔직하게 말씀해 주십시오</h1>
-  <p class="lead">다음 기수의 시간표와 실습 순서를 그대로 고치는 데 씁니다. 3분이면 됩니다. 무기명을 고르시면 성함은 어디에도 저장되지 않습니다.</p>
+  <p class="lead">다음 기수의 시간표와 실습 순서를 그대로 고치는 데 씁니다. 3분이면 됩니다. 성함은 받지 않으니 누가 썼는지 알 수 없습니다. 편하게 적어 주십시오.</p>
 
   <form id="sv" novalidate>
-    <div class="q">
-      <span class="t">응답 방식</span>
-      <div class="mode">
-        <label><input type="radio" name="mode" value="named"><b>기명</b><span>성함을 남깁니다. 강사가 따로 답을 드릴 수 있습니다.</span></label>
-        <label><input type="radio" name="mode" value="anon"><b>무기명</b><span>성함 없이 보냅니다. 누가 썼는지 알 수 없습니다.</span></label>
-      </div>
-    </div>
+    <!-- 만족도 조사는 무기명으로만 받는다(2026-10-22 원장 지시: 객관적인 반영) -->
+    <input type="radio" name="mode" value="anon" checked hidden>
     <div class="q" id="nameBox" hidden><label class="t" for="name">성함</label><input type="text" id="name" maxlength="40" autocomplete="name"></div>
     <div class="q"><span class="t">기수</span><div class="opts" id="cohort">
       <label><input type="radio" name="cohort" value="1">1기</label><label><input type="radio" name="cohort" value="2">2기</label><label><input type="radio" name="cohort" value="3">3기</label><label><input type="radio" name="cohort" value="4">4기</label><label><input type="radio" name="cohort" value="5">5기</label><label><input type="radio" name="cohort" value="기타">그 밖</label></div></div>
@@ -100,7 +95,7 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
     <div class="q"><label class="t" for="quote">다른 원장님께 한마디</label><small>교육 소개에 실어도 되는 문장이면 더 고맙겠습니다.</small><textarea id="quote" maxlength="600" style="min-height:80px"></textarea></div>
     <div class="q"><span class="t">위 한마디를 교육 소개에 써도 될까요?</span><div class="opts stack">
       <label id="pubReal"><input type="radio" name="publish" value="실명">네, 이름과 함께</label>
-      <label><input type="radio" name="publish" value="익명">네, 이름 없이 (예: 서울 ○○동물병원 원장)</label>
+      <label><input type="radio" name="publish" value="익명">네, 써도 됩니다</label>
       <label><input type="radio" name="publish" value="비공개" checked>아니요, 강사만 봐 주십시오</label></div></div>
 
     <input class="hp" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
