@@ -98,6 +98,16 @@ table.cost tr.sum td{border-bottom:2px solid var(--ink);font-weight:700;padding-
 .cv ul{list-style:none;margin:0 0 24px;padding:0;display:grid;gap:8px;font-size:.93rem}
 .cv li{padding-left:12px;border-left:2px solid var(--line)}
 @media (max-width:820px){.cv{grid-template-columns:minmax(0,1fr);gap:8px}}
+.voices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-top:2px solid var(--ink)}
+.voices figure{margin:0;padding:26px 26px 26px 0;border-bottom:1px solid var(--line);display:grid;gap:12px;align-content:start}
+.voices figure:nth-child(even){padding-left:26px;border-left:1px solid var(--line)}
+.voices figure.wide{grid-column:1/-1;padding-left:0;border-left:0}
+.voices blockquote{margin:0;font-family:var(--serif);font-size:1.12rem;line-height:1.7}
+.voices figure.wide blockquote{font-size:1.3rem}
+.voices figcaption{font-size:.85rem;color:var(--ink-3)}
+.voice-stat{display:flex;flex-wrap:wrap;gap:28px;margin:-14px 0 28px;font-size:.95rem;color:var(--ink-2)}
+.voice-stat b{font-family:var(--serif);font-size:1.6rem;color:var(--ink);margin-right:6px}
+@media (max-width:720px){.voices{grid-template-columns:minmax(0,1fr)}.voices figure,.voices figure:nth-child(even){padding-left:0;border-left:0}}
 .diff-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:2px solid var(--ink)}
 .diff-grid>div{padding:22px 22px 22px 0;display:grid;gap:10px;align-content:start}
 .diff-grid>div+div{padding-left:22px;border-left:1px solid var(--line)}
@@ -532,6 +542,27 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
         <p class="lead" style="font-size:.95rem">"이런 프로그램이 있었으면" 하는 것을 사전 질문지에 적어 주시면, 교육 전에 무엇을 만들지 함께 정해 둡니다. 당일 오후를 설명 듣는 데 쓰지 않으시도록 하기 위해서입니다.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="voices">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">수강 후기</p>
+      <h2>3기를 마친 원장님들의 말</h2>
+    </div>
+    <div class="voice-stat">
+      <span><b>5 / 5</b>다섯 분 모두 전체 만족도 5점</span>
+      <span><b>10 / 10</b>다섯 분 모두 "동료에게 권하겠다" 10점</span>
+    </div>
+    <div class="voices">
+      <figure class="wide"><blockquote>"110만원의 가치가 이렇게 크다는 사실에 놀라웠습니다. … 110만원이 전혀 아깝지 않은 8시간이었습니다."</blockquote><figcaption>3기 수강 원장</figcaption></figure>
+      <figure><blockquote>"하루면 프로그램을 만들게 해주는 수업"</blockquote><figcaption>3기 수강 원장</figcaption></figure>
+      <figure><blockquote>"AI시대 아주 유용한 강의였습니다."</blockquote><figcaption>3기 수강 원장</figcaption></figure>
+      <figure><blockquote>"지식이 많지 않아도 평소 병원 운영에 필요하다고 생각했던 기능들을 직접 구현해 볼 수 있어 만족스러웠습니다. 관심은 있지만 어디서부터 시작할지 막막했던 원장님들께 좋은 출발점이 될 강의라고 생각합니다."</blockquote><figcaption>3기 수강 원장</figcaption></figure>
+      <figure><blockquote>"AI를 이용해 병원에 최적화된 앱을 만든다는 건 항상 머릿속에서만 그려오던 일이었어요. … 시간도 비용도 아깝지 않은 교육이었습니다. 완전 강추입니다!"</blockquote><figcaption>3기 수강 원장</figcaption></figure>
+    </div>
+    <p class="lead" style="font-size:.85rem;margin-top:18px;color:var(--ink-3)">2026년 10월 3기 만족도 조사에서 소개에 동의해 주신 분들의 말을 옮겼습니다. 띄어쓰기·표기만 다듬었고 … 은 줄인 부분입니다. 병원을 알 수 없도록 이름은 싣지 않았습니다.</p>
   </div>
 </section>
 
