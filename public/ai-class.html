@@ -763,12 +763,20 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
       el.textContent=Math.round(to*k).toLocaleString("en-US");if(k<1)requestAnimationFrame(step);}
     el.textContent="0";requestAnimationFrame(step);
   }
+  // 화면 안에 들어온 것을 직접 확인해 보여 준다(IntersectionObserver가 늦거나 안 될 때를 대비한 예비 장치).
+  // 첫 화면에 걸친 것은 바로 보여 주고, 화면 안의 것이 끝내 안 보이면 전부 보여 준다(글이 숨은 채 남지 않게).
+  function sweep(){var h=window.innerHeight||800;els.forEach(function(e){if(!e.classList.contains("in")){var r=e.getBoundingClientRect();if(r.top<h*0.95&&r.bottom>-40)e.classList.add("in");}});
+    document.querySelectorAll(".cnt[data-to]:not([data-done])").forEach(function(e){var r=e.getBoundingClientRect();if(r.top<h*0.9&&r.bottom>0){e.dataset.done="1";count(e);}});}
+  window.addEventListener("scroll",sweep,{passive:true});window.addEventListener("resize",sweep);
+  sweep();setTimeout(sweep,300);
+  // 2.5초가 지나도 지금 화면 안의 것이 안 보이면(움직임이 막힌 환경) 전부 보여 준다
+  setTimeout(function(){var h=window.innerHeight||800;var stuck=[].some.call(els,function(e){var r=e.getBoundingClientRect();return r.top<h&&r.bottom>0&&!e.classList.contains("in");});if(stuck)showAll();},2500);
   try{
     if(reduce||!("IntersectionObserver" in window)){showAll();}
     else{
       var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{rootMargin:"0px 0px -8% 0px",threshold:.08});
       els.forEach(function(e){io.observe(e);});
-      var co=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){count(e.target);co.unobserve(e.target);}});},{threshold:.6});
+      var co=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&!e.target.dataset.done){e.target.dataset.done="1";count(e.target);co.unobserve(e.target);}});},{threshold:.6});
       document.querySelectorAll(".cnt[data-to]").forEach(function(e){co.observe(e);});
     }
   }catch(_){root.classList.remove("js");showAll();}
