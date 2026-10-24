@@ -253,9 +253,10 @@ td.long{min-width:200px;max-width:280px;white-space:pre-wrap}
       document.getElementById("lf").hidden=true;document.getElementById("bar").hidden=false;var t=new Date();document.getElementById("upd").textContent=t.getHours()+":"+String(t.getMinutes()).padStart(2,"0")+" 기준";
       var items=x.j.items,h="",groups={};
       items.filter(function(a){return a.course==="1"}).forEach(function(a){(groups[a.cohort]=groups[a.cohort]||[]).push(a)});
-      Object.keys(groups).filter(function(c){return c!=="0"}).sort(function(a,b){return a-b}).forEach(function(c){var g=groups[c],full=g.length>=5;
+      Object.keys(groups).filter(function(c){return c!=="0"&&c!=="취소"}).sort(function(a,b){return a-b}).forEach(function(c){var g=groups[c],full=g.length>=5;
         h+="<section class=coh><h2>과정 1 · "+c+"기 <span class='pill"+(full?" full":"")+"'>"+(full?"마감 5/5":"모집 중 "+g.length+"/5")+"</span></h2><div class=tbl><table>"+TH+g.map(function(a){return row(a,true)}).join("")+"</table></div></section>";});
       if(groups["0"]){var w=groups["0"];h+="<section class=coh><h2>과정 1 · 대기자 <span class=pill>"+w.length+"명</span></h2><div class=tbl><table>"+TH+w.map(function(a){return row(a,false)}).join("")+"</table></div></section>";}
+      if(groups["취소"]){var x2=groups["취소"];h+="<section class=coh><h2>과정 1 · 취소 <span class=pill>"+x2.length+"명</span></h2><div class=tbl><table>"+TH+x2.map(function(a){return row(a,false)}).join("")+"</table></div></section>";}
       var c2=items.filter(function(a){return a.course==="2"});
       h+="<section class=coh><h2>과정 2 · 방문 세팅 <small>"+c2.length+"건</small></h2>"+(c2.length?"<div class=tbl><table>"+TH+c2.map(function(a){return row(a,false)}).join("")+"</table></div>":"<p class=lead>아직 신청이 없습니다.</p>")+"</section>";
       if(!items.length)h="<section class=coh><p class=lead>아직 신청이 없습니다.</p></section>";
