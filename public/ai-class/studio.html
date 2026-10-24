@@ -179,9 +179,9 @@ function cohort(no){var c=S.cohorts[no];if(!c){c=S.cohorts[no]={date:"",status:"
 function member(no){return S.members[no]||(S.members[no]={paid:false,laptop:false,memo:""})}
 function renderCoh(){
   var by={},wait=[],c2=[];
-  APPS.forEach(function(a){if(a.course==="2")c2.push(a);else if(String(a.cohort)==="0")wait.push(a);else(by[a.cohort]=by[a.cohort]||[]).push(a)});
+  APPS.forEach(function(a){if(a.course==="2")c2.push(a);else if(String(a.cohort)==="0")wait.push(a);else if(String(a.cohort)==="취소"){}/* 취소자는 준비실에서 관리하지 않는다(2026-10-24) */else(by[a.cohort]=by[a.cohort]||[]).push(a)});
   Object.keys(S.cohorts).forEach(function(k){if(!by[k])by[k]=[]});
-  var ks=Object.keys(by).filter(function(k){return k&&k!=="null"&&k!=="0"}).sort(function(a,b){return a-b});
+  var ks=Object.keys(by).filter(function(k){return k&&k!=="null"&&k!=="0"&&k!=="취소"}).sort(function(a,b){return a-b});
   var next=ks.map(function(k){var c=cohort(k);return c.date&&c.status!=="완료"&&c.date>=kstToday()?{k:k,d:c.date}:null}).filter(Boolean).sort(function(a,b){return a.d<b.d?-1:1})[0];
   var h='<div class="sec"><h2>기수</h2><p class="lead">'+(next?"다음 교육은 "+esc(next.k)+"기 "+fmt(next.d)+" · "+dday(next.d):"날짜가 정해진 기수가 아직 없습니다.")+' 수강생은 신청 명단에서 자동으로 들어옵니다.</p>';
   ks.forEach(function(k){var c=cohort(k),g=by[k],done=c.tasks.filter(function(t){return t.done}).length;
