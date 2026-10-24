@@ -51,6 +51,11 @@ a{color:inherit}
 .hero h1{font-size:clamp(2rem,5.4vw,3.5rem);line-height:1.22}
 .hero h1 em{font-style:normal;color:var(--gold-ink)}
 .hero .lead{margin-top:24px}
+.hero-proof{display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-top:26px;padding:12px 16px;border:1px solid var(--line);text-decoration:none;color:var(--ink-2);font-size:.95rem}
+.hero-proof b{font-family:var(--serif);font-size:1.25rem;color:var(--ink)}
+.hero-proof span{color:var(--ink-3)}.hero-proof .arr{color:var(--gold-ink)}
+.hero-proof:hover{border-color:var(--ink-3)}
+
 .who{border-left:2px solid var(--gold);padding-left:20px;display:grid;gap:6px;font-size:.95rem;color:var(--ink-2)}
 .who strong{font-family:var(--serif);font-size:1.15rem;color:var(--ink)}
 .facts{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:44px}
@@ -245,6 +250,7 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
         <p class="label">수의사·동물병원 원장 대상 · 오프라인 실습</p>
         <h1 style="margin-top:18px">AI를 쓰는 수의사가<br><em>AI를 쓰지 않는 수의사</em>를<br>대체합니다.</h1>
         <p class="lead">코드를 쓸 줄 모르는 임상 수의사가 진료·운영·경영·마케팅에 쓰는 프로그램 26개를 직접 만들어 매일 쓰고 있습니다. 진료하다 "이런 프로그램이 있으면 좋겠다" 싶었던 상상을, 원장님 병원에서 실제로 돌아가는 프로그램으로 만들어 드립니다.</p>
+        <a class="hero-proof" href="#voices"><b>5 / 5</b> 수강하신 원장님 모두 만족도 5점 <span>·</span> <b>10 / 10</b> 동료 추천 <span class="arr">→</span></a>
       </div>
       <div class="who">
         <img class="portrait" src="/ai-class/portrait-cut.webp" alt="이태호 수의사" width="480" height="750">
@@ -255,6 +261,26 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
         <span>대한수의사회 학술홍보위원회 위원장</span>
         <span>한국동물병원협회 정책기획위원회 위원장</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="voices">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label">수강 후기</p>
+      <h2>먼저 수강하신 원장님들의 말씀</h2>
+    </div>
+    <div class="voice-stat">
+      <span><b>5 / 5</b>수강하신 분 모두 전체 만족도 5점</span>
+      <span><b>10 / 10</b>수강하신 분 모두 "동료에게 권하겠다" 10점</span>
+    </div>
+    <div class="voices">
+      <figure class="wide"><blockquote>"110만원의 가치가 이렇게 크다는 사실에 놀라웠습니다. … 110만원이 전혀 아깝지 않은 8시간이었습니다."</blockquote><figcaption>수강 원장님</figcaption></figure>
+      <figure><blockquote>"하루면 프로그램을 만들게 해주는 수업"</blockquote><figcaption>수강 원장님</figcaption></figure>
+      <figure><blockquote>"AI시대 아주 유용한 강의였습니다."</blockquote><figcaption>수강 원장님</figcaption></figure>
+      <figure><blockquote>"지식이 많지 않아도 평소 병원 운영에 필요하다고 생각했던 기능들을 직접 구현해 볼 수 있어 만족스러웠습니다. 관심은 있지만 어디서부터 시작할지 막막했던 원장님들께 좋은 출발점이 될 강의라고 생각합니다."</blockquote><figcaption>수강 원장님</figcaption></figure>
+      <figure><blockquote>"AI를 이용해 병원에 최적화된 앱을 만든다는 건 항상 머릿속에서만 그려오던 일이었어요. … 시간도 비용도 아깝지 않은 교육이었습니다. 완전 강추입니다!"</blockquote><figcaption>수강 원장님</figcaption></figure>
     </div>
   </div>
 </section>
@@ -541,26 +567,6 @@ footer{padding-block:32px;font-size:.82rem;color:var(--ink-3)}
         </ul>
         <p class="lead" style="font-size:.95rem">"이런 프로그램이 있었으면" 하는 것을 사전 질문지에 적어 주시면, 교육 전에 무엇을 만들지 함께 정해 둡니다. 당일 오후를 설명 듣는 데 쓰지 않으시도록 하기 위해서입니다.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="voices">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="label">수강 후기</p>
-      <h2>먼저 수강하신 원장님들의 말씀</h2>
-    </div>
-    <div class="voice-stat">
-      <span><b>5 / 5</b>수강하신 분 모두 전체 만족도 5점</span>
-      <span><b>10 / 10</b>수강하신 분 모두 "동료에게 권하겠다" 10점</span>
-    </div>
-    <div class="voices">
-      <figure class="wide"><blockquote>"110만원의 가치가 이렇게 크다는 사실에 놀라웠습니다. … 110만원이 전혀 아깝지 않은 8시간이었습니다."</blockquote><figcaption>수강 원장님</figcaption></figure>
-      <figure><blockquote>"하루면 프로그램을 만들게 해주는 수업"</blockquote><figcaption>수강 원장님</figcaption></figure>
-      <figure><blockquote>"AI시대 아주 유용한 강의였습니다."</blockquote><figcaption>수강 원장님</figcaption></figure>
-      <figure><blockquote>"지식이 많지 않아도 평소 병원 운영에 필요하다고 생각했던 기능들을 직접 구현해 볼 수 있어 만족스러웠습니다. 관심은 있지만 어디서부터 시작할지 막막했던 원장님들께 좋은 출발점이 될 강의라고 생각합니다."</blockquote><figcaption>수강 원장님</figcaption></figure>
-      <figure><blockquote>"AI를 이용해 병원에 최적화된 앱을 만든다는 건 항상 머릿속에서만 그려오던 일이었어요. … 시간도 비용도 아깝지 않은 교육이었습니다. 완전 강추입니다!"</blockquote><figcaption>수강 원장님</figcaption></figure>
     </div>
   </div>
 </section>
