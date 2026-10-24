@@ -8,851 +8,948 @@
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="description" content="임상 수의사가 직접 만들어 매일 쓰는 병원 프로그램과, 만들면서 알게 된 것. 수의 소프트웨어를 만드는 분들께 드리는 현장 노트.">
+<meta name="description" content="임상 수의사가 직접 만들어 매일 쓰는 병원 프로그램 48개와, 만들면서 알게 된 것. 수의 소프트웨어를 만드는 분들께 드리는 현장 노트.">
 <meta property="og:title" content="진료실에서 만든 프로그램">
 <meta property="og:description" content="임상 수의사가 직접 만들어 매일 쓰는 병원 프로그램 48개와, 만들면서 알게 된 것.">
 <meta property="og:type" content="article">
+<script>document.documentElement.classList.add("js")</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;800&family=Noto+Serif+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;800&family=Noto+Serif+KR:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* 문서 — 랜딩이 아니라 노트다. 좁은 본문 단, 바깥에 번호와 방주, 금색 실선 하나.
-   같은 식구(이태호 채널)의 종이·먹·금색은 쓰되 레이아웃은 교육 소개 페이지와 다르게 간다. */
+/* 교육 소개 페이지와 같은 식구. 밝은 종이 / 먹색 띠 / 옅은 종이 띠를 번갈아 쓴다.
+   모서리: 사진 14px, 묶음 상자 20px, 버튼은 끝까지 둥글게. 색은 먹 + 종이 + 금색 하나. */
 :root{
-  --paper:#fdfaf3; --paper-2:#f6efe1; --white:#fffdf8; --ink:#241f1a; --ink-2:#564e42; --ink-3:#7b7263;
-  --line:#e4d9c3; --line-2:#efe6d4; --gold:#a8802f; --gold-ink:#846525; --mark:#f0e4c6;
-  --code-bg:#f7f1e3;
+  --paper:#fdfaf3; --paper-2:#f4ecdc; --white:#fffdf8; --ink:#2a251f; --ink-2:#5b5245; --ink-3:#70685b;
+  --line:#e6dcc8; --gold:#a8802f; --gold-ink:#846525; --gold-inv:#d6ae67; --gold-fill:#906e28;
+  --band:#211d18; --band-2:#2c2721; --band-ink:#f4ede1; --band-ink-2:#c9bead; --band-line:#3d362d; --band-gold:#d9b46f;
+  --shadow:0 24px 60px -28px rgba(60,44,20,.35);
   --display:"Noto Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;
   --serif:"Noto Serif KR","AppleMyungjo",Georgia,serif;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --max:1120px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#15120e; --paper-2:#1d1914; --white:#1a1712; --ink:#f0e8da; --ink-2:#c3b7a2; --ink-3:#9d9382;
-  --line:#352d22; --line-2:#2a241c; --gold:#d6ae67; --gold-ink:#d6ae67; --mark:#3a2f17;
-  --code-bg:#1f1a13; color-scheme:dark}}
+  --paper:#15120e; --paper-2:#1e1a14; --white:#1a1712; --ink:#f0e8da; --ink-2:#c3b7a2; --ink-3:#a19682;
+  --line:#352d22; --gold:#d6ae67; --gold-ink:#d6ae67; --gold-inv:#7d6023; --gold-fill:#d6ae67;
+  --band:#0c0b09; --band-2:#16130f; --band-ink:#f0e8da; --band-ink-2:#b9ae9c; --band-line:#2e281f; --band-gold:#d9b46f;
+  --shadow:0 24px 60px -28px rgba(0,0,0,.7); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --paper:#15120e; --paper-2:#1d1914; --white:#1a1712; --ink:#f0e8da; --ink-2:#c3b7a2; --ink-3:#9d9382;
-  --line:#352d22; --line-2:#2a241c; --gold:#d6ae67; --gold-ink:#d6ae67; --mark:#3a2f17;
-  --code-bg:#1f1a13; color-scheme:dark}
+  --paper:#15120e; --paper-2:#1e1a14; --white:#1a1712; --ink:#f0e8da; --ink-2:#c3b7a2; --ink-3:#a19682;
+  --line:#352d22; --gold:#d6ae67; --gold-ink:#d6ae67; --gold-inv:#7d6023; --gold-fill:#d6ae67;
+  --band:#0c0b09; --band-2:#16130f; --band-ink:#f0e8da; --band-ink-2:#b9ae9c; --band-line:#2e281f; --band-gold:#d9b46f;
+  --shadow:0 24px 60px -28px rgba(0,0,0,.7); color-scheme:dark}
 
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);
-  font-size:17px;line-height:1.88;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration-color:var(--gold);text-underline-offset:3px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere;overflow-x:clip}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:20px}
+section{padding-block:clamp(84px,11vw,148px);position:relative}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1,h2{font-family:var(--display);font-weight:800;letter-spacing:-.035em}
+h2{font-size:clamp(1.9rem,5.2vw,3.3rem);line-height:1.22}
+h3{font-family:var(--display);font-weight:700;font-size:1.2rem;line-height:1.4;letter-spacing:-.02em}
+p{margin:0}
+a{color:inherit}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-p{margin:0 0 1.15em}
-p:last-child{margin-bottom:0}
-strong{font-weight:700}
-em{font-style:normal;background:linear-gradient(transparent 62%,var(--mark) 62%)}
+.label{font-size:.92rem;font-weight:600;color:var(--gold-ink);letter-spacing:-.01em}
+.label .n{font-family:var(--mono);font-size:.82rem;margin-right:8px;opacity:.8}
+.lead{color:var(--ink-2);font-size:clamp(1.02rem,1.6vw,1.14rem);max-width:60ch}
+.sec-head{display:grid;gap:16px;margin-bottom:clamp(40px,6vw,72px)}
+.sec-head.center{justify-items:center;text-align:center}
+.sec-head.center .lead{margin-inline:auto}
+.note{margin-top:20px;font-size:.88rem;color:var(--ink-3)}
 
-.page{max-width:1240px;margin:0 auto;padding:0 20px}
-.col{max-width:none}
-.doc{max-width:720px}
+/* bands */
+.tint{background:var(--paper-2)}
+.dark{background:var(--band);color:var(--band-ink)}
+.dark .label{color:var(--band-gold)}
+.dark .lead,.dark .note{color:var(--band-ink-2)}
+.dark h2,.dark h3{color:var(--band-ink)}
 
-/* 표제부 */
-header.cover{padding:clamp(56px,9vw,116px) 0 clamp(40px,6vw,64px);border-bottom:2px solid var(--ink)}
-.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink)}
-h1{margin:.5em 0 0;font-family:var(--display);font-weight:800;letter-spacing:-.04em;
-  font-size:clamp(2.1rem,6.4vw,3.6rem);line-height:1.12}
-.cover .sub{margin-top:.8em;font-size:clamp(1.05rem,2.1vw,1.26rem);line-height:1.7;color:var(--ink-2);max-width:30ch;font-weight:600}
-.cover .to{margin-top:2.2em;display:grid;gap:4px;font-family:var(--display);font-size:.93rem;line-height:1.6;color:var(--ink-2)}
-.cover .to b{font-weight:700;color:var(--ink)}
-.byline{margin-top:1.6em;font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;color:var(--ink-3)}
+/* reveal */
+@media (prefers-reduced-motion:no-preference){
+  .js .rv{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i,0) * 80ms)}
+  .js .rv.in{opacity:1;transform:none}
+  .js .rv-img{opacity:0;transform:translateY(40px) scale(.97);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i,0) * 90ms)}
+  .js .rv-img.in{opacity:1;transform:none}
+  html{scroll-behavior:smooth}
+}
 
-/* 한 장 요약 */
-.abstract{padding:clamp(34px,5vw,54px) 0;border-bottom:1px solid var(--line)}
-.abstract .doc p{font-size:1.06rem}
-.figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);
-  border:1px solid var(--line);margin-top:2.4em}
-.fig{background:var(--paper);padding:18px 16px 16px}
-.fig b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(1.3rem,3.2vw,1.72rem);letter-spacing:-.03em;line-height:1.1}
-.fig span{display:block;margin-top:7px;font-family:var(--display);font-size:.79rem;line-height:1.45;color:var(--ink-3)}
+/* hero */
+.hero{padding-block:clamp(56px,8vw,96px) clamp(64px,9vw,112px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:clamp(36px,6vw,80px);align-items:end}
+.hero h1{font-size:clamp(1.9rem,7.4vw,3.6rem);line-height:1.2;margin-top:20px}
+.hero h1 em{font-style:normal;color:var(--gold-ink)}
+.hero .lead{margin-top:28px}
+.hero-proof{display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;margin-top:32px;padding:14px 22px;border-radius:999px;background:var(--ink);color:var(--paper);text-decoration:none;font-size:.95rem;transition:transform .2s}
+.hero-proof b{font-family:var(--display);font-weight:800;font-size:1.3rem;color:var(--gold-inv);letter-spacing:-.02em}
+.hero-proof span{opacity:.6}.hero-proof .arr{opacity:1;color:var(--gold-inv)}
+.hero-proof:hover{transform:translateY(-2px)}
+.hero-proof:active{transform:scale(.98)}
+.who{display:grid;gap:4px;font-size:.93rem;color:var(--ink-2)}
+.who .to{font-family:var(--display);font-weight:800;font-size:1.18rem;color:var(--ink);letter-spacing:-.02em;margin-bottom:2px}
+.who .to2{color:var(--ink-2);margin-bottom:16px}
+.who strong{font-family:var(--display);font-weight:800;font-size:1.25rem;color:var(--ink);letter-spacing:-.02em;margin-bottom:4px}
+.portrait{width:100%;max-width:240px;height:auto;margin-bottom:12px;-webkit-mask-image:linear-gradient(to bottom,#000 78%,transparent 100%);mask-image:linear-gradient(to bottom,#000 78%,transparent 100%)}
 
-/* 목차 */
-nav.toc{padding:clamp(30px,4vw,44px) 0;border-bottom:1px solid var(--line)}
-nav.toc ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 36px}
-nav.toc li{display:flex;gap:12px;align-items:baseline;font-family:var(--display);font-size:.93rem;padding:5px 0}
-nav.toc .n{font-family:var(--mono);font-size:.78rem;color:var(--gold-ink);min-width:2.2em}
-nav.toc a{text-decoration:none;border-bottom:1px solid transparent}
-nav.toc a:hover{border-bottom-color:var(--gold)}
+/* 요약: 먹색 띠, 큰 숫자 */
+.sum-stat{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;border-top:1px solid var(--band-line);padding-top:30px;margin-bottom:clamp(44px,6vw,72px)}
+.sum-stat>span{display:grid;gap:6px;align-content:start;font-size:.95rem;color:var(--band-ink-2)}
+.sum-stat b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(2.4rem,6.4vw,4.2rem);line-height:1;letter-spacing:-.05em;color:var(--band-gold);font-variant-numeric:tabular-nums}
+.sum-stat b small{font-family:var(--sans);font-size:.28em;font-weight:600;letter-spacing:0;margin-left:5px}
+.sum-body{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(32px,5vw,64px);align-items:start}
+.sum-body .big{font-family:var(--serif);font-size:clamp(1.3rem,3.2vw,2.05rem);line-height:1.6;font-weight:600;color:var(--band-ink);max-width:24ch}
+.sum-body .big em{font-style:normal;color:var(--band-gold)}
+.sum-body p+p{margin-top:16px}
+.sum-body .side{color:var(--band-ink-2);font-size:1rem;line-height:1.85}
 
-/* 절 */
-section{padding:clamp(52px,7vw,88px) 0;border-bottom:1px solid var(--line)}
-.sec-n{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;color:var(--gold-ink);display:block;margin-bottom:1.1em}
-h2{margin:0;font-family:var(--display);font-weight:800;letter-spacing:-.035em;
-  font-size:clamp(1.52rem,3.6vw,2.12rem);line-height:1.28;max-width:24ch}
-h2 + .lede{margin-top:1.2em;font-size:1.06rem;color:var(--ink-2)}
-h3{margin:2.6em 0 .7em;font-family:var(--display);font-weight:700;font-size:1.06rem;letter-spacing:-.02em;line-height:1.5}
-h2 ~ * {max-width:720px}
-.rule{height:0;border:0;border-top:1px solid var(--gold);width:72px;margin:1.5em 0 0;opacity:.7}
+/* 편지 */
+.letter{max-width:720px;margin:0 auto;display:grid;gap:26px}
+.letter .label{text-align:center}
+.letter-body{display:grid;gap:22px;font-family:var(--serif);font-size:clamp(1.06rem,1.8vw,1.2rem);line-height:1.95}
+.letter-body p.first{font-size:clamp(1.2rem,2.5vw,1.55rem);line-height:1.7;font-weight:600}
+.plain{font-family:var(--sans);font-size:1.02rem;line-height:1.9;gap:18px}
+.plain h3{margin-top:18px}
+.pull{padding:22px 26px;background:var(--white);border:1px solid var(--line);border-radius:20px;font-family:var(--sans);font-size:1rem;line-height:1.8;color:var(--ink-2)}
+.pull b{color:var(--ink)}
 
-/* 방주 */
-.aside{margin:2.2em 0;padding:16px 0 16px 18px;border-left:2px solid var(--gold);
-  font-family:var(--display);font-size:.93rem;line-height:1.72;color:var(--ink-2)}
-.aside b{color:var(--ink)}
+/* 하루 */
+.log{display:grid;max-width:880px;margin:0 auto;position:relative}
+.log::before{content:"";position:absolute;left:118px;top:10px;bottom:10px;width:1px;background:var(--line)}
+.row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:44px;padding-block:22px}
+.row time{font-family:var(--display);font-weight:800;font-size:1.22rem;color:var(--gold-ink);font-variant-numeric:tabular-nums;letter-spacing:-.02em;text-align:right;line-height:1.5}
+.row h3{font-size:clamp(1.15rem,2vw,1.4rem)}
+.row .need{display:block;margin-top:8px;font-size:.92rem;color:var(--ink-3);max-width:58ch}
+.row p.now{color:var(--ink-2);font-size:.98rem;margin-top:10px;max-width:58ch}
 
-/* 시간표 */
-.log{margin:2.4em 0 0;display:grid;gap:0}
-.log .row{display:grid;grid-template-columns:96px 1fr;gap:20px;padding:20px 0;border-top:1px solid var(--line-2)}
-.log .row:last-child{border-bottom:1px solid var(--line-2)}
-.log time{font-family:var(--mono);font-size:.82rem;color:var(--gold-ink);padding-top:.35em;letter-spacing:.02em}
-.log h4{margin:0 0 .35em;font-family:var(--display);font-weight:700;font-size:1rem;letter-spacing:-.02em}
-.log .need{display:block;font-family:var(--display);font-size:.88rem;color:var(--ink-3);margin-bottom:.5em}
-.log p{margin:0;font-size:.98rem}
+/* 프로그램 */
+.built-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,5vw,64px);align-items:end;margin-bottom:clamp(32px,5vw,52px)}
+.built-head .big{font-family:var(--display);font-weight:800;font-size:clamp(6.5rem,22vw,15rem);line-height:.8;letter-spacing:-.06em;color:var(--gold-ink);font-variant-numeric:tabular-nums}
+.built-head .sec-head{margin:0}
+.keynote{max-width:820px;padding:20px 24px;background:var(--white);border:1px solid var(--line);border-radius:20px;font-size:.97rem;line-height:1.8;color:var(--ink-2)}
+.keynote b{color:var(--ink)}
+.cg-title{font-size:clamp(1.4rem,3.2vw,2.05rem);margin:clamp(60px,8vw,96px) 0 0;font-family:var(--display);font-weight:800;letter-spacing:-.03em}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:26px}
+.pcard{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:26px 24px;display:grid;gap:10px;align-content:start}
+.pcard h3{font-size:1.1rem}
+.pcard .tag{font-size:.88rem;color:var(--ink-3);margin-top:-4px}
+.pcard .ba{font-size:.97rem;color:var(--ink-2);line-height:1.75}
+.pcard .ba i{font-style:normal;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;color:var(--gold-ink);margin-right:8px;vertical-align:.1em}
+.pcard ul{margin:4px 0 0;padding:0;list-style:none;display:grid;gap:7px;border-top:1px solid var(--line);padding-top:14px}
+.pcard ul li{position:relative;padding-left:15px;font-size:.93rem;line-height:1.7;color:var(--ink-2)}
+.pcard ul li::before{content:"";position:absolute;left:1px;top:.82em;width:6px;height:1px;background:var(--gold)}
+.go{margin-top:6px;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;border-top:1px solid var(--line);padding-top:16px}
+.try{font-size:.87rem;font-weight:600;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:8px 15px;background:var(--paper);transition:border-color .2s,transform .15s,color .2s;white-space:nowrap}
+.try:hover{border-color:var(--gold);color:var(--gold-ink);transform:translateY(-1px)}
+.try:active{transform:scale(.98)}
+.try b{font-weight:600;color:var(--gold-ink);margin-left:4px}
+.key{font-size:.79rem;color:var(--ink-3);font-family:var(--mono)}
+.key.open{color:var(--gold-ink)}
 
-/* 프로그램 대장 */
-.ledger{margin-top:2.6em;max-width:none}
-.ledger h3{margin:2.8em 0 0;padding-bottom:.6em;border-bottom:2px solid var(--ink);font-size:1rem;
-  font-family:var(--mono);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
-.ledger h3:first-child{margin-top:0}
-.item{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:8px 30px;
-  padding:22px 0;border-bottom:1px solid var(--line-2)}
-.item .nm{font-family:var(--display);font-weight:700;font-size:1rem;letter-spacing:-.02em;line-height:1.45}
-.item .nm span{display:block;margin-top:4px;font-weight:500;font-size:.85rem;color:var(--ink-3);line-height:1.5}
-.item .body{font-size:.98rem}
-.item .ba{margin:0 0 .6em;font-family:var(--display);font-size:.9rem;line-height:1.7;color:var(--ink-2)}
-.item .ba i{font-style:normal;font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;color:var(--gold-ink);
-  margin-right:7px;vertical-align:.08em}
-.item ul{margin:.6em 0 0;padding:0;list-style:none;display:grid;gap:.3em}
-.item ul li{position:relative;padding-left:15px;font-size:.93rem;line-height:1.7;color:var(--ink-2)}
-.item ul li::before{content:"";position:absolute;left:2px;top:.82em;width:5px;height:1px;background:var(--gold)}
+/* 가로 띠 */
+.strip-wrap{position:relative;margin-top:clamp(48px,7vw,80px)}
+.strip{display:grid;grid-auto-flow:column;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:20px;padding:8px 20px 28px;margin-inline:-20px;scrollbar-width:thin;overscroll-behavior-x:contain}
+.strip>*{scroll-snap-align:start}
+.strip-nav{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+.strip-nav button{all:unset;cursor:pointer;width:44px;height:44px;border-radius:999px;border:1px solid var(--line);display:grid;place-items:center;font-family:var(--mono);color:var(--ink);transition:background .2s,transform .15s}
+.strip-nav button:hover{background:var(--paper-2)}
+.strip-nav button:active{transform:scale(.95)}
+.strip-nav button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.gal{grid-auto-columns:min(84%,560px)}
+.gal figure{margin:0;display:grid;gap:14px;align-content:start}
+.gal img{width:100%;aspect-ratio:3/2;object-fit:cover;object-position:top;border-radius:14px;border:1px solid var(--line);display:block;background:#fff;box-shadow:var(--shadow)}
+.gal b{display:block;font-family:var(--display);font-weight:700;font-size:1.1rem;color:var(--ink);letter-spacing:-.02em}
+.gal span{display:block;font-size:.92rem;color:var(--ink-3);margin-top:2px}
 
-/* 원칙 */
-.laws{margin-top:2.8em;counter-reset:law;max-width:none}
-.law{display:grid;grid-template-columns:46px minmax(0,1fr);gap:24px;padding:26px 0;border-top:1px solid var(--line-2);
-  max-width:860px}
-.law:last-child{border-bottom:1px solid var(--line-2)}
-.law::before{counter-increment:law;content:counter(law,decimal-leading-zero);
-  font-family:var(--mono);font-size:.82rem;color:var(--gold-ink);padding-top:.3em}
-.law h4{margin:0 0 .5em;font-family:var(--display);font-weight:700;font-size:1.08rem;letter-spacing:-.025em;line-height:1.5}
-.law p{margin:0;font-size:.99rem}
-.law p + p{margin-top:.7em}
-
-/* 도판 */
-.plates{margin-top:2.8em;max-width:none}
-.plates .strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
-figure{margin:0}
-figure img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:var(--white)}
-figcaption{margin-top:9px;font-family:var(--display);font-size:.82rem;line-height:1.55;color:var(--ink-3)}
-figcaption b{display:block;color:var(--ink-2);font-weight:600}
-.plates .note{margin-top:1.6em}
-
-/* 표 */
-table{width:100%;border-collapse:collapse;margin-top:2.2em;font-family:var(--display);font-size:.93rem}
-caption{text-align:left;font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--gold-ink);padding-bottom:.9em}
-th,td{text-align:left;padding:12px 14px 12px 0;border-bottom:1px solid var(--line-2);vertical-align:top}
-th{font-weight:700;border-bottom:2px solid var(--ink);white-space:nowrap}
-td.num,th.num{text-align:right;font-family:var(--mono);font-size:.86rem;white-space:nowrap;padding-right:0}
-tfoot td{border-bottom:0;border-top:2px solid var(--ink);font-weight:700}
-tfoot td.num{font-family:var(--mono)}
+/* 조건: 먹색 띠 2열 */
+.diff-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+.diff-grid>div{padding:clamp(28px,4vw,42px) clamp(0px,3vw,40px) clamp(28px,4vw,42px) 0;display:grid;gap:12px;align-content:start;border-top:1px solid var(--band-line)}
+.diff-grid>div:nth-child(even){padding-left:clamp(28px,4vw,48px);border-left:1px solid var(--band-line)}
+.diff-grid .k{font-family:var(--mono);font-size:.76rem;letter-spacing:.14em;color:var(--band-gold)}
+.diff-grid b{font-family:var(--display);font-weight:800;font-size:clamp(1.3rem,2.7vw,1.85rem);letter-spacing:-.03em;line-height:1.3;color:var(--band-ink)}
+.diff-grid p{font-size:.99rem;color:var(--band-ink-2);max-width:46ch}
+.diff-grid p+p{margin-top:10px}
 
 /* 코드 */
-pre{margin:1.6em 0 0;padding:18px 20px;background:var(--code-bg);border:1px solid var(--line);
-  border-radius:10px;overflow-x:auto;font-family:var(--mono);font-size:.8rem;line-height:1.75;color:var(--ink)}
-pre b{font-weight:500;color:var(--gold-ink)}
-code{font-family:var(--mono);font-size:.88em;background:var(--code-bg);padding:1px 5px;border-radius:4px}
-pre code{background:none;padding:0;font-size:1em}
-.cap{margin-top:.8em;font-family:var(--display);font-size:.85rem;color:var(--ink-3)}
+pre{margin:0;padding:20px 22px;background:var(--band-2);border:1px solid var(--band-line);border-radius:16px;overflow-x:auto;
+  font-family:var(--mono);font-size:.8rem;line-height:1.8;color:var(--band-ink)}
+pre b{font-weight:500;color:var(--band-gold)}
+.codeblock{display:grid;gap:14px;margin-top:clamp(36px,5vw,56px)}
+.codeblock h3{font-size:clamp(1.15rem,2.2vw,1.45rem)}
+.codeblock .cap{font-size:.95rem;color:var(--band-ink-2);max-width:70ch}
+.paper-pre pre{background:var(--white);border-color:var(--line);color:var(--ink)}
+.paper-pre pre b{color:var(--gold-ink)}
+
+/* 교육 */
+.courses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.course{border-radius:20px;background:var(--white);border:1px solid var(--line);padding:clamp(26px,4vw,40px);display:grid;gap:20px;align-content:start}
+.course h3{font-size:clamp(1.25rem,2.3vw,1.55rem)}
+.price{font-family:var(--display);font-size:clamp(2.4rem,5.6vw,3.5rem);font-weight:800;letter-spacing:-.045em;line-height:1.05;font-variant-numeric:tabular-nums}
+.price small{font-family:var(--sans);font-size:.85rem;font-weight:400;color:var(--ink-3);margin-left:8px;letter-spacing:0}
+.course dl{margin:0;display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px 14px;font-size:.94rem;border-top:1px solid var(--line);padding-top:20px}
+.course dt{color:var(--ink-3)}
+.course dd{margin:0}
+.sched{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,6vw,80px);margin-top:clamp(56px,8vw,96px)}
+.sched ol{list-style:none;margin:0;padding:0;display:grid}
+.sched ol li{display:grid;grid-template-columns:112px minmax(0,1fr);gap:16px;padding-block:13px;border-bottom:1px solid var(--line);font-size:.97rem}
+.sched ol li time{font-family:var(--mono);font-size:.84rem;color:var(--gold-ink);font-variant-numeric:tabular-nums;padding-top:2px}
+.sched ol li.brk{color:var(--ink-3)}
+.sched ol li.brk time{color:var(--ink-3)}
+.takeaway{display:grid;gap:16px;align-content:start}
+.takeaway ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.takeaway ul li{padding:14px 18px;background:var(--white);border-radius:14px;border:1px solid var(--line);font-size:.96rem}
+.demand{margin-top:clamp(56px,8vw,96px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(32px,5vw,64px);align-items:start}
+.demand h3{font-size:clamp(1.3rem,2.6vw,1.8rem);font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1.35}
+.asked{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.asked li{display:flex;gap:14px;align-items:baseline;padding:15px 18px;background:var(--white);border:1px solid var(--line);border-radius:14px;font-size:.98rem}
+.asked li i{font-style:normal;font-family:var(--mono);font-size:.74rem;color:var(--ink-3)}
+.asked li.ops{box-shadow:inset 3px 0 0 var(--gold)}
+.asked li.ops i{color:var(--gold-ink)}
+.asked li em{font-style:normal;margin-left:auto;font-size:.78rem;color:var(--gold-ink)}
+.voices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,4vw,48px);margin-top:clamp(48px,7vw,80px)}
+.voices figure{margin:0;display:grid;gap:12px;align-content:start}
+.voices blockquote{margin:0;font-family:var(--serif);font-size:1.04rem;line-height:1.85;color:var(--ink)}
+.voices figcaption{font-size:.86rem;color:var(--ink-3)}
+
+/* 비용 */
+.cost-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(40px,6vw,80px);align-items:start}
+.cost-h{font-size:.85rem;font-weight:600;color:var(--ink-3);margin-bottom:12px}
+table.cost{width:100%;border-collapse:collapse;font-size:.93rem}
+table.cost td{padding:13px 0;border-bottom:1px solid var(--line);vertical-align:top}
+table.cost td:first-child{font-weight:600;padding-right:14px;white-space:nowrap}
+table.cost td:nth-child(2){color:var(--ink-2);padding-right:14px}
+table.cost td.won{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.cost tr.sum td{border-bottom:0;border-top:2px solid var(--ink);font-family:var(--display);font-weight:800;font-size:1.15rem;padding-top:16px}
+table.cost tr.sum td.won{font-family:var(--display)}
+.value{display:grid;gap:0}
+.value .v{display:grid;gap:8px;padding-block:24px;border-top:1px solid var(--line)}
+.value .v:first-child{border-top:0;padding-top:0;padding-bottom:34px}
+.value b{font-family:var(--display);font-weight:800;font-size:clamp(2.3rem,6.2vw,4.2rem);line-height:1.08;letter-spacing:-.045em;color:var(--gold-ink)}
+.value b.sm{font-size:clamp(1.45rem,3vw,1.85rem);letter-spacing:-.03em;color:var(--ink)}
+.value .v>span{font-size:1.02rem}
+.value .v:first-child>span{font-size:clamp(1.05rem,1.8vw,1.2rem);font-weight:600}
+.value small{font-size:.84rem;color:var(--ink-3);line-height:1.65}
 
 /* 제안 */
-.props{margin-top:2.6em;max-width:none;display:grid;gap:0}
-.prop{padding:24px 0;border-top:1px solid var(--line-2);max-width:860px}
-.prop:last-child{border-bottom:1px solid var(--line-2)}
-.prop h4{margin:0 0 .5em;font-family:var(--display);font-weight:700;font-size:1.06rem;letter-spacing:-.025em;line-height:1.5}
-.prop h4 i{font-style:normal;font-family:var(--mono);font-size:.76rem;color:var(--gold-ink);margin-right:10px}
-.prop p{margin:0;font-size:.99rem}
+.props{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.prop{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:26px 24px;display:grid;gap:10px;align-content:start}
+.prop .k{font-family:var(--mono);font-size:.76rem;letter-spacing:.14em;color:var(--gold-ink)}
+.prop h3{font-size:clamp(1.08rem,2vw,1.28rem)}
+.prop p{font-size:.97rem;color:var(--ink-2);line-height:1.8}
 
-/* 인용 */
-blockquote{margin:2.2em 0;padding-left:20px;border-left:2px solid var(--line);font-size:1.02rem;color:var(--ink-2)}
-blockquote p:last-child{margin-bottom:0}
-blockquote cite{display:block;margin-top:.7em;font-family:var(--display);font-style:normal;font-size:.85rem;color:var(--ink-3)}
+/* 끝 띠 */
+.end h2{font-size:clamp(2rem,5.6vw,3.6rem);line-height:1.2}
+.end .grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(40px,6vw,72px);align-items:start;margin-top:clamp(36px,5vw,56px)}
+.end .body{display:grid;gap:18px;font-family:var(--serif);font-size:clamp(1.04rem,1.8vw,1.18rem);line-height:1.9;color:var(--band-ink)}
+.contact{background:var(--band-2);border-radius:20px;padding:clamp(24px,4vw,34px);display:grid;gap:8px;font-size:.95rem;color:var(--band-ink-2)}
+.contact b{font-family:var(--display);font-weight:800;font-size:1.3rem;letter-spacing:-.02em;color:var(--band-ink);margin-bottom:4px}
+.cta{display:inline-block;margin-top:14px;background:var(--band-gold);color:#201a12;font-weight:600;font-size:1.02rem;text-decoration:none;padding:14px 28px;border-radius:999px;justify-self:start;transition:transform .2s,filter .2s}
+.cta:hover{filter:brightness(1.06);transform:translateY(-2px)}
+.cta:active{transform:scale(.98)}
+.linkrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.linkrow a{font-size:.88rem;font-weight:600;text-decoration:none;border:1px solid var(--band-line);border-radius:999px;padding:9px 18px;color:var(--band-ink);transition:border-color .2s,transform .15s}
+.linkrow a:hover{border-color:var(--band-gold);transform:translateY(-1px)}
+footer{padding-block:34px;font-size:.82rem;color:var(--ink-3)}
 
-.note{font-family:var(--display);font-size:.85rem;line-height:1.7;color:var(--ink-3)}
-.linkrow{margin-top:2.2em;display:flex;flex-wrap:wrap;gap:10px}
-.linkrow a{font-family:var(--display);font-size:.88rem;font-weight:600;text-decoration:none;
-  border:1px solid var(--line);border-radius:999px;padding:8px 16px;color:var(--ink-2);background:var(--white)}
-.linkrow a:hover{border-color:var(--gold);color:var(--ink)}
-
-footer{padding:clamp(48px,7vw,80px) 0 clamp(60px,9vw,110px)}
-footer .doc p{font-size:1.02rem}
-footer .sig{margin-top:2.4em;font-family:var(--display);font-size:.93rem;line-height:1.8;color:var(--ink-2)}
-footer .sig b{display:block;font-size:1.05rem;color:var(--ink);font-weight:700;letter-spacing:-.02em}
-
-@media (max-width:860px){
-  .figs{grid-template-columns:repeat(2,minmax(0,1fr))}
-  nav.toc ol{grid-template-columns:1fr}
-  .plates .strip{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .item{grid-template-columns:1fr;gap:12px}
-  .log .row{grid-template-columns:1fr;gap:6px}
-  .log time{padding-top:0}
-  .law{grid-template-columns:34px minmax(0,1fr);gap:16px}
+@media (max-width:980px){
+  .cards,.props,.courses{grid-template-columns:minmax(0,1fr)}
 }
-@media (max-width:520px){
-  body{font-size:16.5px}
-  .plates .strip{grid-template-columns:1fr}
-  table{font-size:.88rem}
-  th,td{padding:10px 10px 10px 0;white-space:normal}
-  td.num,th.num{text-align:left;padding-right:0}
+@media (max-width:820px){
+  .hero-grid,.sched,.cost-grid,.sum-body,.demand,.end .grid{grid-template-columns:minmax(0,1fr)}
+  .hero-grid{gap:44px}
+  .who{grid-template-columns:110px minmax(0,1fr);column-gap:18px;align-items:end}
+  .who .portrait{grid-row:1/span 8;max-width:110px;margin:0}
+  .sum-stat{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
+  .value{order:-1}
+  table.cost tr:not(.sum) td:nth-child(2){display:none}
+  .built-head{grid-template-columns:minmax(0,1fr);gap:8px}
+  .voices{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .diff-grid{grid-template-columns:minmax(0,1fr)}
+  .diff-grid>div,.diff-grid>div:nth-child(even){padding-left:0;padding-right:0;border-left:0}
+  .log::before{left:76px}
+  .row{grid-template-columns:58px minmax(0,1fr);gap:28px}
+  .row time{font-size:1rem}
+  .strip-nav{display:none}
+  .hero-proof{border-radius:18px}
+}
+@media (max-width:480px){
+  .sum-stat{grid-template-columns:minmax(0,1fr)}
+  .sched ol li{grid-template-columns:96px minmax(0,1fr);gap:10px}
 }
 @media print{
-  body{background:#fff;color:#000;font-size:10.5pt}
-  nav.toc,.linkrow{display:none}
-  section{page-break-inside:avoid;border-bottom:1px solid #ccc}
-  figure img{border:1px solid #ccc}
+  .strip{display:grid;grid-auto-flow:row;overflow:visible}
+  .strip-nav{display:none}
+  .dark{background:#fff;color:#000}
 }
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<header class="cover">
-  <div class="page">
-    <div class="doc">
-      <p class="eyebrow">현장 노트 · 2026년 10월</p>
-      <h1>진료실에서<br>만든 프로그램</h1>
-      <p class="sub">임상 수의사가 직접 만들어 매일 쓰는 병원 프로그램, 그리고 만들면서 알게 된 것</p>
-      <div class="to">
-        <b>춘옥컴퍼니 벳프라이데이 팀께</b>
-        <span>그리고 수의 소프트웨어를 만드시는 개발자분들께</span>
+<main>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="label rv">현장 노트 · 2026년 10월</p>
+        <h1 class="rv" style="--i:1">진료실에서<br><em>만든 프로그램</em></h1>
+        <p class="lead rv" style="--i:2">코드를 쓸 줄 모르는 임상 수의사가 진료·기록·운영·학술에 쓰는 프로그램을 직접 만들어 매일 쓰고 있습니다. 이 노트는 그 목록이 아니라, 수의사가 하루 중 어디서 손이 멈추는지에 대한 기록입니다.</p>
+        <a class="hero-proof rv" style="--i:3" href="#sum"><b>48</b> 개가 매일 돌아갑니다 <span>·</span> <b>39만 원</b> 월 비용 전부 <span class="arr">→</span></a>
       </div>
-      <p class="byline">이태호 · 시그니처 동물의료센터 대표원장 · 건국대학교 수의과대학 임상내과학 겸임교수</p>
-    </div>
-  </div>
-</header>
-
-<div class="abstract">
-  <div class="page">
-    <div class="doc">
-      <p>코드를 쓸 줄 모르는 임상 수의사입니다. 진료를 하다 "이런 프로그램이 있으면 좋겠다" 싶었던 것들을 직접 만들기 시작해, 지금은 48개가 돌아갑니다. 그중 44개가 병원과 학술 쪽 일을 하고, 넷은 가족·개인용입니다. 종이 기록지와 엑셀, 단톡방으로 돌아가던 일 대부분이 그 안으로 들어갔습니다.</p>
-      <p>이 노트는 그 목록이 아닙니다. <em>수의사가 하루 중 어디서 손이 멈추는지</em>, 그 자리에 무엇을 놓았더니 쓰이게 되었는지에 대한 기록입니다. 기술 이야기는 뒤쪽 한 절로 모았고, 앞쪽은 전부 니즈와 쓰임새입니다.</p>
-      <div class="figs">
-        <div class="fig"><b>48</b><span>운영 중인 프로그램<br>병원·학술 44 · 개인 4</span></div>
-        <div class="fig"><b>29종</b><span>임상 계산기<br>체중 한 번 입력으로 연동</span></div>
-        <div class="fig"><b>38만 원</b><span>이 전부를 만들고<br>매일 돌리는 월 비용</span></div>
-        <div class="fig"><b>5 / 5</b><span>원장 대상 AI 교육<br>수강생 전원 만족도</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<nav class="toc" aria-label="목차">
-  <div class="page">
-    <ol>
-      <li><span class="n">01</span><a href="#why">이 노트를 드리는 이유</a></li>
-      <li><span class="n">02</span><a href="#day">하루 중 손이 멈추는 자리</a></li>
-      <li><span class="n">03</span><a href="#ledger">만들어 쓰는 프로그램</a></li>
-      <li><span class="n">04</span><a href="#laws">수의사가 실제로 쓰게 되는 조건</a></li>
-      <li><span class="n">05</span><a href="#wrong">AI가 임상에서 틀리는 방식</a></li>
-      <li><span class="n">06</span><a href="#class">원장을 위한 AI 실전 교육</a></li>
-      <li><span class="n">07</span><a href="#cost">돈 — 월 38만 원의 내역</a></li>
-      <li><span class="n">08</span><a href="#code">구조와 코드</a></li>
-      <li><span class="n">09</span><a href="#proposal">벳프라이데이에 드리는 제안</a></li>
-      <li><span class="n">10</span><a href="#links">주소와 연락</a></li>
-    </ol>
-  </div>
-</nav>
-
-<section id="why">
-  <div class="page">
-    <span class="sec-n">01</span>
-    <div class="doc">
-      <h2>이 노트를 드리는 이유</h2>
-      <p class="lede">허찬 대표님이 춘옥컴퍼니에서 벳프라이데이를 준비하신다는 소식을 들었습니다. 저는 그 제품을 쓸 사람 쪽에 서 있습니다.</p>
-      <hr class="rule">
-      <p>수의 소프트웨어가 병원에서 안 쓰이는 이유는 기능이 모자라서가 아닌 경우가 많습니다. 기록 항목의 순서가 종이와 달라서, 입력이 세 번에 끝나지 않아서, 수술 중에 한 손으로 쓸 수 없어서 멈춥니다. 그런 자리는 임상에서 하루를 다 보내 봐야 보입니다.</p>
-      <p>그래서 기획서에 흔히 들어가는 시장 규모나 경쟁 분석은 넣지 않았습니다. 대신 한 병원에서 실제로 돌아간 것만 적었습니다. 데모가 아니라 어제 아침에도 돌아간 프로그램입니다. 무엇이 잘 쓰이는지, 왜 쓰이는지를 같이 적었습니다.</p>
-      <p>개발하시는 분들께는 기술보다 니즈가 쓸모 있을 것 같아 그 비중으로 썼습니다. 코드가 궁금하시면 8절에 몇 조각을 넣었고, 저장소는 말씀해 주시면 열어 드리겠습니다. 가져가 쓰실 만한 것이 있으면 그렇게 하시는 편이 이 노트를 쓴 뜻에 맞습니다.</p>
-      <div class="aside">
-        <b>읽는 순서를 하나만 권한다면</b> 2절(하루)과 4절(쓰게 되는 조건)입니다. 제품 결정에 바로 쓰실 수 있는 것은 그 두 절에 몰려 있습니다.
+      <div class="who rv" style="--i:2">
+        <img class="portrait" src="/ai-class/portrait-cut.webp" alt="이태호 수의사" width="480" height="750" fetchpriority="high">
+        <p class="to">춘옥컴퍼니 벳프라이데이 팀께</p>
+        <p class="to2">그리고 수의 소프트웨어를 만드시는 개발자분들께</p>
+        <strong>이태호</strong>
+        <span>시그니처 동물의료센터 대표원장</span>
+        <span>건국대학교 수의과대학 임상내과학 겸임교수</span>
+        <span>대한수의사회 학술홍보위원회 위원장</span>
+        <span>한국동물병원협회 정책기획위원회 위원장</span>
       </div>
     </div>
   </div>
 </section>
 
-<section id="day">
-  <div class="page">
-    <span class="sec-n">02</span>
-    <div class="doc">
-      <h2>하루 중 손이 멈추는 자리</h2>
-      <p class="lede">시그니처 동물의료센터의 평일 하루입니다. 왼쪽은 시각, 아래 작은 글씨는 그 자리에 있었던 문제, 본문은 지금 돌아가는 방식입니다.</p>
+<section class="dark" id="sum">
+  <div class="wrap">
+    <div class="sum-stat" data-stagger>
+      <span><b class="cnt" data-to="48">48</b>직접 만들어 쓰는 프로그램<br>병원·학술·교육·홍보 44 · 개인 4</span>
+      <span><b class="cnt" data-to="29">29</b>종 임상 계산기<br>체중 한 번 입력으로 연동</span>
+      <span><b class="cnt" data-to="388500">388,500</b><small>원</small>이 전부를 만들고<br>매일 돌리는 월 비용</span>
+      <span><b>5 / 5</b>원장 대상 AI 교육<br>수강생 전원 만족도</span>
     </div>
-    <div class="doc log">
-      <div class="row">
-        <time>05:00</time>
-        <div>
-          <h4>밤사이 나온 논문이 카카오톡으로 옵니다</h4>
-          <span class="need">문제 — 관심 분야 신규 논문을 찾아 읽는 일은 늘 다음 주로 밀립니다. 전공의 시절처럼 저널을 뒤질 시간이 없습니다.</span>
-          <p>PubMed에서 신규 논문을 찾아 요약하고, 임상 적용점을 붙여 카카오톡으로 보냅니다. 같은 내용으로 인스타그램 카드와 네이버 블로그 초안까지 만들어집니다. 하루 최대 5편으로 묶어 두었습니다. 그 이상은 읽지 않게 되기 때문입니다.</p>
-        </div>
+    <div class="sum-body">
+      <div>
+        <p class="big rv">종이 기록지와 엑셀, 단톡방으로 돌아가던 일 대부분이 <em>이 안으로 들어왔습니다.</em></p>
       </div>
-      <div class="row">
-        <time>진료 전</time>
-        <div>
-          <h4>진료실 문을 열기 전에 이미 환자를 압니다</h4>
-          <span class="need">문제 — 첫 5분을 "언제부터 그러셨어요"로 씁니다. 보호자는 대기실에서 기다리는 동안 할 일이 없습니다.</span>
-          <p>예약 안내 카톡에 링크 한 줄을 붙이면 보호자가 전날 집에서 증상과 병력을 적습니다. 다음 날 진료 전에 그것을 읽고 들어갑니다. 진료 시간이 질문에서 설명과 상담으로 옮겨 갑니다.</p>
-        </div>
+      <div class="side rv" style="--i:1">
+        <p>진료를 하다 "이런 프로그램이 있으면 좋겠다" 싶었던 것들을 직접 만들기 시작해, 지금은 48개가 돌아갑니다. 그중 44개가 병원·학술·교육·홍보 쪽 일을 하고, 넷은 가족·개인용입니다.</p>
+        <p>3절의 프로그램에는 주소를 달아 두었습니다. 눌러서 직접 써 보실 수 있습니다. 기술 이야기는 8절 한 절로 모았고, 나머지는 전부 니즈와 쓰임새입니다.</p>
       </div>
-      <div class="row">
-        <time>진료 후</time>
-        <div>
-          <h4>녹음이 차트가 되고, 보호자 문안이 붙어 나옵니다</h4>
-          <span class="need">문제 — 차트는 진료가 끝난 뒤 기억으로 씁니다. 보호자에게 보내는 요약은 쓰는 사람에 따라 길이와 수준이 다릅니다.</span>
-          <p>진료 녹음을 고르면 SOAP 차트와 보호자에게 보낼 카카오톡 문안이 함께 나옵니다. 전사문을 근거로 쓰므로 기억에 기대지 않고, 보호자 안내가 매번 같은 형식으로 나갑니다.</p>
-        </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="letter">
+      <p class="label rv"><span class="n">01</span>이 노트를 드리는 이유</p>
+      <div class="letter-body">
+        <p class="first rv" style="--i:1">허찬 대표님이 춘옥컴퍼니에서 벳프라이데이(VETFR.AI.DAY)를 준비하신다는 소식을 들었습니다. 저는 그 제품을 쓸 사람 쪽에 서 있습니다.</p>
+        <p class="rv" style="--i:2">수의 소프트웨어가 병원에서 안 쓰이는 이유는 기능이 모자라서가 아닌 경우가 많습니다. 기록 항목의 순서가 종이와 달라서, 입력이 세 번에 끝나지 않아서, 수술 중에 한 손으로 쓸 수 없어서 멈춥니다. 그런 자리는 임상에서 하루를 다 보내 봐야 보입니다.</p>
+        <p class="rv" style="--i:3">그래서 기획서에 흔히 들어가는 시장 규모나 경쟁 분석은 넣지 않았습니다. 대신 한 병원에서 실제로 돌아간 것만 적었습니다. 데모가 아니라 어제 아침에도 돌아간 프로그램입니다.</p>
+        <p class="rv" style="--i:4">개발하시는 분들께는 기술보다 니즈가 쓸모 있을 것 같아 그 비중으로 썼습니다. 코드가 궁금하시면 8절에 몇 조각을 넣었고, 저장소는 말씀해 주시면 열어 드리겠습니다. 가져가 쓰실 만한 것이 있으면 그렇게 하시는 편이 이 노트를 쓴 뜻에 맞습니다.</p>
       </div>
-      <div class="row">
-        <time>수술 · 투석</time>
-        <div>
-          <h4>종이 기록지 대신 여러 기기가 같이 적습니다</h4>
-          <span class="need">문제 — 마취 중 활력징후를 종이에 적고 그래프를 손으로 그립니다. 투석 기록지는 항목이 32개입니다. 수술방 PC 한 대 앞에 사람이 줄을 섭니다.</span>
-          <p>휴대폰과 수술방 PC에서 같은 기록지를 동시에 적고, 종이와 같은 기호로 그래프가 저절로 그려집니다. 기준을 벗어난 수치는 붉게 표시되고, 기록 간격을 넘기면 알려 줍니다. 다른 기기에서 고친 내용은 5초 안에 반영됩니다.</p>
-        </div>
-      </div>
-      <div class="row">
-        <time>수시로</time>
-        <div>
-          <h4>계산은 체중을 한 번만 넣습니다</h4>
-          <span class="need">문제 — 수액, 전해질 교정, 수혈량, 약물 용량을 각각 계산기나 종이에 다시 적습니다. 응급일수록 틀립니다.</span>
-          <p>종과 체중을 한 번 넣으면 29종 가운데 체중이 필요한 계산 전부에 반영됩니다. 인터넷이 끊겨도 열리고, 처방 용량과 상호작용을 점검하는 화면이 같이 들어 있습니다.</p>
-        </div>
-      </div>
-      <div class="row">
-        <time>운영</time>
-        <div>
-          <h4>규제 업무와 재고, 근무표</h4>
-          <span class="need">문제 — 마약류는 수기 장부와 단톡방으로 관리하다 NIMS 보고를 놓칩니다. 혈액 팩 유효기한은 아무도 매일 보지 않습니다. 근무표는 부장이 매달 손으로 짭니다.</span>
-          <p>마약류 사용은 큰 버튼 몇 번으로 남기고 보고 대기함이 자동으로 만들어집니다. 혈액 팩은 임박한 것이 있으면 아침 7시에 카카오톡이 옵니다. 근무표는 휴무 규칙으로 쉬는 날을 정한 뒤 남은 출근자를 오전·오후로 자동 배분합니다.</p>
-        </div>
-      </div>
-      <div class="row">
-        <time>원장실</time>
-        <div>
-          <h4>공동원장이 같은 숫자를 봅니다</h4>
-          <span class="need">문제 — 경영 지표는 엑셀 파일 여러 개로 흩어져 있고, 직원 면담 기록은 메모장에 있습니다.</span>
-          <p>매출·객단가·내원·손익을 공동원장이 한 화면에서 봅니다. 직원 계약과 원온원 면담 기록을 모아, 면담이 밀린 사람과 계약 만료가 가까운 사람을 먼저 보여 줍니다.</p>
-        </div>
-      </div>
+      <div class="pull rv" style="--i:5"><b>읽는 순서를 하나만 권한다면</b> 2절(하루)과 4절(쓰게 되는 조건)입니다. 제품 결정에 바로 쓰실 수 있는 것은 그 두 절에 몰려 있습니다.</div>
+    </div>
+  </div>
+</section>
+
+<section class="tint" id="day">
+  <div class="wrap">
+    <div class="sec-head center">
+      <p class="label rv"><span class="n">02</span>하루 중 손이 멈추는 자리</p>
+      <h2 class="rv" style="--i:1">원장이 출근하기 전부터<br>프로그램이 일하고 있습니다</h2>
+      <p class="lead rv" style="--i:2">시그니처 동물의료센터의 평일 하루입니다. 회색 글씨는 그 자리에 있던 문제, 그 아래는 지금 돌아가는 방식입니다.</p>
+    </div>
+    <div class="log">
+      <div class="row rv"><time>05:00</time><div>
+        <h3>밤사이 나온 논문이 카카오톡으로 옵니다</h3>
+        <span class="need">관심 분야 신규 논문을 찾아 읽는 일은 늘 다음 주로 밀립니다. 전공의 시절처럼 저널을 뒤질 시간이 없습니다.</span>
+        <p class="now">PubMed에서 신규 논문을 찾아 요약하고, 임상 적용점을 붙여 카카오톡으로 보냅니다. 같은 내용으로 인스타그램 카드와 네이버 블로그 초안까지 만들어집니다. 하루 최대 5편으로 묶어 두었습니다. 그 이상은 읽지 않게 되기 때문입니다.</p>
+      </div></div>
+      <div class="row rv"><time>진료 전</time><div>
+        <h3>진료실 문을 열기 전에 이미 환자를 압니다</h3>
+        <span class="need">첫 5분을 "언제부터 그러셨어요"로 씁니다. 보호자는 대기실에서 기다리는 동안 할 일이 없습니다.</span>
+        <p class="now">예약 안내 카톡에 링크 한 줄을 붙이면 보호자가 전날 집에서 증상과 병력을 적습니다. 다음 날 진료 전에 그것을 읽고 들어갑니다. 진료 시간이 질문에서 설명과 상담으로 옮겨 갑니다.</p>
+      </div></div>
+      <div class="row rv"><time>진료 후</time><div>
+        <h3>녹음이 차트가 되고, 보호자 문안이 붙어 나옵니다</h3>
+        <span class="need">차트는 진료가 끝난 뒤 기억으로 씁니다. 보호자에게 보내는 요약은 쓰는 사람에 따라 길이와 수준이 다릅니다.</span>
+        <p class="now">진료 녹음을 고르면 SOAP 차트와 보호자에게 보낼 카카오톡 문안이 함께 나옵니다. 전사문을 근거로 쓰므로 기억에 기대지 않고, 보호자 안내가 매번 같은 형식으로 나갑니다.</p>
+      </div></div>
+      <div class="row rv"><time>수술·투석</time><div>
+        <h3>종이 기록지 대신 여러 기기가 같이 적습니다</h3>
+        <span class="need">마취 중 활력징후를 종이에 적고 그래프를 손으로 그립니다. 투석 기록지는 항목이 32개입니다. 수술방 PC 한 대 앞에 사람이 줄을 섭니다.</span>
+        <p class="now">휴대폰과 수술방 PC에서 같은 기록지를 동시에 적고, 종이와 같은 기호로 그래프가 저절로 그려집니다. 기준을 벗어난 수치는 붉게 표시되고, 기록 간격을 넘기면 알려 줍니다. 다른 기기에서 고친 내용은 5초 안에 반영됩니다.</p>
+      </div></div>
+      <div class="row rv"><time>수시로</time><div>
+        <h3>계산은 체중을 한 번만 넣습니다</h3>
+        <span class="need">수액, 전해질 교정, 수혈량, 약물 용량을 각각 계산기나 종이에 다시 적습니다. 응급일수록 틀립니다.</span>
+        <p class="now">종과 체중을 한 번 넣으면 29종 가운데 체중이 필요한 계산 전부에 반영됩니다. 인터넷이 끊겨도 열리고, 처방 용량과 상호작용을 점검하는 화면이 같이 들어 있습니다.</p>
+      </div></div>
+      <div class="row rv"><time>운영</time><div>
+        <h3>규제 업무와 재고, 근무표</h3>
+        <span class="need">마약류는 수기 장부와 단톡방으로 관리하다 NIMS 보고를 놓칩니다. 혈액 팩 유효기한은 아무도 매일 보지 않습니다. 근무표는 부장이 매달 손으로 짭니다.</span>
+        <p class="now">마약류 사용은 큰 버튼 몇 번으로 남기고 보고 대기함이 자동으로 만들어집니다. 혈액 팩은 임박한 것이 있으면 아침 7시에 카카오톡이 옵니다. 근무표는 휴무 규칙으로 쉬는 날을 정한 뒤 남은 출근자를 오전·오후로 자동 배분합니다.</p>
+      </div></div>
+      <div class="row rv"><time>원장실</time><div>
+        <h3>공동원장이 같은 숫자를 봅니다</h3>
+        <span class="need">경영 지표는 엑셀 파일 여러 개로 흩어져 있고, 직원 면담 기록은 메모장에 있습니다.</span>
+        <p class="now">매출·객단가·내원·손익을 공동원장이 한 화면에서 봅니다. 직원 계약과 원온원 면담 기록을 모아, 면담이 밀린 사람과 계약 만료가 가까운 사람을 먼저 보여 줍니다.</p>
+      </div></div>
     </div>
   </div>
 </section>
 
 <section id="ledger">
-  <div class="page">
-    <span class="sec-n">03</span>
-    <div class="doc">
-      <h2>만들어 쓰는 프로그램</h2>
-      <p class="lede">48개 가운데 병원에서 매일 또는 매주 쓰는 것을 추렸습니다. <b>전</b>은 그 전에 어떻게 했는지, <b>후</b>는 지금 어떻게 쓰는지입니다.</p>
-    </div>
-
-    <div class="ledger">
-      <h3>진료와 기록</h3>
-
-      <div class="item">
-        <div class="nm">진료 녹음 차트<span>녹음 → SOAP 차트 + 보호자 문안</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 진료 녹음을 SOAP 차트와 보호자에게 보낼 카카오톡 문안으로 정리합니다.</p>
-          <ul>
-            <li>전사문을 근거로 쓰므로 기억에 의존하지 않습니다</li>
-            <li>보호자 안내가 매번 같은 형식으로 나갑니다</li>
-            <li>직원이 복사해 쓰는 화면을 따로 두어, 원장이 보내지 않아도 나갑니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">보호자 사전문진<span>예약 안내 링크 한 줄</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 보호자가 전날 적어 둔 증상과 병력을 다음 날 진료 전에 읽습니다.</p>
-          <ul>
-            <li>보호자는 자기 답을 다시 볼 수 없고, 기기에도 남지 않게 만들었습니다</li>
-            <li>병원 태블릿을 여러 보호자가 돌려 써도 앞사람 내용이 보이지 않습니다</li>
-            <li>문진 항목은 병원이 고칩니다. 양식이 병원마다 다르기 때문입니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">마취 및 수술 기록지<span>수술방 PC와 휴대폰이 동시 기록</span></div>
-        <div class="body">
-          <p class="ba"><i>전</i> 종이 기록지에 활력징후를 적고 그래프를 손으로 그렸습니다.</p>
-          <p class="ba"><i>후</i> 여러 기기에서 같은 기록지를 함께 적고, 종이와 같은 기호로 그래프가 자동으로 그려집니다.</p>
-          <ul>
-            <li>MAP·SpO₂·ETCO₂·체온이 기준을 벗어나면 붉게 표시하고, 기록 간격을 넘기면 알립니다</li>
-            <li>용량(mg/kg)을 넣으면 투약량(mL)이 계산됩니다</li>
-            <li>끝나면 기록지를 사진 한 장으로 저장해 차트에 붙입니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">혈액투석 기록지<span>종이 양식 32개 항목 그대로</span></div>
-        <div class="body">
-          <p class="ba"><i>전</i> 종이 기록지에 시간대별 수치를 적었습니다.</p>
-          <p class="ba"><i>후</i> 종이 기록지의 32개 항목을 순서를 바꾸지 않고 옮긴 앱에서 여러 기기가 함께 기록합니다.</p>
-          <ul>
-            <li>이전 투석 값이 자동으로 채워지고 BUN·CREA 감소율이 계산됩니다</li>
-            <li>들어간 수액과 기계가 뺀 양을 합쳐 수분 수지를 실시간으로 보여 줍니다</li>
-            <li>다른 기기에서 고친 내용이 5초 안에 반영되고, 수의사 오더도 기록지 안에서 냅니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">수의 임상 계산기 29종<span>처방 안전 점검 포함</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 종과 체중을 한 번 넣으면 수액·전해질·약물·수혈·투석 등 29종 가운데 체중이 필요한 계산에 모두 반영됩니다.</p>
-          <ul>
-            <li>응급 상황에서 계산 실수를 줄입니다</li>
-            <li>인터넷이 끊겨도 열립니다</li>
-            <li>의학적 상수는 두 번 검증한 값이라, 이후 임의로 고치지 않도록 규칙을 걸어 두었습니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">심장초음파·CT 소견서<span>판독 메모 → 정식 소견서</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 심장초음파 리포트 사진을 올리면 수치를 읽어 소견서를 만들고, CT는 판독의가 적은 메모를 정식 소견서로 정리합니다.</p>
-          <ul>
-            <li>판독의가 적은 순서와 내용을 바꾸지 않고, 적지 않은 소견은 덧붙이지 않게 규칙을 두었습니다</li>
-            <li>사진에서 읽히지 않는 값은 만들어 넣지 않고 '판독불가'로 남깁니다</li>
-            <li>차트번호를 넣으면 같은 환자의 이전 검사와 수치 변화를 비교합니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">건강검진 결과서<span>차트 PDF + 영상 사진 → 보호자용 결과서</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 진료차트 PDF와 엑스레이·초음파·치과 사진을 올리면 보호자용 결과서 초안이 나오고, 화면에서 고친 뒤 PDF로 뽑습니다.</p>
-          <ul>
-            <li>결과서 쓰기가 '처음부터 쓰는 일'에서 '초안을 고치는 일'로 바뀝니다</li>
-            <li>보호자가 읽기 쉬운 같은 형식으로 나갑니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">중성화 상담 · APPLE score<span>상담 도구와 중증도 점수</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 품종·성별·생년월일을 넣으면 중성화 권장 시기와 장단점, 보호자 안내문이 나옵니다. 입원 환자 중증도(APPLE score)는 캡쳐·PDF에서 수치를 읽어 자동 입력합니다.</p>
-          <ul>
-            <li>보호자 설명이 원장 개인의 말솜씨에 덜 의존합니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <h3>운영과 규제</h3>
-
-      <div class="item">
-        <div class="nm">마약류 관리<span>사용 기록 → NIMS 보고 대기함</span></div>
-        <div class="body">
-          <p class="ba"><i>전</i> 카카오톡 단체방과 수기 장부로 관리했습니다.</p>
-          <p class="ba"><i>후</i> 큰 버튼 몇 번으로 사용 기록을 남기면(목표 30초) 보고 대기함이 자동으로 만들어집니다.</p>
-          <ul>
-            <li>보고를 완료할 때까지 대기함에서 사라지지 않고, 3일이 지나면 경고합니다</li>
-            <li>한 병을 여러 환자가 나눠 쓴 잔량이 자동으로 계산됩니다</li>
-            <li>누가 언제 무엇을 했는지 감사 기록이 남고, 삭제는 지우지 않고 표시만 바꿉니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">수혈 혈액 재고 · 수혈 모니터링<span>유효기한과 수혈 중 활력징후</span></div>
-        <div class="body">
-          <p class="ba"><i>전</i> 종이와 구글 시트로 혈액 팩을 관리했습니다.</p>
-          <p class="ba"><i>후</i> 종·성분·혈액형별로 지금 쓸 수 있는 팩이 한 화면에 보입니다. 수혈 중에는 측정 시각 알림이 있는 기록지를 씁니다.</p>
-          <ul>
-            <li>채혈일만 넣으면 성분별 유효기한이 자동으로 계산됩니다</li>
-            <li>임박하거나 지난 팩이 있으면 매일 아침 7시 카카오톡으로 알려 줍니다</li>
-            <li>어떤 팩을 어느 환자에게 썼는지 기록이 남습니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">테크니션 근무표<span>휴무 로테이션 자동 배정</span></div>
-        <div class="body">
-          <p class="ba"><i>전</i> 부장이 매달 구글 시트로 근무표를 손으로 짰습니다.</p>
-          <p class="ba"><i>후</i> 휴무 규칙으로 쉬는 날을 정하고, 남은 출근자를 오전·오후로 자동 배분합니다.</p>
-          <ul>
-            <li>규칙 위반을 자동으로 점검합니다</li>
-            <li>연차·월차·병가 기록이 함께 관리됩니다</li>
-            <li>휴무 규칙은 실측 42일치 근무표를 역산해 찾아냈습니다. 규정집에 적혀 있지 않았습니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">리셉 알림 보드<span>1층 접수 ↔ 진료실 실시간 전달판</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 내복약 요청과 전달 사항을 실시간 보드로 주고받습니다. 태블릿에 띄워 둡니다.</p>
-          <ul>
-            <li>새 알림을 소리로 읽어 줘 화면을 보고 있지 않아도 압니다</li>
-            <li>처리한 항목은 완료 구역으로 내려가 남은 일만 위에 보입니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">약품 재고·가격<span>업체별 단가 · 최저가 · 납품서 사진 입고</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 납품서를 사진으로 찍어 올리면 입고가 잡히고, 업체별 단가와 최저가가 보입니다. 인약 장부도 같이 있습니다.</p>
-          <ul>
-            <li>표기는 상품명(성분명) 순서로 고정했습니다. 직원이 부르는 이름이 상품명이기 때문입니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">의뢰환자 관리 · 미용실 예약 · 스튜디오 예약 · 줄기세포 배양 일정</div>
-        <div class="body">
-          <p class="ba"><i>후</i> 의뢰 병원별 현황과 회신 여부, 미용 예약장부, 공간 예약, 줄기세포 배양·냉동 재고를 각각 앱으로 관리합니다.</p>
-          <ul>
-            <li>의뢰는 회신을 놓친 환자를 바로 찾습니다. 의뢰병원 회신문 초안도 만듭니다</li>
-            <li>예약이 겹치면 저장이 잠기고 누구와 겹치는지 알려 줍니다</li>
-            <li>줄기세포 앱은 담당 테크니션이 쓰겠다고 요청해 만들었습니다. 요청한 사람이 쓰는 앱이 가장 오래 갑니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <h3>학술과 경영</h3>
-
-      <div class="item">
-        <div class="nm">수의학 데일리 브리핑<span>매일 05시 · PubMed</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 신규 논문을 찾아 요약하고 카카오톡으로 보냅니다. 인스타그램 카드와 블로그 초안까지 함께 만들어집니다.</p>
-          <ul>
-            <li>하루 최대 5편으로 제한했습니다. 그 이상은 읽히지 않습니다</li>
-            <li>이미 소개한 논문은 대장과 대조해 다시 싣지 않습니다</li>
-            <li>게시 전에 인용과 수치를 전건 재검증합니다 (5절)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">논문 번역기<span>원문 지면 그대로 한국어로</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 영어 논문 PDF를 열면 그림·표·배치는 원본 그대로 두고 글만 한국어로 바뀐 지면이 나옵니다. 요약 모드는 핵심 수치와 임상 적용점만 뽑습니다.</p>
-          <ul>
-            <li>번역에서 문장이 조용히 빠지지 않게 규칙을 걸어 두었습니다</li>
-            <li>애초에 한국어로 쓰인 논문처럼 읽히는 것이 목표입니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">저널클럽 발표 준비 · 그래픽 초록 편집기 · 논문 작성실</div>
-        <div class="body">
-          <p class="ba"><i>후</i> 논문 PDF를 올리면 요약·병원 적용점·대본이 든 발표 자료가 나옵니다. 논문 graphical abstract는 저자가 직접 고치는 편집기를 따로 만들었습니다.</p>
-          <ul>
-            <li>편집기에서는 논문 수치 칸을 잠가 두었습니다. 그림은 고쳐도 숫자는 못 고치게</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">원장실 경영대장 · 인재관리</div>
-        <div class="body">
-          <p class="ba"><i>후</i> 매출·객단가·내원·손익을 공동원장이 한 화면에서 봅니다. 직원 계약·연봉·원온원 면담 기록을 모읍니다.</p>
-          <ul>
-            <li>면담이 밀린 사람, 계약 만료가 가까운 사람, 연봉을 오래 그대로 둔 사람을 먼저 보여 줍니다</li>
-            <li>면담 전에 지난 면담 요약과 남은 약속, 질문 세 개를 꺼내 줍니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">협회·연구회 쪽 일<span>KAHA 회원 앱 · KSVERRT 다기관 기록 · 학회 참관 수첩</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 한국동물병원협회 회원용 앱(양식 265종 검색·내려받기, 교육 신청 알림), 혈액투석 다기관 기록(연구 총괄 1곳 + 참여 병원 9곳), 해외 학회 세션을 한글로 정리한 참관 수첩을 만들었습니다.</p>
-          <ul>
-            <li>다기관 연구는 병원마다 전용 주소를 주고 서로의 기록이 보이지 않게 나누었습니다</li>
-            <li>총괄만 전체를 읽습니다. 이 구조가 아니면 병원들이 기록을 올리지 않습니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <h3>밖으로 나가는 것</h3>
-
-      <div class="item">
-        <div class="nm">홈페이지 세 곳<span>의료진 개인 홈페이지, 매주 갱신</span></div>
-        <div class="body">
-          <p class="ba"><i>후</i> 의료진 개인 홈페이지를 직접 만들고, 언론 보도·논문·유튜브 영상을 매주 확인해 반영합니다.</p>
-          <ul>
-            <li>검색 등록과 구조화 데이터를 넣어, 보호자가 검색할 때 보이게 했습니다</li>
-            <li>보호자가 자주 검색하는 질문에 답하는 안내 페이지를 꾸준히 늘립니다</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="nm">케이스 카드뉴스 · 유튜브 채널 기획실 · 댓글 답글</div>
-        <div class="body">
-          <p class="ba"><i>후</i> 수술 증례를 인스타그램 카드와 게시글 초안으로 만듭니다. 유튜브는 실제 조회수 데이터로 다음 영상을 기획하고, 댓글 답글 초안도 만듭니다.</p>
-          <ul>
-            <li>카드 생성기에는 환자 이름·차트번호 칸을 아예 두지 않았고, 영상 사진에 새겨진 이름은 자동으로 가립니다</li>
-            <li>답글은 영상 말투(해요체)와 댓글 답글 말투(합쇼체)가 다른 것을 실제 답글 119건으로 학습시켰습니다</li>
-          </ul>
-        </div>
+  <div class="wrap">
+    <div class="built-head">
+      <div class="big rv cnt" data-to="48">48</div>
+      <div class="sec-head rv" style="--i:1">
+        <p class="label"><span class="n">03</span>만들어 쓰는 프로그램</p>
+        <h2>눌러서<br>직접 써 보십시오</h2>
+        <p class="lead"><b>전</b>은 그 전에 어떻게 했는지, <b>후</b>는 지금 어떻게 쓰는지입니다.</p>
       </div>
     </div>
+    <div class="keynote rv"><b>원내 앱은 대부분 비밀번호 뒤에 있습니다.</b> 진료 기록이 들어 있어 그렇게 해 두었습니다. 비밀번호는 따로 보내 드리겠습니다. <b>바로 열림</b>으로 표시한 것은 그냥 눌러서 보실 수 있고, 다기관 기록은 실제 기록과 섞이지 않는 연습용 주소를 걸어 두었습니다.</div>
 
-    <div class="plates">
-      <div class="strip">
-        <figure><img src="/ai-class/shots/hd.jpg?v=4" alt="혈액투석 기록지 화면" loading="lazy" decoding="async">
-          <figcaption><b>도판 1 · 혈액투석 기록지</b>종이 양식 32개 항목을 순서 그대로</figcaption></figure>
-        <figure><img src="/ai-class/shots/anes.jpg?v=4" alt="마취 기록지 화면" loading="lazy" decoding="async">
-          <figcaption><b>도판 2 · 마취 기록지</b>그래프 자동, 이상 수치는 붉게</figcaption></figure>
-        <figure><img src="/ai-class/shots/narcotics.jpg?v=4" alt="마약류 관리 화면" loading="lazy" decoding="async">
-          <figcaption><b>도판 3 · 마약류 관리</b>목표 30초, 보고 대기함</figcaption></figure>
-        <figure><img src="/ai-class/shots/calc.jpg?v=4" alt="임상 계산기 화면" loading="lazy" decoding="async">
-          <figcaption><b>도판 4 · 임상 계산기</b>체중 한 번, 29종 연동</figcaption></figure>
+    <h3 class="cg-title rv" style="margin-top:clamp(48px,6vw,72px)">진료와 기록</h3>
+    <div class="cards" data-stagger>
+      <article class="pcard">
+        <h3>진료 녹음 차트</h3>
+        <p class="tag">녹음 → SOAP 차트 + 보호자 문안</p>
+        <p class="ba"><i>후</i> 진료 녹음을 SOAP 차트와 보호자에게 보낼 카카오톡 문안으로 정리합니다.</p>
+        <ul>
+          <li>전사문을 근거로 쓰므로 기억에 의존하지 않습니다</li>
+          <li>보호자 안내가 매번 같은 형식으로 나갑니다</li>
+          <li>직원이 복사해 쓰는 화면을 따로 두어, 원장이 보내지 않아도 나갑니다</li>
+        </ul>
+        <div class="go">
+          <a class="try" href="https://signature-amc-chart.vercel.app/index.html" target="_blank" rel="noopener">녹음 연결 화면 <b>→</b></a>
+          <a class="try" href="https://signature-amc-chart.vercel.app/today.html" target="_blank" rel="noopener">오늘의 차트 <b>→</b></a>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <h3>보호자 사전문진</h3>
+        <p class="tag">예약 안내에 링크 한 줄</p>
+        <p class="ba"><i>후</i> 보호자가 전날 적어 둔 증상과 병력을 다음 날 진료 전에 읽습니다.</p>
+        <ul>
+          <li>보호자는 자기 답을 다시 볼 수 없고, 기기에도 남지 않게 만들었습니다</li>
+          <li>병원 태블릿을 여러 보호자가 돌려 써도 앞사람 내용이 보이지 않습니다</li>
+          <li>문진 항목은 병원이 고칩니다. 양식이 병원마다 다르기 때문입니다</li>
+        </ul>
+        <div class="go">
+          <a class="try" href="https://signature-amc-intake.vercel.app/samc-17244aef" target="_blank" rel="noopener">문진 확인 화면 <b>→</b></a>
+          <span class="key">보호자 작성 화면은 예약 카톡으로만 열립니다</span>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <h3>마취 및 수술 기록지</h3>
+        <p class="tag">수술방 PC와 휴대폰이 동시 기록</p>
+        <p class="ba"><i>전</i> 종이 기록지에 활력징후를 적고 그래프를 손으로 그렸습니다.</p>
+        <p class="ba"><i>후</i> 여러 기기에서 같은 기록지를 함께 적고, 종이와 같은 기호로 그래프가 자동으로 그려집니다.</p>
+        <ul>
+          <li>MAP·SpO₂·ETCO₂·체온이 기준을 벗어나면 붉게 표시하고, 기록 간격을 넘기면 알립니다</li>
+          <li>용량(mg/kg)을 넣으면 투약량(mL)이 계산됩니다</li>
+          <li>끝나면 기록지를 사진 한 장으로 저장해 차트에 붙입니다</li>
+        </ul>
+        <div class="go"><a class="try" href="https://signature-amc-anes.vercel.app" target="_blank" rel="noopener">마취 기록지 <b>→</b></a></div>
+      </article>
+
+      <article class="pcard">
+        <h3>혈액투석 기록지</h3>
+        <p class="tag">종이 양식 32개 항목 그대로</p>
+        <p class="ba"><i>전</i> 종이 기록지에 시간대별 수치를 적었습니다.</p>
+        <p class="ba"><i>후</i> 종이 기록지의 32개 항목을 순서를 바꾸지 않고 옮긴 앱에서 여러 기기가 함께 기록합니다.</p>
+        <ul>
+          <li>이전 투석 값이 자동으로 채워지고 BUN·CREA 감소율이 계산됩니다</li>
+          <li>들어간 수액과 기계가 뺀 양을 합쳐 수분 수지를 실시간으로 보여 줍니다</li>
+          <li>다른 기기에서 고친 내용이 5초 안에 반영되고, 수의사 오더도 기록지 안에서 냅니다</li>
+        </ul>
+        <div class="go"><a class="try" href="https://signature-amc-hd.vercel.app" target="_blank" rel="noopener">투석 기록지 <b>→</b></a></div>
+      </article>
+
+      <article class="pcard">
+        <h3>수의 임상 계산기 29종</h3>
+        <p class="tag">처방 안전 점검 포함</p>
+        <p class="ba"><i>후</i> 종과 체중을 한 번 넣으면 수액·전해질·약물·수혈·투석 등 29종 가운데 체중이 필요한 계산에 모두 반영됩니다.</p>
+        <ul>
+          <li>응급 상황에서 계산 실수를 줄입니다</li>
+          <li>인터넷이 끊겨도 열립니다</li>
+          <li>의학적 상수는 두 번 검증한 값이라, 이후 임의로 고치지 않도록 규칙을 걸어 두었습니다</li>
+        </ul>
+        <div class="go">
+          <a class="try" href="https://signature-calculator.vercel.app" target="_blank" rel="noopener">계산기 29종 <b>→</b></a>
+          <a class="try" href="https://signature-calculator.vercel.app/rx-checker.html" target="_blank" rel="noopener">처방 안전 점검 <b>→</b></a>
+          <span class="key open">바로 열림</span>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <h3>심장초음파·CT 소견서</h3>
+        <p class="tag">판독 메모 → 정식 소견서</p>
+        <p class="ba"><i>후</i> 심장초음파 리포트 사진을 올리면 수치를 읽어 소견서를 만들고, CT는 판독의가 적은 메모를 정식 소견서로 정리합니다.</p>
+        <ul>
+          <li>판독의가 적은 순서와 내용을 바꾸지 않고, 적지 않은 소견은 덧붙이지 않게 규칙을 두었습니다</li>
+          <li>사진에서 읽히지 않는 값은 만들어 넣지 않고 '판독불가'로 남깁니다</li>
+          <li>차트번호를 넣으면 같은 환자의 이전 검사와 수치 변화를 비교합니다</li>
+        </ul>
+        <div class="go"><a class="try" href="https://signature-echo.vercel.app" target="_blank" rel="noopener">소견서 만들기 <b>→</b></a></div>
+      </article>
+
+      <article class="pcard">
+        <h3>건강검진 결과서</h3>
+        <p class="tag">차트 PDF + 영상 사진 → 보호자용 결과서</p>
+        <p class="ba"><i>후</i> 진료차트 PDF와 엑스레이·초음파·치과 사진을 올리면 보호자용 결과서 초안이 나오고, 화면에서 고친 뒤 PDF로 뽑습니다.</p>
+        <ul>
+          <li>결과서 쓰기가 '처음부터 쓰는 일'에서 '초안을 고치는 일'로 바뀝니다</li>
+          <li>보호자가 읽기 쉬운 같은 형식으로 나갑니다</li>
+        </ul>
+        <div class="go"><a class="try" href="https://signature-amc-checkup.vercel.app" target="_blank" rel="noopener">결과서 만들기 <b>→</b></a></div>
+      </article>
+
+      <article class="pcard">
+        <h3>중성화 상담 · APPLE score</h3>
+        <p class="tag">상담 도구와 입원 환자 중증도</p>
+        <p class="ba"><i>후</i> 품종·성별·생년월일을 넣으면 중성화 권장 시기와 장단점, 보호자 안내문이 나옵니다. 입원 환자 중증도는 캡쳐·PDF에서 수치를 읽어 자동 입력합니다.</p>
+        <ul>
+          <li>보호자 설명이 원장 개인의 말솜씨에 덜 의존합니다</li>
+        </ul>
+        <div class="go">
+          <a class="try" href="https://signature-amc-neuter.vercel.app" target="_blank" rel="noopener">중성화 상담 <b>→</b></a>
+          <a class="try" href="https://signature-amc-referral.vercel.app/apple" target="_blank" rel="noopener">APPLE score <b>→</b></a>
+        </div>
+      </article>
+    </div>
+
+    <h3 class="cg-title rv">운영과 규제</h3>
+    <div class="cards" data-stagger>
+      <article class="pcard">
+        <h3>마약류 관리</h3>
+        <p class="tag">사용 기록 → NIMS 보고 대기함</p>
+        <p class="ba"><i>전</i> 카카오톡 단체방과 수기 장부로 관리했습니다.</p>
+        <p class="ba"><i>후</i> 큰 버튼 몇 번으로 사용 기록을 남기면(목표 30초) 보고 대기함이 자동으로 만들어집니다.</p>
+        <ul>
+          <li>보고를 완료할 때까지 대기함에서 사라지지 않고, 3일이 지나면 경고합니다</li>
+          <li>한 병을 여러 환자가 나눠 쓴 잔량이 자동으로 계산됩니다</li>
+          <li>누가 언제 무엇을 했는지 감사 기록이 남고, 삭제는 지우지 않고 표시만 바꿉니다</li>
+        </ul>
+        <div class="go"><a class="try" href="https://signature-amc-narcotics.vercel.app" target="_blank" rel="noopener">마약류 관리 <b>→</b></a></div>
+      </article>
+
+      <article class="pcard">
+        <h3>수혈 혈액 재고 · 수혈 모니터링</h3>
+        <p class="tag">유효기한과 수혈 중 활력징후</p>
+        <p class="ba"><i>전</i> 종이와 구글 시트로 혈액 팩을 관리했습니다.</p>
+        <p class="ba"><i>후</i> 종·성분·혈액형별로 지금 쓸 수 있는 팩이 한 화면에 보입니다. 수혈 중에는 측정 시각 알림이 있는 기록지를 씁니다.</p>
+        <ul>
+          <li>채혈일만 넣으면 성분별 유효기한이 자동으로 계산됩니다</li>
+          <li>임박하거나 지난 팩이 있으면 매일 아침 7시 카카오톡으로 알려 줍니다</li>
+          <li>어떤 팩을 어느 환자에게 썼는지 기록이 남습니다</li>
+        </ul>
+        <div class="go">
+          <a class="try" href="https://signature-amc-blood.vercel.app" target="_blank" rel="noopener">혈액 재고 <b>→</b></a>
+          <a class="try" href="https://signature-amc-blood.vercel.app/transfusion.html" target="_blank" rel="noopener">수혈 모니터링 <b>→</b></a>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <h3>테크니션 근무표</h3>
+        <p class="tag">휴무 로테이션 자동 배정</p>
+        <p class="ba"><i>전</i> 부장이 매달 구글 시트로 근무표를 손으로 짰습니다.</p>
+        <p class="ba"><i>후</i> 휴무 규칙으로 쉬는 날을 정하고, 남은 출근자를 오전·오후로 자동 배분합니다.</p>
+        <ul>
+          <li>규칙 위반을 자동으로 점검하고, 연차·월차·병가가 함께 관리됩니다</li>
+          <li>휴무 규칙은 실측 42일치 근무표를 역산해 찾아냈습니다. 규정집에 적혀 있지 않았습니다</li>
+        </ul>
+        <div class="go"><a class="try" href="https://signature-amc-techshift.vercel.app" target="_blank" rel="noopener">근무표 만들기 <b>→</b></a></div>
+      </article>
+
+      <article class="pcard">
+        <h3>리셉 알림 보드</h3>
+        <p class="tag">1층 접수 ↔ 진료실 실시간 전달판</p>
+        <p class="ba"><i>후</i> 내복약 요청과 전달 사항을 실시간 보드로 주고받습니다. 태블릿에 띄워 둡니다.</p>
+        <ul>
+          <li>새 알림을 소리로 읽어 줘 화면을 보고 있지 않아도 압니다</li>
+          <li>처리한 항목은 완료 구역으로 내려가 남은 일만 위에 보입니다</li>
+        </ul>
+        <div class="go"><a class="try" href="https://signature-amc-referral.vercel.app/recep.html" target="_blank" rel="noopener">알림 보드 <b>→</b></a></div>
+      </article>
+
+      <article class="pcard">
+        <h3>약품 재고·가격</h3>
+        <p class="tag">업체별 단가 · 최저가 · 납품서 사진 입고</p>
+        <p class="ba"><i>후</i> 납품서를 사진으로 찍어 올리면 입고가 잡히고, 업체별 단가와 최저가가 보입니다. 인약 장부도 같이 있습니다.</p>
+        <ul>
+          <li>표기는 상품명(성분명) 순서로 고정했습니다. 직원이 부르는 이름이 상품명이기 때문입니다</li>
+        </ul>
+        <div class="go"><a class="try" href="https://signature-amc-stock.vercel.app" target="_blank" rel="noopener">재고·가격 <b>→</b></a></div>
+      </article>
+
+      <article class="pcard">
+        <h3>의뢰환자 · 미용실 · 스튜디오 · 줄기세포</h3>
+        <p class="tag">예약과 현황을 한곳에</p>
+        <p class="ba"><i>후</i> 의뢰 병원별 현황과 회신 여부, 미용 예약장부, 공간 예약, 줄기세포 배양·냉동 재고를 각각 앱으로 관리합니다.</p>
+        <ul>
+          <li>의뢰는 회신을 놓친 환자를 바로 찾습니다. 회신문 초안도 만듭니다</li>
+          <li>예약이 겹치면 저장이 잠기고 누구와 겹치는지 알려 줍니다</li>
+          <li>줄기세포 앱은 담당 테크니션이 쓰겠다고 요청해 만들었습니다. 요청한 사람이 쓰는 앱이 가장 오래 갑니다</li>
+        </ul>
+        <div class="go">
+          <a class="try" href="https://signature-amc-referral.vercel.app" target="_blank" rel="noopener">의뢰환자 <b>→</b></a>
+          <a class="try" href="https://signature-amc-grooming.vercel.app" target="_blank" rel="noopener">미용실 예약 <b>→</b></a>
+          <a class="try" href="https://signature-amc-studio.vercel.app" target="_blank" rel="noopener">스튜디오 예약 <b>→</b></a>
+          <a class="try" href="https://signature-amc-msc.vercel.app" target="_blank" rel="noopener">줄기세포 <b>→</b></a>
+        </div>
+      </article>
+    </div>
+
+    <h3 class="cg-title rv">학술과 경영</h3>
+    <div class="cards" data-stagger>
+      <article class="pcard">
+        <h3>수의학 데일리 브리핑</h3>
+        <p class="tag">매일 05시 · PubMed</p>
+        <p class="ba"><i>후</i> 신규 논문을 찾아 요약하고 카카오톡으로 보냅니다. 인스타그램 카드와 블로그 초안까지 함께 만들어집니다.</p>
+        <ul>
+          <li>하루 최대 5편으로 제한했습니다. 그 이상은 읽히지 않습니다</li>
+          <li>이미 소개한 논문은 대장과 대조해 다시 싣지 않습니다</li>
+          <li>게시 전에 인용과 수치를 전건 재검증합니다 (5절)</li>
+        </ul>
+        <div class="go">
+          <a class="try" href="https://vet-briefing.vercel.app" target="_blank" rel="noopener">브리핑 보기 <b>→</b></a>
+          <span class="key open">바로 열림</span>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <h3>논문 번역기</h3>
+        <p class="tag">원문 지면 그대로 한국어로</p>
+        <p class="ba"><i>후</i> 영어 논문 PDF를 열면 그림·표·배치는 원본 그대로 두고 글만 한국어로 바뀐 지면이 나옵니다. 요약 모드는 핵심 수치와 임상 적용점만 뽑습니다.</p>
+        <ul>
+          <li>번역에서 문장이 조용히 빠지지 않게 규칙을 걸어 두었습니다</li>
+          <li>애초에 한국어로 쓰인 논문처럼 읽히는 것이 목표입니다</li>
+        </ul>
+        <div class="go"><a class="try" href="https://signature-amc-papers.vercel.app" target="_blank" rel="noopener">논문 번역기 <b>→</b></a></div>
+      </article>
+
+      <article class="pcard">
+        <h3>저널클럽 · 그래픽 초록 편집기 · 논문 작성실</h3>
+        <p class="tag">발표와 집필</p>
+        <p class="ba"><i>후</i> 논문 PDF를 올리면 요약·병원 적용점·대본이 든 발표 자료가 나옵니다. graphical abstract는 저자가 직접 고치는 편집기를 따로 만들었습니다.</p>
+        <ul>
+          <li>편집기에서는 논문 수치 칸을 잠가 두었습니다. 그림은 고쳐도 숫자는 못 고치게</li>
+        </ul>
+        <div class="go">
+          <a class="try" href="https://signature-amc-journal.vercel.app" target="_blank" rel="noopener">저널클럽 <b>→</b></a>
+          <a class="try" href="https://signature-amc-papers.vercel.app/ga/" target="_blank" rel="noopener">그래픽 초록 편집기 <b>→</b></a>
+          <a class="try" href="https://songwoojin-manuscript.vercel.app" target="_blank" rel="noopener">논문 작성실 <b>→</b></a>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <h3>원장실 경영대장 · 인재관리</h3>
+        <p class="tag">공동원장과 직원</p>
+        <p class="ba"><i>후</i> 매출·객단가·내원·손익을 공동원장이 한 화면에서 봅니다. 직원 계약·연봉·원온원 면담 기록을 모읍니다.</p>
+        <ul>
+          <li>면담이 밀린 사람, 계약 만료가 가까운 사람, 연봉을 오래 그대로 둔 사람을 먼저 보여 줍니다</li>
+          <li>면담 전에 지난 면담 요약과 남은 약속, 질문 세 개를 꺼내 줍니다</li>
+        </ul>
+        <div class="go">
+          <a class="try" href="https://wonjangsil-ledger.vercel.app" target="_blank" rel="noopener">경영대장 <b>→</b></a>
+          <span class="key">인재관리는 아직 배포 전입니다</span>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <h3>협회·연구회 쪽 일</h3>
+        <p class="tag">KAHA 회원 앱 · 다기관 기록 · 학회 참관 수첩</p>
+        <p class="ba"><i>후</i> 한국동물병원협회 회원용 앱(양식 265종 검색·내려받기, 교육 신청 알림), 혈액투석 다기관 기록(연구 총괄 1곳 + 참여 병원 9곳), 해외 학회 세션을 한글로 정리한 참관 수첩을 만들었습니다.</p>
+        <ul>
+          <li>다기관 연구는 병원마다 전용 주소를 주고 서로의 기록이 보이지 않게 나누었습니다</li>
+          <li>총괄만 전체를 읽습니다. 이 구조가 아니면 병원들이 기록을 올리지 않습니다</li>
+        </ul>
+        <div class="go">
+          <a class="try" href="https://kaha-member-app.vercel.app" target="_blank" rel="noopener">KAHA 회원 앱 <b>→</b></a>
+          <a class="try" href="https://ksverrt-hd.vercel.app/h/test-034b6f" target="_blank" rel="noopener">다기관 기록 (연습용) <b>→</b></a>
+          <a class="try" href="https://aaha-con-2026.vercel.app" target="_blank" rel="noopener">학회 참관 수첩 <b>→</b></a>
+          <span class="key">다기관 연습용 비밀번호 ksverrt</span>
+        </div>
+      </article>
+
+      <article class="pcard">
+        <h3>홈페이지 · 카드뉴스 · 유튜브</h3>
+        <p class="tag">밖으로 나가는 것</p>
+        <p class="ba"><i>후</i> 의료진 개인 홈페이지 세 곳을 직접 만들어 매주 갱신하고, 수술 증례는 인스타그램 카드로, 유튜브는 실제 조회수 데이터로 기획합니다.</p>
+        <ul>
+          <li>카드 생성기에는 환자 이름·차트번호 칸을 아예 두지 않았고, 영상 사진에 새겨진 이름은 자동으로 가립니다</li>
+          <li>댓글 답글은 영상 말투(해요체)와 답글 말투(합쇼체)가 다른 것을 실제 답글 119건으로 학습시켰습니다</li>
+        </ul>
+        <div class="go">
+          <a class="try" href="https://leetaeho.co.kr" target="_blank" rel="noopener">홈페이지 <b>→</b></a>
+          <a class="try" href="https://signature-amc-cases.vercel.app" target="_blank" rel="noopener">케이스 카드 <b>→</b></a>
+          <a class="try" href="https://taeho-yt-growth.vercel.app" target="_blank" rel="noopener">채널 기획실 <b>→</b></a>
+          <a class="try" href="https://taeho-yt-replies.vercel.app" target="_blank" rel="noopener">댓글 답글 <b>→</b></a>
+          <span class="key open">홈페이지는 바로 열림</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="strip-wrap">
+      <div class="strip gal" id="gal">
+        <figure class="rv-img"><img src="/ai-class/shots/hd.jpg?v=4" alt="혈액투석 기록지 화면" loading="lazy" decoding="async"><figcaption><b>혈액투석 기록지</b><span>종이 양식 32개 항목을 순서 그대로</span></figcaption></figure>
+        <figure class="rv-img" style="--i:1"><img src="/ai-class/shots/anes.jpg?v=4" alt="마취 기록지 화면" loading="lazy" decoding="async"><figcaption><b>마취 기록지</b><span>그래프 자동, 이상 수치는 붉게</span></figcaption></figure>
+        <figure class="rv-img" style="--i:2"><img src="/ai-class/shots/narcotics.jpg?v=4" alt="마약류 관리 화면" loading="lazy" decoding="async"><figcaption><b>마약류 관리</b><span>목표 30초, 보고 대기함</span></figcaption></figure>
+        <figure class="rv-img" style="--i:3"><img src="/ai-class/shots/calc.jpg?v=4" alt="임상 계산기 화면" loading="lazy" decoding="async"><figcaption><b>임상 계산기</b><span>체중 한 번, 29종 연동</span></figcaption></figure>
+        <figure class="rv-img" style="--i:4"><img src="/ai-class/shots/intake.jpg?v=4" alt="보호자 사전문진 화면" loading="lazy" decoding="async"><figcaption><b>보호자 사전문진</b><span>재열람 불가, 기기에 남지 않음</span></figcaption></figure>
+        <figure class="rv-img" style="--i:5"><img src="/ai-class/shots/recep.jpg?v=4" alt="리셉 알림 보드 화면" loading="lazy" decoding="async"><figcaption><b>리셉 알림 보드</b><span>접수와 진료실 사이</span></figcaption></figure>
+        <figure class="rv-img" style="--i:6"><img src="/ai-class/shots/techshift.jpg?v=4" alt="테크니션 근무표 화면" loading="lazy" decoding="async"><figcaption><b>테크니션 근무표</b><span>휴무 규칙 역산</span></figcaption></figure>
+        <figure class="rv-img" style="--i:6"><img src="/ai-class/shots/briefing.jpg?v=4" alt="데일리 브리핑 화면" loading="lazy" decoding="async"><figcaption><b>데일리 브리핑</b><span>매일 05시, 최대 5편</span></figcaption></figure>
       </div>
-      <div class="strip" style="margin-top:18px">
-        <figure><img src="/ai-class/shots/intake.jpg?v=4" alt="보호자 사전문진 화면" loading="lazy" decoding="async">
-          <figcaption><b>도판 5 · 보호자 사전문진</b>재열람 불가, 기기에 남지 않음</figcaption></figure>
-        <figure><img src="/ai-class/shots/recep.jpg?v=4" alt="리셉 알림 보드 화면" loading="lazy" decoding="async">
-          <figcaption><b>도판 6 · 리셉 알림 보드</b>접수와 진료실 사이</figcaption></figure>
-        <figure><img src="/ai-class/shots/techshift.jpg?v=4" alt="테크니션 근무표 화면" loading="lazy" decoding="async">
-          <figcaption><b>도판 7 · 테크니션 근무표</b>휴무 규칙 역산</figcaption></figure>
-        <figure><img src="/ai-class/shots/briefing.jpg?v=4" alt="데일리 브리핑 화면" loading="lazy" decoding="async">
-          <figcaption><b>도판 8 · 데일리 브리핑</b>매일 05시, 최대 5편</figcaption></figure>
-      </div>
+      <div class="strip-nav" data-for="gal"><button type="button" data-d="-1" aria-label="이전">←</button><button type="button" data-d="1" aria-label="다음">→</button></div>
       <p class="note">화면 속 환자·직원·병원 이름과 수치는 모두 가상 데이터입니다.</p>
     </div>
   </div>
 </section>
 
-<section id="laws">
-  <div class="page">
-    <span class="sec-n">04</span>
-    <div class="doc">
-      <h2>수의사가 실제로 쓰게 되는 조건</h2>
-      <p class="lede">만들어 놓고 안 쓰이던 것과 매일 쓰이는 것의 차이입니다. 기능 목록으로는 설명되지 않았습니다.</p>
+<section class="dark" id="laws">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label rv"><span class="n">04</span>수의사가 실제로 쓰게 되는 조건</p>
+      <h2 class="rv" style="--i:1">만들어 놓고 안 쓰이던 것과<br>매일 쓰이는 것의 차이</h2>
+      <p class="lead rv" style="--i:2">기능 목록으로는 설명되지 않았습니다. 열 가지로 추렸습니다.</p>
     </div>
-
-    <div class="laws">
-      <div class="law">
-        <div>
-          <h4>종이 양식의 순서를 바꾸지 않습니다</h4>
-          <p>투석 기록지는 32개 항목을 종이와 같은 순서로 옮겼습니다. 보기 좋게 묶거나 중요한 것을 위로 올리는 쪽이 화면으로는 분명히 낫습니다. 그런데 기록은 화면을 보며 하는 일이 아니라 손이 기억하는 순서로 하는 일입니다. 순서를 바꾸면 매번 눈으로 찾아야 하고, 그 0.5초가 쌓이면 사람은 종이로 돌아갑니다.</p>
-          <p>병원마다 양식이 다르다는 점도 그래서 중요합니다. "우리 병원 양식 그대로"가 도입의 조건입니다.</p>
-        </div>
+    <div class="diff-grid" data-stagger>
+      <div>
+        <span class="k">01</span>
+        <b>종이 양식의 순서를 바꾸지 않습니다</b>
+        <p>투석 기록지는 32개 항목을 종이와 같은 순서로 옮겼습니다. 보기 좋게 묶거나 중요한 것을 위로 올리는 쪽이 화면으로는 분명히 낫습니다. 그런데 기록은 화면을 보며 하는 일이 아니라 손이 기억하는 순서로 하는 일입니다.</p>
+        <p>순서를 바꾸면 매번 눈으로 찾아야 하고, 그 0.5초가 쌓이면 사람은 종이로 돌아갑니다.</p>
       </div>
-
-      <div class="law">
-        <div>
-          <h4>입력은 30초 안에 끝나야 합니다</h4>
-          <p>마약류 기록은 목표를 30초로 잡고 큰 버튼 몇 번으로 끝나게 만들었습니다. 수술 중에, 보호자 앞에서, 장갑을 낀 손으로, 때로는 한 손으로 하는 입력입니다. 입력 칸이 늘어나면 정확도가 올라가는 것이 아니라 기록 자체가 사라집니다.</p>
-          <p>필수 칸을 늘리는 대신 나중에 채울 수 있게 두고, 비어 있는 것을 눈에 보이게 하는 편이 실제 데이터가 더 많이 남습니다.</p>
-        </div>
+      <div>
+        <span class="k">02</span>
+        <b>입력은 30초 안에 끝나야 합니다</b>
+        <p>마약류 기록은 목표를 30초로 잡고 큰 버튼 몇 번으로 끝나게 만들었습니다. 수술 중에, 보호자 앞에서, 장갑을 낀 손으로, 때로는 한 손으로 하는 입력입니다.</p>
+        <p>입력 칸이 늘어나면 정확도가 올라가는 것이 아니라 기록 자체가 사라집니다. 필수 칸을 늘리는 대신 나중에 채울 수 있게 두고, 비어 있는 것을 눈에 보이게 하는 편이 데이터가 더 많이 남습니다.</p>
       </div>
-
-      <div class="law">
-        <div>
-          <h4>"모르겠다"를 말할 수 있어야 합니다</h4>
-          <p>심초 리포트 사진 판독은 읽히지 않는 값을 만들어 넣지 않고 '판독불가'로 남기게 했습니다. 빈칸은 수의사가 알아서 채웁니다. 그럴듯한 숫자는 그렇지 않습니다. 소견서 쪽에는 판독의가 적지 않은 소견을 덧붙이지 못하게 규칙을 넣었습니다.</p>
-          <p>임상에서 신뢰를 잃는 방식은 "자주 틀린다"가 아니라 "한 번 조용히 틀렸다"입니다. 모르는 것을 모른다고 하는 기능이 정확도보다 먼저입니다.</p>
-        </div>
+      <div>
+        <span class="k">03</span>
+        <b>"모르겠다"를 말할 수 있어야 합니다</b>
+        <p>심초 리포트 사진 판독은 읽히지 않는 값을 만들어 넣지 않고 '판독불가'로 남기게 했습니다. 빈칸은 수의사가 알아서 채웁니다. 그럴듯한 숫자는 그렇지 않습니다.</p>
+        <p>임상에서 신뢰를 잃는 방식은 "자주 틀린다"가 아니라 "한 번 조용히 틀렸다"입니다. 모르는 것을 모른다고 하는 기능이 정확도보다 먼저입니다.</p>
       </div>
-
-      <div class="law">
-        <div>
-          <h4>결과물은 완성본이 아니라 초안입니다</h4>
-          <p>건강검진 결과서, 소견서, 의뢰병원 회신문, 보호자 안내 문안 모두 '초안 → 화면에서 고침 → PDF 또는 복사'입니다. 수의사는 자기 이름으로 나가는 문서를 고치지 않고 내보내지 않습니다. 고칠 자리를 안 주는 제품은 그 단계에서 버려집니다.</p>
-          <p>고친 흔적이 남으면 더 좋습니다. 무엇을 고쳤는지가 쌓이면 다음 초안이 나아집니다.</p>
-        </div>
+      <div>
+        <span class="k">04</span>
+        <b>결과물은 완성본이 아니라 초안입니다</b>
+        <p>건강검진 결과서, 소견서, 의뢰병원 회신문, 보호자 안내 문안 모두 '초안 → 화면에서 고침 → PDF 또는 복사'입니다. 수의사는 자기 이름으로 나가는 문서를 고치지 않고 내보내지 않습니다.</p>
+        <p>고칠 자리를 안 주는 제품은 그 단계에서 버려집니다. 고친 흔적이 남으면 다음 초안이 나아집니다.</p>
       </div>
-
-      <div class="law">
-        <div>
-          <h4>한 사람이 아니라 교대 근무가 씁니다</h4>
-          <p>마취 기록지는 수술방 PC와 휴대폰이 같은 기록지를 동시에 적습니다. 투석 기록지는 다른 기기에서 고친 내용이 5초 안에 반영됩니다. 1인용으로 만들면 "누가 지금 적고 있어?"를 물어야 하고, 그러면 종이가 이깁니다.</p>
-          <p>동시에 적는다는 것은 덮어쓰기를 막아야 한다는 뜻입니다. 저장할 때 서버의 판본 번호를 같이 보내고, 그사이 누가 고쳤으면 저장을 거절하고 최신본을 돌려줍니다. 앱이 합친 뒤 다시 보냅니다(8절).</p>
-        </div>
+      <div>
+        <span class="k">05</span>
+        <b>한 사람이 아니라 교대 근무가 씁니다</b>
+        <p>마취 기록지는 수술방 PC와 휴대폰이 같은 기록지를 동시에 적습니다. 1인용으로 만들면 "누가 지금 적고 있어?"를 물어야 하고, 그러면 종이가 이깁니다.</p>
+        <p>동시에 적는다는 것은 덮어쓰기를 막아야 한다는 뜻입니다. 저장할 때 서버의 판본 번호를 같이 보내고, 그사이 누가 고쳤으면 저장을 거절하고 최신본을 돌려줍니다.</p>
       </div>
-
-      <div class="law">
-        <div>
-          <h4>오프라인에서 열려야 합니다</h4>
-          <p>계산기는 인터넷이 끊겨도 열립니다. 지하 수술방, 영상실, 야간 응급. 하필 그런 자리에서 신호가 약합니다. 응급 상황에 로딩 화면이 뜨면 그 앱은 다시 열리지 않습니다.</p>
-        </div>
+      <div>
+        <span class="k">06</span>
+        <b>오프라인에서 열려야 합니다</b>
+        <p>계산기는 인터넷이 끊겨도 열립니다. 지하 수술방, 영상실, 야간 응급. 하필 그런 자리에서 신호가 약합니다.</p>
+        <p>응급 상황에 로딩 화면이 뜨면 그 앱은 다시 열리지 않습니다.</p>
       </div>
-
-      <div class="law">
-        <div>
-          <h4>개인정보는 '지우는 설계'보다 '안 받는 설계'가 낫습니다</h4>
-          <p>사전문진은 보호자가 제출한 뒤 자기 답을 다시 볼 수 없고, 기기에도 남지 않습니다. 병원 태블릿을 여러 보호자가 돌려 쓰기 때문입니다. 케이스 카드 생성기에는 환자 이름과 차트번호 칸을 아예 만들지 않았고, 영상 사진에 새겨진 이름은 자동으로 가립니다.</p>
-          <p>보호자 정보를 받아 두고 잘 지키는 것보다, 처음부터 받지 않는 쪽이 설명하기도 쉽고 사고도 안 납니다.</p>
-        </div>
+      <div>
+        <span class="k">07</span>
+        <b>개인정보는 '지우는 설계'보다 '안 받는 설계'</b>
+        <p>사전문진은 보호자가 제출한 뒤 자기 답을 다시 볼 수 없고, 기기에도 남지 않습니다. 병원 태블릿을 여러 보호자가 돌려 쓰기 때문입니다. 케이스 카드 생성기에는 환자 이름과 차트번호 칸을 아예 만들지 않았습니다.</p>
+        <p>받아 두고 잘 지키는 것보다, 처음부터 받지 않는 쪽이 설명하기도 쉽고 사고도 안 납니다.</p>
       </div>
-
-      <div class="law">
-        <div>
-          <h4>법정 보고는 기록이 아니라 '완료'가 산출물입니다</h4>
-          <p>마약류 보고 대기함은 보고를 마칠 때까지 항목이 사라지지 않고, 3일이 지나면 경고합니다. 규제 업무에서 병원이 두려운 것은 기록이 없는 것이 아니라 보고를 놓치는 것입니다. 기록을 남겨 주는 제품은 많고, 완료까지 쫓아가는 제품은 드뭅니다.</p>
-          <p>삭제도 지우지 않습니다. 플래그만 바꾸고 누가 언제 무엇을 했는지 남깁니다. 실사 때 필요한 것은 현재 상태가 아니라 이력입니다.</p>
-        </div>
+      <div>
+        <span class="k">08</span>
+        <b>법정 보고는 '완료'가 산출물입니다</b>
+        <p>마약류 보고 대기함은 보고를 마칠 때까지 항목이 사라지지 않고, 3일이 지나면 경고합니다. 병원이 두려운 것은 기록이 없는 것이 아니라 보고를 놓치는 것입니다.</p>
+        <p>삭제도 지우지 않습니다. 플래그만 바꾸고 누가 언제 무엇을 했는지 남깁니다. 실사 때 필요한 것은 현재 상태가 아니라 이력입니다.</p>
       </div>
-
-      <div class="law">
-        <div>
-          <h4>차트 프로그램(EMR) 연동 없이도 쓸 수 있어야 합니다</h4>
-          <p>EMR 연동은 병원이 혼자 결정할 수 없는 일이 많습니다. 그것을 기다리면 아무것도 시작하지 못합니다. 그래서 전부 붙여넣기와 PDF 업로드, 사진 올리기로 시작하게 만들었습니다. 건강검진 결과서는 차트 PDF를 그냥 올립니다.</p>
-          <p>연동은 나중에 붙이면 됩니다. 연동을 전제로 한 제품은 도입 검토 단계에서 멈춥니다.</p>
-        </div>
+      <div>
+        <span class="k">09</span>
+        <b>EMR 연동 없이도 쓸 수 있어야 합니다</b>
+        <p>차트 프로그램 연동은 병원이 혼자 결정할 수 없는 일이 많습니다. 그것을 기다리면 아무것도 시작하지 못합니다. 그래서 전부 붙여넣기와 PDF 업로드, 사진 올리기로 시작하게 만들었습니다.</p>
+        <p>연동은 나중에 붙이면 됩니다. 연동을 전제로 한 제품은 도입 검토 단계에서 멈춥니다.</p>
       </div>
-
-      <div class="law">
-        <div>
-          <h4>요청한 사람이 쓰는 앱이 가장 오래 갑니다</h4>
-          <p>줄기세포 배양 일정 앱은 담당 테크니션이 "이런 게 있으면 좋겠다"고 해서 만들었습니다. 근무표는 매달 손으로 짜던 부장이 쓰고, 미용 예약은 미용실 두 분이 씁니다. 원장이 좋아 보여서 만든 것은 대개 원장만 씁니다.</p>
-          <p>제품을 넣을 때도 그렇습니다. 결정은 원장이 하지만, 매일 여는 사람은 테크니션과 접수입니다. 그쪽에서 쓰기 시작하면 해지되지 않습니다.</p>
-        </div>
+      <div>
+        <span class="k">10</span>
+        <b>요청한 사람이 쓰는 앱이 가장 오래 갑니다</b>
+        <p>줄기세포 배양 일정 앱은 담당 테크니션이 "이런 게 있으면 좋겠다"고 해서 만들었습니다. 근무표는 매달 손으로 짜던 부장이 쓰고, 미용 예약은 미용실 두 분이 씁니다. 원장이 좋아 보여서 만든 것은 대개 원장만 씁니다.</p>
+        <p>제품을 넣을 때도 그렇습니다. 결정은 원장이 하지만, 매일 여는 사람은 테크니션과 접수입니다.</p>
       </div>
     </div>
   </div>
 </section>
 
 <section id="wrong">
-  <div class="page">
-    <span class="sec-n">05</span>
-    <div class="doc">
-      <h2>AI가 임상에서 틀리는 방식</h2>
-      <p class="lede">공개된 소개를 보니 벳프라이데이도 근거 추적과 한계 명시를 앞에 두셨습니다. 같은 문제를 저도 겪었고, 겪고 나서 걸어 둔 장치를 적습니다.</p>
-      <hr class="rule">
+  <div class="wrap">
+    <div class="sec-head center">
+      <p class="label rv"><span class="n">05</span>AI가 임상에서 틀리는 방식</p>
+      <h2 class="rv" style="--i:1">틀린 답을 줄이는 것보다<br>틀렸을 때 알아채게 하는 것</h2>
+      <p class="lead rv" style="--i:2">공개된 소개를 보니 벳프라이데이도 근거 추적과 한계 명시를 앞에 두셨습니다. 같은 문제를 저도 겪었고, 겪고 나서 걸어 둔 장치를 적습니다.</p>
+    </div>
 
-      <h3>초록만 읽으면 권고가 뒤집히는 경우가 있습니다</h3>
-      <p>PubMed 초록은 본문의 요약이 아니라 별도로 쓰인 글입니다. 오픈액세스 논문에서 초록과 본문의 결론 강도가 다른 경우를 몇 번 만났습니다. 초록에는 "유의한 차이가 있었다"만 있고, 본문에 "다만 이 용량에서는 권하지 않는다"가 있는 식입니다. 수치는 더 위험합니다. 초록 텍스트에서 지수 표기가 깨져(×10⁹/L 같은 단위) 자릿수가 달라진 채 들어오는 일이 있습니다.</p>
-      <p>그래서 오픈액세스는 PMC 전문까지 확인하게 했습니다. 임상 권고를 뽑는 제품이라면 근거의 출처를 '논문'이 아니라 '논문의 어느 부분'까지 내려가야 한다고 생각합니다.</p>
-
-      <h3>검증은 본문을 쓴 쪽과 분리했습니다</h3>
-      <p>글을 쓴 쪽에 "맞는지 확인해 봐"라고 시키면 거의 맞다고 합니다. 그래서 게시·전달 직전에 읽기만 하는 별도 검증 단계를 뒀습니다. 판정은 세 가지뿐입니다.</p>
-      <pre><b>[확인]</b>   도구로 검증 완료. 어떤 도구·출처로 확인했는지 한 줄 명시
-<b>[오류]</b>   사실과 다름. 무엇이 어떻게 다른지 + 올바른 값 + 수정안
-<b>[미확인]</b> 도구로 확인 불가 → 게시 전 삭제 또는 사람 확인</pre>
-      <p class="cap">핵심은 세 번째입니다. 확인되지 않은 것은 "맞을 수도 있음"이 아니라 "못 나감"으로 분류합니다. 병원 이름을 걸고 나가는 글이라 무죄추정을 쓰지 않습니다.</p>
-      <p>구체적으로는 인용된 PMID를 전건 재조회해 제목·저널·연도·DOI를 글자 단위로 대조하고, 논문에서 가져왔다고 주장하는 수치를 원문에서 직접 찾습니다. 이미 소개한 논문인지 대장과 대조하는 단계도 같이 들어 있습니다. 하나라도 [오류]가 있으면 게시하지 않습니다.</p>
-
-      <h3>잘 틀리는 자리는 정해져 있습니다</h3>
-      <p>겪어 보니 의학 쪽에서 반복되는 실수는 몇 가지로 모입니다. 단위 혼동(mg/kg과 mg/lb, mL과 L), 자릿수, 그리고 개와 고양이 용량을 바꿔 쓰는 것. 고양이에서 금기인 약을 개 기준으로 말하는 경우도 있습니다. 법령 조문 번호도 자주 틀립니다. 그럴듯한 조문 번호를 지어내는 쪽이 "모르겠다"보다 자연스럽게 나오기 때문입니다.</p>
-      <p>계산기에 들어가는 상수는 두 번 검증한 뒤 "이후 임의로 고치지 않는다"는 규칙을 코드 옆에 적어 두었습니다. 나중에 좋은 뜻으로 고치다 틀리는 일을 막으려는 장치입니다.</p>
-
-      <div class="aside">
-        <b>개발하시는 분께 하나만 고른다면</b> — 틀린 답을 줄이는 기능보다, 틀렸을 때 수의사가 알아챌 수 있게 하는 기능이 임상 현장에서 더 값이 나갑니다. 근거를 접어 두지 말고 펼쳐 두는 쪽, 확신의 정도를 숫자가 아니라 말로 쓰는 쪽입니다.
+    <div class="letter">
+      <div class="letter-body plain">
+        <h3 class="rv" style="margin-top:0">초록만 읽으면 권고가 뒤집히는 경우가 있습니다</h3>
+        <p class="rv">PubMed 초록은 본문의 요약이 아니라 별도로 쓰인 글입니다. 오픈액세스 논문에서 초록과 본문의 결론 강도가 다른 경우를 몇 번 만났습니다. 초록에는 "유의한 차이가 있었다"만 있고, 본문에 "다만 이 용량에서는 권하지 않는다"가 있는 식입니다. 수치는 더 위험합니다. 초록 텍스트에서 지수 표기가 깨져(×10⁹/L 같은 단위) 자릿수가 달라진 채 들어오는 일이 있습니다.</p>
+        <p class="rv">그래서 오픈액세스는 PMC 전문까지 확인하게 했습니다. 임상 권고를 뽑는 제품이라면 근거의 출처를 '논문'이 아니라 '논문의 어느 부분'까지 내려가야 한다고 생각합니다.</p>
+        <h3 class="rv">검증은 본문을 쓴 쪽과 분리했습니다</h3>
+        <p class="rv">글을 쓴 쪽에 "맞는지 확인해 봐"라고 시키면 거의 맞다고 합니다. 그래서 게시·전달 직전에 읽기만 하는 별도 검증 단계를 뒀습니다. 판정은 세 가지뿐입니다.</p>
       </div>
+      <div class="paper-pre rv"><pre><b>[확인]</b>   도구로 검증 완료. 어떤 도구·출처로 확인했는지 한 줄 명시
+<b>[오류]</b>   사실과 다름. 무엇이 어떻게 다른지 + 올바른 값 + 수정안
+<b>[미확인]</b> 도구로 확인 불가 → 게시 전 삭제 또는 사람 확인</pre></div>
+      <div class="letter-body plain">
+        <p class="rv">핵심은 세 번째입니다. 확인되지 않은 것은 "맞을 수도 있음"이 아니라 "못 나감"으로 분류합니다. 병원 이름을 걸고 나가는 글이라 무죄추정을 쓰지 않습니다. 인용된 PMID를 전건 재조회해 제목·저널·연도·DOI를 글자 단위로 대조하고, 논문에서 가져왔다고 주장하는 수치를 원문에서 직접 찾습니다. 하나라도 [오류]가 있으면 게시하지 않습니다.</p>
+        <h3 class="rv">잘 틀리는 자리는 정해져 있습니다</h3>
+        <p class="rv">겪어 보니 의학 쪽에서 반복되는 실수는 몇 가지로 모입니다. 단위 혼동(mg/kg과 mg/lb, mL과 L), 자릿수, 그리고 개와 고양이 용량을 바꿔 쓰는 것. 고양이에서 금기인 약을 개 기준으로 말하는 경우도 있습니다. 법령 조문 번호도 자주 틀립니다. 그럴듯한 조문 번호를 지어내는 쪽이 "모르겠다"보다 자연스럽게 나오기 때문입니다.</p>
+        <p class="rv">계산기에 들어가는 상수는 두 번 검증한 뒤 "이후 임의로 고치지 않는다"는 규칙을 코드 옆에 적어 두었습니다. 나중에 좋은 뜻으로 고치다 틀리는 일을 막으려는 장치입니다.</p>
+      </div>
+      <div class="pull rv"><b>하나만 고른다면</b> — 틀린 답을 줄이는 기능보다, 틀렸을 때 수의사가 알아챌 수 있게 하는 기능이 임상 현장에서 더 값이 나갑니다. 근거를 접어 두지 말고 펼쳐 두는 쪽, 확신의 정도를 숫자가 아니라 말로 쓰는 쪽입니다.</div>
     </div>
   </div>
 </section>
 
-<section id="class">
-  <div class="page">
-    <span class="sec-n">06</span>
-    <div class="doc">
-      <h2>원장을 위한 AI 실전 교육</h2>
-      <p class="lede">만들어 쓰는 모습을 주변 원장님들께 보여 드렸더니 다들 관심은 있는데 시작을 못 하고 계셨습니다. 그래서 교육을 열었습니다. 개발하시는 분들께는 이 교육의 내용보다 <em>신청서에 올라오는 요청 목록</em>이 쓸모 있을 것 같습니다.</p>
-      <hr class="rule">
+<section class="tint" id="class">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label rv"><span class="n">06</span>원장을 위한 AI 실전 교육</p>
+      <h2 class="rv" style="--i:1">신청서에 올라오는 요청 목록이<br>곧 수요 조사표입니다</h2>
+      <p class="lead rv" style="--i:2">만들어 쓰는 모습을 주변 원장님들께 보여 드렸더니 다들 관심은 있는데 시작을 못 하고 계셨습니다. 그래서 교육을 열었습니다. 개발하시는 분들께는 교육 내용보다 아래 요청 목록이 쓸모 있을 것 같습니다.</p>
+    </div>
 
-      <h3>과정은 두 가지입니다</h3>
-      <table>
-        <caption>과정 개요</caption>
-        <thead><tr><th>　</th><th>과정 1 · 하루 집중 실습</th><th>과정 2 · 병원 방문 세팅</th></tr></thead>
-        <tbody>
-          <tr><td>대상</td><td>직접 만드는 법을 익히려는 원장</td><td>병원 전체를 한 번에 바꾸려는 곳</td></tr>
-          <tr><td>장소</td><td>시그니처 동물의료센터 · 10–18시</td><td>원장님 병원 · 하루 최대 8시간</td></tr>
-          <tr><td>정원</td><td>기수당 5명, 한 달에 한 번</td><td>한 달에 한 병원</td></tr>
-          <tr><td>비용</td><td class="num">110만 원 / 1인</td><td class="num">550만 원 / 병원 1곳</td></tr>
-          <tr><td>남는 것</td><td>휴대폰에 설치된 우리 병원 프로그램 1개</td><td>계정·배포·저장소·자동화까지 연결된 환경</td></tr>
-        </tbody>
-      </table>
-      <p class="note">교육비는 교육을 운영하는 주식회사 더벳로드 명의로 받습니다. EMR 직접 연동 작업은 두 과정 모두에 포함하지 않습니다.</p>
+    <div class="courses" data-stagger>
+      <article class="course">
+        <h3>과정 1 · 하루 집중 실습</h3>
+        <p class="price">110<small>만 원 · 1인, 부가세 포함</small></p>
+        <dl>
+          <dt>대상</dt><dd>직접 만드는 법을 익히려는 원장</dd>
+          <dt>장소</dt><dd>시그니처 동물의료센터 · 10:00–18:00</dd>
+          <dt>정원</dt><dd>기수당 5명, 한 달에 한 번</dd>
+          <dt>남는 것</dt><dd>휴대폰에 설치된 우리 병원 프로그램 1개</dd>
+        </dl>
+      </article>
+      <article class="course">
+        <h3>과정 2 · 병원 방문 세팅</h3>
+        <p class="price">550<small>만 원 · 병원 1곳, 부가세 포함</small></p>
+        <dl>
+          <dt>대상</dt><dd>병원 전체를 한 번에 바꾸려는 곳</dd>
+          <dt>장소</dt><dd>원장님 병원 · 하루 최대 8시간</dd>
+          <dt>정원</dt><dd>한 달에 한 병원</dd>
+          <dt>남는 것</dt><dd>계정·배포·저장소·자동화까지 연결된 환경</dd>
+        </dl>
+      </article>
+    </div>
+    <p class="note">교육비는 교육을 운영하는 주식회사 더벳로드 명의로 받습니다. EMR 직접 연동 작업은 두 과정 모두에 포함하지 않습니다.</p>
 
-      <h3>하루 시간표</h3>
-      <div class="log">
-        <div class="row"><time>10:00</time><div><p>앱은 어떻게 생겼나 — 화면·서버·저장소</p></div></div>
-        <div class="row"><time>10:30</time><div><p>시그니처에서 매일 도는 프로그램 시연</p></div></div>
-        <div class="row"><time>11:30</time><div><p>주문하는 법, 첫 웹앱을 휴대폰에 올리기</p></div></div>
-        <div class="row"><time>14:30</time><div><p>우리 병원 프로그램 만들기 (1:1 순회)</p></div></div>
-        <div class="row"><time>16:45</time><div><p>사람이 없어도 도는 자동화</p></div></div>
-        <div class="row"><time>17:30</time><div><p>만든 것 보여주기와 이후 활용법</p></div></div>
+    <div class="sched">
+      <div class="rv">
+        <h3 style="margin-bottom:18px">과정 1 하루 시간표</h3>
+        <ol>
+          <li><time>10:00–10:30</time><span>앱은 어떻게 생겼나, 화면·서버·저장소</span></li>
+          <li><time>10:30–11:30</time><span>시그니처에서 매일 도는 프로그램 시연</span></li>
+          <li><time>11:30–12:30</time><span>도구 연결과 병원 규칙 파일 설치</span></li>
+          <li class="brk"><time>12:30–13:30</time><span>점심</span></li>
+          <li><time>13:30–14:30</time><span>주문하는 법, 첫 웹앱을 휴대폰에</span></li>
+          <li><time>14:30–16:30</time><span>우리 병원 프로그램 만들기 (1:1 순회)</span></li>
+          <li><time>16:45–17:30</time><span>사람이 없어도 도는 자동화</span></li>
+          <li><time>17:30–18:00</time><span>만든 것 보여주기와 이후 활용법</span></li>
+        </ol>
       </div>
-      <p class="note" style="margin-top:1.4em">돌아가실 때 손에 있는 것: 우리 병원 프로그램 1개, 병원을 아는 AI의 규칙 파일(병원 이름·진료과·문체·금지 사항), 매일 정해진 시간에 도는 작업 1개, 다른 원장 네 명이 만든 것에서 얻은 다음 아이디어.</p>
-
-      <h3>신청서가 곧 수요 조사표입니다</h3>
-      <p>정원이 5명이라 당일 시간을 설명에 쓰지 않으려고, 무엇을 만들지 사전 질문지로 미리 받습니다. 묻는 것은 네 가지입니다.</p>
-      <ul style="padding-left:0;list-style:none;margin:1.2em 0 0;display:grid;gap:.45em">
-        <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold-ink)">—</span> 병원에서 매주 시간을 가장 많이 빼앗는 일</li>
-        <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold-ink)">—</span> 종이, 엑셀, 단톡방으로 관리하는 것</li>
-        <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold-ink)">—</span> "이런 프로그램이 있었으면" 싶은 것</li>
-        <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold-ink)">—</span> 그 프로그램을 쓸 사람 (원장 혼자 / 수의사들 / 직원 전체 / 보호자)</li>
-      </ul>
-      <p style="margin-top:1.3em">신청하신 원장님들께 수업 전에 시제품을 만들어 보여 드렸는데, 요청의 내용이 제 예상과 달랐습니다. 다섯 분이 꺼낸 과제는 케이스 노트, 의뢰환자 보드, 치과 차트, 원장실 인사·경영 대시보드, 센터 운영 보드였습니다. <em>다섯 중 셋이 임상 판단이 아니라 운영·경영이었습니다.</em></p>
-      <p>임상 질문에 답하는 AI는 이미 여러 곳이 만들고 있습니다. 원장님들이 먼저 입에 올리는 것은 "이 환자에게 무슨 약을 쓸까"가 아니라 "이번 달 근무표"와 "회신 안 간 의뢰 환자"였습니다. 수의사의 지불 의사가 어디에 몰려 있는지를 보여 주는 숫자라고 생각합니다.</p>
-
-      <h3>수강 후기</h3>
-      <blockquote>
-        <p>"110만원의 가치가 이렇게 크다는 사실에 놀라웠습니다. … 110만원이 전혀 아깝지 않은 8시간이었습니다."</p>
-        <cite>수강 원장님</cite>
-      </blockquote>
-      <blockquote>
-        <p>"지식이 많지 않아도 평소 병원 운영에 필요하다고 생각했던 기능들을 직접 구현해 볼 수 있어 만족스러웠습니다. 관심은 있지만 어디서부터 시작할지 막막했던 원장님들께 좋은 출발점이 될 강의라고 생각합니다."</p>
-        <cite>수강 원장님</cite>
-      </blockquote>
-      <p class="note">지금까지 수강하신 원장님 전원이 전체 만족도 5점(5점 만점), 동료 추천 10점(10점 만점)을 주셨습니다. 수업 뒤 기명·무기명을 고를 수 있는 만족도 조사로 받은 값입니다.</p>
-      <div class="linkrow">
-        <a href="/ai-class">교육 소개 페이지</a>
-        <a href="/ai-class/review">수강 후기</a>
+      <div class="takeaway rv" style="--i:1">
+        <h3>돌아가실 때 손에 있는 것</h3>
+        <ul>
+          <li>상상만 하던 우리 병원 프로그램 1개 (휴대폰 홈 화면에서 열림)</li>
+          <li>우리 병원을 아는 AI의 규칙 파일 (병원 이름, 진료과, 문체, 금지 사항)</li>
+          <li>매일 정해진 시간에 저절로 도는 작업 1개</li>
+          <li>다른 원장님 네 분이 만든 프로그램에서 얻은 다음 아이디어</li>
+        </ul>
       </div>
     </div>
+
+    <div class="demand">
+      <div class="rv">
+        <h3>다섯 분이 먼저 꺼낸 과제<br>셋이 운영·경영이었습니다</h3>
+        <p class="lead" style="margin-top:16px">정원이 5명이라 무엇을 만들지 사전 질문지로 미리 받습니다. 묻는 것은 세 가지입니다. 매주 시간을 가장 많이 빼앗는 일(종이·엑셀·단톡방으로 관리하는 것 포함), "이런 프로그램이 있었으면" 싶은 것, 그리고 그 프로그램을 쓸 사람.</p>
+        <p class="note">임상 질문에 답하는 AI는 이미 여러 곳이 만들고 있습니다. 원장님들이 먼저 입에 올린 것은 "이 환자에게 무슨 약을 쓸까"가 아니라 "이번 달 근무표"와 "회신 안 간 의뢰 환자"였습니다.</p>
+      </div>
+      <ul class="asked rv" style="--i:1">
+        <li><i>01</i><span>케이스 노트</span></li>
+        <li class="ops"><i>02</i><span>의뢰환자 보드</span><em>운영</em></li>
+        <li><i>03</i><span>치과 차트</span></li>
+        <li class="ops"><i>04</i><span>원장실 인사·경영 대시보드</span><em>경영</em></li>
+        <li class="ops"><i>05</i><span>센터 운영 보드</span><em>운영</em></li>
+      </ul>
+    </div>
+
+    <div class="voices">
+      <figure class="rv">
+        <blockquote>"110만원의 가치가 이렇게 크다는 사실에 놀라웠습니다. … 110만원이 전혀 아깝지 않은 8시간이었습니다."</blockquote>
+        <figcaption>수강 원장님</figcaption>
+      </figure>
+      <figure class="rv" style="--i:1">
+        <blockquote>"지식이 많지 않아도 평소 병원 운영에 필요하다고 생각했던 기능들을 직접 구현해 볼 수 있어 만족스러웠습니다. 관심은 있지만 어디서부터 시작할지 막막했던 원장님들께 좋은 출발점이 될 강의라고 생각합니다."</blockquote>
+        <figcaption>수강 원장님</figcaption>
+      </figure>
+    </div>
+    <p class="note">지금까지 수강하신 원장님 전원이 전체 만족도 5점(5점 만점), 동료 추천 10점(10점 만점)을 주셨습니다. 수업 뒤 기명·무기명을 고를 수 있는 만족도 조사로 받은 값입니다. 교육 소개는 <a href="/ai-class" style="color:var(--gold-ink)">leetaeho.co.kr/ai-class</a>에 있습니다.</p>
   </div>
 </section>
 
 <section id="cost">
-  <div class="page">
-    <span class="sec-n">07</span>
-    <div class="doc">
-      <h2>돈 — 월 38만 원의 내역</h2>
-      <p class="lede">동물병원이 AI에 실제로 얼마를 쓰고 있는지, 그리고 그 돈으로 무엇이 돌아가는지를 적습니다. 가격 설계에 참고가 되실 것 같습니다.</p>
-
-      <table>
-        <caption>2026년 9–10월 결제 영수증 기준 · 1달러 1,343원 환산</caption>
-        <thead><tr><th>항목</th><th>무엇에 쓰는지</th><th class="num">월</th></tr></thead>
-        <tbody>
-          <tr><td>Claude Max</td><td>프로그램 제작, 매일 도는 작업</td><td class="num">187,500원</td></tr>
-          <tr><td>Plaud 무제한</td><td>진료 녹음, 받아쓰기</td><td class="num">약 26,900원</td></tr>
-          <tr><td>Vercel Pro</td><td>웹앱·홈페이지 주소와 배포</td><td class="num">약 26,900원</td></tr>
-          <tr><td>Supabase Pro</td><td>여러 기기가 함께 쓰는 저장소</td><td class="num">약 81,000원</td></tr>
-          <tr><td>Claude API</td><td>앱 안에서 AI를 부르는 기능</td><td class="num">약 59,000원</td></tr>
-        </tbody>
-        <tfoot><tr><td colspan="2">합계</td><td class="num">약 381,000원</td></tr></tfoot>
-      </table>
-
-      <h3>이 돈으로 하는 일을 사람 몫으로 바꾸면</h3>
-      <p>두 가지를 더했습니다. 프로그램 26개를 개발자에게 맡겼다면 드는 인건비를 1년에 나눈 값이 월 약 899만 원입니다. 프로그램 하나에 개발자 10일씩만 잡아 260일, 한국인공지능·소프트웨어산업협회가 발표한 2026년 적용 SW기술자 일평균임금 414,762원을 곱해 약 1억 780만 원, 두 달 동안 만든 것을 1년 쓴다고 보고 나눈 값입니다. 외주 이윤과 관리비는 넣지 않았습니다.</p>
-      <p>여기에 사람 대신 해 주는 일과 직원이 아낀 시간 월 213시간을 2026년 최저임금 시간당 10,320원으로만 계산해 약 220만 원을 더했습니다. 합치면 월 약 1,120만 원, 내는 돈의 29배가 넘습니다.</p>
-      <p class="note">가정을 적게 잡아 계산한 추정값입니다. 정확한 비용 절감액이라기보다, 병원 한 곳이 이 정도 금액을 쓸 이유가 있다는 뜻으로 보시면 좋겠습니다.</p>
-
-      <div class="aside">
-        <b>청구 단위에 대한 의견</b> — 병원에서 이 프로그램들을 매일 여는 사람은 원장 한 명이 아니라 수의사와 테크니션, 접수까지 열 명 넘습니다. 좌석당 과금이면 병원은 계정을 돌려 씁니다. 병원 단위 정액이 실제 쓰임과 맞습니다.
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label rv"><span class="n">07</span>돈</p>
+      <h2 class="rv" style="--i:1">한 달 39만 원으로<br>하는 일</h2>
+      <p class="lead rv" style="--i:2">동물병원이 AI에 실제로 얼마를 쓰고 있는지, 그 돈으로 무엇이 돌아가는지 적습니다. 가격 설계에 참고가 되실 것 같습니다.</p>
+    </div>
+    <div class="cost-grid">
+      <div class="rv">
+        <p class="cost-h">매달 내는 돈</p>
+        <table class="cost">
+          <tbody>
+            <tr><td>Claude Max</td><td>프로그램 제작, 매일 도는 작업</td><td class="won">187,500원</td></tr>
+            <tr><td>Plaud 무제한</td><td>진료 녹음, 받아쓰기 (연 349,000원)</td><td class="won">약 29,100원</td></tr>
+            <tr><td>Vercel Pro</td><td>웹앱·홈페이지 주소와 배포 (크레딧 초과분 포함)</td><td class="won">약 46,600원</td></tr>
+            <tr><td>Supabase Pro</td><td>여러 기기가 함께 쓰는 저장소</td><td class="won">약 66,300원</td></tr>
+            <tr><td>Claude API</td><td>앱 안에서 AI를 부르는 기능</td><td class="won">약 59,000원</td></tr>
+            <tr class="sum"><td>합계</td><td></td><td class="won">약 388,500원</td></tr>
+          </tbody>
+        </table>
+        <p class="note">2026년 9–10월 결제 영수증과 대시보드 청구액 기준, 1달러 1,343원으로 환산했습니다. 사용량에 따라 달마다 조금씩 달라집니다.</p>
+      </div>
+      <div class="value rv" style="--i:1">
+        <div class="v">
+          <b>월 약 1,120만 원어치</b>
+          <span>한 달 39만 원으로 하는 일을 돈으로 바꾸면 약 29배입니다</span>
+          <small>아래 두 가지를 더했습니다. 모두 적게 잡은 값입니다.</small>
+        </div>
+        <div class="v">
+          <b class="sm">월 약 899만 원</b>
+          <span>매일 쓰는 프로그램 26개를 개발자에게 맡겼다면 드는 인건비를 1년에 나눈 값</span>
+          <small>48개 가운데 교육에서 시연하는 26개를 기준으로 잡았습니다. 프로그램 하나에 개발자 10일씩만 잡아 260일, 한국인공지능·소프트웨어산업협회가 발표한 2026년 적용 SW기술자 일평균임금 414,762원을 곱하면 약 1억 780만 원입니다. 두 달 동안 만든 것을 1년 동안 쓴다고 보고 나눴습니다. 외주 회사의 이윤과 관리비는 넣지 않았습니다.</small>
+        </div>
+        <div class="v">
+          <b class="sm">월 213시간, 약 220만 원</b>
+          <span>사람 대신 해 주는 일과 직원이 아낀 시간. 주 40시간 근무하는 직원 1명분이 넘습니다</span>
+          <small>2026년 최저임금 시간당 10,320원으로만 계산했습니다. 정확한 절감액이라기보다, 병원 한 곳이 이 정도 금액을 쓸 이유가 있다는 뜻으로 보시면 좋겠습니다.</small>
+        </div>
       </div>
     </div>
+    <div class="pull rv" style="max-width:820px;margin-top:clamp(48px,6vw,72px)"><b>청구 단위에 대한 의견</b> — 병원에서 이 프로그램들을 매일 여는 사람은 원장 한 명이 아니라 수의사와 테크니션, 접수까지 열 명 넘습니다. 좌석당 과금이면 병원은 계정을 돌려 씁니다. 병원 단위 정액이 실제 쓰임과 맞습니다.</div>
   </div>
 </section>
 
-<section id="code">
-  <div class="page">
-    <span class="sec-n">08</span>
-    <div class="doc">
-      <h2>구조와 코드</h2>
-      <p class="lede">여기부터는 기술 이야기입니다. 자랑할 구조는 아니고, 혼자 유지보수하는 사람이 고를 수 있는 가장 단순한 선택들입니다.</p>
-      <hr class="rule">
+<section class="dark" id="code">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label rv"><span class="n">08</span>구조와 코드</p>
+      <h2 class="rv" style="--i:1">혼자 유지보수하는 사람이<br>고를 수 있는 가장 단순한 것</h2>
+      <p class="lead rv" style="--i:2">프레임워크를 쓰지 않습니다. 앱 하나가 정적 HTML 한 장, 서버리스 함수 두세 개, 그리고 Supabase Storage입니다. 빌드 단계가 없고 외부 패키지도 거의 없습니다. 이유는 하나입니다. 2년 뒤에도 제가 열어서 고칠 수 있어야 합니다.</p>
+      <p class="lead rv" style="--i:3">새로 만드는 앱은 Supabase 프로젝트 하나를 경로 앞머리로 나눠 쓰게 했습니다. 프로젝트마다 서버가 24시간 돌아 쓰지 않아도 월 6달러 안팎이 붙기 때문입니다. 앱마다 프로젝트를 파면 그것만으로 월 10만 원이 넘습니다.</p>
+    </div>
 
-      <p>프레임워크를 쓰지 않습니다. 앱 하나가 정적 HTML 한 장, 서버리스 함수 두세 개, 그리고 Supabase Storage입니다. 빌드 단계가 없고 외부 패키지도 거의 없습니다. 이유는 하나입니다. <em>2년 뒤에도 제가 열어서 고칠 수 있어야 합니다.</em> 의존성이 늘면 수의사 혼자 유지하지 못합니다.</p>
-      <p>저장소는 Supabase 프로젝트 한 개를 모든 앱이 경로 앞머리로 나눠 씁니다. 프로젝트마다 서버가 24시간 돌아 쓰지 않아도 월 6달러 안팎이 붙기 때문입니다. 앱이 15개라면 그것만으로 월 10만 원이 넘습니다.</p>
-
+    <div class="codeblock rv">
       <h3>동시에 적기 — 판본 번호로 덮어쓰기를 막습니다</h3>
       <pre>// 저장: 앱이 들고 있던 판본(baseRev)이 서버와 다르면 저장하지 않고 최신본을 돌려준다.
 // 앱이 합친 뒤 다시 보낸다. 마지막 저장이 이기는 구조를 쓰지 않는 이유 —
@@ -865,120 +962,157 @@ if (meta.rev > 0 &amp;&amp; body.baseRev !== meta.rev) {
 await store.writeJson(DATA_PATH, body.data);
 await store.writeJson(META_PATH, { rev: meta.rev + 1, updatedAt: new Date().toISOString() });</pre>
       <p class="cap">파일이 없는 것과 읽기가 실패한 것을 반드시 구분합니다. 실패를 빈 값으로 뭉개면 다음 저장이 다른 기기의 기록을 지웁니다. 투석 기록지에서 이것이 제일 무서운 버그입니다.</p>
+    </div>
 
-      <h3>뒤로가기 가드 — 네 줄입니다</h3>
-      <pre>// 화면 이동마다 기록을 쌓고, popstate에서 그 화면으로 되돌린다.
-function go(tab){ history.pushState({app:1,tab:tab},""); showTab(tab); }
-history.replaceState({app:1,base:1},""); history.pushState({app:1,tab:"first"},"");
-addEventListener("popstate", e =&gt; {
-  const st = e.state || {};
-  if (!st.app || st.base) { history.pushState({app:1,tab:"first"},""); showTab("first"); }
-  else showTab(st.tab);
-});</pre>
-      <p class="cap">바닥까지 내려오면 다시 쌓아서 머물게 합니다. 홈 화면 앱에서 기록 중 화면이 날아가는 일을 막는 장치입니다.</p>
-
+    <div class="codeblock rv">
       <h3>소견서 — 없는 것을 만들지 않게 하는 규칙</h3>
-      <pre>"2. 각 수치를 해당 종(개는 체중 기반 정상범위/알로메트릭 스케일링)의 공인된
-    정상 참고범위와 비교해 normal/high/low로 판정합니다. 판정이 애매하거나
-    참고범위가 없으면 <b>na</b>로 둡니다."
+      <pre>"2. 각 수치를 해당 종(그리고 개는 체중 기반 정상범위/알로메트릭 스케일링)의
+    공인된 정상 참고범위와 비교하여 normal/high/low로 판정합니다.
+    판정이 애매하거나 참고범위가 없으면 <b>na</b>로 둡니다."
 "3. 사진에서 명확히 읽히지 않는 값은 임의로 만들지 말고 생략하거나
     value를 <b>'판독불가'</b>로 표기합니다."
 "측정값이 하나도 인식되지 않으면 measurements는 빈 배열로 두고
  report에 그 사실을 명시하세요."</pre>
       <p class="cap">판정 불가와 판독 불가를 각각 다른 값으로 둔 것이 중요했습니다. 하나로 합치면 "참고범위를 모르는 것"과 "사진이 안 읽히는 것"이 섞여, 수의사가 무엇을 확인해야 하는지 알 수 없습니다.</p>
+    </div>
 
+    <div class="codeblock rv">
       <h3>가져가 쓰실 만한 것</h3>
-      <p>저장소는 <a href="https://github.com/growingtiger?tab=repositories">github.com/growingtiger</a>에 있습니다. 대부분 비공개지만 말씀해 주시면 열어 드리겠습니다. 특히 다음 세 가지는 바로 쓰실 수 있을 것 같습니다.</p>
-      <ul style="padding-left:0;list-style:none;margin:1.2em 0 0;display:grid;gap:.5em">
-        <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold-ink)">—</span> 판본 번호 기반 동기화 한 벌 (서버 함수 + 클라이언트 모듈, 의존성 없음)</li>
-        <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold-ink)">—</span> 종이 양식을 그대로 옮긴 마취·투석 기록지 화면 구조</li>
-        <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--gold-ink)">—</span> 게시 전 검증 단계의 판정 기준과 점검 항목 목록</li>
-      </ul>
+      <p class="cap">저장소는 <a href="https://github.com/growingtiger?tab=repositories" style="color:var(--band-gold)">github.com/growingtiger</a>에 있습니다. 대부분 비공개지만 말씀해 주시면 열어 드리겠습니다. 특히 판본 번호 기반 동기화 한 벌(서버 함수 + 클라이언트 모듈, 의존성 없음), 종이 양식을 그대로 옮긴 마취·투석 기록지 화면 구조, 게시 전 검증 단계의 판정 기준과 점검 항목 목록은 바로 쓰실 수 있을 것 같습니다.</p>
     </div>
   </div>
 </section>
 
-<section id="proposal">
-  <div class="page">
-    <span class="sec-n">09</span>
-    <div class="doc">
-      <h2>벳프라이데이에 드리는 제안</h2>
-      <p class="lede">공개된 소개 페이지에서 읽은 것을 전제로 적었습니다. 제품 내부 사정과 어긋나는 부분이 있으면 걸러 읽어 주십시오.</p>
+<section class="tint" id="proposal">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label rv"><span class="n">09</span>벳프라이데이에 드리는 제안</p>
+      <h2 class="rv" style="--i:1">쓸 사람 쪽에서 보이는 것</h2>
+      <p class="lead rv" style="--i:2">공개된 소개 페이지에서 읽은 것을 전제로 적었습니다. 제품 내부 사정과 어긋나는 부분이 있으면 걸러 읽어 주십시오.</p>
     </div>
-
-    <div class="props">
-      <div class="prop">
-        <h4><i>01</i> 임상 질문 답변 옆에 기록과 보고를 두십시오</h4>
+    <div class="props" data-stagger>
+      <article class="prop">
+        <span class="k">01</span>
+        <h3>임상 질문 답변 옆에 기록과 보고를 두십시오</h3>
         <p>근거를 붙여 임상 질문에 답하는 일은 이미 하고 계십니다. 다만 수의사가 하루 중 손을 가장 많이 쓰는 곳은 질문이 아니라 기록입니다. 교육 신청자 다섯 분이 먼저 꺼낸 과제 중 셋이 운영·경영이었습니다. 질문 답변으로 들어가 기록으로 남는 동선이 되면 하루에 여러 번 열립니다.</p>
-      </div>
-      <div class="prop">
-        <h4><i>02</i> 근거 추적을 초록에서 멈추지 마십시오</h4>
+      </article>
+      <article class="prop">
+        <span class="k">02</span>
+        <h3>근거 추적을 초록에서 멈추지 마십시오</h3>
         <p>PubMed 초록과 본문의 결론 강도가 다른 경우가 있고, 초록 텍스트에서 지수 표기가 깨져 자릿수가 달라지는 일도 있습니다. 출처 표시를 '논문'이 아니라 '논문의 어느 부분'까지 내려 주시면, 수의사가 직접 확인하는 비용이 크게 줄어듭니다. 임상 권고에서는 이 한 칸이 신뢰의 전부입니다.</p>
-      </div>
-      <div class="prop">
-        <h4><i>03</i> 결과물을 고치게 하고, 고친 것을 모으십시오</h4>
+      </article>
+      <article class="prop">
+        <span class="k">03</span>
+        <h3>결과물을 고치게 하고, 고친 것을 모으십시오</h3>
         <p>SOAP 노트와 보호자 안내문은 수의사가 자기 이름으로 내보내는 문서입니다. 완성본으로 주면 복사해서 다른 창에서 고칩니다. 화면에서 고치게 하고 무엇을 고쳤는지 쌓으면, 그 자체가 병원별 문체 데이터가 됩니다.</p>
-      </div>
-      <div class="prop">
-        <h4><i>04</i> 한국 규제 업무는 외국 제품이 들어오지 못하는 자리입니다</h4>
+      </article>
+      <article class="prop">
+        <span class="k">04</span>
+        <h3>한국 규제 업무는 외국 제품이 들어오지 못하는 자리입니다</h3>
         <p>마약류 사용 기록과 NIMS 보고, 처방 기록은 양식과 기한이 정해져 있고 틀리면 병원이 다칩니다. 그래서 병원이 돈을 냅니다. 기록을 남겨 주는 것에서 멈추지 말고 '보고 완료'까지 쫓아가는 기능이면, 다른 기능이 부족해도 해지되지 않습니다.</p>
-      </div>
-      <div class="prop">
-        <h4><i>05</i> 병원 양식을 바꾸지 않고 옮겨 주는 기능</h4>
+      </article>
+      <article class="prop">
+        <span class="k">05</span>
+        <h3>병원 양식을 바꾸지 않고 옮겨 주는 기능</h3>
         <p>병원마다 마취·투석·입원 기록지 양식이 다르고, 그 순서는 손이 기억하고 있습니다. "우리 병원 양식 그대로"가 도입의 조건입니다. 종이 양식 사진을 올리면 같은 순서의 입력 화면이 나오는 기능이 있다면, 영업에서 설명할 말이 한 문장으로 줄어들 것 같습니다.</p>
-      </div>
-      <div class="prop">
-        <h4><i>06</i> 병원이 만든 작은 앱을 붙일 자리를 열어 주십시오</h4>
+      </article>
+      <article class="prop">
+        <span class="k">06</span>
+        <h3>병원이 만든 작은 앱을 붙일 자리를 열어 주십시오</h3>
         <p>저처럼 직접 만들어 쓰는 원장이 앞으로 늘어날 것이라고 봅니다. 환자·검사 데이터를 읽고 쓰는 길이 열려 있으면, 병원이 자기 사정에 맞게 만든 것을 플랫폼 위에 올립니다. 제가 만든 계산기 29종이나 기록지도 그렇게 붙일 수 있습니다. 모든 요구를 직접 만들지 않아도 되는 길입니다.</p>
-      </div>
-      <div class="prop">
-        <h4><i>07</i> 청구는 좌석보다 병원 단위로</h4>
+      </article>
+      <article class="prop">
+        <span class="k">07</span>
+        <h3>청구는 좌석보다 병원 단위로</h3>
         <p>매일 여는 사람이 열 명을 넘습니다. 좌석당 과금이면 병원은 계정을 돌려 쓰고, 그러면 누가 무엇을 했는지가 사라집니다. 감사 기록이 필요한 업무에서는 이것이 기능 손실입니다.</p>
-      </div>
-      <div class="prop">
-        <h4><i>08</i> 베타는 시그니처에서 돌려 보겠습니다</h4>
+      </article>
+      <article class="prop">
+        <span class="k">08</span>
+        <h3>베타는 시그니처에서 돌려 보겠습니다</h3>
         <p>FASAVA 2026에서 베타 테스터를 모집하신다고 보았습니다. 2차 의뢰 병원이고 마취·투석·중환자 기록이 매일 쌓이는 곳이라, 쓰이는지 안 쓰이는지가 하루 만에 드러납니다. 직원들이 안 쓰면 안 쓴다고 말씀드리겠습니다. 그 말이 필요하시면 연락 주십시오.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="dark end" id="contact">
+  <div class="wrap">
+    <p class="label rv"><span class="n">10</span>맺으며</p>
+    <h2 class="rv" style="--i:1">제대로 나오면 제가 만든 것 중<br>몇 개는 지워도 될 것입니다</h2>
+    <div class="grid">
+      <div class="body">
+        <p class="rv">수의사가 소프트웨어를 만드는 일은 제가 특별해서가 아니라, 필요한 것이 시장에 없었기 때문에 시작했습니다. 벳프라이데이가 제대로 나오면 제가 만든 것 가운데 몇 개는 지워도 될 것입니다. 그렇게 되기를 바라며 이 노트를 보냅니다.</p>
+        <p class="rv" style="--i:1">3절의 주소는 눌러서 바로 보실 수 있게 달아 두었습니다. 원내 앱의 비밀번호는 따로 보내 드리겠습니다. 더 보고 싶은 화면이나 가져가고 싶은 코드가 있으면 말씀해 주십시오. 시연 자리를 만들겠습니다.</p>
+        <div class="linkrow rv" style="--i:2">
+          <a href="#ledger">프로그램 목록으로</a>
+          <a href="/ai-class">원장을 위한 AI 실전 교육</a>
+          <a href="https://signature-calculator.vercel.app">임상 계산기 29종</a>
+          <a href="https://vet-briefing.vercel.app">수의학 데일리 브리핑</a>
+          <a href="https://kaha-member-app.vercel.app">KAHA 회원 앱</a>
+          <a href="https://ksverrt.vercel.app">KSVERRT 연구회</a>
+          <a href="https://github.com/growingtiger?tab=repositories">저장소</a>
+        </div>
+      </div>
+      <div class="contact rv" style="--i:1">
+        <b>이태호</b>
+        <span>시그니처 동물의료센터 대표원장</span>
+        <span>건국대학교 수의과대학 임상내과학 겸임교수</span>
+        <span>대한수의사회 학술홍보위원회 위원장</span>
+        <span>한국동물병원협회 정책기획위원회 위원장</span>
+        <a class="cta" href="mailto:growingtiger@gmail.com">메일 보내기</a>
       </div>
     </div>
   </div>
 </section>
 
-<section id="links">
-  <div class="page">
-    <span class="sec-n">10</span>
-    <div class="doc">
-      <h2>주소와 연락</h2>
-      <p>아래는 공개되어 있거나 보여 드릴 수 있는 것들입니다. 병원 내부 자료가 들어 있는 앱은 비밀번호 뒤에 있어 링크를 넣지 않았습니다. 보고 싶은 것을 말씀해 주시면 시연 자리를 만들겠습니다.</p>
-      <div class="linkrow">
-        <a href="/ai-class">원장을 위한 AI 실전 교육</a>
-        <a href="https://signature-calculator.vercel.app">수의 임상 계산기 29종</a>
-        <a href="https://vet-briefing.vercel.app">수의학 데일리 브리핑</a>
-        <a href="https://kaha-member-app.vercel.app">KAHA 회원 앱</a>
-        <a href="https://ksverrt.vercel.app">KSVERRT 연구회</a>
-        <a href="https://leetaeho.co.kr">이태호 홈페이지</a>
-        <a href="https://github.com/growingtiger?tab=repositories">저장소</a>
-      </div>
-    </div>
-  </div>
-</section>
+</main>
 
 <footer>
-  <div class="page">
-    <div class="doc">
-      <p>수의사가 소프트웨어를 만드는 일은 제가 특별해서가 아니라, 필요한 것이 시장에 없었기 때문에 시작했습니다. 벳프라이데이가 제대로 나오면 제가 만든 것 가운데 몇 개는 지워도 될 것입니다. 그렇게 되기를 바라며 이 노트를 보냅니다.</p>
-      <p>궁금한 것, 더 보고 싶은 화면, 가져가고 싶은 코드가 있으면 언제든 말씀해 주십시오.</p>
-      <div class="sig">
-        <b>이태호</b>
-        시그니처 동물의료센터 대표원장<br>
-        건국대학교 수의과대학 임상내과학 겸임교수<br>
-        대한수의사회 학술홍보위원회 위원장 · 한국동물병원협회 정책기획위원회 위원장<br>
-        <a href="mailto:growingtiger@gmail.com">growingtiger@gmail.com</a>
-      </div>
-      <p class="note" style="margin-top:2.6em">이 문서의 화면 사진 속 환자·직원·병원 이름과 수치는 모두 가상 데이터입니다. 검색엔진에 올라가지 않도록 설정해 두었으며, 링크를 아시는 분만 보실 수 있습니다. 2026년 10월 작성.</p>
-    </div>
+  <div class="wrap">
+    이 문서의 화면 사진 속 환자·직원·병원 이름과 수치는 모두 가상 데이터입니다. 검색엔진에 올라가지 않도록 설정해 두었으며, 링크를 아시는 분만 보실 수 있습니다. 2026년 10월 작성 · 이태호
   </div>
 </footer>
 
-<!-- 문서다. 글이 숨은 채 남을 위험을 만들지 않으려고 등장 효과는 넣지 않았다. -->
+<script>
+/* 스크롤 등장, 숫자 올라가기, 가로 띠 버튼. 동작 줄이기 설정이면 전부 끈다.
+   교육 소개 페이지와 같은 장치 — 글이 숨은 채 남지 않게 예비 장치를 둔다. */
+(function(){
+  var root=document.documentElement;
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll("[data-stagger]").forEach(function(p){
+    Array.prototype.forEach.call(p.children,function(c,i){c.classList.add("rv");c.style.setProperty("--i",Math.min(i,6));});
+  });
+  var els=document.querySelectorAll(".rv,.rv-img");
+  function showAll(){els.forEach(function(e){e.classList.add("in");});}
+  function count(el){
+    var to=+el.dataset.to,t0=null,dur=1200;
+    function step(t){if(!t0)t0=t;var k=Math.min((t-t0)/dur,1);k=1-Math.pow(1-k,3);
+      el.textContent=Math.round(to*k).toLocaleString("en-US");if(k<1)requestAnimationFrame(step);}
+    el.textContent="0";requestAnimationFrame(step);
+  }
+  function sweep(){var h=window.innerHeight||800;els.forEach(function(e){if(!e.classList.contains("in")){var r=e.getBoundingClientRect();if(r.top<h*0.95&&r.bottom>-40)e.classList.add("in");}});
+    document.querySelectorAll(".cnt[data-to]:not([data-done])").forEach(function(e){var r=e.getBoundingClientRect();if(r.top<h*0.9&&r.bottom>0){e.dataset.done="1";count(e);}});}
+  window.addEventListener("scroll",sweep,{passive:true});window.addEventListener("resize",sweep);
+  sweep();setTimeout(sweep,300);
+  setTimeout(function(){var h=window.innerHeight||800;var stuck=[].some.call(els,function(e){var r=e.getBoundingClientRect();return r.top<h&&r.bottom>0&&!e.classList.contains("in");});if(stuck)showAll();},2500);
+  try{
+    if(reduce||!("IntersectionObserver" in window)){showAll();}
+    else{
+      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{rootMargin:"0px 0px -8% 0px",threshold:.08});
+      els.forEach(function(e){io.observe(e);});
+      var co=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&!e.target.dataset.done){e.target.dataset.done="1";count(e.target);co.unobserve(e.target);}});},{threshold:.6});
+      document.querySelectorAll(".cnt[data-to]").forEach(function(e){co.observe(e);});
+    }
+  }catch(_){root.classList.remove("js");showAll();}
+  document.querySelectorAll(".strip-nav").forEach(function(n){
+    var s=document.getElementById(n.dataset.for);
+    function fit(){n.style.visibility=s.scrollWidth>s.clientWidth+4?"visible":"hidden";}
+    fit();window.addEventListener("resize",fit);
+    n.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;
+      var first=s.children[0],step=first?first.getBoundingClientRect().width+20:300;
+      s.scrollBy({left:step*(+b.dataset.d),behavior:reduce?"auto":"smooth"});});
+  });
+})();
+</script>
 </body>
 </html>
