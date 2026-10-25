@@ -203,7 +203,7 @@ td.long{min-width:200px;max-width:280px;white-space:pre-wrap}
   var out=document.getElementById("out"),err=document.getElementById("err");
 
   // 기수별 예상 시기 — 5기부터 한 달에 두 기수(5·6기 2027년 1월, 7·8기 2월 …), 2026-10-19 원장 지시. ~/ai-assistant/ai_class_alert.py와 같게.
-  function expected(c){var n=+c,f={1:"2026년 11월 26일(목)",2:"2026년 12월 10일(목)",3:"2026년 10월 21일(수)",4:"2026년 12월 16일(수)"};if(f[n])return f[n];if(!(n>=5))return"";var k=Math.floor((n-5)/2);return (2027+Math.floor(k/12))+"년 "+(1+k%12)+"월 중"}
+  function expected(c){var n=+c,f={1:"2026년 11월 26일(목)",2:"2026년 12월 10일(목)",3:"2026년 10월 21일(수)",4:"2026년 12월 16일(수)",5:"2027년 1월 6일(수)"};if(f[n])return f[n];if(!(n>=5))return"";var k=Math.floor((n-5)/2);return (2027+Math.floor(k/12))+"년 "+(1+k%12)+"월 중"}
   function msg(a){
     var hi=(a.name||"")+" 원장님, 안녕하세요. 시그니처 동물의료센터 이태호입니다.\n\n";
     var t;
