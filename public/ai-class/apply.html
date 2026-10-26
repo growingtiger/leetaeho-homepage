@@ -167,14 +167,14 @@ button:disabled{opacity:.5;cursor:default}
 <main class="form-wrap">
   <p class="label">원장을 위한 AI 실전 교육 · 신청서</p>
   <h1>신청서와 사전 질문지</h1>
-  <p class="lead">두 과정 모두 선착순입니다. 과정 1(하루 실습)은 5명이 모이면 한 기수가 열리고, 단톡방에서 다섯 분이 모두 되는 날짜를 함께 고릅니다. 과정 2(방문 세팅)는 원하는 프로그램을 병원에서 직접 만들 수 있게 환경을 세팅해 드리며, 신청 순서대로 한 달에 한 병원씩 진행합니다. 현업 진료의라 과정 1도 한 달에 한 번만 엽니다. 따로 통화하지 않으니 원하시는 내용을 질문지에 자세히 적어 주십시오. 신청 전에 궁금한 점은 <a href="mailto:growingtiger+aiclass@gmail.com">growingtiger+aiclass@gmail.com</a> 으로 보내 주십시오.</p>
+  <p class="lead">두 과정 모두 선착순입니다. 과정 1(하루 실습)은 5명이 모이면 한 기수가 열리고, 단톡방에서 다섯 분이 모두 되는 날짜를 함께 고릅니다. 과정 2(방문 교육)는 병원 분들이 원하는 프로그램을 직접 만들 수 있도록 병원에서 가르쳐 드리며, 신청 순서대로 한 달에 한 병원씩 진행합니다. 현업 진료의라 과정 1도 한 달에 한 번만 엽니다. 따로 통화하지 않으니 원하시는 내용을 질문지에 자세히 적어 주십시오. 신청 전에 궁금한 점은 <a href="mailto:growingtiger+aiclass@gmail.com">growingtiger+aiclass@gmail.com</a> 으로 보내 주십시오.</p>
 
   <form id="f" novalidate>
     <fieldset>
       <legend>신청 과정</legend>
       <div class="choice" role="radiogroup">
         <label><input type="radio" name="course" value="1" checked> 과정 1 · 하루 집중 실습 (110만 원)</label>
-        <label><input type="radio" name="course" value="2"> 과정 2 · 병원 방문 세팅 (550만 원)</label>
+        <label><input type="radio" name="course" value="2"> 과정 2 · 병원 방문 교육 (550만 원)</label>
       </div>
     </fieldset>
 
@@ -234,7 +234,7 @@ button:disabled{opacity:.5;cursor:default}
     <label class="agree"><input type="checkbox" id="agree2"> <span>교육 자료와 강의 내용은 우리 병원 안에서만 쓰고, 녹화·녹음·공유하거나 같은 내용으로 강의·세팅 서비스를 판매하지 않겠습니다.</span></label>
     <div class="refund-note"><b>결제와 환불</b>
       <p>과정 1은 기수 5명과 날짜가 확정되면 입금 안내를 드립니다(3일 안 입금 시 확정). 교육일 7일 전까지 취소하면 전액, 6~3일 전은 50%, 2일 전부터는 환불되지 않습니다. 3일 전까지는 다음 기수 이월이나 같은 병원 수의사 대리 참석이 가능합니다.</p>
-      <p>과정 2는 세팅 항목 확정 후 50%, 방문일에 50%를 받습니다. 확정 전 취소는 전액, 방문일 7일 전까지는 받은 금액의 50%, 그 이후는 환불되지 않습니다.</p>
+      <p>과정 2는 교육 내용 확정 후 50%, 방문일에 50%를 받습니다. 확정 전 취소는 전액, 방문일 7일 전까지는 받은 금액의 50%, 그 이후는 환불되지 않습니다.</p>
       <p>교육비는 교육을 운영하는 주식회사 더벳로드 명의로 받으며, 세금계산서도 같은 명의로 발행합니다.</p>
       <p>강사 사정으로 취소되면 전액 환불하거나 날짜를 옮겨 드립니다. 신청을 취소한 뒤 다시 신청하시면 가장 뒤 순서로 받습니다. 자세한 내용은 <a href="/ai-class#faq" target="_blank" rel="noopener">안내 페이지 자주 묻는 질문</a>에 있습니다.</p></div>
     <label class="agree"><input type="checkbox" id="agree3"> <span>위 결제와 환불 규정을 확인했습니다.</span></label>
@@ -263,7 +263,7 @@ button:disabled{opacity:.5;cursor:default}
   function sync(){var c1=course()==="1";document.getElementById("laptopRow").hidden=!c1;document.getElementById("wantLabel").textContent=c1?"\"이런 프로그램이 있었으면\" 싶은 것 (교육 당일 만들어 가실 것)":"\"이런 프로그램이 있었으면\" 싶은 것 (방문 때 함께 만들어 볼 것)";}
   f.addEventListener("change",sync);sync();
   function collect(){return{course:course(),name:val("name"),phone:val("phone"),hospital:val("hospital"),region:val("region"),type:val("type"),size:val("size"),ai:val("ai"),laptop:course()==="1"?val("laptop"):"",pain:val("pain"),want:val("want"),users:val("users"),ask:val("ask"),website:val("website"),agree:document.getElementById("agree").checked,agree2:document.getElementById("agree2").checked,agree3:document.getElementById("agree3").checked};}
-  function asText(d){var L=[["희망 과정",d.course==="1"?"과정 1 하루 집중 실습":"과정 2 병원 방문 세팅"],["성함",d.name],["휴대폰",d.phone],["병원",d.hospital],["지역",d.region],["병원 형태",d.type],["규모",d.size],["쓰는 AI",[].concat(d.ai).join(", ")],["노트북",d.laptop],["시간을 빼앗는 일",d.pain],["만들고 싶은 것",d.want],["쓸 사람",d.users],["요청사항",d.ask],["동의","개인정보 수집, 교육 내용 재판매 금지, 결제·환불 규정 확인"]];return "[AI 교육 신청]\n"+L.filter(function(x){return x[1]&&String(x[1]).length}).map(function(x){return x[0]+": "+x[1]}).join("\n");}
+  function asText(d){var L=[["희망 과정",d.course==="1"?"과정 1 하루 집중 실습":"과정 2 병원 방문 교육"],["성함",d.name],["휴대폰",d.phone],["병원",d.hospital],["지역",d.region],["병원 형태",d.type],["규모",d.size],["쓰는 AI",[].concat(d.ai).join(", ")],["노트북",d.laptop],["시간을 빼앗는 일",d.pain],["만들고 싶은 것",d.want],["쓸 사람",d.users],["요청사항",d.ask],["동의","개인정보 수집, 교육 내용 재판매 금지, 결제·환불 규정 확인"]];return "[AI 교육 신청]\n"+L.filter(function(x){return x[1]&&String(x[1]).length}).map(function(x){return x[0]+": "+x[1]}).join("\n");}
   function manual(d){f.hidden=true;document.getElementById("copyText").textContent=asText(d);document.getElementById("manual").hidden=false;window.scrollTo(0,0);}
   document.getElementById("copyBtn").addEventListener("click",function(){var t=document.getElementById("copyText").textContent,b=this;function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById("copyText"));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="선택됨 · 길게 눌러 복사";}
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){b.textContent="복사했습니다";},sel);}else sel();});
@@ -278,7 +278,7 @@ button:disabled{opacity:.5;cursor:default}
       if(x.s!==200||!x.j.ok){manual(d);return;}
       var j=x.j,t;
       if(j.course==="1"){t="신청이 잘 접수되었습니다. 선착순으로 5명이 모이면 한 기수가 열리며, 몇 기로 진행되는지와 날짜는 기수가 다 차면 단톡방에서 안내해 드립니다. 진료를 계속 보고 있어 하루 실습은 한 달에 한 번 진행합니다.";}
-      else{t="방문 세팅 신청이 잘 접수되었습니다. 신청 순서대로 한 달에 한 병원씩 진행하며, 차례가 오면 먼저 연락드려 날짜를 함께 정합니다.";}
+      else{t="방문 교육 신청이 잘 접수되었습니다. 신청 순서대로 한 달에 한 병원씩 진행하며, 차례가 오면 먼저 연락드려 날짜를 함께 정합니다.";}
       f.hidden=true;document.getElementById("doneText").textContent=t+(j.course==="1"?" 노트북 준비 안내문은 문자로 따로 보내 드립니다.":" 적어 주신 요청사항을 보고 병원에 맞는 세팅을 미리 준비해 두겠습니다.");document.getElementById("done").hidden=false;window.scrollTo(0,0);
     }).catch(function(){manual(d);});
   });
