@@ -110,7 +110,8 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
     if(sc.length){var p=sc.filter(function(x){return x>=9}).length,d=sc.filter(function(x){return x<=6}).length;
       el("kNps").textContent=Math.round((p-d)/sc.length*100);el("kNpsD").textContent=" 추천 "+p+" · 비추천 "+d+" / "+sc.length}
     else{el("kNps").textContent="–";el("kNpsD").textContent=""}
-    var items=[["전체 만족도","overall"],["오전 이론","theory"],["오후 실습","practice"],["강의실·자리·인터넷","venue"],["수업 전 안내","notice"]];
+    var visitSel=/방문/.test(el("fc").value||"");
+    var items=[["전체 만족도","overall"],["오전 이론","theory"],["오후 실습","practice"],[visitSel?"직원 사용법 안내 (방문 교육)":"강의실·자리·인터넷","venue"],["수업 전 안내","notice"]];
     el("items").innerHTML=items.map(function(it){var vs=rs.map(function(r){return r[it[1]]}).filter(function(x){return x}),a=avg(vs);
       return "<tr><td>"+it[0]+"</td><td class='n'>"+f1(a)+(a==null?"":"<span class='meter'><i style='width:"+(a/5*100)+"%'></i></span>")+"</td><td class='n'>"+vs.length+"</td></tr>"}).join("");
     function dist(k,opts){var m={};rs.forEach(function(r){if(r[k])m[r[k]]=(m[r[k]]||0)+1});return opts.map(function(o){return o[1]+" "+(m[o[0]]||0)}).join(" · ")}
@@ -121,11 +122,11 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
     el("list").innerHTML=rs.slice().reverse().map(function(r){
       var who=r.mode==="anon"?"<b>무기명</b><span class='chip anon'>무기명</span>":"<b>"+esc(r.name||"이름 없음")+"</b><span class='chip'>기명</span>";
       var when=r.at?new Date(r.at).toLocaleString("ko-KR",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}):"";
-      var rows=[["전체 만족도",r.overall?r.overall+" / 5":""],["항목","이론 "+(r.theory||"–")+" · 실습 "+(r.practice||"–")+" · 강의실 "+(r.venue||"–")+" · 안내 "+(r.notice||"–")],
+      var rows=[["전체 만족도",r.overall?r.overall+" / 5":""],["항목","이론 "+(r.theory||"–")+" · 실습 "+(r.practice||"–")+(/방문/.test(r.cohort||"")?" · 직원 안내 ":" · 강의실 ")+(r.venue||"–")+" · 안내 "+(r.notice||"–")],
         ["추천 의향",r.score?r.score+" / 10":""],["속도·난이도",[r.pace,r.level].filter(Boolean).join(" · ")],["도움된 것",r.best],["아쉬운 것",r.worse],
         ["만든 프로그램",r.made],["다음에 만들 것",r.next],[/방문/.test(r.cohort||"")?"추가 도움":"과정 2",r.course2],["한마디",r.quote],["소개 동의",r.publish]];
       return "<div class='r'><div class='who'>"+who+"<span>"+esc(/^\d+$/.test(r.cohort)?r.cohort+"기":r.cohort||"")+"</span><span>"+esc(when)+"</span></div><dl>"+
-        rows.filter(function(x){return x[1]&&String(x[1]).replace(/[–·\s]|이론|실습|강의실|안내/g,"")}).map(function(x){return "<dt>"+x[0]+"</dt><dd>"+esc(x[1])+"</dd>"}).join("")+"</dl></div>"}).join("");
+        rows.filter(function(x){return x[1]&&String(x[1]).replace(/[–·\s]|이론|실습|강의실|직원|안내/g,"")}).map(function(x){return "<dt>"+x[0]+"</dt><dd>"+esc(x[1])+"</dd>"}).join("")+"</dl></div>"}).join("");
   }
   function toCsv(){
     var c=el("fc").value, rs=all.filter(function(r){return!c||r.cohort===c});

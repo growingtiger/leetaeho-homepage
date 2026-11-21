@@ -116,7 +116,7 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
   var VISITS={
     "dasom":{cohort:"다솜방문",name:"다솜동물메디컬센터 방문 교육 · 2026년 11월 20일",
       theory:"이론과 시연 (AI로 프로그램을 만든다는 것)",practice:"실습 (키트 설치·첫 앱·병원 프로그램 함께 만들기)",
-      venue:"교육 장소·자리·인터넷 (병원 안)",notice:"교육 전 안내 (준비할 것·키트 코드)"}
+      venue:"직원 사용법 안내 (직원분들께 드린 설명 시간)",notice:"교육 전 안내 (준비할 것·키트 코드)"}
   };
   var visit=c&&VISITS[c];
   if(visit){
@@ -159,7 +159,7 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
       venue:pick("venue"),notice:pick("notice"),pace:pick("pace"),level:pick("level"),score:pick("score"),best:v("best"),worse:v("worse"),
       made:v("made"),next:v("next"),course2:pick("course2"),quote:v("quote"),publish:pick("publish"),website:v("website")};
     if(!d.overall&&!d.score&&!d.best&&!d.worse){m.textContent="전체 만족도나 의견을 하나 이상 남겨 주십시오.";return}
-    var miss=[["overall","전체 만족도"],["theory","이론"],["practice","실습"],["venue",visit?"교육 장소·인터넷":"강의실·자리·인터넷"],["notice",visit?"교육 전 안내":"수업 전 안내"],["pace","진행 속도"],["level","난이도"],["score","추천 점수"]].filter(function(x){return !d[x[0]]}).map(function(x){return x[1]});
+    var miss=[["overall","전체 만족도"],["theory","이론"],["practice","실습"],["venue",visit?"직원 사용법 안내":"강의실·자리·인터넷"],["notice",visit?"교육 전 안내":"수업 전 안내"],["pace","진행 속도"],["level","난이도"],["score","추천 점수"]].filter(function(x){return !d[x[0]]}).map(function(x){return x[1]});
     if(miss.length&&!confirm("아직 고르지 않은 항목이 있습니다: "+miss.join(", ")+"\n그래도 지금 보낼까요?")){m.textContent="";return}
     m.textContent="보내는 중…";f.querySelector(".send").disabled=true;
     fetch("/api/ai-review",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(d)})
