@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'">
+<meta name="theme-color" content="#f5f3ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171613" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<title>마약류 장부 · 박준석 원장님을 위한 시제품</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* 장부 종이: 미색 바탕, 먹색 글자, 괘선. 붉은 먹은 '마약' 표기와 미보고에만 쓴다.
+   색만으로 구분하지 않는다: 마약은 테두리 상자, 미보고는 글자 자체가 '미보고'. */
+:root{
+  --bg:#f5f3ee; --paper:#fffefb; --wash:#efebe2;
+  --ink:#1c1a17; --ink2:#47433c; --mute:#6b655b;
+  --rule:#d6cfc0; --rule2:#e7e2d7;
+  --red:#962a1d; --red-soft:#f5e5df;
+  --serif:"Hahmlet","AppleMyungjo","Noto Serif KR",serif;
+  --sans:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --navw:232px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#171613; --paper:#201e1a; --wash:#2a2722;
+    --ink:#ece7dc; --ink2:#c6bfb1; --mute:#9d9687;
+    --rule:#3b372f; --rule2:#2d2a24;
+    --red:#ea8f7b; --red-soft:#3b231d;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+body.lock{overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+.edu-note{background:var(--wash);color:var(--mute);font-size:13px;line-height:1.5;padding:8px 16px;text-align:center;border-bottom:1px solid var(--rule2)}
+
+/* 뼈대: 넓은 화면은 왼쪽 목차 + 본문, 좁은 화면은 위 제목 + 가로 목차 */
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr}
+.side{padding:18px 16px 0}
+.proto{font-size:13.5px;color:var(--mute);line-height:1.45}
+.proto b{color:var(--ink2);font-weight:500}
+.book{margin:10px 0 0;font-family:var(--serif);font-weight:700;font-size:27px;letter-spacing:-.02em;line-height:1.15}
+.book small{display:block;font-family:var(--sans);font-size:14px;font-weight:400;color:var(--mute);letter-spacing:0;margin-top:6px}
+nav.toc{display:flex;gap:0;margin:16px -16px 0;padding:0 8px;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--bg);z-index:20}
+nav.toc button{flex:1;min-width:0;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;min-height:48px;padding:10px 4px;font-size:15.5px;color:var(--mute);white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:5px}
+nav.toc button[aria-current="page"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:700}
+nav.toc .ct{font-size:12px;font-weight:700;color:var(--red);border:1px solid currentColor;border-radius:3px;padding:0 4px;line-height:17px}
+.side .law{display:none}
+
+main{padding:8px 16px 48px;min-width:0}
+@media (min-width:900px){
+  .shell{grid-template-columns:var(--navw) minmax(0,1fr);gap:0 40px;padding:0 24px}
+  .side{position:sticky;top:0;align-self:start;height:100vh;padding:28px 0 24px;display:flex;flex-direction:column}
+  .book{font-size:30px}
+  nav.toc{flex-direction:column;margin:28px 0 0;padding:0;border:0;border-top:1px solid var(--rule);position:static}
+  nav.toc button{justify-content:space-between;text-align:left;border:0;border-bottom:1px solid var(--rule2);margin:0;padding:12px 2px;font-size:16px;min-height:50px}
+  nav.toc button[aria-current="page"]{border-bottom-color:var(--rule2);box-shadow:inset 3px 0 0 var(--ink);padding-left:14px}
+  .side .law{display:block;margin-top:auto;font-size:13.5px;color:var(--mute);line-height:1.55;border-top:1px solid var(--rule);padding-top:14px}
+  main{padding:30px 0 64px}
+}
+
+/* 본문 머리 */
+.hd{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 16px;padding:14px 0 14px;border-bottom:2px solid var(--ink)}
+.hd h1{margin:0;font-family:var(--serif);font-weight:600;font-size:23px;letter-spacing:-.015em;line-height:1.25}
+.hd .per{display:block;font-family:var(--sans);font-size:14.5px;font-weight:400;color:var(--ink2);margin-top:4px;letter-spacing:0}
+.hd .acts{margin-left:auto;display:flex;flex-wrap:wrap;gap:8px}
+@media (min-width:900px){.hd{padding-top:0}.hd h1{font-size:26px}}
+h2.sec{font-family:var(--serif);font-weight:600;font-size:18.5px;letter-spacing:-.01em;margin:34px 0 4px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+h2.sec .aside{font-family:var(--sans);font-size:14px;font-weight:400;color:var(--mute)}
+p.cap{margin:0 0 10px;font-size:14.5px;color:var(--mute)}
+
+/* 단추 */
+.btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:9px 15px;border-radius:4px;border:1px solid var(--rule);background:var(--paper);font-size:15px;font-weight:500;line-height:1.2;white-space:nowrap}
+.btn:hover{background:var(--wash)}
+.btn.ink{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.ink:hover{opacity:.9}
+.btn.quiet{border-color:transparent;background:none;color:var(--ink2);padding-left:8px;padding-right:8px}
+.btn.warn{color:var(--red)}
+.btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.stepper{display:flex;align-items:center;gap:2px}
+.stepper .btn{min-width:44px;padding:0}
+.stepper .now{font-size:14.5px;color:var(--ink2);padding:0 8px;white-space:nowrap}
+
+/* 입력 */
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:16px 0 4px}
+.fd{min-width:0}
+.fd.w2{grid-column:1/-1}
+.fd label,.fd .lb{display:block;font-size:13.5px;color:var(--ink2);margin-bottom:4px}
+.fd input,.fd select,.fd textarea{width:100%;min-height:46px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);padding:10px 11px;font-size:16px;line-height:1.35}
+.fd input:focus,.fd select:focus,.fd textarea:focus{outline:none;border-color:var(--ink)}
+.fd .unit{position:relative}
+.fd .unit input{padding-right:44px}
+.fd .unit span{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:14.5px;color:var(--mute);pointer-events:none}
+.tick{display:flex;align-items:center;gap:10px;min-height:46px;font-size:15.5px}
+.fd .tick{display:flex;margin:0;font-size:15.5px;color:var(--ink)}
+.fd .tick input,.tick input{width:22px;height:22px;min-height:0;margin:0;padding:0;flex:none;accent-color:var(--ink)}
+.form .go{grid-column:1/-1;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.form .go .btn.ink{min-width:150px}
+.form .go .msg{font-size:14px;color:var(--mute)}
+@media (min-width:900px){
+  .form{grid-template-columns:160px 130px minmax(0,1.3fr) 130px minmax(0,1fr) minmax(0,1fr)}
+  .form .fd.memo{grid-column:1/5}
+  .form .fd.nimsf{grid-column:5/7;align-self:end}
+  .form .go{grid-column:1/-1}
+}
+.radio{display:flex;gap:0;border:1px solid var(--rule);border-radius:4px;overflow:hidden;min-height:46px}
+.radio label{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;margin:0;font-size:15.5px;color:var(--ink2);cursor:pointer;background:var(--paper)}
+.radio label+label{border-left:1px solid var(--rule)}
+.radio input{position:absolute;opacity:0;pointer-events:none}
+.radio input:checked+span{font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px}
+
+/* 구분 표기 */
+.cls{display:inline-block;font-size:12px;font-weight:700;line-height:18px;padding:0 5px;border-radius:3px;vertical-align:2px;margin-left:6px;white-space:nowrap}
+.cls.n{color:var(--red);border:1px solid var(--red)}
+.cls.p{color:var(--ink2);border:1px dashed var(--rule)}
+
+/* 거르기 */
+.filters{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:22px 0 10px;border-bottom:1px solid var(--rule)}
+.seg{display:flex;border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.seg button{background:var(--paper);border:0;min-height:42px;padding:8px 13px;font-size:14.5px;color:var(--ink2)}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);font-weight:500}
+.filters input[type=search]{flex:1;min-width:150px;min-height:42px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);padding:8px 11px;font-size:16px}
+
+/* 사용 기록 줄 */
+.day{font-size:13.5px;font-weight:700;color:var(--ink2);padding:16px 0 6px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;gap:10px}
+.day span{font-weight:400;color:var(--mute)}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--rule2)}
+.row .what{min-width:0;background:none;border:0;padding:0;text-align:left;display:block;min-height:44px}
+.row .l1{display:block;font-size:16px;line-height:1.4}
+.row .l1 b{font-weight:500}
+.row .qty{font-weight:700;margin-left:8px}
+.row .l2{display:block;font-size:14px;color:var(--mute);line-height:1.45;margin-top:1px}
+.row .l2 .pt{color:var(--ink2)}
+.row .memo{display:block;font-size:13.5px;color:var(--mute);margin-top:2px}
+.nims{min-height:40px;min-width:76px;padding:6px 10px;border-radius:4px;font-size:14px;font-weight:700;border:1px solid var(--rule);background:var(--paper);color:var(--ink2);display:inline-flex;align-items:center;justify-content:center;gap:5px}
+.nims svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.nims.no{border-color:var(--red);color:var(--red);background:var(--red-soft)}
+.row .what:hover .l1 b{text-decoration:underline;text-underline-offset:3px}
+.empty{padding:22px 0;color:var(--mute);font-size:15.5px}
+.more{padding:14px 0}
+
+/* 표 */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:6px 0 0}
+table.led{width:100%;border-collapse:collapse;font-size:15px}
+table.led th,table.led td{padding:9px 8px;border-bottom:1px solid var(--rule2);text-align:right;white-space:nowrap}
+table.led th:first-child,table.led td:first-child{text-align:left;padding-left:0;white-space:normal}
+table.led td:last-child,table.led th:last-child{padding-right:0}
+table.led thead th{font-size:13px;font-weight:500;color:var(--mute);border-bottom:1px solid var(--ink);vertical-align:bottom}
+table.led tbody td.nm{font-weight:500}
+table.led tfoot td{border-top:1px solid var(--ink);border-bottom:0;font-weight:700}
+table.led tfoot td.zero{font-weight:400;font-size:13px;white-space:normal}
+table.led td.zero{color:var(--mute)}
+table.led td.bad{color:var(--red);font-weight:700}
+table.led td.bal{font-weight:700}
+table.led .u{font-size:12.5px;color:var(--mute);font-weight:400;margin-left:2px}
+table.led th.chk,table.led td.chk{display:none}
+table.led .mu{display:none}
+@media (max-width:560px){table.led .dt{display:none}}
+@media (max-width:560px){table.led{font-size:14px}table.led th,table.led td{padding:8px 4px}table.led td .u{display:none}table.led td.nm{white-space:nowrap}table.led td.nm .cls{margin-left:0}table.led .mu{display:block;font-size:12px;color:var(--mute);font-weight:400;margin-top:1px}}
+
+.unrep{list-style:none;margin:6px 0 0;padding:0;border-top:1px solid var(--rule)}
+.unrep li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--rule2)}
+.unrep .l1{font-size:15.5px}
+.unrep .l2{font-size:14px;color:var(--mute)}
+.done{padding:14px 0;font-size:15.5px;color:var(--ink2);border-top:1px solid var(--rule);margin-top:6px}
+
+.note-line{margin:26px 0 0;padding-top:12px;border-top:1px solid var(--rule);font-size:14px;color:var(--mute)}
+
+/* 설정 */
+.drugs .dr{display:grid;grid-template-columns:minmax(0,1.4fr) 96px 80px minmax(0,1fr);gap:8px;align-items:end;padding:10px 0;border-bottom:1px solid var(--rule2)}
+.drugs .dr .fd label{font-size:12.5px}
+@media (max-width:560px){.drugs .dr{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.vets{display:flex;flex-wrap:wrap;gap:8px;padding:12px 0}
+.vets span{display:inline-flex;align-items:center;gap:2px;border:1px solid var(--rule);border-radius:4px;padding:0 0 0 10px;min-height:42px;font-size:15px;background:var(--paper)}
+.vets span button{border:0;background:none;min-width:40px;min-height:40px;color:var(--mute);font-size:18px;line-height:1}
+.addline{display:flex;gap:8px;flex-wrap:wrap}
+.addline input{flex:1;min-width:140px;min-height:44px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);padding:8px 11px;font-size:16px}
+.evrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--rule2)}
+.evrow .l1{font-size:15.5px}
+.evrow .kind{font-weight:700}
+.evrow .l2{font-size:14px;color:var(--mute)}
+
+/* 고치기 시트 */
+.scrim{position:fixed;inset:0;background:rgba(20,18,14,.42);z-index:40}
+.sheet{position:fixed;z-index:41;left:0;right:0;bottom:0;max-height:92vh;overflow:auto;background:var(--paper);border-top:2px solid var(--ink);padding:16px 16px calc(20px + env(safe-area-inset-bottom))}
+.sheet h3{margin:0;font-family:var(--serif);font-weight:600;font-size:20px}
+.sheet .sub{font-size:14px;color:var(--mute);margin-top:2px}
+.sheet .form{grid-template-columns:repeat(2,minmax(0,1fr))}
+.sheet .form .fd.memo,.sheet .form .fd.nimsf{grid-column:1/-1}
+.sheet .bar{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap;margin-top:12px}
+@media (min-width:700px){.sheet{left:50%;top:50%;bottom:auto;right:auto;transform:translate(-50%,-50%);width:600px;border:1px solid var(--rule);border-top:2px solid var(--ink);border-radius:4px;padding:22px 24px}}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:60;background:var(--ink);color:var(--bg);font-size:15px;padding:11px 16px;border-radius:4px;max-width:calc(100vw - 32px);text-align:center}
+
+footer.site{max-width:1180px;margin:0 auto;padding:0 16px 32px;color:var(--mute);font-size:13.5px;line-height:1.6}
+footer.site .law-m{display:block;margin-bottom:4px}
+@media (min-width:900px){footer.site{padding:0 24px 32px calc(var(--navw) + 64px)}footer.site .law-m{display:none}}
+
+/* 인쇄용 머리·서명 칸 (화면에서는 숨김) */
+.ph,.sign{display:none}
+@media print{
+  @page{size:A4;margin:14mm 12mm}
+  :root{--bg:#fff;--paper:#fff;--wash:#fff;--ink:#000;--ink2:#222;--mute:#555;--rule:#999;--rule2:#ccc;--red:#000;--red-soft:#fff}
+  body{background:#fff;font-size:11pt}
+  .edu-note,.side,footer.site,.toast,.scrim,.sheet,.hd .acts,.noprint,.nims-act{display:none!important}
+  .shell{display:block;padding:0}
+  main{padding:0}
+  .ph{display:block;font-size:10pt;color:#333;margin-bottom:6px}
+  .hd{padding-top:0}
+  table.led{font-size:10.5pt}
+  table.led th.chk,table.led td.chk{display:table-cell;width:70px;border-left:1px solid #ccc}
+  .tw{overflow:visible}
+  .cls.n{border:1px solid #000}
+  .sign{display:flex;gap:28px;justify-content:flex-end;margin-top:28px;font-size:10.5pt}
+  .sign span{min-width:170px;border-bottom:1px solid #000;padding-bottom:18px}
+  h2.sec{break-after:avoid}
+  tr,li{break-inside:avoid}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="edu-note">교육용 예시 화면입니다. 진료 판단에 쓰는 프로그램이 아니며, 판매하지 않습니다.</div>
+
+<div class="shell">
+  <aside class="side">
+    <div class="proto">24시범어동물의료센터 · <b>박준석 원장님</b>을 위한 시제품 · 예시 데이터입니다</div>
+    <div class="book">마약류 장부<small>사용 기록과 주간·월간 정리</small></div>
+    <nav class="toc" id="toc" aria-label="화면"></nav>
+    <p class="law">법정 보고는 NIMS에서 병원이 직접 합니다. 이 화면은 기록 정리를 돕습니다.</p>
+  </aside>
+  <main id="main"></main>
+</div>
+<footer class="site">
+  <span class="law-m">법정 보고는 NIMS에서 병원이 직접 합니다. 이 화면은 기록 정리를 돕습니다.</span>
+  원장을 위한 AI 실전 교육 시제품입니다. 교육 당일 원장님 병원에 맞게 함께 고칩니다. 화면의 환자 번호와 수의사 이름은 모두 지어낸 것이며, 기록은 이 기기에만 저장됩니다.
+</footer>
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="pjs-narcotic-ledger-v1";
+var $=function(s,r){return (r||document).querySelector(s);};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+
+/* ───────── 날짜 ───────── */
+function pad(n){return (n<10?"0":"")+n;}
+function ymd(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+function pd(s){var a=s.split("-");return new Date(+a[0],+a[1]-1,+a[2]);}
+function addDays(s,n){var d=pd(s);d.setDate(d.getDate()+n);return ymd(d);}
+function monday(s){var d=pd(s);var w=(d.getDay()+6)%7;d.setDate(d.getDate()-w);return ymd(d);}
+function monthStart(s){return s.slice(0,7)+"-01";}
+function addMonths(ms,n){var d=pd(ms);d.setMonth(d.getMonth()+n,1);return ymd(d);}
+function monthEnd(ms){return addDays(addMonths(ms,1),-1);}
+var WD=["일","월","화","수","목","금","토"];
+function dot(s){var d=pd(s);return d.getFullYear()+". "+(d.getMonth()+1)+". "+d.getDate()+".";}
+function md(s){var d=pd(s);return (d.getMonth()+1)+"월 "+d.getDate()+"일";}
+function mdw(s){var d=pd(s);return (d.getMonth()+1)+"월 "+d.getDate()+"일 ("+WD[d.getDay()]+")";}
+function ym(ms){var d=pd(ms);return d.getFullYear()+"년 "+(d.getMonth()+1)+"월";}
+var TODAY=ymd(new Date());
+
+/* ───────── 수량 ───────── */
+function r2(n){return Math.round(n*100)/100;}
+function q(n){n=r2(n);if(n===0)return "0";var s=n.toFixed(2);if(s.slice(-1)==="0")s=s.slice(0,-1);return s;}
+
+/* ───────── 예시 데이터 (모두 가상) ───────── */
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+function seed(){
+  var R=rng(20261126);
+  var base=addMonths(monthStart(TODAY),-1);
+  var drugs=[
+    {id:"d-pro",name:"프로포폴",cls:"향정",unit:"mL",baseQty:300,w:9,min:1,max:8},
+    {id:"d-ket",name:"케타민",cls:"향정",unit:"mL",baseQty:60,w:4,min:.2,max:1.5},
+    {id:"d-mid",name:"미다졸람",cls:"향정",unit:"mL",baseQty:80,w:5,min:.2,max:1.6},
+    {id:"d-but",name:"부토르파놀",cls:"향정",unit:"mL",baseQty:50,w:5,min:.2,max:1.2},
+    {id:"d-fen",name:"펜타닐",cls:"마약",unit:"mL",baseQty:40,w:3,min:.5,max:3}
+  ];
+  var vets=["정다온","윤서진","한지후","오세린","배도윤","문가람"];
+  var pts=[];for(var i=0;i<46;i++){pts.push("26-"+pad(Math.floor(R()*90)+10)+pad(Math.floor(R()*100)));}
+  var recs=[],evs=[],n=0,wsum=0;drugs.forEach(function(d){wsum+=d.w;});
+  function pick(){var x=R()*wsum;for(var i=0;i<drugs.length;i++){x-=drugs[i].w;if(x<0)return drugs[i];}return drugs[0];}
+  var recent=addDays(TODAY,-2);
+  for(var day=base;day<=TODAY;day=addDays(day,1)){
+    var cnt=5+Math.floor(R()*6);
+    for(var k=0;k<cnt;k++){
+      var d=pick(),amt=Math.round((d.min+R()*(d.max-d.min))*10)/10;
+      var hh=Math.floor(R()*24),mm=Math.floor(R()*12)*5;
+      var rep=day<recent?(R()>.008):(R()>.55);
+      if(day===TODAY&&hh>new Date().getHours())hh=Math.max(0,new Date().getHours()-1);
+      var memo="";if(R()<.06)memo="수술 중 추가";else if(R()<.04)memo="응급 내원";
+      recs.push({id:"r"+(++n),date:day,time:pad(hh)+":"+pad(mm),drug:d.id,qty:amt,pt:pts[Math.floor(R()*pts.length)],vet:vets[Math.floor(R()*vets.length)],nims:rep,memo:memo});
+    }
+  }
+  /* 입고는 매달 초·중순, 잔량 폐기는 가끔 */
+  var inq={"d-pro":150,"d-ket":30,"d-mid":40,"d-but":30,"d-fen":30};
+  for(var m=base;m<=TODAY;m=addMonths(m,1)){
+    [2,16].forEach(function(dd){var s=m.slice(0,8)+pad(dd);if(s>TODAY)return;
+      drugs.forEach(function(d){if(dd===16&&d.id!=="d-pro"&&d.id!=="d-fen")return;evs.push({id:"e"+(++n),date:s,drug:d.id,kind:"입고",qty:inq[d.id],memo:"도매상 입고"});});});
+    [9,23].forEach(function(dd){var s=m.slice(0,8)+pad(dd);if(s>TODAY)return;
+      evs.push({id:"e"+(++n),date:s,drug:dd===9?"d-fen":"d-pro",kind:"폐기",qty:dd===9?1.5:4,memo:"잔량 폐기 — 입회 "+vets[dd===9?1:3]+", 원내 폐기 절차에 따름"});});
+  }
+  recs.sort(byTime);
+  return {v:1,base:base,drugs:drugs.map(function(d){return {id:d.id,name:d.name,cls:d.cls,unit:d.unit,baseQty:d.baseQty};}),vets:vets,recs:recs,evs:evs,lastVet:vets[0]};
+}
+function byTime(a,b){return (b.date+b.time)<(a.date+a.time)?-1:(b.date+b.time)>(a.date+a.time)?1:0;}
+
+var db;
+function load(){try{var s=localStorage.getItem(KEY);if(s){var o=JSON.parse(s);if(o&&o.v===1&&Array.isArray(o.recs)&&Array.isArray(o.drugs)){db=o;return;}}}catch(e){}db=seed();save();}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}}
+function drug(id){for(var i=0;i<db.drugs.length;i++)if(db.drugs[i].id===id)return db.drugs[i];return {id:id,name:"(지운 약품)",cls:"",unit:""};}
+function clsTag(d){return d.cls==="마약"?'<span class="cls n">마약</span>':d.cls==="향정"?'<span class="cls p">향정</span>':"";}
+function unrepCount(){var c=0;db.recs.forEach(function(r){if(!r.nims)c++;});return c;}
+
+/* ───────── 집계 ───────── */
+function weekSummary(ws){
+  var we=addDays(ws,6),rows={},list=[],all=[];
+  db.drugs.forEach(function(d){rows[d.id]={d:d,n:0,sum:0,un:0};});
+  db.recs.forEach(function(r){if(r.date<ws||r.date>we)return;all.push(r);
+    var x=rows[r.drug]||(rows[r.drug]={d:drug(r.drug),n:0,sum:0,un:0});x.n++;x.sum+=r.qty;if(!r.nims){x.un++;list.push(r);}});
+  list.sort(function(a,b){return (a.date+a.time)<(b.date+b.time)?-1:1;});
+  return {ws:ws,we:we,rows:Object.keys(rows).map(function(k){return rows[k];}),unrep:list,all:all};
+}
+function monthSummary(ms){
+  var me=monthEnd(ms),st={},vt={};
+  db.drugs.forEach(function(d){st[d.id]={d:d,open:d.baseQty,inq:0,use:0,disp:0};});
+  function S(id){return st[id]||(st[id]={d:drug(id),open:0,inq:0,use:0,disp:0});}
+  db.recs.forEach(function(r){if(r.date<db.base||r.date>me)return;var x=S(r.drug);
+    if(r.date<ms)x.open-=r.qty;else{x.use+=r.qty;var v=vt[r.vet]||(vt[r.vet]={n:0,by:{}});v.n++;v.by[r.drug]=(v.by[r.drug]||0)+1;}});
+  db.evs.forEach(function(e){if(e.date<db.base||e.date>me)return;var x=S(e.drug),sg=e.kind==="입고"?1:-1;
+    if(e.date<ms)x.open+=sg*e.qty;else if(e.kind==="입고")x.inq+=e.qty;else x.disp+=e.qty;});
+  var rows=Object.keys(st).map(function(k){var x=st[k];x.bal=x.open+x.inq-x.use-x.disp;return x;});
+  var vets=Object.keys(vt).sort(function(a,b){return vt[b].n-vt[a].n||(a<b?-1:1);}).map(function(k){return {name:k,n:vt[k].n,by:vt[k].by};});
+  return {ms:ms,me:me,rows:rows,vets:vets};
+}
+
+/* ───────── 화면 상태 ───────── */
+var cur={tab:"rec",wk:null,mo:null,sheet:null};
+var ui={filter:"week",qtxt:"",limit:60,stockDrug:"",stockKind:"입고"};
+var TABS=[["rec","사용 기록"],["week","주간"],["month","월간"],["stock","입고·폐기"]];
+function homeState(){return {app:1,tab:"rec"};}
+
+function renderNav(){
+  var u=unrepCount();
+  $("#toc").innerHTML=TABS.map(function(t){
+    var badge=(t[0]==="week"&&u)?'<span class="ct" aria-label="미보고 '+u+'건">'+u+'</span>':"";
+    return '<button type="button" data-tab="'+t[0]+'"'+(cur.tab===t[0]?' aria-current="page"':"")+'>'+t[1]+badge+'</button>';}).join("");
+}
+function apply(st){
+  var prevTab=cur.tab;
+  cur={tab:st.tab||"rec",wk:st.wk||monday(TODAY),mo:st.mo||monthStart(TODAY),sheet:st.sheet||null};
+  if(cur.mo<db.base)cur.mo=db.base;
+  renderNav();
+  var m=$("#main");
+  if(cur.tab==="rec")m.innerHTML=viewRec();
+  else if(cur.tab==="week")m.innerHTML=viewWeek();
+  else if(cur.tab==="month")m.innerHTML=viewMonth();
+  else m.innerHTML=viewStock();
+  document.title=TABS.filter(function(t){return t[0]===cur.tab;})[0][1]+" · 마약류 장부 · 박준석 원장님을 위한 시제품";
+  if(cur.sheet)openSheetUI(cur.sheet);else closeSheetUI();
+  if(prevTab!==cur.tab)window.scrollTo(0,0);
+}
+function rerender(){apply(Object.assign({},history.state||homeState()));}
+function push(st){st.app=1;history.pushState(st,"");apply(st);}
+function replace(st){st.app=1;history.replaceState(st,"");apply(st);}
+window.addEventListener("popstate",function(e){
+  var st=e.state||{};
+  if(!st.app||st.base){
+    var atHome=cur.tab==="rec"&&!cur.sheet;
+    var hs=homeState();history.pushState(hs,"");
+    if(atHome)toast("앱을 닫으려면 홈 화면으로 나가 주십시오");else apply(hs);
+    return;
+  }
+  apply(st);
+});
+
+/* ───────── 사용 기록 ───────── */
+function drugOptions(sel){return db.drugs.map(function(d){return '<option value="'+d.id+'"'+(d.id===sel?" selected":"")+'>'+esc(d.name)+' ('+esc(d.cls)+')</option>';}).join("");}
+function vetOptions(sel){var o=db.vets.slice();if(sel&&o.indexOf(sel)<0)o.push(sel);return o.map(function(v){return '<option'+(v===sel?" selected":"")+'>'+esc(v)+'</option>';}).join("");}
+function recForm(r,idp){
+  var d=drug(r.drug);
+  return ''+
+  '<div class="fd"><label for="'+idp+'date">날짜</label><input id="'+idp+'date" name="date" type="date" required value="'+esc(r.date)+'"></div>'+
+  '<div class="fd"><label for="'+idp+'time">시간</label><input id="'+idp+'time" name="time" type="time" required value="'+esc(r.time)+'"></div>'+
+  '<div class="fd"><label for="'+idp+'drug">약품</label><select id="'+idp+'drug" name="drug" data-unit-for="'+idp+'u">'+drugOptions(r.drug)+'</select></div>'+
+  '<div class="fd"><label for="'+idp+'qty">사용량</label><div class="unit"><input id="'+idp+'qty" name="qty" type="number" inputmode="decimal" step="0.01" min="0.01" required placeholder="0.0" value="'+(r.qty!=null?esc(r.qty):"")+'"><span id="'+idp+'u">'+esc(d.unit)+'</span></div></div>'+
+  '<div class="fd"><label for="'+idp+'pt">환자 번호</label><input id="'+idp+'pt" name="pt" type="text" autocomplete="off" required placeholder="예: 26-4417" value="'+esc(r.pt||"")+'"></div>'+
+  '<div class="fd"><label for="'+idp+'vet">담당 수의사</label><select id="'+idp+'vet" name="vet">'+vetOptions(r.vet)+'</select></div>'+
+  '<div class="fd memo w2"><label for="'+idp+'memo">메모 (선택)</label><input id="'+idp+'memo" name="memo" type="text" autocomplete="off" placeholder="예: 수술 중 추가" value="'+esc(r.memo||"")+'"></div>'+
+  '<div class="fd nimsf w2"><label class="tick"><input type="checkbox" name="nims"'+(r.nims?" checked":"")+'> NIMS 보고 완료</label></div>';
+}
+function nowTime(){var d=new Date();return pad(d.getHours())+":"+pad(d.getMinutes());}
+function viewRec(){
+  var ws=monday(TODAY),list=db.recs.slice();
+  if(ui.filter==="week")list=list.filter(function(r){return r.date>=ws&&r.date<=addDays(ws,6);});
+  if(ui.filter==="unrep")list=list.filter(function(r){return !r.nims;});
+  var qt=ui.qtxt.trim();
+  if(qt)list=list.filter(function(r){return r.pt.indexOf(qt)>=0||r.vet.indexOf(qt)>=0||drug(r.drug).name.indexOf(qt)>=0;});
+  list.sort(byTime);
+  var shown=list.slice(0,ui.limit),html="",lastDay="";
+  var perDay={};list.forEach(function(r){perDay[r.date]=(perDay[r.date]||0)+1;});
+  shown.forEach(function(r){
+    if(r.date!==lastDay){html+='<div class="day">'+mdw(r.date)+(r.date===TODAY?" · 오늘":"")+'<span>'+perDay[r.date]+'건</span></div>';lastDay=r.date;}
+    html+=recRow(r);
+  });
+  if(!list.length)html='<p class="empty">'+(ui.filter==="unrep"?"미보고 건이 없습니다.":"조건에 맞는 기록이 없습니다.")+'</p>';
+  if(list.length>shown.length)html+='<div class="more"><button class="btn" type="button" data-act="more">이전 기록 더 보기 ('+(list.length-shown.length)+'건 남음)</button></div>';
+  var blank={date:TODAY,time:nowTime(),drug:db.drugs[0]&&db.drugs[0].id,qty:null,pt:"",vet:db.lastVet,nims:false,memo:""};
+  return ''+
+  '<div class="hd"><h1>사용 기록<span class="per">쓸 때마다 한 줄씩 남겨 주십시오. 주간·월간 정리는 자동으로 만들어집니다.</span></h1></div>'+
+  '<form class="form" id="addForm" autocomplete="off" novalidate>'+recForm(blank,"a-")+
+  '<div class="go"><button class="btn ink" type="submit">기록 추가</button><span class="msg" id="addMsg"></span></div></form>'+
+  '<div class="filters"><div class="seg" role="group" aria-label="보기">'+
+    [["week","이번 주"],["unrep","미보고만"],["all","전체"]].map(function(f){return '<button type="button" data-filter="'+f[0]+'" aria-pressed="'+(ui.filter===f[0])+'">'+f[1]+'</button>';}).join("")+
+  '</div><input type="search" id="qtxt" placeholder="환자 번호·수의사·약품 찾기" aria-label="찾기" value="'+esc(ui.qtxt)+'"></div>'+
+  '<div id="recList">'+html+'</div>';
+}
+var CHECK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+function recRow(r){
+  var d=drug(r.drug);
+  return '<div class="row"><button type="button" class="what" data-edit="'+r.id+'" aria-label="'+esc(md(r.date)+" "+r.time+" "+d.name+" "+q(r.qty)+d.unit+" 기록 고치기")+'">'+
+    '<span class="l1"><b>'+esc(d.name)+'</b>'+clsTag(d)+'<span class="qty">'+q(r.qty)+' '+esc(d.unit)+'</span></span>'+
+    '<span class="l2">'+esc(r.time)+' · 환자 <span class="pt">'+esc(r.pt)+'</span> · '+esc(r.vet)+'</span>'+
+    (r.memo?'<span class="memo">'+esc(r.memo)+'</span>':"")+
+  '</button>'+nimsBtn(r)+'</div>';
+}
+function nimsBtn(r){return '<button type="button" class="nims'+(r.nims?"":" no")+'" data-nims="'+r.id+'" aria-pressed="'+(!!r.nims)+'" title="누르면 보고 여부가 바뀝니다">'+(r.nims?CHECK+"보고":"미보고")+'</button>';}
+
+/* ───────── 주간 정리 ───────── */
+function viewWeek(){
+  var s=weekSummary(cur.wk),thisWk=cur.wk===monday(TODAY);
+  var totN=0,totU=0;
+  var body=s.rows.map(function(x){totN+=x.n;totU+=x.un;
+    return '<tr><td class="nm">'+esc(x.d.name)+'<span class="mu">'+esc(x.d.cls)+' · '+esc(x.d.unit)+'</span><span class="dt">'+clsTag(x.d)+'</span></td><td'+(x.n?"":' class="zero"')+'>'+x.n+'</td><td'+(x.n?"":' class="zero"')+'>'+q(x.sum)+'<span class="u">'+esc(x.d.unit)+'</span></td><td class="'+(x.un?"bad":"zero")+'">'+x.un+'</td></tr>';}).join("");
+  var ul=s.unrep.length?'<ul class="unrep">'+s.unrep.map(function(r){var d=drug(r.drug);
+    return '<li><div><div class="l1">'+esc(d.name)+clsTag(d)+' <b>'+q(r.qty)+' '+esc(d.unit)+'</b></div><div class="l2">'+mdw(r.date)+' '+esc(r.time)+' · 환자 '+esc(r.pt)+' · '+esc(r.vet)+'</div></div>'+
+    '<button type="button" class="btn nims-act" data-nims="'+r.id+'">보고 완료로 표시</button></li>';}).join("")+'</ul>'
+    :'<p class="done">이 주의 사용 기록은 모두 NIMS 보고 완료로 표시되어 있습니다.</p>';
+  return ''+
+  '<div class="ph">24시범어동물의료센터 · 마약류 사용 주간 정리표 · 출력 '+dot(TODAY)+'</div>'+
+  '<div class="hd"><h1>주간 정리<span class="per">'+dot(s.ws)+' (월) – '+dot(s.we)+' (일)'+(thisWk?" · 이번 주":"")+'</span></h1>'+
+  '<div class="acts"><div class="stepper"><button class="btn" type="button" data-wk="-1" aria-label="지난주"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>'+
+  (thisWk?"":'<button class="btn quiet" type="button" data-wk="0">이번 주</button>')+
+  '<button class="btn" type="button" data-wk="1" aria-label="다음 주"'+(thisWk?" disabled":"")+'><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>'+
+  '<button class="btn" type="button" data-act="print">인쇄</button><button class="btn" type="button" data-act="csv-week">CSV 내보내기</button></div></div>'+
+  '<h2 class="sec">약품별 사용량<span class="aside">사용 기록 '+s.all.length+'건</span></h2>'+
+  '<div class="tw"><table class="led"><thead><tr><th>약품</th><th>건수</th><th>사용량 합계</th><th>미보고</th></tr></thead><tbody>'+body+'</tbody>'+
+  '<tfoot><tr><td>계</td><td>'+totN+'</td><td class="zero">단위가 달라 합하지 않습니다</td><td>'+totU+'</td></tr></tfoot></table></div>'+
+  '<h2 class="sec">NIMS 미보고 건<span class="aside">'+s.unrep.length+'건</span></h2>'+ul+
+  '<div class="sign"><span>작성</span><span>확인</span></div>'+
+  '<p class="note-line noprint">법정 보고는 NIMS에서 병원이 직접 합니다. 이 화면은 기록 정리를 돕습니다.</p>';
+}
+
+/* ───────── 월간 정리 ───────── */
+function viewMonth(){
+  var s=monthSummary(cur.mo),thisMo=cur.mo===monthStart(TODAY),first=cur.mo<=db.base;
+  var neg=false;
+  var body=s.rows.map(function(x){if(r2(x.bal)<0)neg=true;var u='<span class="u">'+esc(x.d.unit)+'</span>';
+    function c(v){return '<td'+(r2(v)===0?' class="zero"':"")+'>'+q(v)+u+'</td>';}
+    return '<tr><td class="nm">'+esc(x.d.name)+'<span class="mu">'+esc(x.d.cls)+' · '+esc(x.d.unit)+'</span><span class="dt">'+clsTag(x.d)+'</span></td>'+c(x.open)+c(x.inq)+c(x.use)+c(x.disp)+'<td class="bal'+(r2(x.bal)<0?" bad":"")+'">'+q(x.bal)+u+'</td><td class="chk"></td></tr>';}).join("");
+  var dh=db.drugs.map(function(d){return '<th>'+esc(d.name)+'</th>';}).join("");
+  var totBy={},tot=0;
+  var vb=s.vets.map(function(v){tot+=v.n;return '<tr><td class="nm">'+esc(v.name)+'</td>'+db.drugs.map(function(d){var n=v.by[d.id]||0;totBy[d.id]=(totBy[d.id]||0)+n;return '<td'+(n?"":' class="zero"')+'>'+n+'</td>';}).join("")+'<td class="bal">'+v.n+'</td></tr>';}).join("");
+  var vf='<tr><td>계</td>'+db.drugs.map(function(d){return '<td>'+(totBy[d.id]||0)+'</td>';}).join("")+'<td>'+tot+'</td></tr>';
+  return ''+
+  '<div class="ph">24시범어동물의료센터 · 마약류 월간 정리표 · 출력 '+dot(TODAY)+'</div>'+
+  '<div class="hd"><h1>월간 정리<span class="per">'+ym(s.ms)+' · '+dot(s.ms)+' – '+dot(s.me)+(thisMo?" (오늘까지)":"")+'</span></h1>'+
+  '<div class="acts"><div class="stepper"><button class="btn" type="button" data-mo="-1" aria-label="지난달"'+(first?" disabled":"")+'><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>'+
+  (thisMo?"":'<button class="btn quiet" type="button" data-mo="0">이번 달</button>')+
+  '<button class="btn" type="button" data-mo="1" aria-label="다음 달"'+(thisMo?" disabled":"")+'><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>'+
+  '<button class="btn" type="button" data-act="print">인쇄</button><button class="btn" type="button" data-act="csv-month">CSV 내보내기</button></div></div>'+
+  '<h2 class="sec">약품별 입고·사용·폐기·잔량</h2>'+
+  '<p class="cap">잔량 = 전월 이월 + 입고 − 사용 − 폐기. 장부 시작일 '+dot(db.base)+'의 기초 재고에서 이어 계산합니다.</p>'+
+  '<div class="tw"><table class="led"><thead><tr><th>약품</th><th>전월 이월</th><th>입고</th><th>사용</th><th>폐기</th><th>잔량</th><th class="chk">실재고</th></tr></thead><tbody>'+body+'</tbody></table></div>'+
+  (neg?'<p class="cap" style="color:var(--red);margin-top:10px">장부상 잔량이 0보다 적은 약품이 있습니다. 입고 기록이나 사용량을 확인해 주십시오.</p>':"")+
+  '<h2 class="sec">수의사별 사용 건수<span class="aside">'+s.vets.length+'명 · '+tot+'건</span></h2>'+
+  (s.vets.length?'<div class="tw"><table class="led"><thead><tr><th>수의사</th>'+dh+'<th>계</th></tr></thead><tbody>'+vb+'</tbody><tfoot>'+vf+'</tfoot></table></div>':'<p class="empty">이 달에는 사용 기록이 없습니다.</p>')+
+  '<div class="sign"><span>작성</span><span>확인</span></div>'+
+  '<p class="note-line noprint">법정 보고는 NIMS에서 병원이 직접 합니다. 이 화면은 기록 정리를 돕습니다.</p>';
+}
+
+/* ───────── 입고·폐기와 장부 설정 ───────── */
+function viewStock(){
+  var ms=monthStart(TODAY),from=addMonths(ms,-1);
+  var evs=db.evs.filter(function(e){return e.date>=from;}).sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:0;});
+  var did=ui.stockDrug||(db.drugs[0]&&db.drugs[0].id),dd=drug(did);
+  var isD=ui.stockKind==="폐기";
+  var list=evs.length?evs.map(function(e){var d=drug(e.drug);
+    return '<div class="evrow"><div><div class="l1"><span class="kind">'+esc(e.kind)+'</span> · '+esc(d.name)+clsTag(d)+' <b>'+q(e.qty)+' '+esc(d.unit)+'</b></div><div class="l2">'+mdw(e.date)+(e.memo?" · "+esc(e.memo):"")+'</div></div>'+
+    '<button class="btn quiet warn" type="button" data-delev="'+e.id+'">지우기</button></div>';}).join(""):'<p class="empty">입고·폐기 기록이 없습니다.</p>';
+  var drugsHtml=db.drugs.map(function(d,i){
+    return '<div class="dr" data-di="'+i+'">'+
+    '<div class="fd"><label for="dn'+i+'">약품 이름</label><input id="dn'+i+'" data-dk="name" value="'+esc(d.name)+'"></div>'+
+    '<div class="fd"><label for="dc'+i+'">구분</label><select id="dc'+i+'" data-dk="cls"><option'+(d.cls==="마약"?" selected":"")+'>마약</option><option'+(d.cls==="향정"?" selected":"")+'>향정</option></select></div>'+
+    '<div class="fd"><label for="du'+i+'">단위</label><input id="du'+i+'" data-dk="unit" value="'+esc(d.unit)+'"></div>'+
+    '<div class="fd"><label for="db'+i+'">기초 재고</label><div class="unit"><input id="db'+i+'" data-dk="baseQty" type="number" inputmode="decimal" step="0.01" min="0" value="'+esc(d.baseQty)+'"><span>'+esc(d.unit)+'</span></div></div>'+
+    '</div>';}).join("");
+  return ''+
+  '<div class="hd"><h1>입고·폐기<span class="per">들어온 수량과 폐기한 수량을 남겨 주십시오. 월간 잔량에 바로 반영됩니다.</span></h1></div>'+
+  '<form class="form" id="evForm" autocomplete="off" novalidate>'+
+  '<div class="fd w2"><span class="lb">구분</span><div class="radio">'+
+    '<label><input type="radio" name="kind" value="입고"'+(isD?"":" checked")+'><span>입고</span></label>'+
+    '<label><input type="radio" name="kind" value="폐기"'+(isD?" checked":"")+'><span>폐기</span></label></div></div>'+
+  '<div class="fd"><label for="evdate">날짜</label><input id="evdate" name="date" type="date" required value="'+TODAY+'"></div>'+
+  '<div class="fd"><label for="evdrug">약품</label><select id="evdrug" name="drug" data-unit-for="evu">'+drugOptions(did)+'</select></div>'+
+  '<div class="fd"><label for="evqty">수량</label><div class="unit"><input id="evqty" name="qty" type="number" inputmode="decimal" step="0.01" min="0.01" required placeholder="0"><span id="evu">'+esc(dd.unit)+'</span></div></div>'+
+  '<div class="fd w2 memo"><label for="evmemo">메모</label><input id="evmemo" name="memo" type="text" placeholder="'+(isD?"예: 잔량 폐기 — 입회 ○○, 원내 폐기 절차에 따름":"예: 도매상 입고, 제조번호")+'"></div>'+
+  '<div class="go"><button class="btn ink" type="submit">'+(isD?"폐기 기록":"입고 기록")+'</button><span class="msg" id="evMsg"></span></div></form>'+
+  '<h2 class="sec">최근 입고·폐기<span class="aside">'+ym(from)+'부터</span></h2>'+list+
+  '<h2 class="sec">장부 설정</h2>'+
+  '<p class="cap">장부 시작일 '+dot(db.base)+'. 기초 재고는 이날 아침의 수량입니다. 고치면 월간 잔량이 다시 계산됩니다.</p>'+
+  '<div class="drugs">'+drugsHtml+'</div>'+
+  '<div class="addline" style="margin-top:12px"><input id="newDrug" placeholder="약품 추가 (이름)" aria-label="추가할 약품 이름"><button class="btn" type="button" data-act="add-drug">약품 추가</button></div>'+
+  '<h2 class="sec">수의사<span class="aside">'+db.vets.length+'명</span></h2>'+
+  '<div class="vets">'+db.vets.map(function(v,i){return '<span>'+esc(v)+'<button type="button" data-delvet="'+i+'" aria-label="'+esc(v)+' 빼기">×</button></span>';}).join("")+'</div>'+
+  '<div class="addline"><input id="newVet" placeholder="이름" aria-label="추가할 수의사 이름"><button class="btn" type="button" data-act="add-vet">수의사 추가</button></div>'+
+  '<h2 class="sec">예시 데이터</h2>'+
+  '<p class="cap">기록은 이 기기의 브라우저에만 저장됩니다. 처음 상태로 돌리면 지금까지 넣은 기록이 지워집니다.</p>'+
+  '<button class="btn warn" type="button" data-act="reset">예시 데이터로 되돌리기</button>';
+}
+
+/* ───────── 고치기 시트 ───────── */
+function openSheetUI(id){
+  var r=db.recs.filter(function(x){return x.id===id;})[0];
+  if(!r){closeSheetUI();return;}
+  var sh=$("#sheet");
+  sh.innerHTML='<h3 id="shT">기록 고치기</h3><div class="sub">'+mdw(r.date)+' '+esc(r.time)+' · '+esc(drug(r.drug).name)+'</div>'+
+    '<form class="form" id="editForm" data-id="'+r.id+'" autocomplete="off" novalidate>'+recForm(r,"e-")+'</form>'+
+    '<div class="bar"><button class="btn warn" type="button" data-act="del-rec">이 기록 지우기</button><span style="display:flex;gap:8px"><button class="btn" type="button" data-act="close">닫기</button><button class="btn ink" type="button" data-act="save-rec">저장</button></span></div>';
+  sh.hidden=false;$("#scrim").hidden=false;document.body.classList.add("lock");
+}
+function closeSheetUI(){$("#sheet").hidden=true;$("#scrim").hidden=true;document.body.classList.remove("lock");}
+
+function readRec(f){
+  var g=function(n){return f.elements[n];};
+  var qty=parseFloat(String(g("qty").value).replace(",","."));
+  var o={date:g("date").value,time:g("time").value,drug:g("drug").value,qty:qty,pt:g("pt").value.trim(),vet:g("vet").value,nims:g("nims").checked,memo:g("memo").value.trim()};
+  var miss=[];
+  if(!o.date)miss.push("날짜");if(!o.time)miss.push("시간");if(!(qty>0))miss.push("사용량");if(!o.pt)miss.push("환자 번호");if(!o.vet)miss.push("담당 수의사");
+  if(miss.length){var el=!o.date?g("date"):!o.time?g("time"):!(qty>0)?g("qty"):!o.pt?g("pt"):g("vet");el.focus();return {err:miss.join(", ")+"을(를) 넣어 주십시오."};}
+  if(o.date>TODAY)return {err:"오늘 이후 날짜는 넣을 수 없습니다."};
+  o.qty=r2(qty);return {rec:o};
+}
+
+/* ───────── CSV ───────── */
+function csvCell(v){v=String(v==null?"":v);return /[",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
+function downloadCSV(name,rows){
+  var txt="﻿"+rows.map(function(r){return r.map(csvCell).join(",");}).join("\r\n");
+  var url=URL.createObjectURL(new Blob([txt],{type:"text/csv;charset=utf-8"}));
+  var a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(url);a.remove();},800);
+  toast(name+" 파일을 내려받았습니다");
+}
+function csvWeek(){
+  var s=weekSummary(cur.wk),R=[];
+  R.push(["마약류 사용 주간 정리",s.ws+" ~ "+s.we]);R.push([]);
+  R.push(["약품","구분","단위","건수","사용량 합계","미보고 건수"]);
+  s.rows.forEach(function(x){R.push([x.d.name,x.d.cls,x.d.unit,x.n,q(x.sum),x.un]);});
+  R.push([]);R.push(["NIMS 미보고 건"]);R.push(["날짜","시간","약품","사용량","단위","환자 번호","담당 수의사","메모"]);
+  s.unrep.forEach(function(r){var d=drug(r.drug);R.push([r.date,r.time,d.name,q(r.qty),d.unit,r.pt,r.vet,r.memo]);});
+  R.push([]);R.push(["이 주의 전체 사용 기록"]);R.push(["날짜","시간","약품","구분","사용량","단위","환자 번호","담당 수의사","NIMS 보고","메모"]);
+  s.all.slice().sort(function(a,b){return (a.date+a.time)<(b.date+b.time)?-1:1;}).forEach(function(r){var d=drug(r.drug);R.push([r.date,r.time,d.name,d.cls,q(r.qty),d.unit,r.pt,r.vet,r.nims?"보고":"미보고",r.memo]);});
+  downloadCSV("마약류_주간정리_"+s.ws+".csv",R);
+}
+function csvMonth(){
+  var s=monthSummary(cur.mo),R=[];
+  R.push(["마약류 월간 정리",s.ms.slice(0,7)]);R.push([]);
+  R.push(["약품","구분","단위","전월 이월","입고","사용","폐기","잔량"]);
+  s.rows.forEach(function(x){R.push([x.d.name,x.d.cls,x.d.unit,q(x.open),q(x.inq),q(x.use),q(x.disp),q(x.bal)]);});
+  R.push([]);R.push(["수의사별 사용 건수"]);
+  R.push(["수의사"].concat(db.drugs.map(function(d){return d.name;})).concat(["계"]));
+  s.vets.forEach(function(v){R.push([v.name].concat(db.drugs.map(function(d){return v.by[d.id]||0;})).concat([v.n]));});
+  R.push([]);R.push(["입고·폐기 기록"]);R.push(["날짜","구분","약품","수량","단위","메모"]);
+  db.evs.filter(function(e){return e.date>=s.ms&&e.date<=s.me;}).sort(function(a,b){return a.date<b.date?-1:1;}).forEach(function(e){var d=drug(e.drug);R.push([e.date,e.kind,d.name,q(e.qty),d.unit,e.memo]);});
+  downloadCSV("마약류_월간정리_"+s.ms.slice(0,7)+".csv",R);
+}
+
+/* ───────── 이벤트 ───────── */
+var tt;
+function toast(m){var t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(function(){t.hidden=true;},2600);}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  var v;
+  if((v=b.getAttribute("data-tab"))){if(v!==cur.tab)push({tab:v});return;}
+  if((v=b.getAttribute("data-filter"))){ui.filter=v;ui.limit=60;rerender();return;}
+  if((v=b.getAttribute("data-edit"))){push({tab:cur.tab,wk:cur.wk,mo:cur.mo,sheet:v});return;}
+  if((v=b.getAttribute("data-nims"))){var r=db.recs.filter(function(x){return x.id===v;})[0];if(r){r.nims=!r.nims;save();var y=window.scrollY;rerender();window.scrollTo(0,y);toast(r.nims?"보고 완료로 표시했습니다":"미보고로 되돌렸습니다");}return;}
+  if((v=b.getAttribute("data-wk"))!=null){var w=v==="0"?monday(TODAY):addDays(cur.wk,7*(+v));if(w>monday(TODAY))w=monday(TODAY);replace({tab:"week",wk:w,mo:cur.mo});return;}
+  if((v=b.getAttribute("data-mo"))!=null){var m=v==="0"?monthStart(TODAY):addMonths(cur.mo,+v);if(m>monthStart(TODAY))m=monthStart(TODAY);if(m<db.base)m=db.base;replace({tab:"month",wk:cur.wk,mo:m});return;}
+  if((v=b.getAttribute("data-delev"))){var ev=db.evs.filter(function(x){return x.id===v;})[0];if(ev&&confirm(md(ev.date)+" "+drug(ev.drug).name+" "+ev.kind+" 기록을 지울까요?")){db.evs=db.evs.filter(function(x){return x.id!==v;});save();rerender();toast("지웠습니다");}return;}
+  if((v=b.getAttribute("data-delvet"))!=null){var nm=db.vets[+v];if(confirm(nm+" 수의사를 목록에서 뺄까요? 이미 남긴 기록은 그대로 둡니다.")){db.vets.splice(+v,1);save();rerender();}return;}
+  switch(b.getAttribute("data-act")){
+    case "more":ui.limit+=80;rerender();break;
+    case "print":window.print();break;
+    case "csv-week":csvWeek();break;
+    case "csv-month":csvMonth();break;
+    case "close":history.back();break;
+    case "save-rec":
+      var f=$("#editForm"),res=readRec(f);if(res.err){toast(res.err);break;}
+      var rr=db.recs.filter(function(x){return x.id===f.getAttribute("data-id");})[0];Object.assign(rr,res.rec);db.recs.sort(byTime);save();history.back();toast("기록을 고쳤습니다");break;
+    case "del-rec":
+      var id=$("#editForm").getAttribute("data-id");if(confirm("이 사용 기록을 지울까요? 되돌릴 수 없습니다.")){db.recs=db.recs.filter(function(x){return x.id!==id;});save();history.back();toast("기록을 지웠습니다");}break;
+    case "add-drug":
+      var nd=$("#newDrug").value.trim();if(!nd){$("#newDrug").focus();break;}
+      db.drugs.push({id:"d-"+Date.now().toString(36),name:nd,cls:"향정",unit:"mL",baseQty:0});save();rerender();toast(nd+"을(를) 추가했습니다. 구분과 단위를 확인해 주십시오");break;
+    case "add-vet":
+      var nv=$("#newVet").value.trim();if(!nv){$("#newVet").focus();break;}
+      if(db.vets.indexOf(nv)<0)db.vets.push(nv);save();rerender();break;
+    case "reset":
+      if(confirm("이 기기에 저장된 기록을 모두 지우고 예시 데이터로 되돌릴까요?")){db=seed();save();ui.filter="week";ui.qtxt="";rerender();toast("예시 데이터로 되돌렸습니다");}break;
+  }
+});
+$("#scrim").addEventListener("click",function(){if(cur.sheet)history.back();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&cur.sheet)history.back();});
+document.addEventListener("submit",function(e){
+  var f=e.target;e.preventDefault();
+  if(f.id==="addForm"){
+    var res=readRec(f);if(res.err){$("#addMsg").textContent=res.err;return;}
+    var r=res.rec;r.id="r"+Date.now().toString(36);db.recs.push(r);db.recs.sort(byTime);db.lastVet=r.vet;save();
+    var wasDrug=r.drug;rerender();
+    var nf=$("#addForm");if(nf){nf.elements.drug.value=wasDrug;$("#a-u").textContent=drug(wasDrug).unit;}
+    toast(drug(r.drug).name+" "+q(r.qty)+" "+drug(r.drug).unit+" · 환자 "+r.pt+" 기록을 추가했습니다");
+    var qf=$("#a-qty");if(qf)qf.focus({preventScroll:true});
+  } else if(f.id==="evForm"){
+    var kind=f.elements.kind.value,qty=parseFloat(String(f.elements.qty.value).replace(",","."));
+    if(!f.elements.date.value){$("#evMsg").textContent="날짜를 넣어 주십시오.";return;}
+    if(!(qty>0)){$("#evMsg").textContent="수량을 넣어 주십시오.";f.elements.qty.focus();return;}
+    if(f.elements.date.value<db.base){$("#evMsg").textContent="장부 시작일("+dot(db.base)+") 이전 날짜는 넣을 수 없습니다.";return;}
+    db.evs.push({id:"e"+Date.now().toString(36),date:f.elements.date.value,drug:f.elements.drug.value,kind:kind,qty:r2(qty),memo:f.elements.memo.value.trim()});
+    ui.stockDrug=f.elements.drug.value;save();rerender();toast(drug(ui.stockDrug).name+" "+kind+" "+q(qty)+" "+drug(ui.stockDrug).unit+" 기록을 남겼습니다");
+  }
+});
+document.addEventListener("change",function(e){
+  var t=e.target,u;
+  if((u=t.getAttribute("data-unit-for"))){var el=document.getElementById(u);if(el)el.textContent=drug(t.value).unit;if(t.id==="evdrug")ui.stockDrug=t.value;}
+  if(t.name==="kind"&&t.closest("#evForm")){ui.stockKind=t.value;var keep=$("#evqty").value,dt=$("#evdate").value;rerender();$("#evqty").value=keep;$("#evdate").value=dt;}
+  var row=t.closest(".dr");
+  if(row&&t.getAttribute("data-dk")){var d=db.drugs[+row.getAttribute("data-di")],k=t.getAttribute("data-dk");
+    if(k==="baseQty"){var n=parseFloat(t.value);d.baseQty=n>=0?r2(n):0;}else if(k==="name"){if(t.value.trim())d.name=t.value.trim();}else d[k]=t.value.trim();
+    save();var y=window.scrollY;rerender();window.scrollTo(0,y);toast("장부 설정을 고쳤습니다");}
+});
+document.addEventListener("input",function(e){
+  if(e.target.id==="qtxt"){ui.qtxt=e.target.value;ui.limit=60;var pos=e.target.selectionStart;rerender();var s=$("#qtxt");s.focus();try{s.setSelectionRange(pos,pos);}catch(_){}}
+});
+
+/* ───────── 시작 ───────── */
+window.addEventListener("pagehide",save);
+load();
+history.replaceState({app:1,base:1},"");
+var start=homeState();history.pushState(start,"");apply(start);
+/* 점검·캡처용: #week, #month 로 열면 그 화면부터 */
+var hm=/^#(week|month|stock)$/.exec(location.hash);if(hm)push({tab:hm[1]});
+/* 점검용: 화면에는 나타나지 않음 */
+window.__ledger={db:function(){return db;},weekSummary:weekSummary,monthSummary:monthSummary,monday:monday,monthStart:monthStart};
+})();
+</script>
+</body>
+</html>

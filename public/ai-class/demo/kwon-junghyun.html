@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'">
+<meta name="theme-color" content="#f5f2ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16140f" media="(prefers-color-scheme: dark)">
+<title>유튜브 제작 보드 · 권정현 원장님을 위한 시제품</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600&family=Gothic+A1:wght@400;500;700&display=swap">
+<style>
+/* 제작실 보드: 따뜻한 종이색 바탕, 먹색 글자, 주홍은 '지금 단계'와 주 버튼에만.
+   모서리는 4px로 통일. 상자 대신 가로줄로 나눈다. */
+:root{
+  --bg:#f5f2ec; --paper:#fffdf9; --sunk:#ede8df;
+  --ink:#1d1a16; --ink-2:#48423a; --ink-3:#6a6357;
+  --rule:#d9d1c3; --rule-2:#e9e3d8;
+  --acc:#b23d1c; --acc-ink:#fff8f4; --acc-wash:#f5e2d9;
+  --ok:#2d6a4c;
+  --serif:"Hahmlet","Nanum Myeongjo","AppleMyungjo",serif;
+  --sans:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --r:4px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#16140f; --paper:#1e1b16; --sunk:#25211b;
+  --ink:#ede7dc; --ink-2:#c6beb0; --ink-3:#9d9587;
+  --rule:#3a342a; --rule-2:#2b2720;
+  --acc:#ea8a66; --acc-ink:#1d120c; --acc-wash:#3b241a; --ok:#7cc29e; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#16140f; --paper:#1e1b16; --sunk:#25211b;
+  --ink:#ede7dc; --ink-2:#c6beb0; --ink-3:#9d9587;
+  --rule:#3a342a; --rule-2:#2b2720;
+  --acc:#ea8a66; --acc-ink:#1d120c; --acc-wash:#3b241a; --ok:#7cc29e; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere;overflow-x:hidden}
+h1,h2,h3,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:16px}
+@media(min-width:768px){.wrap{padding-inline:32px}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+
+/* 머리 */
+.note{font-size:13px;color:var(--ink-3);line-height:1.5;padding-top:10px;display:flex;flex-wrap:wrap;gap:0 14px}
+.note b{font-weight:500;color:var(--ink-2)}
+.mast{padding-top:18px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.mast h1{font-family:var(--serif);font-weight:600;font-size:25px;letter-spacing:-.02em;line-height:1.2}
+.mast h1 span{display:block;font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:.08em;color:var(--acc);margin-bottom:4px}
+.mast .today{font-size:14px;color:var(--ink-3);text-align:right;line-height:1.4;white-space:nowrap}
+@media(min-width:768px){.mast h1{font-size:34px}}
+nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--rule);margin-top:14px}
+nav.tabs .wrap{display:flex;gap:0}
+nav.tabs button{flex:1 1 0;min-width:0;border:0;background:none;min-height:50px;padding:6px 2px 4px;font-size:15px;font-weight:500;color:var(--ink-3);border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+nav.tabs button .c{font-size:12.5px;margin-left:3px;color:var(--ink-3);font-weight:400}
+nav.tabs button[aria-current="page"]{color:var(--ink);border-bottom-color:var(--acc);font-weight:700}
+@media(min-width:768px){nav.tabs button{flex:0 0 auto;padding:6px 18px 4px;font-size:16px}nav.tabs button:first-child{padding-left:0}}
+
+main{padding-top:22px;padding-bottom:64px}
+.lede{margin-bottom:18px}
+.lede h2{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:-.01em}
+.lede p{font-size:15px;color:var(--ink-2);max-width:46em;margin-top:6px}
+.sub{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--ink-3);margin:30px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+
+/* 버튼·입력 */
+.btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:8px 14px;border-radius:var(--r);border:1px solid var(--rule);background:var(--paper);font-size:15px;font-weight:500;line-height:1.25;white-space:nowrap}
+.btn:hover{background:var(--sunk)}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+.btn.pri:hover{filter:brightness(.95)}
+.btn.ghost{border-color:transparent;background:none;color:var(--ink-2)}
+.btn.ghost:hover{background:var(--sunk)}
+.btn.warn{color:var(--acc)}
+.link{border:0;background:none;padding:0;color:var(--acc);text-decoration:underline;text-underline-offset:3px;font-weight:500;min-height:44px}
+label.f{display:block;font-size:14px;color:var(--ink-2);font-weight:500;margin-bottom:5px}
+input[type=text],input[type=date],input[type=time],input[type=number],input[type=url],select,textarea{width:100%;min-height:46px;border:1px solid var(--rule);border-radius:var(--r);background:var(--paper);padding:10px 12px;font-size:16px;line-height:1.45}
+textarea{resize:vertical;line-height:1.7}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-wash)}
+.grid{display:grid;gap:12px}
+@media(min-width:640px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:2fr 1fr 1fr}}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* 아이디어 */
+.add{background:var(--paper);border-top:3px solid var(--ink);padding:16px;margin-bottom:22px}
+.add h3{font-size:16px;font-weight:700;margin-bottom:10px}
+.filters{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font-size:14.5px;color:var(--ink-2);margin-bottom:6px}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
+.seg button{border:0;background:var(--paper);min-height:40px;padding:6px 12px;font-size:14.5px;color:var(--ink-2)}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);font-weight:500}
+ol.ideas{list-style:none;margin:0;padding:0}
+ol.ideas li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:4px 14px;padding:16px 0;border-bottom:1px solid var(--rule-2)}
+.tally{font-family:var(--serif);font-size:30px;font-weight:600;line-height:1;text-align:right;padding-top:2px}
+.tally small{display:block;font-family:var(--sans);font-size:12px;font-weight:400;color:var(--ink-3);margin-top:5px;line-height:1.3}
+.ideas .q{font-size:17px;font-weight:700;line-height:1.45}
+.ideas .meta{font-size:14px;color:var(--ink-3);margin-top:3px}
+.ideas .acts{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:8px;align-items:center}
+.tag{display:inline-block;font-size:13px;font-weight:500;padding:1px 8px;border-radius:var(--r);background:var(--sunk);color:var(--ink-2);white-space:nowrap}
+.tag.now{background:var(--acc-wash);color:var(--acc)}
+.tag.ok{color:var(--ok);background:transparent;border:1px solid currentColor}
+
+/* 보드 */
+.stagebar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
+.stagebar button{border:0;background:var(--paper);min-height:56px;padding:6px 2px;font-size:13.5px;line-height:1.25;color:var(--ink-2)}
+.stagebar button+button{border-left:1px solid var(--rule)}
+.stagebar button b{display:block;font-family:var(--serif);font-size:19px;font-weight:600;color:var(--ink)}
+.stagebar button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.stagebar button[aria-pressed="true"] b{color:var(--bg)}
+.board{display:grid;grid-template-columns:1fr;gap:0}
+.col h3{display:flex;align-items:baseline;gap:8px;font-size:15px;font-weight:700;padding:0 0 8px;border-bottom:2px solid var(--ink)}
+.col h3 .n{font-family:var(--serif);font-weight:600;color:var(--ink-3)}
+.col h3 .step{font-size:12.5px;color:var(--ink-3);font-weight:400;margin-left:auto}
+.col ul{list-style:none;margin:0;padding:0}
+.col li{padding:12px 0 10px;border-bottom:1px solid var(--rule-2)}
+.col .t{display:block;width:100%;text-align:left;border:0;background:none;padding:0;font-size:16px;font-weight:700;line-height:1.45;min-height:32px}
+.col .t:hover{color:var(--acc)}
+.col .m{font-size:13.5px;color:var(--ink-3);margin-top:2px;line-height:1.5}
+.col .m .due{color:var(--acc);font-weight:500}
+.col .mv{display:flex;justify-content:space-between;gap:6px;margin-top:6px}
+.col .mv .btn{min-height:40px;padding:6px 10px;font-size:14px}
+.col .empty{padding:14px 0;font-size:14.5px;color:var(--ink-3)}
+.col .script-bar{display:flex;gap:3px;margin-top:6px}
+.col .script-bar i{flex:1;height:4px;background:var(--rule-2);border-radius:1px}
+.col .script-bar i.on{background:var(--ink-2)}
+.board .col{display:none}
+.board .col.sel{display:block}
+@media(min-width:1000px){
+  .stagebar{display:none}
+  .board{grid-template-columns:repeat(5,minmax(0,1fr));gap:0 22px}
+  .board .col{display:block}
+  .col .t{font-size:15px}
+}
+
+/* 대본 상세 */
+.back{display:inline-flex;align-items:center;gap:4px;border:0;background:none;color:var(--ink-2);font-size:15px;min-height:44px;padding:0 6px 0 0}
+.back svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.vhead{border-bottom:2px solid var(--ink);padding:6px 0 14px;margin-bottom:18px}
+.vhead .stage{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--acc)}
+.vhead h2{font-family:var(--serif);font-weight:600;font-size:24px;line-height:1.35;letter-spacing:-.01em;margin-top:2px}
+.vhead .saved{font-size:13.5px;color:var(--ink-3);margin-top:6px}
+.vlay{display:grid;gap:28px}
+@media(min-width:960px){.vlay{grid-template-columns:minmax(0,1fr) 320px;gap:48px}.vside{position:sticky;top:70px;align-self:start}}
+.sec{padding:16px 0 18px;border-bottom:1px solid var(--rule-2)}
+.sec:first-child{padding-top:0}
+.sec .hd{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+.sec .hd .k{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--acc);min-width:2.2em}
+.sec .hd h3{font-size:16.5px;font-weight:700}
+.sec .hd .cnt{margin-left:auto;font-size:13px;color:var(--ink-3)}
+.sec .hint{font-size:14px;color:var(--ink-3);margin:-2px 0 8px}
+.vside .grp{padding:14px 0;border-bottom:1px solid var(--rule-2)}
+.vside .grp:first-child{padding-top:0}
+.vside .grp h3{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--ink-3);margin-bottom:8px}
+.vside .line{font-size:15px;color:var(--ink-2)}
+.vside ul{list-style:none;margin:0;padding:0;font-size:15px}
+.vside li{padding:4px 0}
+.steps{display:flex;gap:4px;margin-bottom:10px}
+.steps i{flex:1;height:5px;background:var(--rule-2);border-radius:1px}
+.steps i.on{background:var(--acc)}
+.chk{display:flex;align-items:center;gap:10px;min-height:44px;font-size:15px}
+.chk input{width:20px;height:20px;accent-color:var(--acc)}
+
+/* 달력 */
+.calhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.calhead h3{font-family:var(--serif);font-size:21px;font-weight:600}
+.callay{display:grid;gap:24px}
+@media(min-width:960px){.callay{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:40px}}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+.cal .dow{font-size:12.5px;color:var(--ink-3);text-align:center;padding:6px 0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--sunk)}
+.cal button.d{position:relative;border:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--paper);min-height:58px;padding:4px 4px 6px;text-align:left;font-size:14px;vertical-align:top;display:flex;flex-direction:column;gap:2px;align-items:stretch;min-width:0}
+.cal button.d.out{background:var(--bg);color:var(--ink-3)}
+.cal button.d .dn{font-variant-numeric:tabular-nums;line-height:1.2}
+.cal button.d.today .dn{color:var(--acc);font-weight:700}
+.cal button.d[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--ink)}
+.cal .ev{display:block;font-size:12px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:2px solid var(--acc);padding-left:4px;color:var(--ink-2)}
+.cal .evn{display:none}
+@media(max-width:639px){.cal .ev{display:none}.cal .evn{display:block;font-size:12px;color:var(--acc);font-weight:700}.cal button.d{min-height:50px}}
+@media(min-width:960px){.cal button.d{min-height:92px}}
+.daylist{list-style:none;margin:0;padding:0}
+.daylist li{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:2px 12px;padding:12px 0;border-bottom:1px solid var(--rule-2);align-items:start}
+.daylist .tm{font-family:var(--serif);font-weight:600;font-size:17px}
+.daylist .tt{font-weight:700;line-height:1.45}
+.daylist .mm{font-size:14px;color:var(--ink-3)}
+.vets{list-style:none;margin:0;padding:0}
+.vets li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule-2);font-size:15px}
+.vets li .nm{font-weight:700}
+.vets li .dp{color:var(--ink-3)}
+.vets li .ct{margin-left:auto;color:var(--ink-3);font-size:14px;white-space:nowrap}
+
+/* 업로드 기록 */
+.sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);margin-bottom:18px}
+.sum div{padding:12px 10px 12px 0}
+.sum div+div{padding-left:12px;border-left:1px solid var(--rule)}
+.sum dt{font-size:13px;color:var(--ink-3)}
+.sum dd{margin:2px 0 0;font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.25}
+.sum dd.s{font-family:var(--sans);font-size:15px;font-weight:700;line-height:1.4}
+table.log{width:100%;border-collapse:collapse;font-size:15px}
+table.log th{font-size:13px;font-weight:700;color:var(--ink-3);text-align:left;padding:8px 8px;border-bottom:1px solid var(--rule);white-space:nowrap}
+table.log td{padding:10px 8px;border-bottom:1px solid var(--rule-2);vertical-align:middle}
+table.log th:first-child,table.log td:first-child{padding-left:0}
+table.log .tt{font-weight:700;line-height:1.4}
+table.log .tt button{border:0;background:none;padding:0;text-align:left;font-weight:700;line-height:1.4}
+table.log .tt button:hover{color:var(--acc)}
+table.log .bar{height:4px;background:var(--rule-2);margin-top:6px;border-radius:1px}
+table.log .bar i{display:block;height:100%;background:var(--ink-2);border-radius:1px}
+table.log input[type=number]{width:108px;min-height:42px;text-align:right;padding:8px 10px}
+table.log input[type=date]{width:150px;min-height:42px;padding:8px 8px}
+table.log .lb{display:none}
+@media(max-width:759px){
+  table.log thead{display:none}
+  table.log,table.log tbody,table.log tr,table.log td{display:block;width:100%}
+  table.log tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;padding:14px 0;border-bottom:1px solid var(--rule-2)}
+  table.log td{padding:0;border:0}
+  table.log td.tcell{grid-column:1/-1}
+  table.log td.wcell,table.log td.dcell{grid-column:1/-1}
+  table.log td[style]{text-align:left!important}
+  table.log .lb{display:block;font-size:13px;color:var(--ink-3);margin-bottom:3px}
+  table.log input[type=number],table.log input[type=date]{width:100%}
+}
+
+.foot{border-top:1px solid var(--rule);margin-top:40px;padding-top:14px;font-size:13.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:var(--r);font-size:15px;max-width:calc(100vw - 32px);transition:opacity .2s,transform .2s;pointer-events:none;z-index:50;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media print{
+  body{background:#fff;color:#000}
+  .note,.mast,nav.tabs,.foot,.vside,.back,.toast,.noprint,.sec .hint,.sec .cnt{display:none!important}
+  main{padding:0}
+  .vlay{display:block}
+  textarea{border:0;padding:0;min-height:0;resize:none;font-size:14px}
+  .sec{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap note"><b>모모동물의료센터 · 권정현 원장님을 위한 시제품</b><span>예시 데이터입니다. 수의사 이름과 조회수는 모두 가상입니다. 입력한 내용은 이 기기의 브라우저에만 저장됩니다.</span></div>
+<header class="wrap mast">
+  <h1><span>MOMO CHANNEL DESK</span>유튜브 기획·제작 보드</h1>
+  <p class="today" id="today"></p>
+</header>
+<nav class="tabs" aria-label="화면"><div class="wrap" id="tabs"></div></nav>
+<main class="wrap" id="main"></main>
+<footer class="wrap foot noprint">
+  <span>시제품입니다. 실제 운영 시에는 여러 기기에서 같이 보도록 서버 저장소를 붙입니다.</span>
+  <button type="button" class="link" id="reset">예시 데이터로 되돌리기</button>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="momo-yt-board-v1";
+var STAGES=[["idea","아이디어"],["script","대본 초안"],["shoot","촬영"],["edit","편집"],["upload","업로드"]];
+var SNAME={};STAGES.forEach(function(s){SNAME[s[0]]=s[1];});
+var SOURCES=["진료실","전화 상담","접수 창구","유튜브 댓글","입원 면회","기타"];
+var PLACES=["2층 촬영실","진료실","입원실 앞 복도","병원 밖"];
+var NOTICE="이 영상은 보호자를 위한 일반적인 안내이며, 진료를 대신하지 않습니다. 반려동물의 상태가 걱정되시면 동물병원에서 진료를 받아 주십시오.";
+var SFIELDS=[["intro","도입","보호자에게 처음 건넬 말을 적어 주십시오. 어떤 질문을 받았는지부터 시작하면 자연스럽습니다."],
+  ["k1","핵심 1",""],["k2","핵심 2",""],["k3","핵심 3",""],
+  ["outro","마무리","보호자가 영상을 보고 나서 기억했으면 하는 한 가지를 적어 주십시오."],
+  ["notice","고지 문구","영상 설명란과 마지막 화면에 들어갈 문구입니다."]];
+
+/* ---------- 날짜 ---------- */
+function pad(n){return (n<10?"0":"")+n;}
+function iso(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+function off(n){var d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+n);return iso(d);}
+function pd(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2],12);}
+var WD=["일","월","화","수","목","금","토"];
+function kd(s){if(!s)return "";var d=pd(s);return (d.getMonth()+1)+"월 "+d.getDate()+"일 ("+WD[d.getDay()]+")";}
+function sd(s){if(!s)return "";var d=pd(s);return (d.getMonth()+1)+"."+d.getDate();}
+function daysFrom(s){return Math.round((pd(s)-pd(off(0)))/864e5);}
+function rel(s){var n=daysFrom(s);if(n===0)return "오늘";if(n===1)return "내일";if(n===-1)return "어제";return n>0?n+"일 뒤":(-n)+"일 전";}
+
+/* ---------- 예시 데이터 (모두 가상) ---------- */
+function uid(p){return p+Math.random().toString(36).slice(2,9);}
+function blank(){return {intro:"",k1:"",k2:"",k3:"",outro:"",notice:""};}
+function seed(){
+  var vets=[
+    {id:"v1",name:"서지안",dept:"내과"},{id:"v2",name:"오태민",dept:"정형외과"},
+    {id:"v3",name:"문하린",dept:"영상의학과"},{id:"v4",name:"장도윤",dept:"응급의학과"},
+    {id:"v5",name:"백소율",dept:"치과"}];
+  function sc(a){var s=blank();for(var k in a)s[k]=a[k];return s;}
+  var outline=sc({intro:"진료실에서 보호자분들께 가장 자주 듣는 질문을 오늘 한 번에 정리해 드리겠습니다.",
+    k1:"어떤 상태를 말하는지 — 그림 자료 1장",k2:"집에서 보호자가 알아챌 수 있는 모습 — 영상 자료 2개",
+    k3:"병원에 오시면 어떤 순서로 진행되는지",outro:"궁금한 점은 댓글로 남겨 주시면 다음 영상에서 답해 드리겠습니다.",notice:NOTICE});
+  var videos=[
+    {id:"y1",title:"슬개골 탈구가 뭔가요",stage:"upload",vetId:"v2",ideaId:"i1",script:outline,reviewer:"v1",reviewDate:off(-52),created:off(-75),
+      up:{date:off(-41),url:"",v7:1840,v30:4210,memo:"썸네일 B안이 반응이 좋았습니다"}},
+    {id:"y2",title:"노령견 건강검진, 무엇을 보나요",stage:"upload",vetId:"v1",ideaId:"i5",script:outline,reviewer:"v3",reviewDate:off(-26),created:off(-45),
+      up:{date:off(-17),url:"",v7:960,v30:2380,memo:""}},
+    {id:"y3",title:"입원한 아이 면회는 이렇게 진행됩니다",stage:"upload",vetId:"v4",ideaId:null,script:outline,reviewer:"v1",reviewDate:off(-80),created:off(-95),
+      up:{date:off(-72),url:"",v7:620,v30:1150,memo:"입원 안내 문자에 링크로 보내고 있습니다"}},
+    {id:"y4",title:"고양이가 물을 많이 마셔요",stage:"edit",vetId:"v1",ideaId:"i2",script:outline,reviewer:"v2",reviewDate:off(-12),created:off(-30),up:null},
+    {id:"y5",title:"CT 검사는 어떻게 진행되나요",stage:"shoot",vetId:"v3",ideaId:"i4",script:sc({intro:"CT 검사를 앞두고 걱정하시는 보호자분들이 많아서, 오늘은 검사 날 하루를 순서대로 보여 드리겠습니다.",k1:"검사 전날 안내받는 내용",k2:"검사실 안에서 일어나는 일",k3:"결과 설명을 듣는 시점",outro:"",notice:NOTICE}),reviewer:"",reviewDate:"",created:off(-20),up:null},
+    {id:"y6",title:"응급실에 오실 때 챙겨 오면 좋은 것",stage:"script",vetId:"v4",ideaId:"i6",script:sc({intro:"밤늦게 급히 오시는 보호자분들께 미리 알려 드리고 싶었던 내용입니다.",k1:"평소 먹던 약과 사료 이름"}),reviewer:"",reviewDate:"",created:off(-9),up:null},
+    {id:"y7",title:"스케일링은 왜 마취하고 하나요",stage:"script",vetId:"v5",ideaId:"i3",script:blank(),reviewer:"",reviewDate:"",created:off(-4),up:null},
+    {id:"y8",title:"의뢰 진료는 어떻게 예약하나요",stage:"idea",vetId:"",ideaId:"i7",script:blank(),reviewer:"",reviewDate:"",created:off(-2),up:null}
+  ];
+  var ideas=[
+    {id:"i1",q:"슬개골 탈구가 뭔가요",src:"진료실",dept:"정형외과",count:23,first:off(-120),videoId:"y1"},
+    {id:"i2",q:"고양이가 물을 많이 마시는데 괜찮을까요",src:"전화 상담",dept:"내과",count:17,first:off(-60),videoId:"y4"},
+    {id:"i3",q:"스케일링은 왜 마취하고 하나요",src:"접수 창구",dept:"치과",count:15,first:off(-90),videoId:"y7"},
+    {id:"i4",q:"CT 검사는 어떻게 진행되나요",src:"진료실",dept:"영상의학과",count:12,first:off(-50),videoId:"y5"},
+    {id:"i5",q:"노령견 건강검진은 무엇을 보나요",src:"접수 창구",dept:"내과",count:11,first:off(-70),videoId:"y2"},
+    {id:"i6",q:"응급실에 갈 때 무엇을 챙겨 가야 하나요",src:"유튜브 댓글",dept:"응급의학과",count:9,first:off(-25),videoId:"y6"},
+    {id:"i7",q:"동네 병원에서 의뢰서를 받았는데 예약은 어떻게 하나요",src:"전화 상담",dept:"원무",count:14,first:off(-40),videoId:"y8"},
+    {id:"i8",q:"중성화 수술 전날에는 무엇을 준비하나요",src:"전화 상담",dept:"외과",count:10,first:off(-35),videoId:null},
+    {id:"i9",q:"고양이를 이동장에 익숙하게 하려면 어떻게 하나요",src:"진료실",dept:"내과",count:8,first:off(-28),videoId:null},
+    {id:"i10",q:"강아지가 다리를 들고 걸어요",src:"유튜브 댓글",dept:"정형외과",count:6,first:off(-14),videoId:null},
+    {id:"i11",q:"수술 후 넥카라는 언제까지 하나요",src:"입원 면회",dept:"외과",count:5,first:off(-10),videoId:null},
+    {id:"i12",q:"MRI와 CT는 무엇이 다른가요",src:"진료실",dept:"영상의학과",count:4,first:off(-6),videoId:null}
+  ];
+  var shoots=[
+    {id:"s1",videoId:"y4",date:off(-6),time:"13:30",vetId:"v1",place:"2층 촬영실",memo:"촬영 완료, 편집 담당 전달"},
+    {id:"s2",videoId:"y5",date:off(3),time:"13:00",vetId:"v3",place:"진료실",memo:"CT실 촬영은 검사 없는 시간에만 가능합니다"},
+    {id:"s3",videoId:"y5",date:off(3),time:"14:30",vetId:"v3",place:"2층 촬영실",memo:"설명 부분"},
+    {id:"s4",videoId:"y6",date:off(10),time:"12:30",vetId:"v4",place:"2층 촬영실",memo:""},
+    {id:"s5",videoId:"y7",date:off(17),time:"13:00",vetId:"v5",place:"진료실",memo:"치과 장비 앞에서"}
+  ];
+  return {v:1,vets:vets,ideas:ideas,videos:videos,shoots:shoots};
+}
+var db;
+function load(){try{var s=localStorage.getItem(KEY);if(s){var o=JSON.parse(s);if(o&&o.v===1&&Array.isArray(o.videos)){db=o;return;}}}catch(e){}db=seed();}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}}
+load();
+
+/* ---------- 도우미 ---------- */
+var $=function(s){return document.querySelector(s);};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
+function vet(id){for(var i=0;i<db.vets.length;i++)if(db.vets[i].id===id)return db.vets[i];return null;}
+function vname(id){var v=vet(id);return v?v.name:"";}
+function video(id){for(var i=0;i<db.videos.length;i++)if(db.videos[i].id===id)return db.videos[i];return null;}
+function idea(id){for(var i=0;i<db.ideas.length;i++)if(db.ideas[i].id===id)return db.ideas[i];return null;}
+function sidx(st){for(var i=0;i<STAGES.length;i++)if(STAGES[i][0]===st)return i;return 0;}
+function filled(v){var n=0;SFIELDS.forEach(function(f){if((v.script[f[0]]||"").trim())n++;});return n;}
+function nextShoot(v){var a=db.shoots.filter(function(s){return s.videoId===v.id&&daysFrom(s.date)>=0;}).sort(function(a,b){return (a.date+a.time)<(b.date+b.time)?-1:1;});return a[0]||null;}
+function fmt(n){return (n==null||n==="")?"—":Number(n).toLocaleString("ko-KR");}
+var tt;function toast(m){var t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){t.classList.remove("on");},2600);}
+function vetOpts(sel,blankLabel){return '<option value="">'+esc(blankLabel||"정하지 않음")+'</option>'+db.vets.map(function(v){return '<option value="'+v.id+'"'+(v.id===sel?" selected":"")+'>'+esc(v.name)+' · '+esc(v.dept)+'</option>';}).join("");}
+
+/* ---------- 화면 이동 (뒤로가기로 앱이 닫히지 않게) ---------- */
+var TABS=[["ideas","아이디어"],["board","진행"],["scripts","대본"],["cal","일정"],["log","기록"]];
+var cur={view:"ideas"};
+var ui={ideaSort:"count",ideaFilter:"all",stage:"script",calM:null,calSel:off(0),logSort:"date"};
+function go(s){cur=s;history.pushState({app:1,s:s},"");render(true);}
+window.addEventListener("popstate",function(e){
+  var st=e.state||{};
+  if(!st.app||st.base){
+    var atFirst=cur.view==="ideas";
+    history.pushState({app:1,s:{view:"ideas"}},"");
+    if(atFirst)toast("앱을 닫으려면 홈 화면으로 나가 주십시오");
+    else{cur={view:"ideas"};render(true);}
+    return;
+  }
+  cur=st.s||{view:"ideas"};render(true);
+});
+history.replaceState({app:1,base:1},"");
+history.pushState({app:1,s:cur},"");
+
+/* ---------- 그리기 ---------- */
+function renderTabs(){
+  var active=cur.view==="video"?(cur.from||"board"):cur.view;
+  var cnt={ideas:db.ideas.filter(function(i){return !i.videoId;}).length,
+    board:db.videos.filter(function(v){return v.stage!=="upload";}).length,
+    log:db.videos.filter(function(v){return v.stage==="upload";}).length};
+  $("#tabs").innerHTML=TABS.map(function(t){
+    return '<button type="button" data-tab="'+t[0]+'"'+(t[0]===active?' aria-current="page"':'')+'>'+t[1]+(cnt[t[0]]!=null?'<span class="c num">'+cnt[t[0]]+'</span>':'')+'</button>';}).join("");
+}
+function render(scroll){
+  renderTabs();
+  var m=$("#main");
+  if(cur.view==="ideas")m.innerHTML=vIdeas();
+  else if(cur.view==="board")m.innerHTML=vBoard();
+  else if(cur.view==="scripts")m.innerHTML=vScripts();
+  else if(cur.view==="cal")m.innerHTML=vCal();
+  else if(cur.view==="log")m.innerHTML=vLog();
+  else if(cur.view==="video"){var v=video(cur.id);if(!v){cur={view:"board"};return render(scroll);}m.innerHTML=vVideo(v);}
+  if(scroll)window.scrollTo(0,0);
+}
+
+function vIdeas(){
+  var list=db.ideas.slice();
+  if(ui.ideaFilter==="open")list=list.filter(function(i){return !i.videoId;});
+  list.sort(ui.ideaSort==="count"?function(a,b){return b.count-a.count;}:function(a,b){return a.first<b.first?1:-1;});
+  var h='<div class="lede"><h2>보호자가 자주 묻는 질문</h2><p>진료실·전화·접수 창구에서 같은 질문을 들을 때마다 숫자를 하나씩 올려 주십시오. 많이 들은 질문이 다음 영상 후보가 됩니다.</p></div>';
+  h+='<form class="add" id="ideaForm" autocomplete="off"><h3>새 질문 적기</h3><div class="grid g3">'+
+    '<div><label class="f" for="iq">보호자가 한 말 그대로</label><input type="text" id="iq" required placeholder="예: 강아지가 밤에 자꾸 깨요"></div>'+
+    '<div><label class="f" for="isrc">들은 곳</label><select id="isrc">'+SOURCES.map(function(s){return '<option>'+s+'</option>';}).join("")+'</select></div>'+
+    '<div><label class="f" for="idept">담당 진료과</label><input type="text" id="idept" placeholder="예: 내과" list="depts"></div></div>'+
+    '<datalist id="depts">'+uniq(db.vets.map(function(v){return v.dept;}).concat(["외과","원무"])).map(function(d){return '<option value="'+esc(d)+'">';}).join("")+'</datalist>'+
+    '<div class="row" style="margin-top:12px"><button class="btn pri" type="submit">질문 추가</button></div></form>';
+  h+='<div class="filters"><span class="seg" role="group" aria-label="정렬"><button type="button" data-isort="count" aria-pressed="'+(ui.ideaSort==="count")+'">많이 들은 순</button><button type="button" data-isort="new" aria-pressed="'+(ui.ideaSort==="new")+'">최근 순</button></span>'+
+    '<span class="seg" role="group" aria-label="보기"><button type="button" data-ifil="all" aria-pressed="'+(ui.ideaFilter==="all")+'">전체</button><button type="button" data-ifil="open" aria-pressed="'+(ui.ideaFilter==="open")+'">아직 영상 없음</button></span></div>';
+  if(!list.length)return h+'<p class="col empty" style="padding:20px 0;color:var(--ink-3)">아직 적힌 질문이 없습니다. 위 칸에 보호자가 한 질문을 적어 주십시오.</p>';
+  h+='<ol class="ideas">'+list.map(function(i){
+    var v=i.videoId?video(i.videoId):null;
+    var st=v?(v.stage==="upload"?'<span class="tag ok">업로드 완료</span>':'<span class="tag now">'+SNAME[v.stage]+' 단계</span>'):'';
+    return '<li><div class="tally num" aria-label="'+i.count+'번 들음">'+i.count+'<small>번 들음</small></div><div>'+
+      '<p class="q">'+esc(i.q)+'</p><p class="meta">'+esc(i.src)+(i.dept?' · '+esc(i.dept):'')+' · 처음 들은 날 '+sd(i.first)+'</p>'+
+      '<div class="acts"><button type="button" class="btn" data-plus="'+i.id+'">또 들었습니다 +1</button>'+
+      (v?st+'<button type="button" class="link" data-open="'+v.id+'" data-from="ideas">영상 보기</button>':'<button type="button" class="btn ghost" data-mk="'+i.id+'">영상으로 만들기</button><button type="button" class="btn ghost" data-idel="'+i.id+'" aria-label="이 질문 지우기">지우기</button>')+
+      '</div></div></li>';}).join("")+'</ol>';
+  return h;
+}
+function uniq(a){var o=[];a.forEach(function(x){if(x&&o.indexOf(x)<0)o.push(x);});return o;}
+
+function vBoard(){
+  var h='<div class="lede"><h2>제작 진행</h2><p>영상 한 편이 아이디어에서 업로드까지 어디쯤 와 있는지 보는 화면입니다. 제목을 누르면 대본과 일정이 열립니다.</p></div>';
+  h+='<div class="stagebar" role="group" aria-label="단계 고르기">'+STAGES.map(function(s){
+    var n=db.videos.filter(function(v){return v.stage===s[0];}).length;
+    return '<button type="button" data-stage="'+s[0]+'" aria-pressed="'+(ui.stage===s[0])+'"><b class="num">'+n+'</b>'+s[1]+'</button>';}).join("")+'</div>';
+  h+='<div class="board">'+STAGES.map(function(s,si){
+    var vs=db.videos.filter(function(v){return v.stage===s[0];});
+    if(s[0]==="upload")vs.sort(function(a,b){return (a.up&&b.up&&a.up.date<b.up.date)?1:-1;});
+    return '<section class="col'+(ui.stage===s[0]?' sel':'')+'"><h3>'+s[1]+' <span class="n num">'+vs.length+'</span><span class="step">'+(si+1)+' / 5</span></h3><ul>'+
+      (vs.length?vs.map(function(v){return card(v,si);}).join(""):'<li class="empty">이 단계에 있는 영상이 없습니다.</li>')+'</ul>'+
+      (si===0?'<button type="button" class="btn ghost" data-newv style="margin-top:8px">빈 영상 추가</button>':'')+'</section>';}).join("")+'</div>';
+  return h;
+}
+function card(v,si){
+  var ns=nextShoot(v),meta=[];
+  if(v.vetId)meta.push(esc(vname(v.vetId)));else meta.push('출연 미정');
+  if(ns&&si<3)meta.push('<span class="due">촬영 '+sd(ns.date)+' '+rel(ns.date)+'</span>');
+  if(v.stage==="upload"&&v.up)meta.push('업로드 '+sd(v.up.date)+(v.up.v30?' · 30일 '+fmt(v.up.v30)+'회':''));
+  var f=filled(v),bar='';
+  if(si<=1){bar='<div class="script-bar" aria-label="대본 '+f+'/6칸 작성">'+SFIELDS.map(function(x,k){return '<i'+(k<f?' class="on"':'')+'></i>';}).join("")+'</div>';}
+  return '<li><button type="button" class="t" data-open="'+v.id+'" data-from="board">'+esc(v.title)+'</button><p class="m">'+meta.join(' · ')+(si<=1?' · 대본 '+f+'/6':'')+'</p>'+bar+
+    '<div class="mv">'+(si>0?'<button type="button" class="btn ghost" data-mv="'+v.id+'" data-d="-1" aria-label="'+esc(v.title)+' 이전 단계로">← '+STAGES[si-1][1]+'</button>':'<span></span>')+
+    (si<4?'<button type="button" class="btn" data-mv="'+v.id+'" data-d="1" aria-label="'+esc(v.title)+' 다음 단계로">'+STAGES[si+1][1]+' →</button>':'')+'</div></li>';
+}
+
+function vScripts(){
+  var vs=db.videos.filter(function(v){return v.stage!=="upload";}).sort(function(a,b){return sidx(a.stage)-sidx(b.stage);});
+  var up=db.videos.filter(function(v){return v.stage==="upload";});
+  var h='<div class="lede"><h2>대본</h2><p>모든 영상은 같은 틀(도입 · 핵심 세 가지 · 마무리 · 고지 문구)로 씁니다. 내용은 출연하는 수의사가 직접 채우고, 다른 수의사 한 명이 검수합니다.</p></div>';
+  function rows(list){return '<ol class="ideas">'+list.map(function(v){
+    var f=filled(v),rv=v.reviewer?'<span class="tag ok">검수 '+esc(vname(v.reviewer))+'</span>':'<span class="tag">검수 전</span>';
+    return '<li><div class="tally num">'+f+'<small>/ 6칸</small></div><div><p class="q"><button type="button" class="link" style="color:inherit;text-decoration:none;font-weight:700;text-align:left;min-height:0" data-open="'+v.id+'" data-from="scripts">'+esc(v.title)+'</button></p>'+
+      '<p class="meta">'+SNAME[v.stage]+' 단계 · '+(v.vetId?esc(vname(v.vetId)):'출연 미정')+'</p><div class="acts">'+rv+'<button type="button" class="link" data-open="'+v.id+'" data-from="scripts">대본 열기</button></div></div></li>';}).join("")+'</ol>';}
+  h+='<h3 class="sub">작업 중 '+vs.length+'편</h3>'+(vs.length?rows(vs):'<p class="meta">작업 중인 영상이 없습니다.</p>');
+  h+='<h3 class="sub">올린 영상 '+up.length+'편</h3>'+rows(up);
+  return h;
+}
+
+function vVideo(v){
+  var si=sidx(v.stage),q=v.ideaId?idea(v.ideaId):null;
+  var shots=db.shoots.filter(function(s){return s.videoId===v.id;}).sort(function(a,b){return (a.date+a.time)<(b.date+b.time)?-1:1;});
+  var h='<button type="button" class="back noprint" data-back><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>'+({ideas:"질문 목록",scripts:"대본 목록",log:"업로드 기록",cal:"일정"}[cur.from]||"진행 보드")+'</button>';
+  h+='<div class="vhead"><p class="stage">'+(si+1)+' / 5 · '+SNAME[v.stage]+'</p><h2 id="vtitle">'+esc(v.title)+'</h2><p class="saved noprint" id="saved">입력하면 바로 저장됩니다.</p></div>';
+  h+='<div class="vlay"><div class="vmain">';
+  h+='<div class="sec noprint"><div class="hd"><h3>영상 제목</h3></div><input type="text" data-vk="title" value="'+esc(v.title)+'"></div>';
+  SFIELDS.forEach(function(f,k){
+    var val=v.script[f[0]]||"";
+    var hint=f[2]||(k>=1&&k<=3?"소제목 한 줄과 화면에 띄울 자료를 함께 적어 주십시오.":"");
+    h+='<div class="sec"><div class="hd"><span class="k">'+(k===0?"시작":k<=3?"0"+k:k===4?"끝":"고지")+'</span><h3>'+f[1]+'</h3><span class="cnt num" data-cnt="'+f[0]+'">'+val.length+'자</span></div>'+
+      (hint?'<p class="hint">'+hint+'</p>':'')+
+      '<label class="sr" for="sf-'+f[0]+'">'+f[1]+'</label><textarea id="sf-'+f[0]+'" rows="'+(k===5?3:4)+'" data-sk="'+f[0]+'">'+esc(val)+'</textarea>'+
+      (f[0]==="notice"?'<div class="row noprint" style="margin-top:8px"><button type="button" class="btn ghost" data-notice>병원 기본 문구 넣기</button></div>':'')+'</div>';
+  });
+  h+='<div class="row noprint" style="margin-top:18px"><button type="button" class="btn" data-print>대본 인쇄</button><button type="button" class="btn ghost warn" data-vdel="'+v.id+'">이 영상 지우기</button></div>';
+  h+='</div><aside class="vside noprint">';
+  h+='<div class="grp"><h3>진행 단계</h3><div class="steps" aria-hidden="true">'+STAGES.map(function(s,k){return '<i'+(k<=si?' class="on"':'')+'></i>';}).join("")+'</div>'+
+    '<label class="sr" for="vstage">단계</label><select id="vstage" data-vk="stage">'+STAGES.map(function(s){return '<option value="'+s[0]+'"'+(s[0]===v.stage?' selected':'')+'>'+s[1]+'</option>';}).join("")+'</select></div>';
+  h+='<div class="grp"><h3>출연 수의사</h3><label class="sr" for="vvet">출연 수의사</label><select id="vvet" data-vk="vetId">'+vetOpts(v.vetId,"출연 미정")+'</select></div>';
+  h+='<div class="grp"><h3>대본 검수</h3><div class="grid"><div><label class="f" for="vrev">검수한 수의사</label><select id="vrev" data-vk="reviewer">'+vetOpts(v.reviewer,"아직 검수 전")+'</select></div>'+
+    '<div><label class="f" for="vrd">검수한 날</label><input type="date" id="vrd" data-vk="reviewDate" value="'+esc(v.reviewDate||"")+'"></div></div></div>';
+  h+='<div class="grp"><h3>촬영 일정</h3>'+(shots.length?'<ul>'+shots.map(function(s){return '<li><b class="num">'+kd(s.date)+' '+esc(s.time)+'</b><br><span style="color:var(--ink-3)">'+esc(vname(s.vetId))+' · '+esc(s.place)+'</span></li>';}).join("")+'</ul>':'<p class="line">아직 잡힌 촬영이 없습니다.</p>')+
+    '<button type="button" class="link" data-tocal="'+(shots.length?shots[shots.length-1].date:off(1))+'">일정 화면에서 잡기</button></div>';
+  if(q)h+='<div class="grp"><h3>출발한 질문</h3><p class="line">“'+esc(q.q)+'”</p><p class="line" style="color:var(--ink-3);font-size:14px">'+esc(q.src)+' · '+q.count+'번 들음</p></div>';
+  if(v.stage==="upload"&&v.up)h+='<div class="grp"><h3>업로드</h3><p class="line">'+kd(v.up.date)+' · 7일 '+fmt(v.up.v7)+'회 · 30일 '+fmt(v.up.v30)+'회</p><button type="button" class="link" data-go="log">기록 화면에서 고치기</button></div>';
+  h+='</aside></div>';
+  return h;
+}
+
+function vCal(){
+  if(!ui.calM){var t=pd(off(0));ui.calM=[t.getFullYear(),t.getMonth()];}
+  var y=ui.calM[0],mo=ui.calM[1],first=new Date(y,mo,1,12),start=new Date(first);start.setDate(1-first.getDay());
+  var today=off(0);
+  var h='<div class="lede"><h2>촬영 일정</h2><p>날짜를 눌러 그날 촬영을 확인하고 새로 잡아 주십시오. 진료 시간과 겹치지 않게 점심 무렵으로 잡는 것을 기본으로 했습니다.</p></div>';
+  h+='<div class="callay"><div><div class="calhead"><button type="button" class="btn ghost" data-cm="-1" aria-label="이전 달">←</button><h3>'+y+'년 '+(mo+1)+'월</h3><button type="button" class="btn ghost" data-cm="1" aria-label="다음 달">→</button></div><div class="cal">';
+  h+=WD.map(function(w){return '<div class="dow">'+w+'</div>';}).join("");
+  for(var i=0;i<42;i++){
+    var d=new Date(start);d.setDate(start.getDate()+i);var ds=iso(d);
+    if(i>=35&&d.getMonth()!==mo)break;
+    var ev=db.shoots.filter(function(s){return s.date===ds;}).sort(function(a,b){return a.time<b.time?-1:1;});
+    h+='<button type="button" class="d'+(d.getMonth()!==mo?' out':'')+(ds===today?' today':'')+'" data-day="'+ds+'" aria-pressed="'+(ui.calSel===ds)+'" aria-label="'+kd(ds)+(ev.length?' 촬영 '+ev.length+'건':'')+'"><span class="dn">'+d.getDate()+'</span>'+
+      ev.slice(0,2).map(function(s){var vv=video(s.videoId);return '<span class="ev">'+esc(vname(s.vetId))+' '+esc(vv?vv.title:"")+'</span>';}).join("")+
+      (ev.length>2?'<span class="ev">외 '+(ev.length-2)+'건</span>':'')+(ev.length?'<span class="evn">촬영 '+ev.length+'</span>':'')+'</button>';
+  }
+  h+='</div></div><div>';
+  var sel=db.shoots.filter(function(s){return s.date===ui.calSel;}).sort(function(a,b){return a.time<b.time?-1:1;});
+  h+='<h3 class="sub" style="margin-top:0">'+kd(ui.calSel)+' · '+rel(ui.calSel)+'</h3>';
+  h+=sel.length?'<ul class="daylist">'+sel.map(function(s){var vv=video(s.videoId);return '<li><span class="tm num">'+esc(s.time)+'</span><div><p class="tt">'+(vv?'<button type="button" class="link" style="color:inherit;text-decoration:none;font-weight:700;text-align:left;min-height:0" data-open="'+vv.id+'" data-from="cal">'+esc(vv.title)+'</button>':'(지운 영상)')+'</p><p class="mm">'+esc(vname(s.vetId))+' · '+esc(s.place)+(s.memo?' · '+esc(s.memo):'')+'</p></div><button type="button" class="btn ghost" data-sdel="'+s.id+'" aria-label="이 촬영 일정 지우기">지우기</button></li>';}).join("")+'</ul>':'<p class="mm" style="color:var(--ink-3);padding:6px 0 4px">이날은 잡힌 촬영이 없습니다.</p>';
+  var cand=db.videos.filter(function(v){return v.stage!=="upload";});
+  h+='<form class="add" id="shootForm" style="margin-top:16px" autocomplete="off"><h3>이날 촬영 잡기</h3><div class="grid">'+
+    '<div><label class="f" for="sv">영상</label><select id="sv" required>'+cand.map(function(v){return '<option value="'+v.id+'">'+esc(v.title)+'</option>';}).join("")+'</select></div>'+
+    '<div class="grid g2"><div><label class="f" for="svet">출연 수의사</label><select id="svet">'+vetOpts(cand[0]?cand[0].vetId:"","정하지 않음")+'</select></div>'+
+    '<div><label class="f" for="stime">시간</label><input type="time" id="stime" value="13:00" required></div></div>'+
+    '<div class="grid g2"><div><label class="f" for="splace">장소</label><select id="splace">'+PLACES.map(function(p){return '<option>'+p+'</option>';}).join("")+'</select></div>'+
+    '<div><label class="f" for="smemo">메모</label><input type="text" id="smemo" placeholder="예: 소품 준비"></div></div></div>'+
+    '<div class="row" style="margin-top:12px"><button class="btn pri" type="submit">일정 추가</button></div></form>';
+  h+='</div></div>';
+  var up=db.shoots.filter(function(s){return daysFrom(s.date)>=0;}).sort(function(a,b){return (a.date+a.time)<(b.date+b.time)?-1:1;}).slice(0,6);
+  h+='<h3 class="sub">다가오는 촬영</h3>'+(up.length?'<ul class="daylist">'+up.map(function(s){var vv=video(s.videoId);return '<li><span class="tm num">'+sd(s.date)+'</span><div><p class="tt">'+esc(vv?vv.title:"(지운 영상)")+'</p><p class="mm">'+rel(s.date)+' '+esc(s.time)+' · '+esc(vname(s.vetId))+' · '+esc(s.place)+'</p></div><button type="button" class="btn ghost" data-day="'+s.date+'">보기</button></li>';}).join("")+'</ul>':'<p class="mm">다가오는 촬영이 없습니다.</p>');
+  h+='<h3 class="sub">출연 수의사</h3><ul class="vets">'+db.vets.map(function(v){
+    var n=db.videos.filter(function(x){return x.vetId===v.id;}).length;
+    return '<li><span class="nm">'+esc(v.name)+'</span><span class="dp">'+esc(v.dept)+'</span><span class="ct num">출연 '+n+'편</span><button type="button" class="btn ghost" data-vetdel="'+v.id+'" aria-label="'+esc(v.name)+' 명단에서 빼기">빼기</button></li>';}).join("")+'</ul>'+
+    '<form class="row" id="vetForm" style="margin-top:10px" autocomplete="off"><div style="flex:1 1 140px"><label class="sr" for="vn">이름</label><input type="text" id="vn" placeholder="이름" required></div><div style="flex:1 1 140px"><label class="sr" for="vd">진료과</label><input type="text" id="vd" placeholder="진료과"></div><button class="btn" type="submit">명단에 추가</button></form>';
+  return h;
+}
+
+function vLog(){
+  var vs=db.videos.filter(function(v){return v.stage==="upload";});
+  vs.forEach(function(v){if(!v.up)v.up={date:off(0),url:"",v7:"",v30:"",memo:""};});
+  vs.sort(ui.logSort==="views"?function(a,b){return (+b.up.v30||0)-(+a.up.v30||0);}:function(a,b){return a.up.date<b.up.date?1:-1;});
+  var tot=0,top=null,max=1;
+  vs.forEach(function(v){var n=+v.up.v30||0;tot+=n;if(n>max)max=n;if(!top||n>(+top.up.v30||0))top=v;});
+  var h='<div class="lede"><h2>업로드 기록</h2><p>유튜브 스튜디오에서 본 조회수를 올린 지 7일, 30일 되는 날 옮겨 적어 주십시오. 어떤 질문이 실제로 많이 보였는지 다음 기획에 씁니다.</p></div>';
+  h+='<dl class="sum"><div><dt>올린 영상</dt><dd class="num">'+vs.length+'편</dd></div><div><dt>30일 조회수 합</dt><dd class="num">'+fmt(tot)+'</dd></div><div><dt>가장 많이 본 영상</dt><dd class="s">'+(top?esc(top.title):'—')+'</dd></div></dl>';
+  h+='<div class="filters"><span class="seg" role="group" aria-label="정렬"><button type="button" data-lsort="date" aria-pressed="'+(ui.logSort==="date")+'">최근 올린 순</button><button type="button" data-lsort="views" aria-pressed="'+(ui.logSort==="views")+'">조회수 순</button></span></div>';
+  if(!vs.length)return h+'<p class="meta">아직 올린 영상이 없습니다. 진행 화면에서 영상을 업로드 단계로 옮기면 여기에 생깁니다.</p>';
+  h+='<table class="log"><thead><tr><th>제목</th><th>올린 날</th><th style="text-align:right">7일 조회수</th><th style="text-align:right">30일 조회수</th><th>메모</th></tr></thead><tbody>'+
+    vs.map(function(v){var n=+v.up.v30||0;
+      return '<tr><td class="tcell"><div class="tt"><button type="button" data-open="'+v.id+'" data-from="log">'+esc(v.title)+'</button></div><div style="font-size:13.5px;color:var(--ink-3)">'+esc(vname(v.vetId)||"출연 미정")+'</div><div class="bar" aria-hidden="true"><i style="width:'+Math.round(n/max*100)+'%"></i></div></td>'+
+      '<td class="dcell"><span class="lb">올린 날</span><input type="date" data-up="'+v.id+'" data-uk="date" value="'+esc(v.up.date)+'" aria-label="'+esc(v.title)+' 올린 날"></td>'+
+      '<td style="text-align:right"><span class="lb">7일 조회수</span><input type="number" min="0" inputmode="numeric" data-up="'+v.id+'" data-uk="v7" value="'+esc(v.up.v7)+'" aria-label="'+esc(v.title)+' 7일 조회수"></td>'+
+      '<td style="text-align:right"><span class="lb">30일 조회수</span><input type="number" min="0" inputmode="numeric" data-up="'+v.id+'" data-uk="v30" value="'+esc(v.up.v30)+'" aria-label="'+esc(v.title)+' 30일 조회수"></td>'+
+      '<td class="wcell"><span class="lb">메모</span><input type="text" data-up="'+v.id+'" data-uk="memo" value="'+esc(v.up.memo)+'" placeholder="썸네일, 반응 등" aria-label="'+esc(v.title)+' 메모"></td></tr>';}).join("")+'</tbody></table>';
+  return h;
+}
+
+/* ---------- 동작 ---------- */
+function moveStage(v,st){
+  v.stage=st;
+  if(st==="upload"&&!v.up){v.up={date:off(0),url:"",v7:"",v30:"",memo:""};save();toast("업로드 기록에 올렸습니다. 조회수는 기록 화면에서 적어 주십시오");return;}
+  save();toast("「"+v.title+"」을(를) "+SNAME[st]+" 단계로 옮겼습니다");
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  var a;
+  if((a=b.getAttribute("data-tab"))){if(a!==cur.view)go({view:a});return;}
+  if(b.hasAttribute("data-back")){history.back();return;}
+  if((a=b.getAttribute("data-open"))){go({view:"video",id:a,from:b.getAttribute("data-from")||"board"});return;}
+  if((a=b.getAttribute("data-go"))){go({view:a});return;}
+  if((a=b.getAttribute("data-isort"))){ui.ideaSort=a;render();return;}
+  if((a=b.getAttribute("data-ifil"))){ui.ideaFilter=a;render();return;}
+  if((a=b.getAttribute("data-lsort"))){ui.logSort=a;render();return;}
+  if((a=b.getAttribute("data-stage"))){ui.stage=a;render();return;}
+  if((a=b.getAttribute("data-plus"))){var i=idea(a);i.count++;save();render();toast("「"+i.q+"」 "+i.count+"번째입니다");return;}
+  if((a=b.getAttribute("data-idel"))){if(confirm("이 질문을 지울까요? 되돌릴 수 없습니다.")){db.ideas=db.ideas.filter(function(x){return x.id!==a;});save();render();}return;}
+  if((a=b.getAttribute("data-mk"))){var q=idea(a);var nv={id:uid("y"),title:q.q,stage:"idea",vetId:"",ideaId:q.id,script:blank(),reviewer:"",reviewDate:"",created:off(0),up:null};
+    db.videos.push(nv);q.videoId=nv.id;save();ui.stage="idea";go({view:"video",id:nv.id,from:"ideas"});toast("아이디어 단계에 올렸습니다. 출연 수의사를 정해 주십시오");return;}
+  if(b.hasAttribute("data-newv")){var n2={id:uid("y"),title:"제목 없는 영상",stage:"idea",vetId:"",ideaId:null,script:blank(),reviewer:"",reviewDate:"",created:off(0),up:null};db.videos.push(n2);save();go({view:"video",id:n2.id,from:"board"});return;}
+  if((a=b.getAttribute("data-mv"))){var v=video(a),k=sidx(v.stage)+(+b.getAttribute("data-d"));if(k<0||k>4)return;moveStage(v,STAGES[k][0]);ui.stage=STAGES[k][0];render();return;}
+  if(b.hasAttribute("data-notice")){var ta=$("#sf-notice");if(ta.value.trim()&&!confirm("지금 적힌 고지 문구를 병원 기본 문구로 바꿀까요?"))return;ta.value=NOTICE;ta.dispatchEvent(new Event("input",{bubbles:true}));return;}
+  if(b.hasAttribute("data-print")){window.print();return;}
+  if((a=b.getAttribute("data-vdel"))){var dv=video(a);if(confirm("「"+dv.title+"」 영상과 촬영 일정을 지울까요? 되돌릴 수 없습니다.")){
+    db.videos=db.videos.filter(function(x){return x.id!==a;});db.shoots=db.shoots.filter(function(s){return s.videoId!==a;});
+    db.ideas.forEach(function(i){if(i.videoId===a)i.videoId=null;});save();toast("지웠습니다");history.back();}return;}
+  if((a=b.getAttribute("data-tocal"))){ui.calSel=a;var dd=pd(a);ui.calM=[dd.getFullYear(),dd.getMonth()];go({view:"cal"});return;}
+  if((a=b.getAttribute("data-cm"))){var m=ui.calM[1]+(+a),y=ui.calM[0];if(m<0){m=11;y--;}if(m>11){m=0;y++;}ui.calM=[y,m];render();return;}
+  if((a=b.getAttribute("data-day"))){ui.calSel=a;var d2=pd(a);ui.calM=[d2.getFullYear(),d2.getMonth()];render();return;}
+  if((a=b.getAttribute("data-sdel"))){if(confirm("이 촬영 일정을 지울까요?")){db.shoots=db.shoots.filter(function(s){return s.id!==a;});save();render();}return;}
+  if((a=b.getAttribute("data-vetdel"))){var vt=vet(a);if(confirm(vt.name+" 수의사를 출연 명단에서 뺄까요? 이미 잡힌 영상의 출연자 칸은 비워집니다.")){
+    db.vets=db.vets.filter(function(x){return x.id!==a;});db.videos.forEach(function(x){if(x.vetId===a)x.vetId="";if(x.reviewer===a)x.reviewer="";});save();render();}return;}
+  if(b.id==="reset"){if(confirm("입력한 내용을 모두 지우고 예시 데이터로 되돌릴까요?")){db=seed();save();cur={view:"ideas"};history.replaceState({app:1,s:cur},"");render(true);toast("예시 데이터로 되돌렸습니다");}return;}
+});
+document.addEventListener("submit",function(e){
+  e.preventDefault();var f=e.target;
+  if(f.id==="ideaForm"){var q=$("#iq").value.trim();if(!q){$("#iq").focus();return;}
+    db.ideas.push({id:uid("i"),q:q,src:$("#isrc").value,dept:$("#idept").value.trim(),count:1,first:off(0),videoId:null});save();ui.ideaSort="new";render();toast("질문을 적었습니다");return;}
+  if(f.id==="shootForm"){var vid=$("#sv").value;if(!vid){toast("먼저 진행 화면에서 영상을 만들어 주십시오");return;}
+    var vv=video(vid),vt=$("#svet").value;db.shoots.push({id:uid("s"),videoId:vid,date:ui.calSel,time:$("#stime").value||"13:00",vetId:vt,place:$("#splace").value,memo:$("#smemo").value.trim()});
+    if(vt&&!vv.vetId)vv.vetId=vt;save();render();toast(kd(ui.calSel)+" 촬영을 잡았습니다");return;}
+  if(f.id==="vetForm"){var n=$("#vn").value.trim();if(!n)return;db.vets.push({id:uid("v"),name:n,dept:$("#vd").value.trim()||"미정"});save();render();toast(n+" 수의사를 명단에 넣었습니다");return;}
+});
+var st2;
+function savedNote(){var s=$("#saved");if(!s)return;s.textContent="저장했습니다 · "+new Date().toTimeString().slice(0,5);}
+document.addEventListener("input",function(e){
+  var t=e.target,k;
+  if(cur.view==="video"&&(k=t.getAttribute("data-sk"))){var v=video(cur.id);v.script[k]=t.value;var c=document.querySelector('[data-cnt="'+k+'"]');if(c)c.textContent=t.value.length+"자";clearTimeout(st2);st2=setTimeout(function(){save();savedNote();},300);return;}
+  if(cur.view==="video"&&t.getAttribute("data-vk")==="title"){var v2=video(cur.id);v2.title=t.value||"제목 없는 영상";$("#vtitle").textContent=v2.title;clearTimeout(st2);st2=setTimeout(function(){save();savedNote();},300);return;}
+  if((k=t.getAttribute("data-uk"))&&t.type!=="date"){var u=video(t.getAttribute("data-up"));u.up[k]=t.type==="number"?(t.value===""?"":Math.max(0,parseInt(t.value,10)||0)):t.value;save();return;}
+});
+document.addEventListener("change",function(e){
+  var t=e.target,k;
+  if(cur.view==="video"&&(k=t.getAttribute("data-vk"))&&k!=="title"){var v=video(cur.id);
+    if(k==="stage"){moveStage(v,t.value);ui.stage=t.value;render();return;}
+    v[k]=t.value;if(k==="reviewer"&&t.value&&!v.reviewDate){v.reviewDate=off(0);var rd=$("#vrd");if(rd)rd.value=v.reviewDate;}
+    save();savedNote();return;}
+  if(t.id==="sv"){var vv=video(t.value);if(vv&&vv.vetId)$("#svet").value=vv.vetId;return;}
+  if((k=t.getAttribute("data-uk"))){var u=video(t.getAttribute("data-up"));if(t.type==="date"){if(t.value)u.up.date=t.value;}save();
+    if(t.type==="date")render();return;}
+});
+
+(function(){var d=pd(off(0));$("#today").innerHTML="오늘<br>"+(d.getMonth()+1)+"월 "+d.getDate()+"일 "+WD[d.getDay()]+"요일";})();
+render();
+})();
+</script>
+</body>
+</html>
