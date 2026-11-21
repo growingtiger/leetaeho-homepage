@@ -56,43 +56,43 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
 <body>
 <main>
   <p class="lab">원장을 위한 AI 실전 교육 · 만족도 조사</p>
-  <h1>오늘 수업, 솔직하게 말씀해 주십시오</h1>
-  <p class="lead">다음 기수의 시간표와 실습 순서를 그대로 고치는 데 씁니다. 3분이면 됩니다. 성함은 받지 않으니 누가 썼는지 알 수 없습니다. 편하게 적어 주십시오.</p>
+  <h1 id="h1">오늘 수업, 솔직하게 말씀해 주십시오</h1>
+  <p class="lead" id="lead">다음 기수의 시간표와 실습 순서를 그대로 고치는 데 씁니다. 3분이면 됩니다. 성함은 받지 않으니 누가 썼는지 알 수 없습니다. 편하게 적어 주십시오.</p>
 
   <form id="sv" novalidate>
     <!-- 만족도 조사는 무기명으로만 받는다(2026-10-22 원장 지시: 객관적인 반영) -->
     <input type="radio" name="mode" value="anon" checked hidden>
     <div class="q" id="nameBox" hidden><label class="t" for="name">성함</label><input type="text" id="name" maxlength="40" autocomplete="name"></div>
-    <div class="q"><span class="t">기수</span><div class="opts" id="cohort">
+    <div class="q" id="cohortQ"><span class="t">기수</span><div class="opts" id="cohort">
       <label><input type="radio" name="cohort" value="1">1기</label><label><input type="radio" name="cohort" value="2">2기</label><label><input type="radio" name="cohort" value="3">3기</label><label><input type="radio" name="cohort" value="4">4기</label><label><input type="radio" name="cohort" value="5">5기</label><label><input type="radio" name="cohort" value="기타">그 밖</label></div></div>
 
     <h2 class="part"><span>1</span>점수</h2>
-    <div class="q"><span class="t">오늘 수업 전체에 얼마나 만족하십니까?</span>
+    <div class="q"><span class="t" id="tOverall">오늘 수업 전체에 얼마나 만족하십니까?</span>
       <div class="opts" data-five="overall"></div>
       <div class="scale"><span>1 매우 불만족</span><span>5 매우 만족</span></div></div>
     <div class="q"><span class="t">항목별로 매겨 주십시오</span><small>1 = 아쉬움 · 5 = 아주 좋음</small>
       <div class="grid5">
-        <div class="row5"><span class="nm">오전 이론 (AI로 앱을 만든다는 것)</span><div class="opts" data-five="theory"></div></div>
-        <div class="row5"><span class="nm">오후 실습 (키트 설치·첫 앱 만들기)</span><div class="opts" data-five="practice"></div></div>
-        <div class="row5"><span class="nm">강의실·자리·인터넷</span><div class="opts" data-five="venue"></div></div>
-        <div class="row5"><span class="nm">수업 전 안내 (노트북·키트 코드·찾아오는 길)</span><div class="opts" data-five="notice"></div></div>
+        <div class="row5"><span class="nm" id="nmTheory">오전 이론 (AI로 앱을 만든다는 것)</span><div class="opts" data-five="theory"></div></div>
+        <div class="row5"><span class="nm" id="nmPractice">오후 실습 (키트 설치·첫 앱 만들기)</span><div class="opts" data-five="practice"></div></div>
+        <div class="row5"><span class="nm" id="nmVenue">강의실·자리·인터넷</span><div class="opts" data-five="venue"></div></div>
+        <div class="row5"><span class="nm" id="nmNotice">수업 전 안내 (노트북·키트 코드·찾아오는 길)</span><div class="opts" data-five="notice"></div></div>
       </div></div>
     <div class="q"><span class="t">설명 속도는 어떠셨습니까?</span><div class="opts">
       <label><input type="radio" name="pace" value="느림">느렸다</label><label><input type="radio" name="pace" value="적당">적당했다</label><label><input type="radio" name="pace" value="빠름">빨랐다</label></div></div>
     <div class="q"><span class="t">실습 난이도는 어떠셨습니까?</span><div class="opts">
       <label><input type="radio" name="level" value="쉬움">쉬웠다</label><label><input type="radio" name="level" value="적당">적당했다</label><label><input type="radio" name="level" value="어려움">어려웠다</label></div></div>
-    <div class="q"><span class="t">동료 원장님께 이 교육을 권하시겠습니까?</span><small>0 = 전혀 아니다 · 10 = 꼭 권하겠다</small><div class="opts" id="score"></div></div>
+    <div class="q"><span class="t" id="tScore">동료 원장님께 이 교육을 권하시겠습니까?</span><small>0 = 전혀 아니다 · 10 = 꼭 권하겠다</small><div class="opts" id="score"></div></div>
 
     <h2 class="part"><span>2</span>말씀</h2>
     <div class="q"><label class="t" for="best">가장 도움이 된 것</label><textarea id="best" maxlength="1500"></textarea></div>
     <div class="q"><label class="t" for="worse">아쉬웠던 것, 바꿨으면 하는 것</label><small>시간 배분, 쉬는 시간, 막혔던 단계 무엇이든 좋습니다.</small><textarea id="worse" maxlength="1500"></textarea></div>
-    <div class="q"><label class="t" for="made">오늘 만드신 프로그램</label><small>이름과 한 줄 설명</small><input type="text" id="made" maxlength="600"></div>
+    <div class="q"><label class="t" for="made" id="tMade">오늘 만드신 프로그램</label><small>이름과 한 줄 설명</small><input type="text" id="made" maxlength="600"></div>
     <div class="q"><label class="t" for="next">다음에 만들어 보고 싶은 것</label><textarea id="next" maxlength="1500" style="min-height:80px"></textarea></div>
-    <div class="q"><span class="t">병원 방문 세팅(과정 2)에 관심이 있으십니까?</span><div class="opts">
+    <div class="q"><span class="t" id="tCourse2">병원 방문 세팅(과정 2)에 관심이 있으십니까?</span><div class="opts">
       <label><input type="radio" name="course2" value="있음">있다</label><label><input type="radio" name="course2" value="없음">없다</label><label><input type="radio" name="course2" value="모름">아직 모르겠다</label></div></div>
 
     <h2 class="part"><span>3</span>한마디</h2>
-    <div class="q"><label class="t" for="quote">다른 원장님께 한마디</label><small>교육 소개에 실어도 되는 문장이면 더 고맙겠습니다.</small><textarea id="quote" maxlength="600" style="min-height:80px"></textarea></div>
+    <div class="q"><label class="t" for="quote" id="tQuote">다른 원장님께 한마디</label><small>교육 소개에 실어도 되는 문장이면 더 고맙겠습니다.</small><textarea id="quote" maxlength="600" style="min-height:80px"></textarea></div>
     <div class="q"><span class="t">위 한마디를 교육 소개에 써도 될까요?</span><div class="opts stack">
       <label id="pubReal"><input type="radio" name="publish" value="실명">네, 이름과 함께</label>
       <label><input type="radio" name="publish" value="익명">네, 써도 됩니다</label>
@@ -112,7 +112,24 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
   document.querySelectorAll("[data-five]").forEach(function(box){for(var i=1;i<=5;i++)box.appendChild(radio(box.dataset.five,String(i),String(i)))});
   for(var i=0;i<=10;i++)el("score").appendChild(radio("score",String(i),String(i)));
   var c=new URLSearchParams(location.search).get("c");
-  if(c){var ci=document.querySelector('input[name="cohort"][value="'+c+'"]');if(ci)ci.checked=true}
+  // 병원 방문 교육(과정 2)은 주소의 ?c=로 그 병원 전용 문항을 띄운다. cohort 값은 서버 상한(10자) 안에서 짧게.
+  var VISITS={
+    "dasom":{cohort:"다솜방문",name:"다솜동물메디컬센터 방문 교육 · 2026년 11월 20일",
+      theory:"이론과 시연 (AI로 프로그램을 만든다는 것)",practice:"실습 (키트 설치·첫 앱·병원 프로그램 함께 만들기)",
+      venue:"교육 장소·자리·인터넷 (병원 안)",notice:"교육 전 안내 (준비할 것·키트 코드)"}
+  };
+  var visit=c&&VISITS[c];
+  if(visit){
+    el("cohortQ").innerHTML='<span class="t">교육</span><p style="margin:4px 0 0">'+visit.name+'</p><input type="radio" name="cohort" value="'+visit.cohort+'" checked hidden>';
+    el("h1").textContent="이번 교육, 솔직하게 말씀해 주십시오";
+    el("lead").textContent="다음 방문 교육의 시간표와 진행 순서를 고치는 데 씁니다. 3분이면 됩니다. 성함은 받지 않으니 누가 썼는지 알 수 없습니다. 편하게 적어 주십시오.";
+    el("tOverall").textContent="이번 교육 전체에 얼마나 만족하십니까?";
+    el("nmTheory").textContent=visit.theory;el("nmPractice").textContent=visit.practice;el("nmVenue").textContent=visit.venue;el("nmNotice").textContent=visit.notice;
+    el("tScore").textContent="다른 병원에 이 교육을 권하시겠습니까?";
+    el("tMade").textContent="교육에서 함께 만든 프로그램";
+    el("tCourse2").textContent="교육 뒤 추가 도움(원격 지원·추가 방문)이 필요하십니까?";
+    el("tQuote").textContent="다른 병원에 한마디";
+  }else if(c){var ci=document.querySelector('input[name="cohort"][value="'+c+'"]');if(ci)ci.checked=true}
   var f=el("sv"),m=el("msg");
   function pick(n){var x=f.querySelector('input[name="'+n+'"]:checked');return x?x.value:""}
   function v(id){return el(id).value.trim()}
@@ -142,12 +159,12 @@ footer{margin-top:34px;font-size:.82rem;color:var(--ink-3);border-top:1px solid 
       venue:pick("venue"),notice:pick("notice"),pace:pick("pace"),level:pick("level"),score:pick("score"),best:v("best"),worse:v("worse"),
       made:v("made"),next:v("next"),course2:pick("course2"),quote:v("quote"),publish:pick("publish"),website:v("website")};
     if(!d.overall&&!d.score&&!d.best&&!d.worse){m.textContent="전체 만족도나 의견을 하나 이상 남겨 주십시오.";return}
-    var miss=[["overall","전체 만족도"],["theory","이론"],["practice","실습"],["venue","강의실·자리·인터넷"],["notice","수업 전 안내"],["pace","진행 속도"],["level","난이도"],["score","추천 점수"]].filter(function(x){return !d[x[0]]}).map(function(x){return x[1]});
+    var miss=[["overall","전체 만족도"],["theory","이론"],["practice","실습"],["venue",visit?"교육 장소·인터넷":"강의실·자리·인터넷"],["notice",visit?"교육 전 안내":"수업 전 안내"],["pace","진행 속도"],["level","난이도"],["score","추천 점수"]].filter(function(x){return !d[x[0]]}).map(function(x){return x[1]});
     if(miss.length&&!confirm("아직 고르지 않은 항목이 있습니다: "+miss.join(", ")+"\n그래도 지금 보낼까요?")){m.textContent="";return}
     m.textContent="보내는 중…";f.querySelector(".send").disabled=true;
     fetch("/api/ai-review",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(d)})
       .then(function(x){return x.json()}).then(function(j){
-        if(j.ok){f.hidden=true;el("done").hidden=false;if(mode==="anon")el("doneMsg").textContent="성함 없이 받았습니다. 남겨 주신 말씀은 다음 기수에 그대로 반영하겠습니다.";window.scrollTo(0,0)}
+        if(j.ok){f.hidden=true;el("done").hidden=false;if(mode==="anon")el("doneMsg").textContent="성함 없이 받았습니다. 남겨 주신 말씀은 다음 "+(visit?"방문 교육":"기수")+"에 그대로 반영하겠습니다.";window.scrollTo(0,0)}
         else{m.textContent="보내지 못했습니다. 잠시 뒤 다시 눌러 주십시오.";f.querySelector(".send").disabled=false}
       }).catch(function(){m.textContent="연결이 안 됩니다. 잠시 뒤 다시 눌러 주십시오.";f.querySelector(".send").disabled=false});
   });
