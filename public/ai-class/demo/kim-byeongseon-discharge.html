@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f3f1ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#181a1b" media="(prefers-color-scheme: dark)">
+<title>퇴원 안내문 · 김병선 원장님을 위한 시제품</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* 경영 장부와 같은 종이 계열. 안내문은 보호자 손에 들려 나가는 종이라 바탕을 조금 더 희게, 강조색은 짙은 청록 한 가지. */
+:root{
+  --paper:#f3f1ec; --sheet:#fdfcf9; --sunk:#e9e6de;
+  --ink:#1b1d1e; --ink-2:#43474a; --ink-3:#656a6e;
+  --rule:#d5d1c6; --rule-2:#e6e2d9; --rule-strong:#1b1d1e;
+  --accent:#1f5568; --accent-wash:#e0eaed; --down:#8b3a1f;
+  --serif:"Noto Serif KR","AppleMyungjo","Batang",serif;
+  --sans:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --rail:260px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --paper:#181a1b; --sheet:#1f2223; --sunk:#272a2c;
+  --ink:#e9e7e2; --ink-2:#c2c0ba; --ink-3:#9c9b96;
+  --rule:#3a3d3f; --rule-2:#2c2f31; --rule-strong:#e9e7e2;
+  --accent:#8fc1d0; --accent-wash:#1d3138; --down:#e39274;
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;line-height:1.3}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.n{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.idline{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding:8px 16px;font-size:13px;color:var(--ink-3);border-bottom:1px solid var(--rule)}
+.idline b{color:var(--ink);font-weight:500}
+
+.frame{display:block}
+.rail{padding:20px 16px 0}
+.rail .hosp{font-size:13px;color:var(--ink-3)}
+.rail h1{font-family:var(--serif);font-weight:700;font-size:24px;margin-top:2px}
+.rail .tag{font-size:14px;color:var(--ink-2);margin-top:4px}
+nav.views{display:flex;margin:16px -16px 0;padding:0 16px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none}
+nav.views::-webkit-scrollbar{display:none}
+nav.views button{border:0;background:none;padding:10px 0 11px;margin-right:22px;font-size:16px;color:var(--ink-3);white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
+nav.views button[aria-current="page"]{color:var(--ink);font-weight:700;border-bottom-color:var(--accent)}
+.rail .note{display:none}
+main{padding:20px 16px 48px;min-width:0}
+@media (min-width:960px){
+  .frame{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);min-height:calc(100vh - 76px)}
+  .rail{position:sticky;top:0;align-self:start;height:100vh;padding:32px 28px;border-right:1px solid var(--rule);display:flex;flex-direction:column}
+  .rail h1{font-size:28px}
+  nav.views{flex-direction:column;margin:36px 0 0;padding:0;border:0;border-top:1px solid var(--rule)}
+  nav.views button{margin:0;padding:12px 0;text-align:left;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center}
+  nav.views button[aria-current="page"]{border-bottom-color:var(--rule);color:var(--accent)}
+  nav.views button[aria-current="page"]::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .rail .note{display:block;margin-top:auto;font-size:13px;color:var(--ink-3);line-height:1.55}
+  main{padding:36px 48px 64px;max-width:1040px}
+  .m-note{display:none}
+}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border-radius:4px;border:1px solid var(--rule);background:var(--sheet);font-size:15px;font-weight:500;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--ink-3)}
+.btn.solid{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn.quiet{border-color:transparent;background:none;color:var(--accent);padding:0 6px}
+.btn.danger{color:var(--down)}
+.btn.sm{min-height:36px;font-size:14px;padding:0 10px}
+.btn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.inp,.ta,select.inp{width:100%;min-height:44px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet);padding:8px 10px;font-size:16px}
+.ta{min-height:96px;resize:vertical;line-height:1.6}
+.inp:focus,.ta:focus{border-color:var(--ink-3);outline:none;box-shadow:0 0 0 2px var(--accent-wash)}
+.ta::placeholder,.inp::placeholder{color:var(--ink-3);opacity:.85}
+select.inp{appearance:none;-webkit-appearance:none;padding-right:34px;background-image:linear-gradient(45deg,transparent 50%,var(--ink-3) 50%),linear-gradient(135deg,var(--ink-3) 50%,transparent 50%);background-position:calc(100% - 17px) 52%,calc(100% - 12px) 52%;background-size:5px 5px;background-repeat:no-repeat}
+
+section.view{display:none}
+section.view.on{display:block}
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 20px;padding-bottom:14px;border-bottom:2px solid var(--rule-strong)}
+.head .eyebrow{font-size:13px;color:var(--ink-3);letter-spacing:.04em}
+.head h2{font-family:var(--serif);font-weight:700;font-size:26px}
+@media (min-width:960px){.head h2{font-size:32px}}
+.head .acts{display:flex;flex-wrap:wrap;gap:8px}
+.sub{margin-top:32px}
+.sub-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px;padding-bottom:8px;border-bottom:1px solid var(--rule-strong)}
+.sub-h h3{font-family:var(--serif);font-weight:700;font-size:19px}
+.sub-h .unit{font-size:13px;color:var(--ink-3)}
+.lede{font-size:15px;color:var(--ink-2);margin-top:12px;max-width:64ch}
+.hint{font-size:14px;color:var(--ink-3);margin-top:8px}
+.row-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+
+/* 목록 */
+.doclist{list-style:none;margin:0;padding:0}
+.doclist li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:14px 0;border-bottom:1px solid var(--rule-2);align-items:center}
+.doclist .nm{font-family:var(--serif);font-weight:700;font-size:18px}
+.doclist .nm small{font-family:var(--sans);font-weight:400;font-size:14px;color:var(--ink-3);margin-left:6px}
+.doclist .meta{font-size:14px;color:var(--ink-2)}
+.doclist .st{font-size:13px;color:var(--ink-3)}
+.doclist .st b{font-weight:500;color:var(--accent)}
+.doclist .ops{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.search{max-width:360px;margin-top:16px}
+.empty{padding:28px 0;color:var(--ink-3)}
+
+/* 작성 */
+.grid2{display:grid;grid-template-columns:1fr;gap:12px 24px;margin-top:14px}
+@media (min-width:700px){.grid2{grid-template-columns:1fr 1fr}.grid2 .wide{grid-column:1/-1}}
+.f label,.f .lb{display:block;font-size:14px;color:var(--ink-2);margin-bottom:4px}
+.f .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sec{padding:16px 0;border-bottom:1px solid var(--rule-2)}
+.sec-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;margin-bottom:8px}
+.sec-top h4{margin:0;font-size:17px;font-weight:700}
+.sec-top .r{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chk{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-2);min-height:36px}
+.chk input{width:18px;height:18px;accent-color:var(--accent)}
+.sec.off .ta,.sec.off .pick{opacity:.45}
+.ai-line{font-size:14px;color:var(--ink-2);margin-top:16px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--accent-wash)}
+.saved{font-size:13px;color:var(--ink-3)}
+
+/* 미리보기 */
+.mode{display:inline-flex;border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.mode button{border:0;background:var(--sheet);min-height:44px;padding:0 16px;font-size:15px}
+.mode button+button{border-left:1px solid var(--rule)}
+.mode button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.stage{margin-top:20px;background:var(--sunk);padding:16px;border-radius:4px}
+@media (max-width:520px){.stage{margin-left:-16px;margin-right:-16px;border-radius:0;padding:12px}}
+
+/* 안내문 종이 (A4) — 화면 모드와 관계없이 흰 종이로 보인다 */
+.a4{background:#fff;color:#1a1a1a;max-width:794px;margin:0 auto;padding:44px 48px 40px;font-family:var(--sans);font-size:14.5px;line-height:1.65;box-shadow:0 1px 0 #cfcac0}
+@media (max-width:620px){.a4{padding:24px 18px}}
+.a4 .lt{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:2px solid #1a1a1a;padding-bottom:10px}
+.a4 .lt .h{font-size:12.5px;color:#555}
+.a4 .lt h1{font-family:var(--serif);font-size:24px;font-weight:700;margin-top:2px}
+.a4 .lt .hn{text-align:right;font-size:12.5px;color:#555;line-height:1.45}
+.a4 .lt .hn b{display:block;font-family:var(--serif);font-size:15px;color:#1a1a1a}
+.a4 table.pt{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px}
+.a4 table.pt th,.a4 table.pt td{border:1px solid #bbb;padding:6px 8px;text-align:left;vertical-align:top}
+.a4 table.pt th{width:15%;background:#f3f3f1;font-weight:500;white-space:nowrap}
+.a4 .s{margin-top:16px;break-inside:avoid}
+.a4 .s h3{font-family:var(--serif);font-size:15.5px;font-weight:700;padding-bottom:3px;border-bottom:1px solid #999;margin-bottom:6px}
+.a4 .s p{white-space:pre-line}
+.a4 .blank{height:26px;border-bottom:1px solid #ccc}
+.a4 .nx{display:flex;flex-wrap:wrap;gap:4px 20px;font-size:15px}
+.a4 .nx b{font-family:var(--serif)}
+.a4 .sign{display:flex;justify-content:flex-end;gap:24px;margin-top:28px;font-size:13.5px}
+.a4 .sign span{min-width:180px;border-bottom:1px solid #1a1a1a;padding-bottom:2px}
+.a4 .tel{margin-top:18px;padding-top:8px;border-top:1px solid #bbb;font-size:12.5px;color:#555}
+
+/* 휴대폰용 */
+.phone{max-width:380px;margin:0 auto;background:var(--sheet);border:1px solid var(--rule);border-radius:18px;padding:22px 18px 26px;font-size:16px;line-height:1.7}
+.phone .ph-h{font-size:13px;color:var(--ink-3)}
+.phone h1{font-family:var(--serif);font-size:22px;font-weight:700;margin:2px 0 4px}
+.phone .who{font-size:15px;color:var(--ink-2)}
+.phone .s{margin-top:18px}
+.phone .s h3{font-size:16px;font-weight:700;color:var(--accent);margin-bottom:2px}
+.phone .s p{white-space:pre-line}
+.phone .nx{margin-top:18px;padding:12px;border:1px solid var(--rule);border-radius:8px}
+.phone .nx b{display:block;font-family:var(--serif);font-size:19px}
+.phone .tel{margin-top:20px;font-size:14px;color:var(--ink-3)}
+
+/* 문장 모음 */
+.phr{list-style:none;margin:0;padding:0}
+.phr li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;padding:12px 0;border-bottom:1px solid var(--rule-2);align-items:start}
+.phr .tx{white-space:pre-line}
+.phr .tg{font-size:13px;color:var(--ink-3)}
+.phr .ops{display:flex;gap:6px}
+.addphr{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}
+@media (min-width:700px){.addphr{grid-template-columns:200px minmax(0,1fr) auto;align-items:start}}
+
+/* 문장 고르기 창 */
+.sheet{position:fixed;inset:0;background:rgba(20,20,20,.45);display:none;z-index:40;align-items:flex-end;justify-content:center}
+.sheet.on{display:flex}
+.sheet .box{background:var(--paper);width:100%;max-width:640px;max-height:82vh;overflow:auto;border-radius:12px 12px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom))}
+@media (min-width:700px){.sheet{align-items:center}.sheet .box{border-radius:8px;padding:22px 24px}}
+.sheet .box h3{font-family:var(--serif);font-size:19px}
+.sheet .opt{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--rule-2);background:none;padding:12px 0;font-size:15px;line-height:1.6}
+.sheet .opt:hover{color:var(--accent)}
+.sheet .opt small{display:block;font-size:12.5px;color:var(--ink-3)}
+
+footer.foot{margin-top:56px;padding-top:14px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-3)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--paper);font-size:15px;padding:11px 18px;border-radius:4px;opacity:0;pointer-events:none;transition:.2s;max-width:calc(100% - 32px);text-align:center;z-index:60}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media print{
+  @page{size:A4;margin:12mm}
+  body{background:#fff}
+  body>*:not(.frame){display:none!important}
+  .rail,.head,.lede,.mode-row,footer.foot,section.view:not(#v-preview),.m-note{display:none!important}
+  .frame{display:block}
+  main{padding:0;max-width:none}
+  .stage{background:none;padding:0;margin:0}
+  .a4{box-shadow:none;padding:0;max-width:none;font-size:11pt}
+  .phone{display:none}
+}
+@media (prefers-color-scheme:dark){.edu-note{background:#202325!important;color:#aaa9a3!important;border-bottom-color:#3a3d3f!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="edu-note" style="background:#f3f1ec;color:#5b5a55;font:13px/1.5 -apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;padding:8px 16px;text-align:center;border-bottom:1px solid #e3e0d8">교육용 예시 화면입니다. 진료 판단에 쓰는 프로그램이 아니며, 판매하지 않습니다.</div>
+<div class="idline"><span><b>김병선 원장님을 위한 시제품</b> · 시흥24시센트럴동물의료센터</span><span>환자·보호자·수의사 이름은 모두 지어낸 예시입니다.</span></div>
+
+<div class="frame">
+<aside class="rail">
+  <div class="hosp">시흥24시센트럴동물의료센터</div>
+  <h1>퇴원 안내문</h1>
+  <p class="tag">수술·입원 환자 맞춤 안내</p>
+  <nav class="views" aria-label="화면">
+    <button data-view="list" aria-current="page">안내문 목록</button>
+    <button data-view="write">작성</button>
+    <button data-view="preview">미리보기·인쇄</button>
+    <button data-view="phrases">자주 쓰는 문장</button>
+  </nav>
+  <p class="note">안내문의 내용은 담당 수의사가 직접 적습니다. 이 화면은 칸의 순서와 모양만 잡아 드립니다. 입력하신 내용은 이 기기의 브라우저에만 저장됩니다.</p>
+</aside>
+
+<main>
+<!-- 목록 -->
+<section class="view on" id="v-list">
+  <div class="head">
+    <div><div class="eyebrow">저장한 안내문</div><h2>안내문 목록</h2></div>
+    <div class="acts"><button class="btn solid" data-act="new">새 안내문</button></div>
+  </div>
+  <input class="inp search" id="q" type="search" placeholder="환자 이름·보호자·차트 번호로 찾기" aria-label="안내문 찾기">
+  <ul class="doclist" id="doclist"></ul>
+</section>
+
+<!-- 작성 -->
+<section class="view" id="v-write">
+  <div class="head">
+    <div><div class="eyebrow">작성 중</div><h2 id="w-title">—</h2></div>
+    <div class="acts">
+      <button class="btn" data-act="to-preview">미리보기</button>
+    </div>
+  </div>
+  <p class="lede">칸을 고치시면 바로 저장됩니다. <span class="saved" id="saved-at"></span></p>
+
+  <div class="sub">
+    <div class="sub-h"><h3>환자</h3></div>
+    <div class="grid2">
+      <div class="f"><label for="p-name">환자 이름</label><input class="inp" id="p-name" data-k="patient.name"></div>
+      <div class="f"><label for="p-chart">차트 번호</label><input class="inp" id="p-chart" data-k="patient.chart"></div>
+      <div class="f"><label for="p-sp">종 · 품종</label><div class="pair"><select class="inp" id="p-sp" data-k="patient.species"><option>개</option><option>고양이</option><option>기타</option></select><input class="inp" data-k="patient.breed" aria-label="품종" placeholder="품종"></div></div>
+      <div class="f"><label for="p-age">나이 · 성별</label><div class="pair"><input class="inp" id="p-age" data-k="patient.age" placeholder="예: 5살"><input class="inp" data-k="patient.sex" aria-label="성별" placeholder="예: 수컷(중성화)"></div></div>
+      <div class="f"><label for="p-owner">보호자</label><input class="inp" id="p-owner" data-k="patient.owner"></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-h"><h3>진료</h3></div>
+    <div class="grid2">
+      <div class="f"><label for="v-kind">구분</label><select class="inp" id="v-kind" data-k="visit.kind"><option>수술 후 입원</option><option>수술</option><option>입원</option></select></div>
+      <div class="f"><label for="v-vet">담당 수의사</label><input class="inp" id="v-vet" data-k="visit.vet" list="vet-list"><datalist id="vet-list"></datalist></div>
+      <div class="f wide"><label for="v-title">진단명 · 수술명</label><input class="inp" id="v-title" data-k="visit.title" placeholder="보호자께 보여 드릴 이름으로 적어 주십시오"></div>
+      <div class="f"><label for="v-in">입원일 · 퇴원일</label><div class="pair"><input class="inp n" id="v-in" type="date" data-k="visit.admit"><input class="inp n" type="date" data-k="visit.discharge" aria-label="퇴원일"></div></div>
+      <div class="f"><label for="v-ix">수술일</label><input class="inp n" id="v-ix" type="date" data-k="visit.surgery"></div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <div class="sub-h"><h3>안내 내용</h3><span class="unit">쓰지 않을 칸은 체크를 풀어 주십시오</span></div>
+    <div id="secs"></div>
+    <div class="sec" id="next-sec">
+      <div class="sec-top"><h4>다음 내원</h4></div>
+      <div class="grid2" style="margin-top:0">
+        <div class="f"><label for="n-date">날짜 · 시각</label><div class="pair"><input class="inp n" id="n-date" type="date" data-k="next.date"><input class="inp n" type="time" data-k="next.time" aria-label="시각"></div></div>
+        <div class="f"><label for="n-what">내원 목적</label><input class="inp" id="n-what" data-k="next.what" placeholder="담당 수의사가 적어 주십시오"></div>
+      </div>
+    </div>
+    <p class="ai-line">키트로 만들 때 Claude를 붙이면 진료 기록을 읽고 이 칸들을 자동으로 채울 수 있습니다. 시제품에서는 담당 수의사가 직접 적습니다.</p>
+  </div>
+
+  <div class="sub">
+    <div class="sub-h"><h3>이 안내문</h3></div>
+    <div class="row-actions">
+      <button class="btn" data-act="dup">복사해서 새로 쓰기</button>
+      <button class="btn danger" data-act="del">이 안내문 지우기</button>
+    </div>
+  </div>
+</section>
+
+<!-- 미리보기 -->
+<section class="view" id="v-preview">
+  <div class="head">
+    <div><div class="eyebrow">미리보기</div><h2 id="p-title">—</h2></div>
+    <div class="acts">
+      <button class="btn" data-act="copy">글로 복사</button>
+      <button class="btn solid" data-act="print">A4로 인쇄</button>
+    </div>
+  </div>
+  <div class="row-actions mode-row" style="align-items:center">
+    <div class="mode" role="group" aria-label="보기 방식">
+      <button data-mode="a4" aria-pressed="true">A4 종이</button>
+      <button data-mode="phone" aria-pressed="false">휴대폰</button>
+    </div>
+    <label class="chk"><input type="checkbox" id="blank-lines" checked>A4에서 비어 있는 칸은 손으로 쓸 줄로 인쇄</label>
+  </div>
+  <p class="lede mode-row">휴대폰 보기는 문자나 카카오톡으로 보내실 때의 모양입니다. 「글로 복사」를 누르시면 같은 내용이 글자로 복사됩니다.</p>
+  <div class="stage" id="stage"></div>
+</section>
+
+<!-- 문장 모음 -->
+<section class="view" id="v-phrases">
+  <div class="head">
+    <div><div class="eyebrow">작성할 때 불러 쓰는 문장</div><h2>자주 쓰는 문장</h2></div>
+  </div>
+  <p class="lede">수의사가 자주 쓰는 문장을 담아 두면 작성 화면의 「문장 넣기」에서 바로 불러옵니다. 예시로는 연락·서류 안내만 넣어 두었습니다. 진료 내용에 관한 문장은 원장님 병원에서 쓰시는 표현으로 채워 주십시오.</p>
+  <div class="sub" style="margin-top:20px">
+    <div class="sub-h"><h3>새 문장</h3></div>
+    <div class="addphr">
+      <select class="inp" id="np-sec" aria-label="넣을 칸"></select>
+      <textarea class="ta" id="np-text" rows="2" style="min-height:44px" placeholder="문장을 적어 주십시오" aria-label="새 문장"></textarea>
+      <button class="btn solid" data-act="add-phr">담기</button>
+    </div>
+  </div>
+  <div class="sub">
+    <div class="sub-h"><h3>담아 둔 문장</h3><span class="unit" id="phr-count"></span></div>
+    <ul class="phr" id="phrlist"></ul>
+  </div>
+</section>
+
+<p class="hint m-note">입력하신 내용은 이 기기의 브라우저에만 저장됩니다.</p>
+<footer class="foot">원장을 위한 AI 실전 교육 · 교육 당일 원장님 병원의 안내문 양식에 맞게 함께 고칩니다. <button class="btn quiet sm" data-act="reset">예시로 되돌리기</button></footer>
+</main>
+</div>
+
+<div class="sheet" id="pick" role="dialog" aria-modal="true" aria-labelledby="pick-h">
+  <div class="box">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <h3 id="pick-h">문장 넣기</h3>
+      <button class="btn sm" data-act="close-pick">닫기</button>
+    </div>
+    <p class="hint" id="pick-sub"></p>
+    <div id="pick-list" style="margin-top:8px"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="kbs-discharge-v1";
+var HOSP={name:"시흥24시센트럴동물의료센터",tel:"031-000-0000 (예시 번호)"};
+var SECS=[
+  ["summary","이번 진료 요약","예: 어떤 진료를 받았고 입원 중 어떻게 지냈는지"],
+  ["meds","집에서 드릴 약","예: 먹이는 시간, 먹이는 방법, 남은 약 처리"],
+  ["wound","상처·붕대 관리","예: 확인할 것, 넥칼라, 씻기기"],
+  ["food","식사와 물","예: 언제부터, 무엇을, 얼마나"],
+  ["activity","운동과 생활","예: 산책, 계단, 다른 동물과 지내기"],
+  ["watch","바로 연락 주셔야 하는 증상","담당 수의사가 이 환자에 맞게 적어 주십시오"],
+  ["etc","그 밖에 전해 드릴 말씀",""]
+];
+var SECNAME={};SECS.forEach(function(s){SECNAME[s[0]]=s[1]});SECNAME.next="다음 내원";
+var VETS=["한도윤","서지우","문채원","오태경","남궁별","하은솔","임시현"];
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function pad(n){return (n<10?"0":"")+n}
+function uid(){return "d"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function blankSecs(){var o={};SECS.forEach(function(s){o[s[0]]={on:true,text:""}});return o}
+
+function seed(){
+  function doc(id,p,v,texts,next,upd){var s=blankSecs();Object.keys(texts).forEach(function(k){s[k].text=texts[k]});return {id:id,updated:upd,patient:p,visit:v,sections:s,next:next}}
+  var d1=doc("seed1",{name:"보리",chart:"24-03188",species:"개",breed:"말티즈",age:"5살",sex:"수컷(중성화)",owner:"정○○"},
+    {kind:"수술 후 입원",vet:"한도윤",title:"왼쪽 뒷다리 슬개골 탈구 교정 수술",admit:"2026-11-18",discharge:"2026-11-21",surgery:"2026-11-18"},
+    {summary:"11월 18일에 수술을 받고 사흘 동안 입원한 뒤 오늘 퇴원합니다. 입원 중 경과는 퇴원하실 때 담당 수의사가 설명드렸습니다.",
+     meds:"약 이름과 먹이는 양·횟수는 함께 드린 처방전을 참고해 주십시오.\n약을 먹이기 어려우시면 병원으로 전화 주십시오. 먹이는 방법을 다시 알려 드립니다.",
+     etc:"궁금하신 점은 언제든 병원으로 전화 주십시오. (예시) 24시간 전화를 받습니다.\n다음 내원 때 이 안내문을 함께 가져와 주십시오."},
+    {date:"2026-11-28",time:"10:30",what:"수술 부위 확인"},"2026-11-21T11:20:00");
+  d1.sections.watch.text="아래 증상이 보이면 시간과 관계없이 바로 전화 주십시오.";
+  var d2=doc("seed2",{name:"나비",chart:"22-11802",species:"고양이",breed:"코리안 숏헤어",age:"8살",sex:"암컷(중성화)",owner:"김○○"},
+    {kind:"입원",vet:"서지우",title:"구토와 식욕 저하로 입원 치료",admit:"2026-11-17",discharge:"2026-11-20",surgery:""},
+    {summary:"11월 17일부터 사흘 동안 입원해 치료를 받았습니다. 검사 결과와 경과는 퇴원하실 때 담당 수의사가 설명드렸습니다.",
+     meds:"약 이름과 먹이는 양·횟수는 함께 드린 처방전을 참고해 주십시오.",
+     etc:"내원 시간을 바꾸셔야 하면 하루 전까지 전화 주십시오."},
+    {date:"2026-11-24",time:"15:00",what:"재진"},"2026-11-20T17:05:00");
+  d2.sections.wound.on=false;d2.sections.activity.on=false;
+  var d3=doc("seed3",{name:"콩이",chart:"25-00417",species:"개",breed:"푸들",age:"3살",sex:"암컷",owner:"이○○"},
+    {kind:"수술 후 입원",vet:"문채원",title:"",admit:"2026-11-21",discharge:"2026-11-23",surgery:"2026-11-21"},
+    {},{date:"",time:"",what:""},"2026-11-22T09:10:00");
+  var phrases=[
+    ["meds","약 이름과 먹이는 양·횟수는 함께 드린 처방전을 참고해 주십시오."],
+    ["meds","약을 먹이기 어려우시면 병원으로 전화 주십시오. 먹이는 방법을 다시 알려 드립니다."],
+    ["summary","입원 중 경과는 퇴원하실 때 담당 수의사가 설명드렸습니다."],
+    ["watch","아래 증상이 보이면 시간과 관계없이 바로 전화 주십시오."],
+    ["etc","궁금하신 점은 언제든 병원으로 전화 주십시오. (예시) 24시간 전화를 받습니다."],
+    ["etc","다음 내원 때 이 안내문을 함께 가져와 주십시오."],
+    ["etc","내원 시간을 바꾸셔야 하면 하루 전까지 전화 주십시오."]
+  ].map(function(a,i){return {id:"p"+i,sec:a[0],text:a[1]}});
+  return {v:1,docs:[d1,d2,d3],phrases:phrases,cur:"seed1",mode:"a4",blank:true,savedAt:null};
+}
+var S;
+function load(){try{var o=JSON.parse(localStorage.getItem(KEY)||"null");if(o&&o.docs&&o.phrases){S=o;return}}catch(e){}S=seed()}
+var saveT;
+function save(){clearTimeout(saveT);saveT=setTimeout(function(){try{S.savedAt=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(S));renderSaved()}catch(e){toast("이 브라우저에는 저장할 수 없습니다. 개인 정보 보호 모드인지 확인해 주십시오.")}},250)}
+function renderSaved(){var el=$("#saved-at");if(!S.savedAt){el.textContent="";return}var d=new Date(S.savedAt);el.textContent="마지막 저장 "+(d.getMonth()+1)+"월 "+d.getDate()+"일 "+pad(d.getHours())+":"+pad(d.getMinutes())}
+function curDoc(){for(var i=0;i<S.docs.length;i++)if(S.docs[i].id===S.cur)return S.docs[i];return S.docs[0]||null}
+function dlabel(s){if(!s)return "";var p=s.split("-");return (+p[1])+"월 "+(+p[2])+"일"}
+function dfull(s){if(!s)return "";var p=s.split("-"),d=new Date(+p[0],+p[1]-1,+p[2]);return p[0]+"년 "+(+p[1])+"월 "+(+p[2])+"일 ("+"일월화수목금토"[d.getDay()]+")"}
+function getK(o,k){var p=k.split(".");return (o[p[0]]||{})[p[1]]}
+function setK(o,k,v){var p=k.split(".");o[p[0]]=o[p[0]]||{};o[p[0]][p[1]]=v}
+function docTitle(d){return (d.patient.name||"이름 없는 환자")+" 퇴원 안내문"}
+
+/* ---------- 화면 전환 + 뒤로가기 ---------- */
+var nav={tab:"list",sheet:false},FIRST="list";
+function show(tab){
+  nav.tab=tab;
+  $$("section.view").forEach(function(s){s.classList.toggle("on",s.id==="v-"+tab)});
+  $$("nav.views button").forEach(function(b){if(b.dataset.view===tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+  render();window.scrollTo(0,0);
+}
+function go(tab){if(nav.sheet){closeSheet()}if(tab===nav.tab)return;history.pushState({app:1,tab:tab,doc:S.cur},"");show(tab)}
+history.replaceState({app:1,base:1},"");
+history.pushState({app:1,tab:FIRST},"");
+window.addEventListener("popstate",function(e){
+  var s=e.state||{};
+  if(nav.sheet&&!s.sheet)closeSheet();
+  if(!s.app||s.base){
+    history.pushState({app:1,tab:FIRST},"");
+    if(nav.tab!==FIRST)show(FIRST);else toast("앱을 닫으시려면 홈 화면으로 나가 주십시오");
+    return;
+  }
+  var changed=false;
+  if(s.doc&&s.doc!==S.cur&&S.docs.some(function(d){return d.id===s.doc})){S.cur=s.doc;changed=true}
+  if(s.sheet){openSheet(s.sheet,true);return}
+  if(s.tab&&s.tab!==nav.tab)show(s.tab);else if(changed)render();
+});
+
+/* ---------- 그리기 ---------- */
+function render(){
+  if(nav.tab==="list")renderList();
+  if(nav.tab==="write")renderWrite();
+  if(nav.tab==="preview")renderPreview();
+  if(nav.tab==="phrases")renderPhrases();
+}
+function filled(d){var n=0,t=0;SECS.forEach(function(s){if(d.sections[s[0]].on){t++;if(d.sections[s[0]].text.trim())n++}});return [n,t]}
+function renderList(){
+  var q=($("#q").value||"").trim();
+  var docs=S.docs.slice().sort(function(a,b){return (b.updated||"").localeCompare(a.updated||"")}).filter(function(d){
+    if(!q)return true;return [d.patient.name,d.patient.owner,d.patient.chart,d.visit.title,d.visit.vet].join(" ").indexOf(q)>=0});
+  if(!docs.length){$("#doclist").innerHTML='<li class="empty" style="display:block">'+(q?"찾는 안내문이 없습니다.":"아직 안내문이 없습니다. 「새 안내문」을 눌러 주십시오.")+'</li>';return}
+  $("#doclist").innerHTML=docs.map(function(d){
+    var f=filled(d),up=d.updated?new Date(d.updated):null;
+    return '<li><div><div class="nm">'+esc(d.patient.name||"이름 없음")+'<small>'+esc([d.patient.species,d.patient.breed].filter(Boolean).join(" · "))+'</small></div>'+
+      '<div class="meta">'+esc(d.visit.title||"진단명·수술명 미입력")+'</div>'+
+      '<div class="st">'+esc(d.visit.kind)+' · 퇴원 '+(d.visit.discharge?dlabel(d.visit.discharge):"미정")+' · 담당 '+esc(d.visit.vet||"—")+' · 칸 <b>'+f[0]+'/'+f[1]+'</b> 작성'+(up?' · 고친 때 '+(up.getMonth()+1)+'/'+up.getDate()+' '+pad(up.getHours())+':'+pad(up.getMinutes()):"")+'</div></div>'+
+      '<div class="ops"><button class="btn sm" data-open="'+d.id+'">작성</button><button class="btn sm" data-prev="'+d.id+'">미리보기</button></div></li>';
+  }).join("");
+}
+function renderWrite(){
+  var d=curDoc();if(!d){S.docs.push(newDoc());S.cur=S.docs[S.docs.length-1].id;d=curDoc()}
+  $("#w-title").textContent=docTitle(d);
+  $("#vet-list").innerHTML=VETS.map(function(v){return '<option value="'+v+'">'}).join("");
+  $$("[data-k]").forEach(function(el){var v=getK(d,el.dataset.k);el.value=v==null?"":v});
+  $("#secs").innerHTML=SECS.map(function(s){
+    var st=d.sections[s[0]];
+    return '<div class="sec'+(st.on?"":" off")+'" data-sec="'+s[0]+'"><div class="sec-top"><h4 id="h-'+s[0]+'">'+s[1]+'</h4><div class="r">'+
+      '<label class="chk"><input type="checkbox" data-on="'+s[0]+'"'+(st.on?" checked":"")+'>안내문에 넣기</label>'+
+      '<button class="btn sm pick" data-pick="'+s[0]+'">문장 넣기</button></div></div>'+
+      '<textarea class="ta" data-sec-t="'+s[0]+'" aria-labelledby="h-'+s[0]+'" placeholder="'+esc(s[2]?"담당 수의사가 적어 주십시오. "+s[2]:"담당 수의사가 적어 주십시오.")+'">'+esc(st.text)+'</textarea></div>';
+  }).join("");
+  renderSaved();
+}
+function newDoc(){var t=new Date(),ds=t.getFullYear()+"-"+pad(t.getMonth()+1)+"-"+pad(t.getDate());
+  return {id:uid(),updated:new Date().toISOString(),patient:{name:"",chart:"",species:"개",breed:"",age:"",sex:"",owner:""},visit:{kind:"수술 후 입원",vet:"",title:"",admit:"",discharge:ds,surgery:""},sections:blankSecs(),next:{date:"",time:"",what:""}}}
+function touch(d){d.updated=new Date().toISOString();save()}
+
+/* 안내문 본문 */
+function periodText(d){var v=d.visit,a=[];
+  if(v.admit&&v.discharge)a.push("입원 "+dlabel(v.admit)+" – 퇴원 "+dlabel(v.discharge));else if(v.discharge)a.push("퇴원 "+dlabel(v.discharge));
+  if(v.surgery)a.push("수술 "+dlabel(v.surgery));return a.join(" · ")}
+function nextText(d){var n=d.next||{};if(!n.date)return "";return dfull(n.date)+(n.time?" "+n.time:"")}
+function a4(d){
+  var p=d.patient,v=d.visit,h='<div class="a4" id="sheet"><div class="lt"><div><div class="h">'+esc(v.kind)+' 환자</div><h1>퇴원 안내문</h1></div><div class="hn"><b>'+HOSP.name+'</b>'+HOSP.tel+'</div></div>';
+  h+='<table class="pt"><tr><th>환자</th><td>'+esc(p.name)+'</td><th>차트 번호</th><td>'+esc(p.chart)+'</td></tr>'+
+     '<tr><th>종 · 품종</th><td>'+esc([p.species,p.breed].filter(Boolean).join(" · "))+'</td><th>나이 · 성별</th><td>'+esc([p.age,p.sex].filter(Boolean).join(" · "))+'</td></tr>'+
+     '<tr><th>보호자</th><td>'+esc(p.owner)+'</td><th>담당 수의사</th><td>'+esc(v.vet)+'</td></tr>'+
+     '<tr><th>진단 · 수술</th><td colspan="3">'+esc(v.title)+'</td></tr>'+
+     '<tr><th>기간</th><td colspan="3">'+esc(periodText(d))+'</td></tr></table>';
+  SECS.forEach(function(s){var st=d.sections[s[0]];if(!st.on)return;var t=st.text.trim();
+    if(!t&&!S.blank)return;
+    h+='<div class="s"><h3>'+s[1]+'</h3>'+(t?'<p>'+esc(t)+'</p>':'<div class="blank"></div><div class="blank"></div><div class="blank"></div>')+'</div>'});
+  var nt=nextText(d);
+  h+='<div class="s"><h3>다음 내원</h3>'+(nt?'<div class="nx"><b>'+esc(nt)+'</b><span>'+esc(d.next.what)+'</span></div>':(S.blank?'<div class="blank"></div>':'<p>담당 수의사가 따로 알려 드립니다.</p>'))+'</div>';
+  h+='<div class="sign"><span>담당 수의사 '+esc(v.vet)+'</span><span>보호자 확인</span></div>';
+  h+='<div class="tel">'+HOSP.name+' · '+HOSP.tel+' · 24시간 진료</div></div>';
+  return h;
+}
+function phone(d){
+  var p=d.patient,v=d.visit,h='<div class="phone"><div class="ph-h">'+HOSP.name+'</div><h1>'+esc(p.name||"")+' 퇴원 안내</h1><div class="who">'+esc(v.title)+'<br>'+esc(periodText(d))+' · 담당 '+esc(v.vet)+'</div>';
+  var nt=nextText(d);if(nt)h+='<div class="nx"><span class="hint" style="margin:0">다음 내원</span><b>'+esc(nt)+'</b>'+esc(d.next.what)+'</div>';
+  SECS.forEach(function(s){var st=d.sections[s[0]];if(!st.on||!st.text.trim())return;h+='<div class="s"><h3>'+s[1]+'</h3><p>'+esc(st.text.trim())+'</p></div>'});
+  h+='<div class="tel">'+HOSP.name+' '+HOSP.tel+'</div></div>';return h;
+}
+function plain(d){
+  var p=d.patient,v=d.visit,L=["["+HOSP.name+"] "+(p.name||"")+" 퇴원 안내",""];
+  if(v.title)L.push(v.title);var pt=periodText(d);if(pt)L.push(pt);if(v.vet)L.push("담당 수의사 "+v.vet);
+  var nt=nextText(d);if(nt){L.push("");L.push("■ 다음 내원");L.push(nt+(d.next.what?" · "+d.next.what:""))}
+  SECS.forEach(function(s){var st=d.sections[s[0]];if(!st.on||!st.text.trim())return;L.push("");L.push("■ "+s[1]);L.push(st.text.trim())});
+  L.push("");L.push(HOSP.name+" "+HOSP.tel);return L.join("\n");
+}
+function renderPreview(){
+  var d=curDoc();if(!d){$("#stage").innerHTML='<p class="empty">미리 볼 안내문이 없습니다.</p>';return}
+  $("#p-title").textContent=docTitle(d);
+  $$(".mode button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.mode===S.mode?"true":"false")});
+  $("#blank-lines").checked=!!S.blank;
+  $("#stage").innerHTML=S.mode==="phone"?phone(d):a4(d);
+}
+function renderPhrases(){
+  $("#np-sec").innerHTML=SECS.map(function(s){return '<option value="'+s[0]+'">'+s[1]+'</option>'}).join("");
+  $("#phr-count").textContent=S.phrases.length+"개";
+  if(!S.phrases.length){$("#phrlist").innerHTML='<li class="empty" style="display:block">담아 둔 문장이 없습니다.</li>';return}
+  var order={};SECS.forEach(function(s,i){order[s[0]]=i});
+  $("#phrlist").innerHTML=S.phrases.slice().sort(function(a,b){return order[a.sec]-order[b.sec]}).map(function(p){
+    return '<li><div><div class="tg">'+esc(SECNAME[p.sec]||"")+'</div><div class="tx">'+esc(p.text)+'</div></div><div class="ops"><button class="btn sm danger" data-delphr="'+p.id+'">빼기</button></div></li>'}).join("");
+}
+
+/* 문장 고르기 창 */
+function openSheet(sec,fromPop){
+  if(!fromPop)history.pushState({app:1,tab:nav.tab,doc:S.cur,sheet:sec},"");
+  nav.sheet=sec;
+  var mine=S.phrases.filter(function(p){return p.sec===sec}),other=S.phrases.filter(function(p){return p.sec!==sec});
+  $("#pick-h").textContent=SECNAME[sec]+"에 문장 넣기";
+  $("#pick-sub").textContent="누르시면 칸 끝에 붙습니다. 넣은 뒤 이 환자에 맞게 고쳐 주십시오.";
+  var h=mine.map(function(p){return '<button class="opt" data-ins="'+p.id+'">'+esc(p.text)+'</button>'}).join("");
+  if(!mine.length)h='<p class="hint">이 칸에 담아 둔 문장이 없습니다.</p>';
+  if(other.length)h+='<p class="hint" style="margin-top:16px">다른 칸의 문장</p>'+other.map(function(p){return '<button class="opt" data-ins="'+p.id+'"><small>'+esc(SECNAME[p.sec])+'</small>'+esc(p.text)+'</button>'}).join("");
+  $("#pick-list").innerHTML=h;
+  $("#pick").classList.add("on");
+}
+function closeSheet(){nav.sheet=false;$("#pick").classList.remove("on")}
+
+/* ---------- 입력 ---------- */
+document.addEventListener("input",function(e){
+  var t=e.target,d=curDoc();
+  if(t.id==="q"){renderList();return}
+  if(!d)return;
+  if(t.dataset.k){setK(d,t.dataset.k,t.value);if(t.dataset.k==="patient.name")$("#w-title").textContent=docTitle(d);touch(d);return}
+  if(t.dataset.secT){d.sections[t.dataset.secT].text=t.value;touch(d)}
+});
+document.addEventListener("change",function(e){
+  var t=e.target,d=curDoc();
+  if(t.dataset.on&&d){d.sections[t.dataset.on].on=t.checked;t.closest(".sec").classList.toggle("off",!t.checked);touch(d)}
+  if(t.id==="blank-lines"){S.blank=t.checked;save();renderPreview()}
+});
+document.addEventListener("click",function(e){
+  var t=e.target.closest("button");if(!t)return;
+  if(t.dataset.view){go(t.dataset.view);return}
+  if(t.dataset.open){S.cur=t.dataset.open;save();go("write");return}
+  if(t.dataset.prev){S.cur=t.dataset.prev;save();go("preview");return}
+  if(t.dataset.mode){S.mode=t.dataset.mode;save();renderPreview();return}
+  if(t.dataset.pick){openSheet(t.dataset.pick);return}
+  if(t.dataset.ins){
+    var p=S.phrases.filter(function(x){return x.id===t.dataset.ins})[0],d=curDoc(),sec=nav.sheet;
+    if(p&&d&&sec){var st=d.sections[sec];st.text=st.text.trim()?st.text.replace(/\s+$/,"")+"\n"+p.text:p.text;st.on=true;touch(d)}
+    closeSheet();renderWrite();history.back();
+    var ta=$('[data-sec-t="'+sec+'"]');if(ta){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length)}
+    return;
+  }
+  if(t.dataset.delphr){S.phrases=S.phrases.filter(function(x){return x.id!==t.dataset.delphr});save();renderPhrases();toast("문장을 뺐습니다");return}
+  var act=t.dataset.act;
+  if(act==="close-pick"){history.back()}
+  else if(act==="new"){var nd=newDoc();S.docs.push(nd);S.cur=nd.id;save();go("write");if(nav.tab==="write")renderWrite();setTimeout(function(){$("#p-name").focus()},0)}
+  else if(act==="to-preview"){go("preview")}
+  else if(act==="dup"){var d=curDoc(),c=JSON.parse(JSON.stringify(d));c.id=uid();c.updated=new Date().toISOString();c.patient={name:"",chart:"",species:d.patient.species,breed:"",age:"",sex:"",owner:""};c.next={date:"",time:"",what:""};
+    S.docs.push(c);S.cur=c.id;save();renderWrite();window.scrollTo(0,0);toast("안내 내용만 옮긴 새 안내문입니다. 환자 정보를 넣어 주십시오.")}
+  else if(act==="del"){var d2=curDoc();if(d2&&confirm(docTitle(d2)+"을 지우시겠습니까? 되돌릴 수 없습니다.")){S.docs=S.docs.filter(function(x){return x.id!==d2.id});S.cur=S.docs[0]?S.docs[0].id:null;save();go("list");toast("지웠습니다")}}
+  else if(act==="copy"){var d3=curDoc();if(d3)copyText(plain(d3))}
+  else if(act==="print"){if(S.mode!=="a4"){S.mode="a4";renderPreview()}window.print()}
+  else if(act==="add-phr"){var tx=$("#np-text").value.trim();if(!tx){toast("문장을 적어 주십시오");return}S.phrases.push({id:uid(),sec:$("#np-sec").value,text:tx});$("#np-text").value="";save();renderPhrases();toast("담았습니다")}
+  else if(act==="reset"){if(confirm("입력하신 내용을 모두 지우고 예시로 되돌리시겠습니까?")){clearTimeout(saveT);try{localStorage.removeItem(KEY)}catch(_){}S=seed();render();toast("예시로 되돌렸습니다")}}
+});
+$("#pick").addEventListener("click",function(e){if(e.target===this)history.back()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&nav.sheet)history.back()});
+function copyText(s){
+  function fb(){var ta=document.createElement("textarea");ta.value=s;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("복사했습니다. 문자나 카카오톡에 붙여 넣어 주십시오.")}catch(_){toast("복사하지 못했습니다")}ta.remove()}
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(s).then(function(){toast("복사했습니다. 문자나 카카오톡에 붙여 넣어 주십시오.")},fb);else fb();
+}
+var tT;function toast(m){var el=$("#toast");el.textContent=m;el.classList.add("on");clearTimeout(tT);tT=setTimeout(function(){el.classList.remove("on")},2600)}
+
+load();render();
+window.__discharge={state:function(){return S},plain:function(){return plain(curDoc())}};
+})();
+</script>
+</body>
+</html>

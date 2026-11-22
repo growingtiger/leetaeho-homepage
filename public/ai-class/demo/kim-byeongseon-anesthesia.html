@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f1f1ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#17191c" media="(prefers-color-scheme: dark)">
+<title>마취 체크리스트 · 김병선 원장님을 위한 시제품</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* 경영 장부와 같은 종이 계열. 수술실 기록지라 바탕을 회색 쪽으로 식히고, 강조색은 짙은 남색 한 가지. */
+:root{
+  --paper:#f1f1ee; --sheet:#fbfbf9; --sunk:#e6e6e1;
+  --ink:#1a1c1f; --ink-2:#42464c; --ink-3:#62676e;
+  --rule:#d2d3cd; --rule-2:#e3e3de; --rule-strong:#1a1c1f;
+  --accent:#2f4a6d; --accent-wash:#e2e7ee; --down:#8b3a1f;
+  --serif:"Noto Serif KR","AppleMyungjo","Batang",serif;
+  --sans:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --rail:260px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --paper:#17191c; --sheet:#1e2124; --sunk:#26292d;
+  --ink:#e8e8e4; --ink-2:#c0c1bd; --ink-3:#9a9c99;
+  --rule:#383b40; --rule-2:#2a2d31; --rule-strong:#e8e8e4;
+  --accent:#a3b8d6; --accent-wash:#222d3b; --down:#e39274;
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;line-height:1.3}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.n{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.idline{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding:8px 16px;font-size:13px;color:var(--ink-3);border-bottom:1px solid var(--rule)}
+.idline b{color:var(--ink);font-weight:500}
+.frame{display:block}
+.rail{padding:20px 16px 0}
+.rail .hosp{font-size:13px;color:var(--ink-3)}
+.rail h1{font-family:var(--serif);font-weight:700;font-size:24px;margin-top:2px}
+.rail .tag{font-size:14px;color:var(--ink-2);margin-top:4px}
+nav.views{display:flex;margin:16px -16px 0;padding:0 16px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none}
+nav.views::-webkit-scrollbar{display:none}
+nav.views button{border:0;background:none;padding:10px 0 11px;margin-right:22px;font-size:16px;color:var(--ink-3);white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
+nav.views button[aria-current="page"]{color:var(--ink);font-weight:700;border-bottom-color:var(--accent)}
+.rail .note{display:none}
+main{padding:20px 16px 48px;min-width:0}
+@media (min-width:960px){
+  .frame{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);min-height:calc(100vh - 76px)}
+  .rail{position:sticky;top:0;align-self:start;height:100vh;padding:32px 28px;border-right:1px solid var(--rule);display:flex;flex-direction:column}
+  .rail h1{font-size:28px}
+  nav.views{flex-direction:column;margin:36px 0 0;padding:0;border:0;border-top:1px solid var(--rule)}
+  nav.views button{margin:0;padding:12px 0;text-align:left;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center}
+  nav.views button[aria-current="page"]{border-bottom-color:var(--rule);color:var(--accent)}
+  nav.views button[aria-current="page"]::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .rail .note{display:block;margin-top:auto;font-size:13px;color:var(--ink-3);line-height:1.55}
+  main{padding:36px 48px 64px;max-width:1080px}
+  .m-note{display:none}
+}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border-radius:4px;border:1px solid var(--rule);background:var(--sheet);font-size:15px;font-weight:500;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--ink-3)}
+.btn.solid{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn.quiet{border-color:transparent;background:none;color:var(--accent);padding:0 6px}
+.btn.danger{color:var(--down)}
+.btn.sm{min-height:36px;font-size:14px;padding:0 10px}
+.btn.x{width:36px;min-height:36px;padding:0;font-size:18px;color:var(--ink-3)}
+.inp,select.inp{width:100%;min-height:44px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet);padding:6px 10px;font-size:16px}
+.inp:focus{border-color:var(--ink-3);outline:none;box-shadow:0 0 0 2px var(--accent-wash)}
+.inp::placeholder{color:var(--ink-3);opacity:.8}
+select.inp{appearance:none;-webkit-appearance:none;padding-right:34px;background-image:linear-gradient(45deg,transparent 50%,var(--ink-3) 50%),linear-gradient(135deg,var(--ink-3) 50%,transparent 50%);background-position:calc(100% - 17px) 52%,calc(100% - 12px) 52%;background-size:5px 5px;background-repeat:no-repeat}
+
+section.view{display:none}
+section.view.on{display:block}
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 20px;padding-bottom:14px;border-bottom:2px solid var(--rule-strong)}
+.head .eyebrow{font-size:13px;color:var(--ink-3);letter-spacing:.04em}
+.head h2{font-family:var(--serif);font-weight:700;font-size:26px}
+@media (min-width:960px){.head h2{font-size:32px}}
+.head .acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sub{margin-top:28px}
+.sub-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px;padding-bottom:8px;border-bottom:1px solid var(--rule-strong)}
+.sub-h h3{font-family:var(--serif);font-weight:700;font-size:19px}
+.sub-h .unit{font-size:13px;color:var(--ink-3)}
+.lede{font-size:15px;color:var(--ink-2);margin-top:12px;max-width:66ch}
+.hint{font-size:14px;color:var(--ink-3);margin-top:8px}
+.row-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.empty{padding:24px 0;color:var(--ink-3)}
+
+/* 오늘 목록 */
+.cases{list-style:none;margin:0;padding:0}
+.cases li{display:grid;grid-template-columns:4.2em minmax(0,1fr) auto;gap:2px 14px;padding:14px 0;border-bottom:1px solid var(--rule-2);align-items:center}
+.cases .tm{font-family:var(--serif);font-weight:700;font-size:19px}
+.cases .nm{font-family:var(--serif);font-weight:700;font-size:18px}
+.cases .nm small{font-family:var(--sans);font-weight:400;font-size:14px;color:var(--ink-3);margin-left:6px}
+.cases .meta{font-size:14px;color:var(--ink-2)}
+.prog{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--ink-3);margin-top:2px}
+.prog b{font-weight:500;color:var(--ink)}
+.state{font-size:13px;font-weight:500;padding:2px 8px;border:1px solid var(--rule);border-radius:3px;white-space:nowrap}
+.state.s-ing{border-color:var(--accent);color:var(--accent)}
+.state.s-done{background:var(--sunk);color:var(--ink-2)}
+@media (max-width:560px){.cases li{grid-template-columns:3.6em minmax(0,1fr)}.cases li .go{grid-column:2}}
+.dpick{display:flex;align-items:center;gap:6px}
+.dpick .inp{width:auto}
+
+/* 기록 화면 */
+.pinfo{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:14px}
+@media (min-width:760px){.pinfo{grid-template-columns:repeat(4,1fr)}}
+.pinfo label{display:block;font-size:13px;color:var(--ink-2);margin-bottom:3px}
+.stages{display:flex;margin-top:24px;border:1px solid var(--rule);border-radius:4px;overflow:hidden;position:sticky;top:0;z-index:5;background:var(--sheet)}
+.stages button{flex:1;border:0;background:none;min-height:48px;font-size:15px;padding:0 6px;line-height:1.25}
+.stages button+button{border-left:1px solid var(--rule)}
+.stages button small{display:block;font-size:12px;color:var(--ink-3)}
+.stages button[aria-current="step"]{background:var(--ink);color:var(--paper)}
+.stages button[aria-current="step"] small{color:var(--paper);opacity:.75}
+
+.ck{display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 10px;padding:12px 0;border-bottom:1px solid var(--rule-2);align-items:start}
+.ck input[type=checkbox]{width:22px;height:22px;margin:3px 0 0;accent-color:var(--accent)}
+.ck .lb{font-size:16px;font-weight:500}
+.ck.done .lb{color:var(--ink-2)}
+.ck .more{grid-column:2;display:grid;grid-template-columns:1fr;gap:8px}
+@media (min-width:700px){.ck .more{grid-template-columns:minmax(0,1.4fr) 110px minmax(0,1fr)}}
+.ck .more .inp{min-height:40px;font-size:15px}
+.ck .more label{display:block;font-size:12px;color:var(--ink-3)}
+.ck .stamp{font-size:13px;color:var(--ink-3)}
+
+.evbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.evlist{list-style:none;margin:12px 0 0;padding:0}
+.evlist li{display:grid;grid-template-columns:110px minmax(0,1fr) 36px;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--rule-2)}
+.evlist .inp{min-height:40px}
+
+.vhead,.vrow{display:grid;grid-template-columns:92px repeat(6,minmax(0,1fr)) minmax(0,1.4fr) 36px;gap:6px;align-items:end}
+.vhead{font-size:12px;color:var(--ink-3);padding:10px 0 6px;border-bottom:1px solid var(--rule);line-height:1.3}
+.vrow{padding:6px 0;border-bottom:1px solid var(--rule-2)}
+.vrow .inp{min-height:40px;padding:4px 6px;font-size:15px;text-align:right}
+.vrow .inp.t,.vrow .inp.memo{text-align:left}
+.vrow .ml{display:none}
+@media (max-width:759px){
+  .vhead{display:none}
+  .vrow{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 8px;padding:12px 0;align-items:start}
+  .vrow .c-t{grid-column:1/3}
+  .vrow .c-x{grid-column:3;justify-self:end}
+  .vrow .c-memo{grid-column:1/-1}
+  .vrow .ml{display:block;font-size:12px;color:var(--ink-3);margin-bottom:2px}
+}
+
+/* 이력 */
+.pgroup{padding:14px 0;border-bottom:1px solid var(--rule-2)}
+.pgroup h4{font-family:var(--serif);font-size:18px}
+.pgroup h4 small{font-family:var(--sans);font-weight:400;font-size:14px;color:var(--ink-3);margin-left:6px}
+.pgroup ul{list-style:none;margin:6px 0 0;padding:0}
+.pgroup li{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 12px;padding:6px 0}
+.pgroup li .d{font-size:15px}
+.pgroup li .d span{color:var(--ink-3);font-size:14px}
+
+/* 항목 관리 */
+.itm{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr) 36px;gap:8px;padding:6px 0;border-bottom:1px solid var(--rule-2);align-items:center}
+.itm .inp{min-height:40px}
+.itm-h{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr) 36px;gap:8px;font-size:12px;color:var(--ink-3);padding-top:10px}
+
+footer.foot{margin-top:56px;padding-top:14px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-3)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--paper);font-size:15px;padding:11px 18px;border-radius:4px;opacity:0;pointer-events:none;transition:.2s;max-width:calc(100% - 32px);text-align:center;z-index:60}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* 인쇄용 기록지 */
+#print-area{display:none}
+@media print{
+  @page{size:A4;margin:12mm}
+  body{background:#fff;color:#000}
+  body>*:not(#print-area){display:none!important}
+  #print-area{display:block;font-family:var(--sans);font-size:10pt;line-height:1.5;color:#000}
+  #print-area h1{font-family:var(--serif);font-size:17pt;margin:0}
+  #print-area .ph{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #000;padding-bottom:6px}
+  #print-area h2{font-family:var(--serif);font-size:12pt;margin:14px 0 4px}
+  #print-area table{width:100%;border-collapse:collapse}
+  #print-area th,#print-area td{border:1px solid #999;padding:3px 6px;text-align:left;vertical-align:top}
+  #print-area th{background:#f0f0f0;font-weight:500}
+  #print-area td.c{text-align:center}
+  #print-area .sg{display:flex;justify-content:flex-end;gap:30px;margin-top:20px}
+  #print-area .sg span{min-width:170px;border-bottom:1px solid #000}
+  #print-area section{break-inside:avoid}
+}
+@media (prefers-color-scheme:dark){.edu-note{background:#1f2225!important;color:#a9aaa6!important;border-bottom-color:#383b40!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="edu-note" style="background:#f3f1ec;color:#5b5a55;font:13px/1.5 -apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;padding:8px 16px;text-align:center;border-bottom:1px solid #e3e0d8">교육용 예시 화면입니다. 진료 판단에 쓰는 프로그램이 아니며, 판매하지 않습니다.</div>
+<div class="idline"><span><b>김병선 원장님을 위한 시제품</b> · 시흥24시센트럴동물의료센터</span><span>환자·기록·직원 이름은 모두 지어낸 예시입니다.</span></div>
+
+<div class="frame">
+<aside class="rail">
+  <div class="hosp">시흥24시센트럴동물의료센터</div>
+  <h1>마취 체크리스트</h1>
+  <p class="tag">마취 전 확인 · 마취 중 기록 · 회복 확인</p>
+  <nav class="views" aria-label="화면">
+    <button data-view="today" aria-current="page">마취 일정</button>
+    <button data-view="case">기록지</button>
+    <button data-view="history">환자별 이력</button>
+    <button data-view="items">항목 관리</button>
+  </nav>
+  <p class="note">이 화면은 체크와 기록만 합니다. 수치를 판정하거나 약을 권하지 않습니다. 입력하신 내용은 이 기기의 브라우저에만 저장됩니다.</p>
+</aside>
+
+<main>
+<!-- 일정 -->
+<section class="view on" id="v-today">
+  <div class="head">
+    <div><div class="eyebrow">날짜별 마취 환자</div><h2 id="t-title">—</h2></div>
+    <div class="acts">
+      <div class="dpick">
+        <button class="btn sm" data-act="day-prev" aria-label="전날">‹</button>
+        <input class="inp n" type="date" id="day" aria-label="날짜">
+        <button class="btn sm" data-act="day-next" aria-label="다음 날">›</button>
+      </div>
+      <button class="btn solid" data-act="new">마취 환자 추가</button>
+    </div>
+  </div>
+  <ul class="cases" id="cases"></ul>
+</section>
+
+<!-- 기록지 -->
+<section class="view" id="v-case">
+  <div class="head">
+    <div><div class="eyebrow" id="c-eyebrow">기록지</div><h2 id="c-title">—</h2></div>
+    <div class="acts"><button class="btn" data-act="print">기록지 인쇄</button></div>
+  </div>
+  <div id="c-empty" class="empty" hidden>열린 기록지가 없습니다. 「마취 일정」에서 환자를 골라 주십시오.</div>
+  <div id="c-body">
+    <div class="pinfo">
+      <div><label for="f-name">환자 이름</label><input class="inp" id="f-name" data-f="name"></div>
+      <div><label for="f-chart">차트 번호</label><input class="inp n" id="f-chart" data-f="chart"></div>
+      <div><label for="f-sp">종 · 품종</label><input class="inp" id="f-sp" data-f="species" placeholder="예: 개 · 푸들"></div>
+      <div><label for="f-date">날짜 · 예정 시각</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input class="inp n" type="date" id="f-date" data-f="date"><input class="inp n" type="time" data-f="time" aria-label="예정 시각"></div></div>
+      <div style="grid-column:1/-1"><label for="f-proc">수술·시술</label><input class="inp" id="f-proc" data-f="proc"></div>
+      <div><label for="f-vet">집도 수의사</label><input class="inp" id="f-vet" data-f="vet" list="people"></div>
+      <div><label for="f-anes">마취 담당</label><input class="inp" id="f-anes" data-f="anes" list="people"></div>
+    </div>
+    <datalist id="people"></datalist>
+
+    <div class="stages" role="tablist" aria-label="단계">
+      <button data-stage="pre">마취 전<small id="sg-pre"></small></button>
+      <button data-stage="during">마취 중<small id="sg-during"></small></button>
+      <button data-stage="post">회복<small id="sg-post"></small></button>
+    </div>
+
+    <div id="st-pre" class="stage-body">
+      <div class="sub"><div class="sub-h"><h3>마취 전 확인</h3><span class="unit">체크하시면 시각이 자동으로 찍힙니다</span></div><div id="pre-list"></div></div>
+    </div>
+    <div id="st-during" class="stage-body" hidden>
+      <div class="sub">
+        <div class="sub-h"><h3>진행 기록</h3><span class="unit">누르신 시각이 찍힙니다 · 시각은 고치실 수 있습니다</span></div>
+        <div class="evbtns" id="evbtns"></div>
+        <ul class="evlist" id="evlist"></ul>
+      </div>
+      <div class="sub">
+        <div class="sub-h"><h3>활력징후 기록</h3><span class="unit">담당자가 측정값을 그대로 적습니다</span></div>
+        <div class="vhead" id="vhead"></div>
+        <div id="vrows"></div>
+        <div class="row-actions"><button class="btn solid" data-act="add-v">지금 시각으로 한 줄 추가</button></div>
+      </div>
+    </div>
+    <div id="st-post" class="stage-body" hidden>
+      <div class="sub"><div class="sub-h"><h3>회복 확인</h3><span class="unit">체크하시면 시각이 자동으로 찍힙니다</span></div><div id="post-list"></div></div>
+      <div class="sub"><div class="sub-h"><h3>메모</h3></div><textarea class="inp" id="f-memo" data-f="memo" rows="3" style="min-height:88px;resize:vertical" placeholder="인계할 내용을 적어 주십시오"></textarea></div>
+    </div>
+    <div class="sub">
+      <div class="row-actions"><button class="btn danger" data-act="del-case">이 기록지 지우기</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 이력 -->
+<section class="view" id="v-history">
+  <div class="head">
+    <div><div class="eyebrow">지난 기록 찾기</div><h2>환자별 이력</h2></div>
+  </div>
+  <input class="inp" id="hq" type="search" placeholder="환자 이름·차트 번호·시술로 찾기" aria-label="이력 찾기" style="max-width:360px;margin-top:16px">
+  <div id="hist"></div>
+</section>
+
+<!-- 항목 관리 -->
+<section class="view" id="v-items">
+  <div class="head">
+    <div><div class="eyebrow">체크리스트 항목</div><h2>항목 관리</h2></div>
+  </div>
+  <p class="lede">원장님 병원의 순서와 이름으로 고쳐 주십시오. 고친 항목은 새로 추가하는 기록지부터 들어가고, 이미 쓴 기록지는 그대로 남습니다. 「기록 칸」에 이름을 넣으시면 그 항목 옆에 적는 칸이 생깁니다.</p>
+  <div class="sub"><div class="sub-h"><h3>마취 전 확인</h3><span class="unit" id="ic-pre"></span></div><div class="itm-h"><span>항목</span><span>기록 칸 (비워도 됩니다)</span><span></span></div><div id="it-pre"></div><div class="row-actions"><button class="btn sm" data-additem="pre">항목 추가</button></div></div>
+  <div class="sub"><div class="sub-h"><h3>진행 기록 단추</h3><span class="unit" id="ic-ev"></span></div><div id="it-ev"></div><div class="row-actions"><button class="btn sm" data-additem="ev">단추 추가</button></div></div>
+  <div class="sub"><div class="sub-h"><h3>회복 확인</h3><span class="unit" id="ic-post"></span></div><div class="itm-h"><span>항목</span><span>기록 칸 (비워도 됩니다)</span><span></span></div><div id="it-post"></div><div class="row-actions"><button class="btn sm" data-additem="post">항목 추가</button></div></div>
+  <div class="sub"><div class="row-actions"><button class="btn quiet" data-act="reset">예시 데이터로 되돌리기</button></div></div>
+</section>
+
+<p class="hint m-note">입력하신 내용은 이 기기의 브라우저에만 저장됩니다.</p>
+<footer class="foot">원장을 위한 AI 실전 교육 · 교육 당일 원장님 병원의 마취 기록지 양식에 맞게 함께 고칩니다.</footer>
+</main>
+</div>
+<div id="print-area"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="kbs-anesthesia-v1";
+var VCOLS=[["hr","심박수","회/분"],["rr","호흡수","회/분"],["spo2","SpO₂","%"],["etco2","EtCO₂","mmHg"],["bp","혈압","mmHg"],["temp","체온","℃"]];
+var PEOPLE=["한도윤","서지우","문채원","오태경","남궁별","하은솔","임시현","윤가람","배수아","진하람"];
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function pad(n){return (n<10?"0":"")+n}
+function uid(p){return (p||"c")+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function ymd(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+function addDays(s,n){var p=s.split("-"),d=new Date(+p[0],+p[1]-1,+p[2]+n);return ymd(d)}
+function nowHM(){var d=new Date();return pad(d.getHours())+":"+pad(d.getMinutes())}
+function dlabel(s){var p=s.split("-"),d=new Date(+p[0],+p[1]-1,+p[2]);return (+p[1])+"월 "+(+p[2])+"일 ("+"일월화수목금토"[d.getDay()]+")"}
+
+function defaultItems(){return {
+  pre:[["fast","금식 확인","마지막 식사 시각"],["consent","보호자 동의서 서명",""],["labs","마취 전 검사 결과 확인",""],["weight","당일 체중 측정","체중(kg)"],["iv","정맥 확보","부위"],["machine","마취기·호흡 회로 점검",""],["o2","산소 공급 확인",""],["monitor","감시 장비 연결·작동 확인",""],["airway","기관 튜브·후두경 준비",""],["crash","응급 약품·장비 위치 확인",""],["warm","보온 장치 준비",""],["site","수술 부위·시술 내용 확인",""]].map(function(a){return {id:a[0],label:a[1],field:a[2]}}),
+  ev:["마취 유도","기관 삽관","수술 시작","수술 끝","마취 종료","발관"],
+  post:[["extub","발관 확인",""],["head","스스로 머리 들기 확인",""],["temp","회복 중 체온 측정","체온(℃)"],["pain","통증 평가 기록","평가 결과"],["wound","수술 부위 확인",""],["line","정맥 카테터 상태 확인",""],["ward","입원실·회복실 이동","장소"],["owner","보호자 연락","연락한 사람"],["handoff","담당자 인계","받은 사람"]].map(function(a){return {id:a[0],label:a[1],field:a[2]}})
+}}
+function seed(){
+  var I=defaultItems(),today=ymd(new Date());
+  function mk(o){var c={id:o.id,date:o.date,time:o.time,name:o.name,chart:o.chart,species:o.species,proc:o.proc,vet:o.vet,anes:o.anes,memo:o.memo||"",
+    items:JSON.parse(JSON.stringify({pre:I.pre,ev:I.ev,post:I.post})),pre:{},post:{},events:[],vitals:[]};return c}
+  function checkAll(c,stage,ids,t0,by,vals){var m=+t0.slice(0,2)*60+ +t0.slice(3);c.items[stage].forEach(function(it,i){if(ids&&ids.indexOf(it.id)<0)return;var mm=m+i*2;c[stage][it.id]={done:true,at:pad(Math.floor(mm/60)%24)+":"+pad(mm%60),by:by,val:(vals&&vals[it.id])||""}})}
+  function ev(c,list){list.forEach(function(e){c.events.push({id:uid("e"),t:e[0],label:e[1]})})}
+  function vt(c,rows){rows.forEach(function(r){c.vitals.push({id:uid("v"),t:r[0],hr:r[1],rr:r[2],spo2:r[3],etco2:r[4],bp:r[5],temp:r[6],note:r[7]||""})})}
+  var c1=mk({id:"s1",date:today,time:"09:30",name:"두부",chart:"23-07715",species:"개 · 비숑 프리제",proc:"스케일링(치석 제거)",vet:"오태경",anes:"윤가람"});
+  checkAll(c1,"pre",null,"09:05","윤가람",{fast:"전날 22:00",weight:"6.4",iv:"오른쪽 앞다리"});
+  ev(c1,[["09:32","마취 유도"],["09:35","기관 삽관"],["09:41","수술 시작"],["10:22","수술 끝"],["10:26","마취 종료"],["10:38","발관"]]);
+  vt(c1,[["09:40","112","12","99","39","118/76","38.1",""],["09:50","104","10","99","41","110/70","37.9",""],["10:00","100","10","98","42","106/68","37.7",""],["10:10","98","11","99","40","108/70","37.6",""],["10:20","102","12","99","39","112/72","37.5","마무리 중"]]);
+  checkAll(c1,"post",null,"10:38","윤가람",{temp:"37.4",pain:"차트에 기록",ward:"회복실 2번",owner:"오태경",handoff:"배수아"});
+  var c2=mk({id:"s2",date:today,time:"11:30",name:"레오",chart:"25-01290",species:"고양이 · 코리안 숏헤어",proc:"중성화 수술",vet:"한도윤",anes:"배수아"});
+  checkAll(c2,"pre",null,"11:02","배수아",{fast:"전날 21:30",weight:"4.1",iv:"왼쪽 앞다리"});
+  ev(c2,[["11:34","마취 유도"],["11:37","기관 삽관"],["11:45","수술 시작"]]);
+  vt(c2,[["11:45","150","16","99","38","","37.8",""],["11:55","146","14","98","40","","37.6",""]]);
+  var c3=mk({id:"s3",date:today,time:"15:00",name:"초코",chart:"21-05522",species:"개 · 푸들",proc:"피부 종괴 제거",vet:"문채원",anes:"진하람"});
+  checkAll(c3,"pre",["fast","consent"],"13:40","진하람",{fast:"오늘 06:30"});
+  var c4=mk({id:"s4",date:addDays(today,-1),time:"14:00",name:"망고",chart:"24-10033",species:"개 · 웰시 코기",proc:"앞다리 골절 수술",vet:"한도윤",anes:"윤가람"});
+  checkAll(c4,"pre",null,"13:30","윤가람",{fast:"전날 22:00",weight:"12.8",iv:"왼쪽 앞다리"});
+  ev(c4,[["14:05","마취 유도"],["14:09","기관 삽관"],["14:20","수술 시작"],["15:40","수술 끝"],["15:45","마취 종료"],["15:58","발관"]]);
+  vt(c4,[["14:20","96","10","99","40","104/66","38.0",""],["14:40","92","10","99","41","100/64","37.7",""],["15:00","90","9","98","42","98/62","37.5",""],["15:20","94","10","99","40","102/66","37.4",""]]);
+  checkAll(c4,"post",null,"15:58","윤가람",{temp:"37.3",pain:"차트에 기록",ward:"입원실 5번",owner:"한도윤",handoff:"진하람"});
+  var c5=mk({id:"s5",date:addDays(today,-3),time:"10:00",name:"두부",chart:"23-07715",species:"개 · 비숑 프리제",proc:"피부 생검",vet:"서지우",anes:"진하람"});
+  checkAll(c5,"pre",null,"09:40","진하람",{fast:"전날 22:00",weight:"6.5",iv:"왼쪽 앞다리"});
+  ev(c5,[["10:03","마취 유도"],["10:06","기관 삽관"],["10:12","수술 시작"],["10:30","수술 끝"],["10:33","마취 종료"],["10:41","발관"]]);
+  vt(c5,[["10:12","108","12","99","40","112/72","38.0",""],["10:22","104","11","99","41","108/70","37.8",""]]);
+  checkAll(c5,"post",null,"10:41","진하람",{temp:"37.7",pain:"차트에 기록",ward:"회복실 1번",owner:"서지우",handoff:"배수아"});
+  var c6=mk({id:"s6",date:addDays(today,-6),time:"16:00",name:"까미",chart:"20-02871",species:"고양이 · 페르시안",proc:"치아 발치",vet:"하은솔",anes:"배수아"});
+  checkAll(c6,"pre",null,"15:35","배수아",{fast:"오늘 07:00",weight:"3.6",iv:"오른쪽 앞다리"});
+  ev(c6,[["16:04","마취 유도"],["16:07","기관 삽관"],["16:12","수술 시작"],["16:58","수술 끝"],["17:01","마취 종료"],["17:09","발관"]]);
+  vt(c6,[["16:12","160","18","98","37","","38.2",""],["16:32","152","16","99","39","","37.9",""],["16:52","148","15","99","40","","37.7",""]]);
+  checkAll(c6,"post",null,"17:09","배수아",{temp:"37.6",pain:"차트에 기록",ward:"입원실 2번",owner:"하은솔",handoff:"윤가람"});
+  return {v:1,items:I,cases:[c1,c2,c3,c4,c5,c6],day:today,cur:"s2",stage:"during",savedAt:null};
+}
+var S;
+function load(){try{var o=JSON.parse(localStorage.getItem(KEY)||"null");if(o&&o.cases&&o.items){S=o;return}}catch(e){}S=seed()}
+var saveT;function save(){clearTimeout(saveT);saveT=setTimeout(function(){try{S.savedAt=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast("이 브라우저에는 저장할 수 없습니다. 개인 정보 보호 모드인지 확인해 주십시오.")}},250)}
+function cur(){for(var i=0;i<S.cases.length;i++)if(S.cases[i].id===S.cur)return S.cases[i];return null}
+function cnt(c,stage){var n=0;c.items[stage].forEach(function(it){if(c[stage][it.id]&&c[stage][it.id].done)n++});return [n,c.items[stage].length]}
+function hasEv(c,l){return c.events.some(function(e){return e.label===l})}
+function status(c){
+  var p=cnt(c,"pre"),q=cnt(c,"post");
+  if(q[0]===q[1]&&q[1]>0)return ["s-done","기록 끝"];
+  if(hasEv(c,"마취 종료")||q[0]>0)return ["s-ing","회복 중"];
+  if(c.events.length||c.vitals.length)return ["s-ing","마취 중"];
+  if(p[0]>0)return ["","마취 전 확인 중"];
+  return ["","예정"];
+}
+
+/* ---------- 화면 전환 + 뒤로가기 ---------- */
+var nav={tab:"today"},FIRST="today";
+function show(tab){
+  nav.tab=tab;
+  $$("section.view").forEach(function(s){s.classList.toggle("on",s.id==="v-"+tab)});
+  $$("nav.views button").forEach(function(b){if(b.dataset.view===tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+  render();window.scrollTo(0,0);
+}
+function go(tab,stage){
+  if(tab===nav.tab&&(tab!=="case"||!stage||stage===S.stage))return;
+  if(stage)S.stage=stage;
+  history.pushState({app:1,tab:tab,c:S.cur,stage:S.stage},"");
+  if(tab===nav.tab)renderCase();else show(tab);
+}
+history.replaceState({app:1,base:1},"");
+history.pushState({app:1,tab:FIRST},"");
+window.addEventListener("popstate",function(e){
+  var s=e.state||{};
+  if(!s.app||s.base){history.pushState({app:1,tab:FIRST},"");if(nav.tab!==FIRST)show(FIRST);else toast("앱을 닫으시려면 홈 화면으로 나가 주십시오");return}
+  if(s.c&&S.cases.some(function(c){return c.id===s.c}))S.cur=s.c;
+  if(s.stage)S.stage=s.stage;
+  if(s.tab!==nav.tab)show(s.tab);else render();
+});
+
+function render(){
+  $("#people").innerHTML=PEOPLE.map(function(p){return '<option value="'+p+'">'}).join("");
+  if(nav.tab==="today")renderToday();
+  if(nav.tab==="case")renderCase();
+  if(nav.tab==="history")renderHist();
+  if(nav.tab==="items")renderItems();
+}
+
+/* 일정 */
+function renderToday(){
+  $("#day").value=S.day;
+  var isToday=S.day===ymd(new Date());
+  $("#t-title").textContent=dlabel(S.day)+(isToday?" · 오늘":"");
+  var list=S.cases.filter(function(c){return c.date===S.day}).sort(function(a,b){return (a.time||"").localeCompare(b.time||"")});
+  if(!list.length){$("#cases").innerHTML='<li class="empty" style="display:block">이날 잡힌 마취가 없습니다. 「마취 환자 추가」를 눌러 주십시오.</li>';return}
+  $("#cases").innerHTML=list.map(function(c){
+    var st=status(c),p=cnt(c,"pre"),q=cnt(c,"post");
+    return '<li><div class="tm n">'+esc(c.time||"—")+'</div><div><div class="nm">'+esc(c.name||"이름 없음")+'<small>'+esc(c.species)+'</small></div>'+
+      '<div class="meta">'+esc(c.proc||"시술 미입력")+' · 집도 '+esc(c.vet||"—")+' · 마취 '+esc(c.anes||"—")+'</div>'+
+      '<div class="prog n"><span class="state '+st[0]+'">'+st[1]+'</span><span>마취 전 <b>'+p[0]+'/'+p[1]+'</b></span><span>활력징후 <b>'+c.vitals.length+'줄</b></span><span>회복 <b>'+q[0]+'/'+q[1]+'</b></span></div></div>'+
+      '<div class="go"><button class="btn sm" data-open="'+c.id+'">기록지 열기</button></div></li>';
+  }).join("");
+}
+
+/* 기록지 */
+function stamp(it,rec){return rec&&rec.done?(rec.at?rec.at+" 확인":"확인")+(rec.by?" · "+rec.by:""):""}
+function ckRow(stage,it,rec){
+  rec=rec||{};
+  var id="ck-"+stage+"-"+it.id;
+  return '<div class="ck'+(rec.done?" done":"")+'" data-stage-k="'+stage+'" data-item="'+it.id+'"><input type="checkbox" id="'+id+'"'+(rec.done?" checked":"")+'><div><label class="lb" for="'+id+'">'+esc(it.label)+'</label> <span class="stamp n">'+esc(stamp(it,rec))+'</span></div>'+
+   '<div class="more">'+(it.field?'<div><label>'+esc(it.field)+'</label><input class="inp" data-rk="val" value="'+esc(rec.val)+'"></div>':'<div></div>')+
+   '<div><label>확인 시각</label><input class="inp n" type="time" data-rk="at" value="'+esc(rec.at)+'"></div>'+
+   '<div><label>확인한 사람</label><input class="inp" data-rk="by" list="people" value="'+esc(rec.by)+'"></div></div></div>';
+}
+function renderCase(){
+  var c=cur();
+  $("#c-empty").hidden=!!c;$("#c-body").hidden=!c;
+  if(!c){$("#c-title").textContent="기록지";return}
+  $("#c-eyebrow").textContent=dlabel(c.date)+(c.time?" "+c.time:"")+" · "+status(c)[1];
+  $("#c-title").textContent=(c.name||"이름 없는 환자")+" 마취 기록";
+  $$("[data-f]").forEach(function(el){if(document.activeElement!==el)el.value=c[el.dataset.f]||""});
+  var p=cnt(c,"pre"),q=cnt(c,"post");
+  $("#sg-pre").textContent=p[0]+"/"+p[1];$("#sg-during").textContent=c.vitals.length+"줄";$("#sg-post").textContent=q[0]+"/"+q[1];
+  $$(".stages button").forEach(function(b){if(b.dataset.stage===S.stage)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current")});
+  ["pre","during","post"].forEach(function(s){$("#st-"+s).hidden=s!==S.stage});
+  $("#pre-list").innerHTML=c.items.pre.map(function(it){return ckRow("pre",it,c.pre[it.id])}).join("");
+  $("#post-list").innerHTML=c.items.post.map(function(it){return ckRow("post",it,c.post[it.id])}).join("");
+  $("#evbtns").innerHTML=c.items.ev.map(function(l){return '<button class="btn" data-ev="'+esc(l)+'">'+esc(l)+'</button>'}).join("");
+  var evs=c.events.slice().sort(function(a,b){return a.t.localeCompare(b.t)});
+  $("#evlist").innerHTML=evs.length?evs.map(function(e){return '<li data-eid="'+e.id+'"><input class="inp n" type="time" data-ek="t" value="'+esc(e.t)+'" aria-label="'+esc(e.label)+' 시각"><span>'+esc(e.label)+'</span><button class="btn x" data-delev="'+e.id+'" aria-label="'+esc(e.label)+' 지우기">×</button></li>'}).join(""):'<li class="hint" style="display:block;border:0">아직 찍힌 기록이 없습니다.</li>';
+  $("#vhead").innerHTML='<span>시각</span>'+VCOLS.map(function(v){return '<span>'+v[1]+'<br>'+v[2]+'</span>'}).join("")+'<span>메모</span><span></span>';
+  $("#vrows").innerHTML=c.vitals.length?c.vitals.map(function(r){
+    return '<div class="vrow" data-vid="'+r.id+'"><div class="c-t"><span class="ml">시각</span><input class="inp t n" type="time" data-vk="t" value="'+esc(r.t)+'" aria-label="측정 시각"></div>'+
+      VCOLS.map(function(v){return '<div><span class="ml">'+v[1]+' ('+v[2]+')</span><input class="inp n" inputmode="'+(v[0]==="bp"?"text":"decimal")+'" data-vk="'+v[0]+'" value="'+esc(r[v[0]])+'" aria-label="'+v[1]+'"></div>'}).join("")+
+      '<div class="c-memo"><span class="ml">메모</span><input class="inp memo" data-vk="note" value="'+esc(r.note)+'" aria-label="메모"></div>'+
+      '<div class="c-x"><button class="btn x" data-delv="'+r.id+'" aria-label="이 줄 지우기">×</button></div></div>'}).join(""):'<p class="hint">아직 기록한 줄이 없습니다.</p>';
+}
+
+/* 이력 */
+function renderHist(){
+  var q=($("#hq").value||"").trim(),g={},order=[];
+  S.cases.slice().sort(function(a,b){return (b.date+b.time).localeCompare(a.date+a.time)}).forEach(function(c){
+    if(q&&[c.name,c.chart,c.proc,c.vet,c.anes].join(" ").indexOf(q)<0)return;
+    var k=(c.chart||"")+"|"+(c.name||"");if(!g[k]){g[k]=[];order.push(k)}g[k].push(c)});
+  if(!order.length){$("#hist").innerHTML='<p class="empty">찾는 기록이 없습니다.</p>';return}
+  $("#hist").innerHTML=order.map(function(k){var a=g[k],c0=a[0];
+    return '<div class="pgroup"><h4>'+esc(c0.name||"이름 없음")+'<small>'+esc(c0.species)+' · '+esc(c0.chart||"차트 번호 없음")+' · 마취 '+a.length+'회</small></h4><ul>'+
+      a.map(function(c){var st=status(c);return '<li><div class="d n">'+dlabel(c.date)+' '+esc(c.time)+' · '+esc(c.proc)+' <span>· 집도 '+esc(c.vet)+' · '+st[1]+'</span></div><button class="btn sm" data-open="'+c.id+'">열기</button></li>'}).join("")+'</ul></div>'}).join("");
+}
+
+/* 항목 관리 */
+function renderItems(){
+  ["pre","post"].forEach(function(s){
+    $("#ic-"+s).textContent=S.items[s].length+"개";
+    $("#it-"+s).innerHTML=S.items[s].map(function(it,i){return '<div class="itm" data-is="'+s+'" data-ii="'+i+'"><input class="inp" data-ik="label" value="'+esc(it.label)+'" aria-label="항목 이름"><input class="inp" data-ik="field" value="'+esc(it.field)+'" placeholder="없음" aria-label="기록 칸 이름"><button class="btn x" data-delitem="'+s+'" data-i="'+i+'" aria-label="'+esc(it.label)+' 빼기">×</button></div>'}).join("");
+  });
+  $("#ic-ev").textContent=S.items.ev.length+"개";
+  $("#it-ev").innerHTML=S.items.ev.map(function(l,i){return '<div class="itm" style="grid-template-columns:minmax(0,1fr) 36px" data-is="ev" data-ii="'+i+'"><input class="inp" data-ik="ev" value="'+esc(l)+'" aria-label="단추 이름"><button class="btn x" data-delitem="ev" data-i="'+i+'" aria-label="'+esc(l)+' 빼기">×</button></div>'}).join("");
+}
+
+/* 인쇄 */
+function printCase(){
+  var c=cur();if(!c)return;
+  function rows(stage){return c.items[stage].map(function(it){var r=c[stage][it.id]||{};return '<tr><td class="c">'+(r.done?"✓":"")+'</td><td>'+esc(it.label)+'</td><td>'+esc(it.field?(it.field+": "+(r.val||"")):"")+'</td><td class="c">'+esc(r.at||"")+'</td><td>'+esc(r.by||"")+'</td></tr>'}).join("")}
+  var h='<div class="ph"><div><div>시흥24시센트럴동물의료센터</div><h1>마취 기록지</h1></div><div style="text-align:right">'+dlabel(c.date)+' '+esc(c.time)+'</div></div>';
+  h+='<section><table style="margin-top:10px"><tr><th>환자</th><td>'+esc(c.name)+'</td><th>차트 번호</th><td>'+esc(c.chart)+'</td><th>종 · 품종</th><td>'+esc(c.species)+'</td></tr><tr><th>수술·시술</th><td colspan="5">'+esc(c.proc)+'</td></tr><tr><th>집도</th><td>'+esc(c.vet)+'</td><th>마취 담당</th><td colspan="3">'+esc(c.anes)+'</td></tr></table></section>';
+  h+='<section><h2>마취 전 확인</h2><table><tr><th style="width:5%">확인</th><th>항목</th><th>기록</th><th style="width:10%">시각</th><th style="width:14%">확인자</th></tr>'+rows("pre")+'</table></section>';
+  var evs=c.events.slice().sort(function(a,b){return a.t.localeCompare(b.t)});
+  h+='<section><h2>진행 기록</h2><table><tr>'+(evs.length?evs.map(function(e){return '<th>'+esc(e.label)+'</th>'}).join(""):'<th>기록 없음</th>')+'</tr><tr>'+evs.map(function(e){return '<td class="c">'+esc(e.t)+'</td>'}).join("")+'</tr></table></section>';
+  h+='<section><h2>활력징후</h2><table><tr><th>시각</th>'+VCOLS.map(function(v){return '<th>'+v[1]+' ('+v[2]+')</th>'}).join("")+'<th>메모</th></tr>'+
+    c.vitals.slice().sort(function(a,b){return a.t.localeCompare(b.t)}).map(function(r){return '<tr><td class="c">'+esc(r.t)+'</td>'+VCOLS.map(function(v){return '<td class="c">'+esc(r[v[0]])+'</td>'}).join("")+'<td>'+esc(r.note)+'</td></tr>'}).join("")+'</table></section>';
+  h+='<section><h2>회복 확인</h2><table><tr><th style="width:5%">확인</th><th>항목</th><th>기록</th><th style="width:10%">시각</th><th style="width:14%">확인자</th></tr>'+rows("post")+'</table></section>';
+  if(c.memo)h+='<section><h2>메모</h2><p style="white-space:pre-line;margin:0">'+esc(c.memo)+'</p></section>';
+  h+='<div class="sg"><span>마취 담당 '+esc(c.anes)+'</span><span>집도 수의사 '+esc(c.vet)+'</span></div>';
+  $("#print-area").innerHTML=h;window.print();
+}
+
+/* ---------- 입력 ---------- */
+function rowRec(el){var row=el.closest("[data-item]");if(!row)return null;var c=cur(),st=row.dataset.stageK,id=row.dataset.item;c[st][id]=c[st][id]||{done:false,at:"",by:"",val:""};return {c:c,rec:c[st][id],row:row}}
+document.addEventListener("input",function(e){
+  var t=e.target,c=cur();
+  if(t.id==="hq"){renderHist();return}
+  if(t.dataset.f&&c){c[t.dataset.f]=t.value;if(t.dataset.f==="name")$("#c-title").textContent=(c.name||"이름 없는 환자")+" 마취 기록";save();return}
+  if(t.dataset.rk){var r=rowRec(t);if(r){r.rec[t.dataset.rk]=t.value;save();if(t.dataset.rk!=="val")r.row.querySelector(".stamp").textContent=stamp(null,r.rec)}return}
+  if(t.dataset.vk&&c){var vr=c.vitals.filter(function(x){return x.id===t.closest(".vrow").dataset.vid})[0];if(vr){vr[t.dataset.vk]=t.value;save()}return}
+  if(t.dataset.ek&&c){var ev=c.events.filter(function(x){return x.id===t.closest("li").dataset.eid})[0];if(ev){ev.t=t.value;save()}return}
+  if(t.dataset.ik){var w=t.closest(".itm"),s=w.dataset.is,i=+w.dataset.ii;if(s==="ev")S.items.ev[i]=t.value;else S.items[s][i][t.dataset.ik]=t.value;save()}
+});
+document.addEventListener("change",function(e){
+  var t=e.target;
+  if(t.id==="day"&&t.value){S.day=t.value;save();renderToday();return}
+  if(t.type==="checkbox"&&t.closest("[data-item]")){
+    var r=rowRec(t);r.rec.done=t.checked;
+    if(t.checked){if(!r.rec.at)r.rec.at=nowHM();if(!r.rec.by)r.rec.by=r.c.anes||""}
+    save();var y=window.scrollY;renderCase();window.scrollTo(0,y);
+  }
+});
+document.addEventListener("click",function(e){
+  var t=e.target.closest("button");if(!t)return;
+  var c=cur();
+  if(t.dataset.view){go(t.dataset.view);return}
+  if(t.dataset.open){S.cur=t.dataset.open;var oc=cur();S.stage=cnt(oc,"pre")[0]<cnt(oc,"pre")[1]?"pre":(status(oc)[1]==="마취 중"?"during":(cnt(oc,"post")[0]>0||hasEv(oc,"마취 종료")?"post":"during"));save();history.pushState({app:1,tab:"case",c:S.cur,stage:S.stage},"");show("case");return}
+  if(t.dataset.stage){go("case",t.dataset.stage);save();return}
+  if(t.dataset.ev&&c){c.events.push({id:uid("e"),t:nowHM(),label:t.dataset.ev});save();renderCase();toast(t.dataset.ev+" "+nowHM()+" 기록했습니다");return}
+  if(t.dataset.delev&&c){c.events=c.events.filter(function(x){return x.id!==t.dataset.delev});save();renderCase();return}
+  if(t.dataset.delv&&c){if(confirm("이 줄을 지우시겠습니까?")){c.vitals=c.vitals.filter(function(x){return x.id!==t.dataset.delv});save();renderCase()}return}
+  if(t.dataset.additem){var s=t.dataset.additem;if(s==="ev")S.items.ev.push("새 단추");else S.items[s].push({id:uid("i"),label:"새 항목",field:""});save();renderItems();var ins=$$('[data-is="'+s+'"] input');if(ins.length){var last=s==="ev"?ins[ins.length-1]:ins[ins.length-2];last.focus();last.select()}return}
+  if(t.dataset.delitem){var s2=t.dataset.delitem,i=+t.dataset.i;if(s2==="ev")S.items.ev.splice(i,1);else S.items[s2].splice(i,1);save();renderItems();return}
+  var act=t.dataset.act;
+  if(act==="day-prev"){S.day=addDays(S.day,-1);save();renderToday()}
+  else if(act==="day-next"){S.day=addDays(S.day,1);save();renderToday()}
+  else if(act==="new"){
+    var nc={id:uid(),date:S.day,time:"",name:"",chart:"",species:"",proc:"",vet:"",anes:"",memo:"",items:JSON.parse(JSON.stringify(S.items)),pre:{},post:{},events:[],vitals:[]};
+    S.cases.push(nc);S.cur=nc.id;S.stage="pre";save();history.pushState({app:1,tab:"case",c:S.cur,stage:"pre"},"");show("case");setTimeout(function(){$("#f-name").focus()},0);
+  }
+  else if(act==="add-v"&&c){var nr={id:uid("v"),t:nowHM(),hr:"",rr:"",spo2:"",etco2:"",bp:"",temp:"",note:""};c.vitals.push(nr);save();renderCase();var f=$('[data-vid="'+nr.id+'"] [data-vk="hr"]');if(f)f.focus()}
+  else if(act==="print"){printCase()}
+  else if(act==="del-case"&&c){if(confirm((c.name||"이 환자")+" 기록지를 지우시겠습니까? 되돌릴 수 없습니다.")){S.cases=S.cases.filter(function(x){return x.id!==c.id});S.cur=null;save();go("today");renderToday();toast("지웠습니다")}}
+  else if(act==="reset"){if(confirm("입력하신 내용을 모두 지우고 예시 데이터로 되돌리시겠습니까?")){clearTimeout(saveT);try{localStorage.removeItem(KEY)}catch(_){}S=seed();render();toast("예시 데이터로 되돌렸습니다")}}
+});
+var tT;function toast(m){var el=$("#toast");el.textContent=m;el.classList.add("on");clearTimeout(tT);tT=setTimeout(function(){el.classList.remove("on")},2600)}
+
+load();render();
+window.__anes={state:function(){return S}};
+})();
+</script>
+</body>
+</html>

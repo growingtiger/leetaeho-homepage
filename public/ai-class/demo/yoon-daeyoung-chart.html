@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'">
+<meta name="theme-color" content="#f5f3ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14161b" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>차트 정리 · 윤대영 원장님을 위한 시제품</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700&family=Hahmlet:wght@500;700&display=swap">
+<style>
+:root{
+  --paper:#f5f3ee; --surface:#fffdf9; --sunk:#ece9e1;
+  --ink:#1d2230; --ink2:#474c59; --ink3:#666a75;
+  --line:#d8d3c8; --line2:#e8e4db;
+  --navy:#1f2f57; --navy-ink:#f4f2ec; --navy-soft:#e3e7f0;
+  --warn:#ad3f1a; --warn-soft:#f7e5db;
+  --ok:#2f5d3a;
+  --scrim:rgb(20 22 27 / .38);
+  --serif:"Hahmlet","Nanum Myeongjo",Georgia,serif;
+  --sans:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14161b; --surface:#1b1e25; --sunk:#111318;
+    --ink:#e9e7e1; --ink2:#bcbab3; --ink3:#9a9993;
+    --line:#30343d; --line2:#262931;
+    --navy:#b9c8ee; --navy-ink:#121a30; --navy-soft:#232b40;
+    --warn:#f0997a; --warn-soft:#3b231b;
+    --ok:#9fd0a9;
+    --scrim:rgb(0 0 0 / .6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14161b; --surface:#1b1e25; --sunk:#111318;
+  --ink:#e9e7e1; --ink2:#bcbab3; --ink3:#9a9993;
+  --line:#30343d; --line2:#262931;
+  --navy:#b9c8ee; --navy-ink:#121a30; --navy-soft:#232b40;
+  --warn:#f0997a; --warn-soft:#3b231b;
+  --ok:#9fd0a9;
+  --scrim:rgb(0 0 0 / .6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--sans);word-break:keep-all;overflow-wrap:anywhere;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+h1,h2,h3,p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+@media(min-width:768px){.wrap{padding:0 32px}}
+
+.edu{background:var(--sunk);color:var(--ink3);font-size:13px;line-height:1.5;padding:7px 16px;text-align:center;border-bottom:1px solid var(--line2)}
+.idline{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 16px;font-size:13px;color:var(--ink3);padding-top:12px}
+.idline b{color:var(--ink);font-weight:700}
+.mast{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
+.mast h1{font:700 30px/1.1 var(--serif);letter-spacing:-.02em}
+.mast .sub{font-size:14px;color:var(--ink3);margin-top:4px}
+.mast .cnt{text-align:right;font-size:13px;color:var(--ink3);line-height:1.3}
+.mast .cnt b{display:block;font:700 30px/1 var(--serif);color:var(--warn)}
+.mast .cnt b.zero{color:var(--ink)}
+@media(min-width:768px){.mast{padding-top:22px;padding-bottom:20px}.mast h1{font-size:40px}.mast .cnt b{font-size:38px}}
+
+.tabs{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
+.tabs .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.tabs button{position:relative;min-height:48px;border:0;background:none;font-size:15px;font-weight:500;color:var(--ink3);padding:0 4px;white-space:nowrap}
+.tabs button[aria-current="page"]{color:var(--ink);font-weight:700}
+.tabs button[aria-current="page"]::after{content:"";position:absolute;left:12%;right:12%;bottom:-1px;height:3px;background:var(--ink)}
+@media(min-width:768px){.tabs .wrap{display:flex;gap:28px}.tabs button{padding:0;font-size:16px}.tabs button[aria-current="page"]::after{left:0;right:0}}
+
+main{padding:22px 0 56px;min-height:60vh}
+.foot{border-top:1px solid var(--line);padding:18px 0 calc(24px + env(safe-area-inset-bottom));font-size:13px;color:var(--ink3)}
+
+h2.h{font:700 21px/1.3 var(--serif);letter-spacing:-.01em}
+.hrow{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 14px;margin-bottom:12px}
+.hrow .meta{font-size:14px;color:var(--ink3)}
+.lead{font-size:15px;color:var(--ink2);margin-bottom:16px;max-width:62ch}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid var(--ink);border-radius:6px;background:var(--ink);color:var(--paper);font-size:15px;font-weight:700;white-space:nowrap}
+.btn:hover{opacity:.9}
+.btn.line{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.line:hover{background:var(--sunk);opacity:1}
+.btn.warn{background:transparent;color:var(--warn);border-color:var(--warn)}
+.btn.sm{min-height:40px;padding:0 14px;font-size:14px}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface);max-width:100%}
+.seg button{min-height:40px;padding:0 12px;border:0;background:none;font-size:14px;color:var(--ink2);white-space:nowrap}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);font-weight:700}
+.empty{padding:32px 16px;text-align:center;color:var(--ink3);border:1px dashed var(--line);border-radius:8px}
+.empty p{margin-bottom:12px}
+.aihint{font-size:13px;color:var(--ink3);border-left:2px solid var(--line);padding:2px 0 2px 10px;margin:0 0 16px}
+.sub-h{font-size:13px;font-weight:700;color:var(--ink3);letter-spacing:.04em;margin:0 0 6px}
+
+/* 목록 */
+.two{display:grid;gap:34px}
+@media(min-width:1024px){.two{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px}}
+.recs{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.recs li{border-bottom:1px solid var(--line2)}
+.recs button.r{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:0 12px;align-items:start;width:100%;padding:13px 0;border:0;background:none;text-align:left}
+.recs .tm{font:700 15px/1.45 var(--serif);font-variant-numeric:tabular-nums;color:var(--ink2)}
+.recs .tm small{display:block;font:500 12px/1.3 var(--sans);color:var(--ink3)}
+.recs .pn{font-weight:700;font-size:16px}
+.recs .pn span{font-weight:400;font-size:14px;color:var(--ink3);margin-left:6px}
+.recs .ln{font-size:14px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recs .vt{font-size:13px;color:var(--ink3)}
+.recs .go{align-self:center;font-size:14px;font-weight:700;color:var(--navy);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.recs button.r:hover .pn{text-decoration:underline;text-underline-offset:3px}
+.recs .old{color:var(--warn)}
+.recs.done .tm,.recs.done .pn{color:var(--ink2)}
+.prog{display:flex;gap:3px;margin-top:5px}
+.prog i{display:inline-grid;place-items:center;width:20px;height:18px;font:700 11px/1 var(--sans);font-style:normal;border:1px solid var(--line);border-radius:3px;color:var(--ink3)}
+.prog i.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.filt{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.filt input{min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:16px;width:100%;max-width:340px}
+
+/* 정리하기 */
+.pthead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px 20px;padding-bottom:12px;border-bottom:2px solid var(--ink);margin-bottom:18px}
+.pthead h2{font:700 26px/1.2 var(--serif);letter-spacing:-.01em}
+.pthead h2 span{font:400 15px var(--sans);color:var(--ink3);margin-left:8px}
+.pthead .m{font-size:14px;color:var(--ink3)}
+.pthead .st{font-size:13px;font-weight:700;padding:0 8px;border:1px solid currentColor;border-radius:4px;color:var(--warn)}
+.pthead .st.done{color:var(--ok);border-style:dashed}
+.work{display:grid;gap:30px}
+@media(min-width:1024px){.work{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:44px;align-items:start}.work .mcol{position:sticky;top:64px}}
+.lines{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.lines li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line2)}
+.lines .tx{font-size:15px;line-height:1.5}
+.lines li.as .tx{color:var(--ink3)}
+.pk{display:grid;grid-template-columns:repeat(4,36px);gap:3px}
+.pk button{height:36px;border:1px solid var(--line);border-radius:4px;background:var(--surface);font-size:13px;font-weight:700;color:var(--ink3);padding:0}
+.pk button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.left{font-size:13px;color:var(--ink3);margin:8px 0 0}
+.left b{color:var(--warn)}
+.memoedit textarea{width:100%;min-height:200px;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:16px;line-height:1.6;resize:vertical}
+.soap{border-top:1px solid var(--line)}
+.sbox{padding:12px 0 14px;border-bottom:1px solid var(--line2)}
+.sbox .lh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.sbox label{display:flex;align-items:baseline;gap:10px;font-size:14px;color:var(--ink2);font-weight:700}
+.sbox label b{font:700 24px/1 var(--serif);color:var(--ink);width:22px}
+.sbox label small{font-weight:400;color:var(--ink3)}
+.sbox textarea{width:100%;min-height:84px;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:16px;line-height:1.6;resize:vertical}
+.sbox textarea:focus,.memoedit textarea:focus{border-color:var(--ink);outline:none}
+.sbox .cp{min-height:36px;padding:0 10px;border:1px solid var(--line);border-radius:6px;background:none;font-size:13px;color:var(--ink2)}
+.sbox.emp textarea{border-style:dashed}
+.endbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+
+/* 환자 */
+.pts{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.pts li{border-bottom:1px solid var(--line2)}
+.pts button{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;width:100%;padding:13px 0;border:0;background:none;text-align:left}
+.pts .pn{font-weight:700;font-size:16px}
+.pts .pn span{font-weight:400;font-size:14px;color:var(--ink3);margin-left:6px}
+.pts .pm{font-size:14px;color:var(--ink3);grid-column:1}
+.pts .pr{grid-row:1/span 2;grid-column:2;align-self:center;text-align:right;font-size:13px;color:var(--ink3)}
+.pts .pr b{color:var(--warn)}
+.pts button:hover .pn{text-decoration:underline;text-underline-offset:3px}
+.hist{list-style:none;margin:0;padding:0}
+.hist>li{padding:16px 0;border-bottom:1px solid var(--line2)}
+.hist>li:first-child{border-top:2px solid var(--ink)}
+.hist .hh{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 12px;align-items:baseline;margin-bottom:8px}
+.hist .hh b{font:700 17px/1.3 var(--serif)}
+.hist .hh span{font-size:13px;color:var(--ink3)}
+.hist dl{margin:0;display:grid;grid-template-columns:26px 1fr;gap:4px 10px;font-size:15px}
+.hist dt{font:700 16px/1.5 var(--serif)}
+.hist dd{margin:0;white-space:pre-wrap;color:var(--ink2)}
+.hist dd.no{color:var(--ink3);font-style:italic}
+
+/* 새 메모 */
+.form{display:grid;gap:12px;grid-template-columns:1fr 1fr;max-width:720px;padding-top:16px;border-top:2px solid var(--ink)}
+.form .full{grid-column:1/-1}
+.fld label{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:4px}
+.fld label small{font-weight:400;color:var(--ink3)}
+.fld input,.fld select,.fld textarea{width:100%;min-height:44px;padding:0 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:16px}
+.fld textarea{padding:10px;line-height:1.6;min-height:200px;resize:vertical}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--ink);outline:none}
+.newpt{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;background:var(--sunk);border-radius:8px}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(6px);z-index:60;background:var(--ink);color:var(--paper);padding:11px 18px;border-radius:6px;font-size:15px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px);width:max-content;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%)}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="edu">교육용 예시 화면입니다. 진료 판단에 쓰는 프로그램이 아니며, 판매하지 않습니다. 환자 이름·차트 번호·진료 메모는 모두 지어낸 것이며, 입력하신 내용은 이 기기에만 저장됩니다.</div>
+
+<div class="wrap idline"><span><b>윤대영 원장님을 위한 시제품</b> · 솔동물의료센터</span><span>가상 환자 · 가상 데이터입니다</span></div>
+
+<header class="wrap mast">
+  <div><h1>차트 정리</h1><div class="sub">진료 중에 적은 메모를 S·O·A·P 칸으로 나눠 옮깁니다</div></div>
+  <div class="cnt" id="hcnt"></div>
+</header>
+<nav class="tabs" aria-label="화면"><div class="wrap" id="tabs"></div></nav>
+
+<main class="wrap" id="main"></main>
+
+<footer class="foot"><div class="wrap">원장을 위한 AI 실전 교육 1기 · 차트 양식과 칸 이름은 교육 당일 병원 전자차트에 맞게 함께 고칩니다. 서버로 보내는 내용은 없습니다.</div></footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="sol-chart-demo-v1";
+var VETS=["서지환","문가은","채도윤","표서린"];
+var SO=[["s","S","보호자가 말한 것"],["o","O","진찰·검사에서 본 것"],["a","A","평가"],["p","P","계획"]];
+var WD=["일","월","화","수","목","금","토"];
+
+/* ---------- 날짜 ---------- */
+function pad(n){return (n<10?"0":"")+n}
+function isoOf(t){return t.getFullYear()+"-"+pad(t.getMonth()+1)+"-"+pad(t.getDate())}
+function addD(s,k){var p=s.split("-");return isoOf(new Date(+p[0],+p[1]-1,+p[2]+k))}
+function dl(s){var p=s.split("-"),t=new Date(+p[0],+p[1]-1,+p[2]);return (+p[1])+"월 "+(+p[2])+"일("+WD[t.getDay()]+")"}
+function nowHM(){var t=new Date();return pad(t.getHours())+":"+pad(t.getMinutes())}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+var T0=isoOf(new Date());
+function rel(s){return s===T0?"오늘":s===addD(T0,-1)?"어제":dl(s)}
+
+/* ---------- 자료 ---------- */
+var S;
+function seed(){
+  S={v:1,seq:1300,pts:[
+    {id:"p1",no:"SOL-24-1187",name:"보리",sp:"개",br:"말티즈",age:"9살 수컷"},
+    {id:"p2",no:"SOL-24-0932",name:"콩이",sp:"고양이",br:"코리안 숏헤어",age:"5살 암컷"},
+    {id:"p3",no:"SOL-23-2210",name:"두부",sp:"개",br:"푸들",age:"12살 수컷"},
+    {id:"p4",no:"SOL-25-0418",name:"망고",sp:"개",br:"포메라니안",age:"3살 암컷"},
+    {id:"p5",no:"SOL-22-1764",name:"나비",sp:"고양이",br:"페르시안",age:"8살 암컷"},
+    {id:"p6",no:"SOL-24-0077",name:"호두",sp:"개",br:"시바",age:"7살 수컷"}
+  ],recs:[]};
+  function add(pid,date,time,vet,memo,soap,done){
+    var r={id:uid(),pid:pid,date:date,time:time,vet:vet,memo:memo.join("\n"),asg:{},s:"",o:"",a:"",p:"",done:!!done};
+    if(soap){r.s=soap.s||"";r.o=soap.o||"";r.a=soap.a||"";r.p=soap.p||"";if(soap.asg)r.asg=soap.asg}
+    S.recs.push(r);return r;
+  }
+  var Y=addD(T0,-1);
+  add("p5",Y,"21:10","문가은",["밤 9시 내원, 숨이 빨라 보인다고 함 (보호자)","저녁은 평소처럼 먹었다고 함","호흡수 빠름, 입 벌리고 숨쉬지는 않음","흉부 방사선 촬영함","호흡이 빨라진 원인 확인 필요","입원해 관찰, 아침 9시 보호자에게 연락"]);
+  add("p6",Y,"15:40","채도윤",["오른쪽 앞다리를 가끔 들고 걷는다고 함","산책 뒤에 더 심해진다고 함","보행 관찰: 오른쪽 앞다리 체중 싣는 시간 짧음","촉진 시 큰 통증 반응 없음","1주 뒤 재진, 그사이 산책 짧게"],
+    {s:"오른쪽 앞다리를 가끔 들고 걷는다고 함\n산책 뒤에 더 심해진다고 함",o:"보행 관찰: 오른쪽 앞다리 체중 싣는 시간 짧음\n촉진 시 큰 통증 반응 없음",a:"오른쪽 앞다리 파행 — 원인은 재진 때 다시 평가",p:"1주 뒤 재진, 그사이 산책 짧게",asg:{0:"s",1:"s",2:"o",3:"o",4:"p"}},true);
+  add("p3",T0,"08:50","채도윤",["귀 긁는 횟수가 줄었다고 함","외이도 붉은 기 지난번보다 줄어듦","지난 진료보다 나아지는 중","지금 쓰는 약 그대로, 2주 뒤 재진"],
+    {s:"귀 긁는 횟수가 줄었다고 함",o:"외이도 붉은 기 지난번보다 줄어듦",a:"지난 진료보다 나아지는 중",p:"지금 쓰는 약 그대로, 2주 뒤 재진",asg:{0:"s",1:"o",2:"a",3:"p"}},true);
+  add("p1",T0,"09:40","서지환",["어제 저녁부터 밥을 거의 안 먹었다고 함","밤에 두 번 토함, 노란 물 (보호자)","물은 마신다고 함","체온 39.0, 심박 120","배 앞쪽 만질 때 불편해함","혈액검사·복부 방사선 진행","결과 보고 수액 여부 결정, 오후 3시 보호자 통화"]);
+  add("p2",T0,"10:30","문가은",["화장실에 자주 들어가는데 소변 양이 적다고 함","어제 아침부터 시작","방광 작게 만져짐, 만질 때 약간 불편해함","소변검사 진행","소변검사 결과 보고 내일 재진 여부 연락"],
+    {s:"화장실에 자주 들어가는데 소변 양이 적다고 함\n어제 아침부터 시작",o:"방광 작게 만져짐, 만질 때 약간 불편해함",asg:{0:"s",1:"s",2:"o"}});
+  add("p4",T0,"11:20","서지환",["예방접종 일정 상담","신체검사에서 특이한 점 없음","체중 3.2kg","다음 접종일 안내 문자 보내기로 함"]);
+}
+function valid(o){return o&&o.v===1&&Array.isArray(o.pts)&&Array.isArray(o.recs)}
+function load(){try{var t=localStorage.getItem(KEY);if(t){var o=JSON.parse(t);if(valid(o)){S=o;return}}}catch(e){}seed()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast("이 기기에 저장하지 못했습니다")}}
+load();save();
+function rec(id){for(var i=0;i<S.recs.length;i++)if(S.recs[i].id===id)return S.recs[i];return null}
+function pt(id){for(var i=0;i<S.pts.length;i++)if(S.pts[i].id===id)return S.pts[i];return null}
+function lines(r){return r.memo.split("\n").map(function(x){return x.trim()}).filter(Boolean)}
+function filled(r){return SO.filter(function(k){return (r[k[0]]||"").trim()}).map(function(k){return k[0]})}
+function byTime(a,b){return (a.date+a.time)<(b.date+b.time)?-1:1}
+function todo(){return S.recs.filter(function(r){return !r.done})}
+
+/* ---------- 화면 상태 · 뒤로가기 ---------- */
+var HOME={tab:"today"},view=HOME,ui={vet:"all",q:"",memoEdit:false};
+function same(a,b){return JSON.stringify(a)===JSON.stringify(b)}
+function go(v){if(same(v,view))return;view=v;ui.memoEdit=false;history.pushState({app:1,v:v},"");render();window.scrollTo(0,0)}
+history.replaceState({app:1,base:1},"");
+history.pushState({app:1,v:HOME},"");
+window.addEventListener("popstate",function(e){
+  var st=e.state||{};
+  if(!st.app||st.base||!st.v){
+    var atHome=view.tab==="today";
+    history.pushState({app:1,v:HOME},"");
+    if(!atHome){view=HOME;render();window.scrollTo(0,0)}
+    else toast("앱을 닫으려면 홈 화면으로 나가 주십시오");
+    return;
+  }
+  view=st.v;ui.memoEdit=false;
+  if((view.tab==="edit"&&!rec(view.id))||(view.tab==="pt"&&!pt(view.id))){view={tab:"today"};history.replaceState({app:1,v:view},"")}
+  render();window.scrollTo(0,0);
+});
+
+/* ---------- 그리기 ---------- */
+var TABS=[["today","오늘"],["edit","정리하기"],["pts","환자"],["new","새 메모"]];
+function render(){
+  var n=todo().length;
+  document.getElementById("hcnt").innerHTML='<b class="num'+(n?'':' zero')+'">'+n+'</b>정리 안 된 차트';
+  var cur=view.tab==="pt"?"pts":view.tab;
+  document.getElementById("tabs").innerHTML=TABS.map(function(t){return '<button data-act="tab" data-t="'+t[0]+'"'+(cur===t[0]?' aria-current="page"':'')+'>'+t[1]+'</button>'}).join("");
+  var f={today:vToday,edit:vEdit,pts:vPts,pt:vPt,new:vNew}[view.tab]||vToday;
+  document.getElementById("main").innerHTML=f();
+}
+function prog(r){var f=filled(r);return '<span class="prog" aria-label="채운 칸 '+f.map(function(x){return x.toUpperCase()}).join(", ")+'">'+SO.map(function(k){return '<i class="'+(f.indexOf(k[0])>=0?'on':'')+'">'+k[1]+'</i>'}).join("")+'</span>'}
+function recRow(r,showDate){
+  var p=pt(r.pid)||{name:"(지운 환자)",sp:"",br:"",no:""},ls=lines(r);
+  return '<li><button class="r" data-act="open" data-id="'+r.id+'"><span class="tm">'+esc(r.time)+(showDate||r.date!==T0?'<small class="'+(r.done?'':'old')+'">'+rel(r.date)+'</small>':'')+'</span>'+
+    '<span><span class="pn">'+esc(p.name)+'<span>'+esc(p.sp)+(p.br?' · '+esc(p.br):'')+' · '+esc(p.no)+'</span></span><span class="ln" style="display:block">'+esc(ls[0]||"메모 없음")+'</span><span class="vt">'+esc(r.vet)+' 수의사</span>'+prog(r)+'</span>'+
+    '<span class="go">'+(r.done?'보기':'정리하기')+'</span></button></li>';
+}
+function vetSeg(){return '<div class="seg" role="group" aria-label="담당 수의사"><button data-act="vf" data-v="all" aria-pressed="'+(ui.vet==="all")+'">전체</button>'+VETS.map(function(v){return '<button data-act="vf" data-v="'+v+'" aria-pressed="'+(ui.vet===v)+'">'+v+'</button>'}).join("")+'</div>'}
+
+function vToday(){
+  var mine=function(r){return ui.vet==="all"||r.vet===ui.vet};
+  var td=todo().filter(mine).sort(byTime),dn=S.recs.filter(function(r){return r.done&&r.date===T0&&mine(r)}).sort(byTime);
+  var old=td.filter(function(r){return r.date<T0}),now=td.filter(function(r){return r.date>=T0});
+  var h='<div class="filt">'+vetSeg()+'</div><div class="two"><div>';
+  h+='<div class="hrow"><h2 class="h">정리 안 된 차트</h2><span class="meta">'+dl(T0)+' · '+td.length+'건</span></div>';
+  if(!td.length)h+='<div class="empty"><p>정리할 차트가 없습니다.</p></div>';
+  else{
+    if(old.length)h+='<p class="sub-h" style="color:var(--warn);margin-top:4px">지난 진료 중 아직 정리 안 된 것 '+old.length+'건</p><ul class="recs">'+old.map(function(r){return recRow(r,true)}).join("")+'</ul>';
+    if(now.length)h+=(old.length?'<p class="sub-h" style="margin-top:22px">오늘</p>':'')+'<ul class="recs">'+now.map(function(r){return recRow(r)}).join("")+'</ul>';
+  }
+  h+='</div><div><div class="hrow"><h2 class="h">오늘 정리 끝</h2><span class="meta">'+dn.length+'건</span></div>';
+  h+=dn.length?'<ul class="recs done">'+dn.map(function(r){return recRow(r)}).join("")+'</ul>':'<div class="empty"><p>오늘 정리를 마친 차트가 아직 없습니다.</p></div>';
+  h+='<div class="btns" style="margin-top:18px"><button class="btn line sm" data-act="tab" data-t="new">진료 메모 새로 적기</button>'+(dn.length?'<button class="btn line sm" data-act="copyday">오늘 정리 끝난 차트 모두 복사</button>':'')+'</div>';
+  h+='</div></div>';
+  return h;
+}
+
+function chartText(r){
+  var p=pt(r.pid)||{name:"",sp:"",br:"",no:"",age:""};
+  var t="["+p.no+"] "+p.name+" ("+p.sp+(p.br?" · "+p.br:"")+(p.age?" · "+p.age:"")+")\n"+r.date+" "+r.time+" · 담당 "+r.vet+"\n";
+  SO.forEach(function(k){t+="\n"+k[1]+"\n"+((r[k[0]]||"").trim()||"-")+"\n"});
+  return t;
+}
+function vEdit(){
+  var r=view.id?rec(view.id):null;
+  if(!r){
+    var nx=todo().sort(byTime)[0];
+    return '<div class="empty"><p>정리할 차트를 골라 주십시오.</p>'+(nx?'<button class="btn" data-act="open" data-id="'+nx.id+'">가장 오래된 차트부터 정리하기</button>':'<button class="btn" data-act="tab" data-t="today">오늘 목록으로</button>')+'</div>';
+  }
+  var p=pt(r.pid)||{name:"(지운 환자)",sp:"",br:"",no:"",age:""},ls=lines(r),h="";
+  h+='<div class="pthead"><div><h2>'+esc(p.name)+'<span>'+esc(p.sp)+(p.br?' · '+esc(p.br):'')+(p.age?' · '+esc(p.age):'')+'</span></h2><div class="m">'+esc(p.no)+' · '+rel(r.date)+' '+esc(r.time)+' · '+esc(r.vet)+' 수의사</div></div><span class="st'+(r.done?' done':'')+'">'+(r.done?'정리 끝':'정리 중')+'</span></div>';
+  h+='<p class="aihint">메모를 S·O·A·P로 나누는 일은 키트로 만들 때 Claude를 붙이면 자동으로 채울 수 있습니다. 시제품에서는 줄마다 칸을 골라 주십시오. 평가와 계획은 담당 수의사가 적은 그대로 옮깁니다.</p>';
+  h+='<div class="work"><div class="mcol"><div class="hrow"><h3 class="sub-h" style="margin:0">진료 중에 적은 메모</h3><button class="btn line sm" data-act="memoedit">'+(ui.memoEdit?'고친 메모 저장':'메모 고치기')+'</button></div>';
+  if(ui.memoEdit){
+    h+='<div class="memoedit"><textarea id="memo" aria-label="진료 메모">'+esc(r.memo)+'</textarea><p class="left">메모를 고치시면 줄마다 고른 칸 표시는 지워지고, 오른쪽 칸에 옮긴 글은 그대로 남습니다.</p></div>';
+  }else{
+    if(!ls.length)h+='<div class="empty"><p>메모가 비어 있습니다.</p></div>';
+    else h+='<ul class="lines">'+ls.map(function(l,i){var as=r.asg[i];
+      return '<li class="'+(as?'as':'')+'"><span class="tx">'+esc(l)+'</span><span class="pk" role="group" aria-label="이 줄을 옮길 칸">'+SO.map(function(k){return '<button data-act="asg" data-i="'+i+'" data-k="'+k[0]+'" aria-pressed="'+(as===k[0])+'" aria-label="'+k[1]+' '+k[2]+'">'+k[1]+'</button>'}).join("")+'</span></li>'}).join("")+'</ul>';
+    var left=ls.filter(function(l,i){return !r.asg[i]}).length;
+    h+='<p class="left">'+(left?'아직 칸을 고르지 않은 줄 <b>'+left+'</b>개':'모든 줄을 칸에 옮겼습니다')+' · 같은 버튼을 한 번 더 누르시면 빼실 수 있습니다.</p>';
+  }
+  h+='</div><div><h3 class="sub-h">정리한 차트</h3><div class="soap">'+SO.map(function(k){var v=r[k[0]]||"";
+    return '<div class="sbox'+(v.trim()?'':' emp')+'"><div class="lh"><label for="so-'+k[0]+'"><b>'+k[1]+'</b>'+k[2]+'</label><button class="cp" data-act="cp1" data-k="'+k[0]+'">복사</button></div><textarea id="so-'+k[0]+'" data-so="'+k[0]+'" placeholder="'+(k[0]==="a"||k[0]==="p"?'담당 수의사가 적습니다':'')+'">'+esc(v)+'</textarea></div>'}).join("")+'</div>';
+  h+='<div class="endbar"><button class="btn" data-act="copyall">차트 전체 복사</button>'+(r.done?'<button class="btn line" data-act="reopen">다시 정리 중으로</button>':'<button class="btn line" data-act="done">정리 끝</button>')+'<button class="btn line" data-act="next">다음 차트</button></div>';
+  h+='<div class="btns" style="margin-top:22px"><button class="btn line sm" data-act="openpt" data-id="'+r.pid+'">'+esc(p.name)+' 진료 기록 모두 보기</button><button class="btn warn sm" data-act="delrec">이 메모 지우기</button></div>';
+  h+='</div></div>';
+  return h;
+}
+
+function vPts(){
+  var q=ui.q.trim(),list=S.pts.filter(function(p){return !q||(p.name+" "+p.no+" "+p.br).indexOf(q)>=0});
+  var h='<div class="hrow"><h2 class="h">환자별 정리</h2><span class="meta">환자 '+S.pts.length+'마리</span></div>';
+  h+='<div class="filt"><input id="q" type="search" placeholder="이름, 차트 번호, 품종으로 찾기" value="'+esc(ui.q)+'" aria-label="환자 찾기"></div>';
+  if(!list.length)return h+'<div class="empty"><p>찾는 환자가 없습니다.</p></div>';
+  list=list.map(function(p){var rs=S.recs.filter(function(r){return r.pid===p.id}).sort(byTime);return {p:p,rs:rs,last:rs[rs.length-1]}}).sort(function(a,b){var x=a.last?a.last.date+a.last.time:"",y=b.last?b.last.date+b.last.time:"";return x<y?1:-1});
+  h+='<ul class="pts">'+list.map(function(x){var p=x.p,nt=x.rs.filter(function(r){return !r.done}).length;
+    return '<li><button data-act="openpt" data-id="'+p.id+'"><span class="pn">'+esc(p.name)+'<span>'+esc(p.sp)+' · '+esc(p.br)+(p.age?' · '+esc(p.age):'')+'</span></span><span class="pm">'+esc(p.no)+(x.last?' · 마지막 진료 '+rel(x.last.date):'')+'</span><span class="pr">기록 '+x.rs.length+'건'+(nt?'<br><b>정리 안 됨 '+nt+'</b>':'')+'</span></button></li>'}).join("")+'</ul>';
+  return h;
+}
+function vPt(){
+  var p=pt(view.id);if(!p)return vPts();
+  var rs=S.recs.filter(function(r){return r.pid===p.id}).sort(byTime).reverse();
+  var h='<div class="pthead"><div><h2>'+esc(p.name)+'<span>'+esc(p.sp)+' · '+esc(p.br)+(p.age?' · '+esc(p.age):'')+'</span></h2><div class="m">'+esc(p.no)+' · 진료 기록 '+rs.length+'건</div></div><button class="btn line sm" data-act="newfor" data-id="'+p.id+'">이 환자 새 메모</button></div>';
+  if(!rs.length)return h+'<div class="empty"><p>아직 진료 기록이 없습니다.</p></div>';
+  h+='<ul class="hist">'+rs.map(function(r){
+    return '<li><div class="hh"><b>'+rel(r.date)+' '+esc(r.time)+'</b><span>'+esc(r.vet)+' 수의사 · '+(r.done?'정리 끝':'<span style="color:var(--warn);font-weight:700">정리 안 됨</span>')+'</span></div>'+
+      '<dl>'+SO.map(function(k){var v=(r[k[0]]||"").trim();return '<dt>'+k[1]+'</dt><dd class="'+(v?'':'no')+'">'+(v?esc(v):'비어 있음')+'</dd>'}).join("")+'</dl>'+
+      '<div class="btns" style="margin-top:10px"><button class="btn sm'+(r.done?' line':'')+'" data-act="open" data-id="'+r.id+'">'+(r.done?'열기':'정리하기')+'</button><button class="btn line sm" data-act="copyrec" data-id="'+r.id+'">복사</button></div></li>'}).join("")+'</ul>';
+  return h;
+}
+
+function vNew(){
+  var pre=view.pid||"";
+  var h='<div class="hrow"><h2 class="h">진료 메모 새로 적기</h2><span class="meta">진료 중에 한 줄씩 적어 두시면 됩니다</span></div>';
+  h+='<p class="lead">순서는 신경 쓰지 않으셔도 됩니다. 저장하신 뒤 정리하기 화면에서 줄마다 S·O·A·P 칸을 고르시면 차트가 됩니다.</p>';
+  h+='<form class="form" id="fnew"><div class="fld full"><label for="n-p">환자</label><select id="n-p"><option value="">골라 주십시오</option>'+S.pts.map(function(p){return '<option value="'+p.id+'"'+(p.id===pre?' selected':'')+'>'+esc(p.name)+' · '+esc(p.br)+' · '+esc(p.no)+'</option>'}).join("")+'<option value="__new">처음 온 환자</option></select></div>';
+  h+='<div class="newpt" id="newpt" hidden><div class="fld"><label for="n-nm">이름</label><input id="n-nm" autocomplete="off"></div><div class="fld"><label for="n-sp">종</label><select id="n-sp"><option>개</option><option>고양이</option><option>그 밖의 동물</option></select></div><div class="fld"><label for="n-br">품종</label><input id="n-br" autocomplete="off"></div><div class="fld"><label for="n-ag">나이·성별 <small>선택</small></label><input id="n-ag" autocomplete="off"></div></div>';
+  h+='<div class="fld"><label for="n-v">담당 수의사</label><select id="n-v">'+VETS.map(function(v){return '<option>'+v+'</option>'}).join("")+'</select></div>';
+  h+='<div class="fld"><label for="n-t">진료 시각</label><input id="n-t" type="time" value="'+nowHM()+'"></div>';
+  h+='<div class="fld full"><label for="n-m">진료 메모 <small>한 줄에 하나씩</small></label><textarea id="n-m" placeholder="보호자 이야기, 진찰 소견, 검사, 담당 수의사의 평가와 계획을 생각나는 대로 적어 주십시오"></textarea></div>';
+  h+='<div class="fld full"><button class="btn" type="submit" style="width:100%">저장하고 정리하기</button></div></form>';
+  return h;
+}
+
+/* ---------- 동작 ---------- */
+var tt;function toast(m){var t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){t.classList.remove("on")},2800)}
+function arm(b,msg){
+  if(b.dataset.armed==="1")return true;
+  var old=b.textContent;b.dataset.armed="1";b.textContent=msg;
+  setTimeout(function(){if(b.isConnected){b.dataset.armed="";b.textContent=old}},4000);
+  return false;
+}
+function copyText(t,m){
+  function fb(){var a=document.createElement("textarea");a.value=t;a.setAttribute("readonly","");a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand("copy")}catch(e){}a.remove();toast(ok?(m||"복사했습니다"):"복사하지 못했습니다. 길게 눌러 직접 복사해 주십시오")}
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(function(){toast(m||"복사했습니다")},fb);else fb();
+}
+function removeLine(box,line){
+  var arr=box.split("\n"),k=arr.indexOf(line);
+  if(k>=0)arr.splice(k,1);
+  return arr.join("\n").replace(/^\n+|\n+$/g,"");
+}
+function keepScroll(fn){var y=window.scrollY;fn();window.scrollTo(0,y)}
+
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-act]");if(!b||b.disabled)return;
+  var a=b.dataset.act,r=view.tab==="edit"&&view.id?rec(view.id):null;
+  if(a==="tab"){var t=b.dataset.t;if(t==="edit"){var nx=todo().sort(byTime)[0];go({tab:"edit",id:(view.tab==="edit"&&view.id)?view.id:(nx?nx.id:null)})}else go({tab:t})}
+  else if(a==="vf"){ui.vet=b.dataset.v;render()}
+  else if(a==="open"){go({tab:"edit",id:b.dataset.id})}
+  else if(a==="openpt"){go({tab:"pt",id:b.dataset.id})}
+  else if(a==="newfor"){go({tab:"new",pid:b.dataset.id})}
+  else if(a==="asg"&&r){
+    var i=+b.dataset.i,k=b.dataset.k,ln=lines(r)[i],prev=r.asg[i];
+    if(prev){r[prev]=removeLine(r[prev]||"",ln);delete r.asg[i]}
+    if(prev!==k){r[k]=((r[k]||"").replace(/\n+$/,"")+(r[k]&&r[k].trim()?"\n":"")+ln);r.asg[i]=k}
+    save();keepScroll(render);
+  }
+  else if(a==="memoedit"&&r){
+    if(ui.memoEdit){var m=document.getElementById("memo").value;if(m!==r.memo){r.memo=m;r.asg={};save();toast("메모를 고쳤습니다. 줄마다 칸을 다시 골라 주십시오")}ui.memoEdit=false}
+    else ui.memoEdit=true;
+    keepScroll(render);
+  }
+  else if(a==="cp1"&&r){var v=(r[b.dataset.k]||"").trim();if(!v){toast("빈 칸입니다");return}copyText(v,b.dataset.k.toUpperCase()+" 칸을 복사했습니다")}
+  else if(a==="copyall"&&r){copyText(chartText(r),"차트 전체를 복사했습니다. 전자차트에 붙여 넣어 주십시오")}
+  else if(a==="copyrec"){var rr=rec(b.dataset.id);if(rr)copyText(chartText(rr),"차트를 복사했습니다")}
+  else if(a==="copyday"){var dn=S.recs.filter(function(x){return x.done&&x.date===T0&&(ui.vet==="all"||x.vet===ui.vet)}).sort(byTime);copyText(dn.map(chartText).join("\n----------\n\n"),"오늘 정리 끝난 차트 "+dn.length+"건을 복사했습니다")}
+  else if(a==="done"&&r){
+    var miss=SO.filter(function(k){return !(r[k[0]]||"").trim()}).map(function(k){return k[1]});
+    if(miss.length&&!arm(b,miss.join("·")+" 칸이 비어 있습니다. 한 번 더 누르시면 그대로 끝냅니다"))return;
+    r.done=true;save();
+    var nx2=todo().sort(byTime)[0];
+    render();toast(nx2?"정리했습니다. 다음 차트 버튼으로 이어서 정리하실 수 있습니다":"정리 안 된 차트가 더 없습니다");
+  }
+  else if(a==="reopen"&&r){r.done=false;save();render();toast("다시 정리 중으로 돌렸습니다")}
+  else if(a==="next"){
+    var list=todo().filter(function(x){return !r||x.id!==r.id}).sort(byTime);
+    if(!list.length){toast("정리 안 된 차트가 더 없습니다");return}
+    go({tab:"edit",id:list[0].id});
+  }
+  else if(a==="delrec"&&r){if(arm(b,"한 번 더 누르시면 지웁니다")){S.recs=S.recs.filter(function(x){return x.id!==r.id});save();view={tab:"today"};history.replaceState({app:1,v:view},"");render();toast("메모를 지웠습니다")}}
+});
+document.addEventListener("input",function(e){
+  var t=e.target;
+  if(t.dataset&&t.dataset.so){var r=rec(view.id);if(!r)return;r[t.dataset.so]=t.value;save();var box=t.closest(".sbox");if(box)box.classList.toggle("emp",!t.value.trim())}
+  else if(t.id==="q"){ui.q=t.value;var pos=t.selectionStart;render();var q=document.getElementById("q");q.focus();try{q.setSelectionRange(pos,pos)}catch(x){}}
+});
+document.addEventListener("change",function(e){
+  var t=e.target;
+  if(t.id==="n-p"){document.getElementById("newpt").hidden=t.value!=="__new"}
+});
+document.addEventListener("submit",function(e){
+  e.preventDefault();
+  if(e.target.id!=="fnew")return;
+  var pid=document.getElementById("n-p").value,memo=document.getElementById("n-m").value.trim();
+  if(!pid){toast("환자를 골라 주십시오");return}
+  if(pid==="__new"){
+    var nm=document.getElementById("n-nm").value.trim();if(!nm){toast("처음 온 환자의 이름을 적어 주십시오");return}
+    S.seq=(S.seq||1300)+1;
+    var np={id:uid(),no:"SOL-"+String(new Date().getFullYear()).slice(2)+"-"+S.seq,name:nm,sp:document.getElementById("n-sp").value,br:document.getElementById("n-br").value.trim(),age:document.getElementById("n-ag").value.trim()};
+    S.pts.push(np);pid=np.id;
+  }
+  if(!memo){toast("진료 메모를 적어 주십시오");return}
+  var r={id:uid(),pid:pid,date:T0,time:document.getElementById("n-t").value||nowHM(),vet:document.getElementById("n-v").value,memo:memo,asg:{},s:"",o:"",a:"",p:"",done:false};
+  S.recs.push(r);save();
+  view={tab:"edit",id:r.id};history.replaceState({app:1,v:view},"");render();window.scrollTo(0,0);
+  toast("메모를 저장했습니다. 줄마다 칸을 골라 주십시오");
+});
+
+render();
+})();
+</script>
+</body>
+</html>

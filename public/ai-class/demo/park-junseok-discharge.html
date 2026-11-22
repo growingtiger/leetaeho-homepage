@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'">
+<meta name="theme-color" content="#f4f3ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#151715" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<title>퇴원 안내 · 박준석 원장님을 위한 시제품</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* 작성 화면은 장부와 같은 종이·먹 계열. 보호자 화면은 휴대폰에서 읽기 쉬운 큰 글씨.
+   초록 먹은 '보호자에게 보이는 것'에만 쓴다. */
+:root{
+  --bg:#f4f3ef; --paper:#fffffc; --wash:#ebeae3;
+  --ink:#1b1d1a; --ink2:#444840; --mute:#676b62;
+  --rule:#d3d3c8; --rule2:#e5e5dc;
+  --acc:#2e5a47; --acc-soft:#e3ece6;
+  --warn:#93321f;
+  --serif:"Hahmlet","AppleMyungjo","Noto Serif KR",serif;
+  --sans:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#151715; --paper:#1d201d; --wash:#262a26;
+    --ink:#e8eae3; --ink2:#c2c6bc; --mute:#979b91;
+    --rule:#383c36; --rule2:#2b2f2a;
+    --acc:#93c7ad; --acc-soft:#22332a;
+    --warn:#ec9a85;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+.edu-note{background:var(--wash);color:var(--mute);font-size:13px;line-height:1.5;padding:8px 16px;text-align:center;border-bottom:1px solid var(--rule2)}
+.top{max-width:1180px;margin:0 auto;padding:18px 16px 0}
+.proto{font-size:13.5px;color:var(--mute);line-height:1.45}
+.proto b{color:var(--ink2);font-weight:500}
+.title{margin:8px 0 0;font-family:var(--serif);font-weight:700;font-size:27px;letter-spacing:-.02em;line-height:1.2}
+.title small{display:block;font-family:var(--sans);font-size:14px;font-weight:400;color:var(--mute);letter-spacing:0;margin-top:5px}
+nav.tabs{display:flex;margin:14px -16px 0;padding:0 8px;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--bg);z-index:20}
+nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;min-height:48px;padding:10px 14px;font-size:15.5px;color:var(--mute);white-space:nowrap}
+nav.tabs button[aria-current="page"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:700}
+main{max-width:1180px;margin:0 auto;padding:6px 16px 56px;min-width:0}
+@media (min-width:900px){.top{padding:28px 24px 0}.title{font-size:30px}nav.tabs{margin:18px 0 0;padding:0}main{padding:8px 24px 64px}}
+
+.hd{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 16px;padding:18px 0 14px;border-bottom:2px solid var(--ink)}
+.hd h1{margin:0;font-family:var(--serif);font-weight:600;font-size:23px;letter-spacing:-.015em;line-height:1.25}
+.hd .per{display:block;font-family:var(--sans);font-size:14.5px;font-weight:400;color:var(--ink2);margin-top:4px;letter-spacing:0}
+.hd .acts{margin-left:auto;display:flex;flex-wrap:wrap;gap:8px}
+h2.sec{font-family:var(--serif);font-weight:600;font-size:18px;letter-spacing:-.01em;margin:30px 0 4px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+h2.sec .aside{font-family:var(--sans);font-size:13.5px;font-weight:400;color:var(--mute)}
+p.cap{margin:0 0 8px;font-size:14.5px;color:var(--mute)}
+
+.btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:9px 15px;border-radius:4px;border:1px solid var(--rule);background:var(--paper);font-size:15px;font-weight:500;line-height:1.2;white-space:nowrap}
+.btn:hover{background:var(--wash)}
+.btn.ink{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.acc{background:var(--acc);border-color:var(--acc);color:var(--bg)}
+.btn.quiet{border-color:transparent;background:none;color:var(--ink2);padding-left:8px;padding-right:8px}
+.btn.warn{color:var(--warn)}
+.btn.sm{min-height:40px;padding:6px 11px;font-size:14px}
+.btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* 목록 */
+.filters{display:flex;flex-wrap:wrap;gap:8px;padding:18px 0 10px;border-bottom:1px solid var(--rule)}
+.seg{display:flex;border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.seg button{background:var(--paper);border:0;min-height:42px;padding:8px 13px;font-size:14.5px;color:var(--ink2)}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);font-weight:500}
+.filters input{flex:1;min-width:150px;min-height:42px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);padding:8px 11px;font-size:16px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--rule2)}
+.item .open{background:none;border:0;padding:0;text-align:left;min-height:44px;min-width:0}
+.item .nm{font-family:var(--serif);font-weight:600;font-size:18.5px;letter-spacing:-.01em}
+.item .nm small{font-family:var(--sans);font-weight:400;font-size:14px;color:var(--mute);margin-left:6px;letter-spacing:0}
+.item .l2{display:block;font-size:14px;color:var(--mute)}
+.item .open:hover .nm{text-decoration:underline;text-underline-offset:4px}
+.st{font-size:13px;line-height:1.35;text-align:right;color:var(--mute);white-space:nowrap}
+.st b{display:block;font-weight:700;color:var(--ink2)}
+.st.sent b{color:var(--acc)}
+.empty{padding:22px 0;color:var(--mute);font-size:15.5px}
+
+/* 작성 */
+.ed{display:grid;grid-template-columns:minmax(0,1fr);gap:0 40px}
+@media (min-width:980px){.ed{grid-template-columns:minmax(0,1fr) 372px}}
+.pane{min-width:0}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{padding:0;font-family:var(--serif);font-weight:600;font-size:18px;letter-spacing:-.01em;margin:28px 0 2px}
+.lg-sub{font-size:14px;color:var(--mute);margin:0 0 8px}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:10px 0 4px}
+.fd{min-width:0}
+.fd.w2{grid-column:1/-1}
+.fd label,.fd .lb{display:block;font-size:13.5px;color:var(--ink2);margin-bottom:4px}
+.fd label i{font-style:normal;color:var(--warn);margin-left:2px}
+.fd input,.fd select,.fd textarea{width:100%;min-height:46px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);padding:10px 11px;font-size:16px;line-height:1.4}
+.fd textarea{min-height:96px;resize:vertical}
+.fd input:focus,.fd select:focus,.fd textarea:focus{outline:none;border-color:var(--ink)}
+.lines{border-top:1px solid var(--rule);margin-top:8px}
+.ln{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:8px;align-items:start;padding:10px 0;border-bottom:1px solid var(--rule2)}
+.ln .no{font-family:var(--serif);font-weight:600;color:var(--mute);padding-top:12px;text-align:center}
+.ln .f3{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.ln .f3 .fd:nth-child(2){grid-column:1/-1}
+@media (min-width:640px){.ln .f3{grid-template-columns:minmax(0,.9fr) minmax(0,1.6fr) minmax(0,.7fr)}.ln .f3 .fd:nth-child(2){grid-column:auto}}
+.ln .tools{display:flex;flex-direction:column;gap:2px;padding-top:18px}
+.ln .tools button{border:0;background:none;min-width:40px;min-height:40px;color:var(--mute);border-radius:4px}
+.ln .tools button:hover{background:var(--wash);color:var(--ink)}
+.ln .tools svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ln.one{grid-template-columns:28px minmax(0,1fr) auto}
+.ln.one .tools{flex-direction:row;padding-top:3px}
+.addrow{padding:10px 0 0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chips .lb{font-size:13px;color:var(--mute);width:100%}
+.chips button{border:1px dashed var(--rule);background:none;border-radius:4px;min-height:38px;padding:5px 10px;font-size:14px;color:var(--ink2);text-align:left}
+.chips button:hover{border-style:solid;background:var(--paper)}
+.ai{margin:26px 0 0;padding:11px 0 0;border-top:1px solid var(--rule);font-size:14px;color:var(--mute)}
+.saved{font-size:13.5px;color:var(--mute)}
+
+/* 휴대폰 미리보기 */
+.side{display:none}
+@media (min-width:980px){.side{display:block;position:sticky;top:64px;align-self:start;padding-top:20px}}
+.side .cap2{font-size:13.5px;color:var(--mute);margin:0 0 10px;display:flex;justify-content:space-between;gap:8px}
+.phone{border:1px solid var(--rule);border-radius:28px;background:var(--wash);padding:12px}
+.phone .scr{border-radius:18px;overflow:hidden;background:#fbfbf8;color:#1b1d1a;height:620px;overflow-y:auto;border:1px solid var(--rule2)}
+.side .acts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+
+/* 보호자 화면 (밝은 종이 고정: 보호자 휴대폰 설정과 무관하게 같은 모습으로 미리 본다) */
+.g{font-family:var(--sans);color:#1b1d1a;background:#fbfbf8;padding:22px 20px 26px;font-size:17px;line-height:1.65;--gacc:#2e5a47;--gm:#62665d;--gr:#dcdcd2}
+.g .gh{font-size:13.5px;color:var(--gm);display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--gr);padding-bottom:10px}
+.g h1{font-family:var(--serif);font-weight:700;font-size:26px;line-height:1.3;letter-spacing:-.02em;margin:18px 0 4px}
+.g .meta{font-size:15px;color:var(--gm);margin:0}
+.g h2{font-family:var(--serif);font-weight:600;font-size:19px;margin:26px 0 8px;padding-top:14px;border-top:2px solid #1b1d1a;letter-spacing:-.01em}
+.g h2.alert{border-top-color:#93321f;color:#7d2a19}
+.g ol{list-style:none;margin:0;padding:0}
+.g ol li{padding:10px 0;border-bottom:1px solid var(--gr)}
+.g ol li:last-child{border-bottom:0}
+.g .mn{font-weight:700;display:block}
+.g .mp{display:block;font-size:15px;color:var(--gm);margin-top:2px}
+.g ul{margin:0;padding:0 0 0 20px}
+.g ul li{padding:4px 0}
+.g p{margin:0;white-space:pre-line}
+.g .visit{font-size:19px;font-weight:700}
+.g .visit span{display:block;font-size:15.5px;font-weight:400;color:var(--gm)}
+.g .call{margin-top:26px;background:#eef2ee;border-radius:6px;padding:16px}
+.g .call b{display:block;font-size:15px}
+.g .call .ph{font-size:24px;font-weight:700;letter-spacing:.01em;margin:2px 0 4px;font-variant-numeric:tabular-nums}
+.g .call .ln2{font-size:15px;color:var(--gm);white-space:pre-line}
+.g .call button{width:100%;margin-top:12px;min-height:50px;border:0;border-radius:6px;background:var(--gacc);color:#fff;font-size:17px;font-weight:700}
+.g .by{font-size:13.5px;color:var(--gm);margin-top:20px}
+.g .hole{display:block;border:1px dashed #b9b9ad;border-radius:4px;padding:7px 10px;color:#85887f;font-size:14.5px;font-style:normal}
+.g .hole.in{display:inline-block;padding:1px 8px}
+
+/* 미리보기 겹창(좁은 화면)과 보호자 화면 크게 보기 */
+.over{position:fixed;inset:0;z-index:45;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.over .bar{position:sticky;top:0;z-index:2;display:flex;gap:8px;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg);border-bottom:1px solid var(--rule)}
+.over .bar .t{font-size:14.5px;color:var(--ink2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.over .g{max-width:480px;margin:0 auto;min-height:calc(100vh - 60px)}
+.over .demo{max-width:480px;margin:0 auto;padding:10px 16px 26px;font-size:13.5px;color:var(--mute);text-align:center}
+.mbar{position:sticky;bottom:0;z-index:15;display:flex;gap:8px;padding:10px 0 calc(10px + env(safe-area-inset-bottom));background:var(--bg);border-top:1px solid var(--rule);margin-top:24px}
+.mbar .btn{flex:1}
+@media (min-width:980px){.mbar{display:none}}
+
+/* 링크 창 */
+.scrim{position:fixed;inset:0;background:rgba(18,20,18,.42);z-index:50}
+.sheet{position:fixed;z-index:51;left:0;right:0;bottom:0;max-height:92vh;overflow:auto;background:var(--paper);border-top:2px solid var(--ink);padding:18px 16px calc(20px + env(safe-area-inset-bottom))}
+.sheet h3{margin:0;font-family:var(--serif);font-weight:600;font-size:20px}
+.sheet .sub{font-size:14.5px;color:var(--mute);margin:4px 0 0}
+.sheet .url{display:flex;gap:8px;margin:16px 0 8px}
+.sheet .url input{flex:1;min-width:0;min-height:46px;border:1px solid var(--rule);border-radius:4px;background:var(--wash);padding:8px 11px;font-size:15px;font-family:ui-monospace,Menlo,monospace}
+.sheet .miss{font-size:14.5px;color:var(--warn);margin:12px 0 0}
+.sheet .note{font-size:14px;color:var(--mute);border-top:1px solid var(--rule2);padding-top:10px;margin-top:14px}
+.sheet .bar2{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:14px}
+@media (min-width:700px){.sheet{left:50%;top:50%;bottom:auto;right:auto;transform:translate(-50%,-50%);width:560px;border:1px solid var(--rule);border-top:2px solid var(--ink);border-radius:4px;padding:22px 24px}}
+
+/* 설정 */
+.phr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--rule2);font-size:15.5px}
+.addline{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.addline input{flex:1;min-width:160px;min-height:44px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);padding:8px 11px;font-size:16px}
+.vets{display:flex;flex-wrap:wrap;gap:8px;padding:10px 0}
+.vets span{display:inline-flex;align-items:center;border:1px solid var(--rule);border-radius:4px;padding:0 0 0 10px;min-height:42px;font-size:15px;background:var(--paper)}
+.vets span button{border:0;background:none;min-width:40px;min-height:40px;color:var(--mute);font-size:18px}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:70;background:var(--ink);color:var(--bg);font-size:15px;padding:11px 16px;border-radius:4px;width:max-content;max-width:calc(100vw - 32px);text-align:center}
+footer.site{max-width:1180px;margin:0 auto;padding:0 16px 32px;color:var(--mute);font-size:13.5px;line-height:1.6}
+@media (min-width:900px){footer.site{padding:0 24px 32px}}
+
+@media print{
+  @page{size:A4;margin:14mm}
+  body{background:#fff}
+  body>*:not(#guest){display:none!important}
+  #guest{position:static!important;overflow:visible;background:#fff}
+  #guest .bar,#guest .demo,#guest .call button{display:none!important}
+  #guest .g{max-width:none;min-height:0;padding:0;background:#fff}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="edu-note">교육용 예시 화면입니다. 진료 판단에 쓰는 프로그램이 아니며, 판매하지 않습니다.</div>
+<header class="top">
+  <div class="proto">24시범어동물의료센터 · <b>박준석 원장님</b>을 위한 시제품 · 예시 데이터입니다</div>
+  <div class="title">퇴원 안내<small>보호자 휴대폰으로 보낼 안내 페이지를 만듭니다</small></div>
+  <nav class="tabs" id="tabs" aria-label="화면"></nav>
+</header>
+<main id="main"></main>
+<footer class="site">원장을 위한 AI 실전 교육 시제품입니다. 교육 당일 원장님 병원에 맞게 함께 고칩니다. 환자·보호자·수의사 이름과 전화번호는 모두 지어낸 것이며, 작성한 안내는 이 기기에만 저장됩니다.</footer>
+
+<div class="over" id="pvOver" role="dialog" aria-modal="true" aria-label="보호자 화면 미리보기" hidden></div>
+<div class="over" id="guest" role="dialog" aria-modal="true" aria-label="보호자가 보는 화면" hidden></div>
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="pjs-discharge-v1";
+var $=function(s,r){return (r||document).querySelector(s);};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function pad(n){return (n<10?"0":"")+n;}
+function ymd(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+function pd(s){var a=s.split("-");return new Date(+a[0],+a[1]-1,+a[2]);}
+function addDays(s,n){var d=pd(s);d.setDate(d.getDate()+n);return ymd(d);}
+var WD=["일","월","화","수","목","금","토"];
+function mdw(s){if(!s)return "";var d=pd(s);return (d.getMonth()+1)+"월 "+d.getDate()+"일 ("+WD[d.getDay()]+")";}
+function ampm(t){if(!t)return "";var h=+t.slice(0,2),m=t.slice(3);return (h<12?"오전 ":"오후 ")+((h%12)||12)+"시"+(m!=="00"?" "+(+m)+"분":"");}
+var TODAY=ymd(new Date());
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+
+/* ───────── 예시 데이터 (모두 가상) ─────────
+   약 이름·용량·증상 문장은 넣지 않는다. 그런 칸은 수의사가 직접 적는 자리로 비워 둔다. */
+function seed(){
+  var vets=["정다온","윤서진","한지후","오세린","배도윤"];
+  var clinic={name:"24시범어동물의료센터",phone:"053-000-0000",line:"(예시) 24시간 진료합니다. 궁금한 점은 언제든 전화해 주십시오."};
+  function N(o){return Object.assign({id:uid(),owner:"",vet:vets[0],meds:[],warns:[],care:"",next:{date:"",time:"",why:""},phone:clinic.phone,line:clinic.line,link:"",linkedAt:"",updated:Date.now()},o);}
+  var notes=[
+    N({pt:"콩이",kind:"개",owner:"",date:TODAY,vet:vets[0],
+      meds:[{name:"봉투 ① (아침)",how:"(예시) 담당 수의사가 먹이는 방법을 적는 칸입니다.",period:""},{name:"봉투 ② (저녁)",how:"",period:""}],
+      warns:["(예시) 담당 수의사가 이 환자에 맞춰 적는 칸입니다."],
+      care:"",next:{date:addDays(TODAY,7),time:"10:30",why:"재진"},updated:Date.now()-60000*12}),
+    N({pt:"나비",kind:"고양이",owner:"",date:addDays(TODAY,-1),vet:vets[2],
+      meds:[{name:"봉투 ①",how:"",period:""}],warns:[],care:"",
+      next:{date:addDays(TODAY,5),time:"15:00",why:"재진"},
+      link:"",updated:Date.now()-3600000*20}),
+    N({pt:"보리",kind:"개",owner:"",date:addDays(TODAY,-3),vet:vets[1],
+      meds:[{name:"봉투 ①",how:"",period:""}],warns:[""],care:"",
+      next:{date:addDays(TODAY,4),time:"11:00",why:"재진"},
+      link:"https://example.com/beomeo/d/"+"K7Q2",linkedAt:addDays(TODAY,-3),updated:Date.now()-3600000*70}),
+    N({pt:"두부",kind:"고양이",owner:"",date:addDays(TODAY,-6),vet:vets[3],
+      meds:[],warns:[],care:"",next:{date:"",time:"",why:""},
+      link:"https://example.com/beomeo/d/"+"P3ZM",linkedAt:addDays(TODAY,-6),updated:Date.now()-3600000*150})
+  ];
+  return {v:1,clinic:clinic,vets:vets,lastVet:vets[0],
+    phrases:["약은 봉투에 적힌 대로 먹여 주십시오.","다음 내원 때 이 화면을 접수에 보여 주십시오.","궁금한 점은 언제든 전화해 주십시오."],
+    notes:notes};
+}
+var db;
+function load(){try{var s=localStorage.getItem(KEY);if(s){var o=JSON.parse(s);if(o&&o.v===1&&Array.isArray(o.notes)){db=o;return;}}}catch(e){}db=seed();save();}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}}
+function note(id){return db.notes.filter(function(n){return n.id===id;})[0];}
+
+/* ───────── 화면 상태 ───────── */
+var cur={v:"list"};
+var ui={filter:"all",q:""};
+function homeState(){return {app:1,v:"list"};}
+function renderTabs(){
+  var t=cur.v==="set"?"set":"list";
+  $("#tabs").innerHTML=[["list","안내 목록"],["set","병원 정보·문구"]].map(function(x){return '<button type="button" data-tab="'+x[0]+'"'+(t===x[0]?' aria-current="page"':"")+'>'+x[1]+'</button>';}).join("");
+}
+function apply(st){
+  var prev=cur.v+(cur.id||"");
+  cur={v:st.v||"list",id:st.id||null,pv:!!st.pv,guest:!!st.guest,link:!!st.link};
+  if((cur.v==="edit")&&!note(cur.id))cur={v:"list"};
+  renderTabs();
+  var m=$("#main");
+  if(cur.v==="edit")m.innerHTML=viewEdit(note(cur.id));
+  else if(cur.v==="set")m.innerHTML=viewSet();
+  else m.innerHTML=viewList();
+  var n=cur.id&&note(cur.id);
+  document.title=(cur.v==="edit"&&n?(n.pt||"새 안내")+" · ":cur.v==="set"?"병원 정보·문구 · ":"")+"퇴원 안내 · 박준석 원장님을 위한 시제품";
+  var pv=$("#pvOver"),g=$("#guest");
+  if(cur.pv&&n){pv.innerHTML=overBar("보호자 화면 미리보기",'<button class="btn sm acc" type="button" data-act="link">링크 복사</button>')+guestHTML(n,true)+'<div class="demo">비어 있는 칸은 점선으로 보입니다. 보호자 화면에서는 빈 칸이 나타나지 않습니다.</div>';pv.hidden=false;pv.scrollTop=0;}else pv.hidden=true;
+  if(cur.guest&&n){g.innerHTML=overBar("보호자가 링크를 열었을 때",'<button class="btn sm" type="button" data-act="print">인쇄</button>')+guestHTML(n,false)+'<div class="demo">시제품이라 실제 주소로 열리지 않습니다. 보호자가 링크를 누르면 이 모습으로 보입니다.</div>';g.hidden=false;g.scrollTop=0;}else g.hidden=true;
+  if(cur.link&&n)openLink(n);else closeLink();
+  document.body.classList.toggle("lock",!!((cur.pv||cur.guest||cur.link)&&n));
+  if(prev!==cur.v+(cur.id||""))window.scrollTo(0,0);
+}
+function overBar(t,extra){return '<div class="bar"><button class="btn sm" type="button" data-act="back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>돌아가기</button><span class="t">'+t+'</span>'+extra+'</div>';}
+function rerender(){var y=window.scrollY;apply(Object.assign({},history.state||homeState()));window.scrollTo(0,y);}
+function push(st){st.app=1;history.pushState(st,"");apply(st);}
+window.addEventListener("popstate",function(e){
+  var st=e.state||{};
+  if(!st.app||st.base){
+    var atHome=cur.v==="list"&&!cur.pv&&!cur.guest&&!cur.link;
+    var hs=homeState();history.pushState(hs,"");
+    if(atHome)toast("앱을 닫으려면 홈 화면으로 나가 주십시오");else apply(hs);
+    return;
+  }
+  apply(st);
+});
+
+/* ───────── 목록 ───────── */
+function isBlank(n){return !n.pt.trim()&&!n.owner.trim()&&!n.care.trim()&&!n.link&&n.meds.every(function(m){return !(m.name+m.how+m.period).trim();})&&n.warns.every(function(w){return !w.trim();});}
+function viewList(){
+  var before=db.notes.length;db.notes=db.notes.filter(function(n){return !isBlank(n);});if(db.notes.length!==before)save();
+  var list=db.notes.slice().sort(function(a,b){return b.updated-a.updated;});
+  if(ui.filter==="draft")list=list.filter(function(n){return !n.link;});
+  if(ui.filter==="sent")list=list.filter(function(n){return !!n.link;});
+  var q=ui.q.trim();if(q)list=list.filter(function(n){return (n.pt+" "+n.owner+" "+n.vet).indexOf(q)>=0;});
+  var drafts=db.notes.filter(function(n){return !n.link;}).length;
+  var rows=list.map(function(n){
+    return '<div class="item"><button type="button" class="open" data-open="'+n.id+'"><span class="nm">'+esc(n.pt||"이름 없음")+(n.kind?'<small>'+esc(n.kind)+'</small>':"")+'</span>'+
+      '<span class="l2">퇴원 '+(n.date?mdw(n.date):"날짜 없음")+' · 담당 '+esc(n.vet)+(n.next.date?' · 다음 내원 '+mdw(n.next.date):"")+'</span></button>'+
+      (n.link?'<div class="st sent"><b>링크 복사함</b>'+mdw(n.linkedAt)+'</div>':'<div class="st"><b>작성 중</b>링크 전</div>')+'</div>';}).join("");
+  if(!list.length)rows='<p class="empty">'+(q?"찾는 안내가 없습니다.":"아직 만든 안내가 없습니다.")+'</p>';
+  return '<div class="hd"><h1>안내 목록<span class="per">퇴원하는 환자마다 한 장씩 만들어 주십시오. 작성 중 '+drafts+'건</span></h1>'+
+    '<div class="acts"><button class="btn ink" type="button" data-act="new"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>새 안내 만들기</button></div></div>'+
+    '<div class="filters"><div class="seg" role="group" aria-label="보기">'+[["all","전체"],["draft","작성 중"],["sent","링크 복사함"]].map(function(f){return '<button type="button" data-filter="'+f[0]+'" aria-pressed="'+(ui.filter===f[0])+'">'+f[1]+'</button>';}).join("")+'</div>'+
+    '<input type="search" id="q" placeholder="환자·수의사 이름 찾기" aria-label="찾기" value="'+esc(ui.q)+'"></div>'+rows;
+}
+
+/* ───────── 작성 ───────── */
+var IC={up:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>',del:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'};
+function vetOpts(sel){var o=db.vets.slice();if(sel&&o.indexOf(sel)<0)o.push(sel);return o.map(function(v){return '<option'+(v===sel?" selected":"")+'>'+esc(v)+'</option>';}).join("");}
+function inp(id,f,label,val,extra){return '<div class="fd'+(extra&&extra.w2?" w2":"")+'"><label for="'+id+'">'+label+(extra&&extra.req?'<i aria-hidden="true">*</i>':"")+'</label><input id="'+id+'" data-f="'+f+'" type="'+((extra&&extra.type)||"text")+'" autocomplete="off" value="'+esc(val)+'"'+(extra&&extra.ph?' placeholder="'+esc(extra.ph)+'"':"")+'></div>';}
+function viewEdit(n){
+  var meds=n.meds.map(function(m,i){
+    return '<div class="ln"><span class="no">'+(i+1)+'</span><div class="f3">'+
+      '<div class="fd"><label for="mn'+i+'">약 (봉투 표기)</label><input id="mn'+i+'" data-m="'+i+'" data-k="name" autocomplete="off" value="'+esc(m.name)+'" placeholder="봉투에 적힌 대로"></div>'+
+      '<div class="fd"><label for="mh'+i+'">먹이는 방법</label><input id="mh'+i+'" data-m="'+i+'" data-k="how" autocomplete="off" value="'+esc(m.how)+'" placeholder="담당 수의사가 적어 주십시오"></div>'+
+      '<div class="fd"><label for="mp'+i+'">기간</label><input id="mp'+i+'" data-m="'+i+'" data-k="period" autocomplete="off" value="'+esc(m.period)+'" placeholder="기간"></div>'+
+    '</div><div class="tools">'+(i?'<button type="button" data-mup="'+i+'" aria-label="'+(i+1)+'번 약 위로">'+IC.up+'</button>':"")+'<button type="button" data-mdel="'+i+'" aria-label="'+(i+1)+'번 약 빼기">'+IC.del+'</button></div></div>';}).join("");
+  var warns=n.warns.map(function(w,i){
+    return '<div class="ln one"><span class="no">·</span><div class="fd"><label class="sr" for="w'+i+'" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">주의 증상 '+(i+1)+'</label><input id="w'+i+'" data-w="'+i+'" autocomplete="off" value="'+esc(w)+'" placeholder="담당 수의사가 적어 주십시오"></div>'+
+    '<div class="tools"><button type="button" data-wdel="'+i+'" aria-label="'+(i+1)+'번째 줄 빼기">'+IC.del+'</button></div></div>';}).join("");
+  var chips=db.phrases.length?'<div class="chips"><span class="lb">병원 문구 모음 · 누르면 끝에 붙습니다</span>'+db.phrases.map(function(p,i){return '<button type="button" data-phr="'+i+'">'+esc(p)+'</button>';}).join("")+'</div>':"";
+  return '<div class="hd"><h1>'+(n.pt?esc(n.pt)+" 퇴원 안내":"새 퇴원 안내")+'<span class="per"><span class="saved" id="saved">이 기기에 자동으로 저장됩니다</span></span></h1>'+
+    '<div class="acts"><button class="btn quiet" type="button" data-act="back">← 목록</button></div></div>'+
+  '<div class="ed"><div class="pane" id="edPane">'+
+  '<fieldset><legend>환자와 퇴원일</legend><div class="form">'+
+    inp("pt","pt","환자 이름",n.pt,{req:1,ph:"예: 콩이"})+inp("kind","kind","종",n.kind,{ph:"개 · 고양이"})+
+    inp("owner","owner","보호자 성함 (선택)",n.owner,{ph:"비우면 '보호자님'"})+
+    inp("date","date","퇴원일",n.date,{req:1,type:"date"})+
+    '<div class="fd w2"><label for="vet">담당 수의사</label><select id="vet" data-f="vet">'+vetOpts(n.vet)+'</select></div>'+
+  '</div></fieldset>'+
+  '<fieldset><legend>약 복용 안내</legend><p class="lg-sub">약 봉투 표기와 먹이는 방법을 담당 수의사가 직접 적어 주십시오.</p>'+
+    '<div class="lines">'+(meds||'<p class="empty" style="padding:12px 0">약이 없으면 비워 두셔도 됩니다. 보호자 화면에 나타나지 않습니다.</p>')+'</div>'+
+    '<div class="addrow"><button class="btn sm" type="button" data-act="add-med">약 한 줄 추가</button></div></fieldset>'+
+  '<fieldset><legend>이럴 때는 바로 연락해 주십시오</legend><p class="lg-sub">이 환자에게 해당하는 주의 증상을 한 줄에 하나씩 적어 주십시오.</p>'+
+    '<div class="lines">'+warns+'</div>'+
+    '<div class="addrow"><button class="btn sm" type="button" data-act="add-warn">한 줄 추가</button></div></fieldset>'+
+  '<fieldset><legend>집에서 돌봐 주실 점</legend><div class="form"><div class="fd w2"><label for="care">보호자께 드리는 글</label><textarea id="care" data-f="care" placeholder="담당 수의사가 적어 주십시오">'+esc(n.care)+'</textarea>'+chips+'</div></div></fieldset>'+
+  '<fieldset><legend>다음 내원</legend><div class="form">'+
+    '<div class="fd"><label for="nd">날짜</label><input id="nd" data-n="date" type="date" value="'+esc(n.next.date)+'"></div>'+
+    '<div class="fd"><label for="nt">시간</label><input id="nt" data-n="time" type="time" value="'+esc(n.next.time)+'"></div>'+
+    '<div class="fd w2"><label for="nw">무엇 때문에 오시는지</label><input id="nw" data-n="why" autocomplete="off" value="'+esc(n.next.why)+'" placeholder="예: 재진"></div>'+
+  '</div></fieldset>'+
+  '<fieldset><legend>병원 연락처</legend><div class="form">'+
+    inp("phone","phone","전화번호",n.phone,{type:"tel",w2:1})+
+    '<div class="fd w2"><label for="line">연락처 아래 안내</label><textarea id="line" data-f="line" style="min-height:70px">'+esc(n.line)+'</textarea></div>'+
+  '</div></fieldset>'+
+  '<p class="ai">키트로 만들 때 Claude를 붙이면 자동으로 채울 수 있습니다.</p>'+
+  '<div style="margin-top:22px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn quiet warn" type="button" data-act="del-note">이 안내 지우기</button></div>'+
+  '<div class="mbar"><button class="btn" type="button" data-act="pv">보호자 화면 보기</button><button class="btn acc" type="button" data-act="link">링크 복사</button></div>'+
+  '</div>'+
+  '<aside class="side" aria-label="보호자 화면 미리보기"><p class="cap2"><span>보호자 휴대폰에서 이렇게 보입니다</span><span>빈 칸은 점선</span></p>'+
+    '<div class="phone"><div class="scr" id="pv">'+guestHTML(n,true)+'</div></div>'+
+    '<div class="acts"><button class="btn acc" type="button" data-act="link">링크 만들고 복사</button><button class="btn" type="button" data-act="guest">보호자 화면 크게 보기</button></div></aside>'+
+  '</div>';
+}
+
+/* 보호자 화면. preview=true 이면 빈 칸을 점선 자리로 보여 준다. */
+function guestHTML(n,preview){
+  function hole(t,inl){return preview?'<i class="hole'+(inl?" in":"")+'">'+t+'</i>':"";}
+  var meds=n.meds.filter(function(m){return m.name||m.how||m.period;});
+  var warns=n.warns.filter(function(w){return w.trim();});
+  var who=n.owner.trim()?esc(n.owner.trim())+" 보호자님":"보호자님";
+  var h='<div class="g"><div class="gh"><span>'+esc(db.clinic.name)+'</span><span>퇴원 안내</span></div>'+
+    '<h1>'+(n.pt?esc(n.pt):hole("환자 이름",1))+' '+who+'께</h1>'+
+    '<p class="meta">퇴원일 '+(n.date?mdw(n.date):hole("날짜",1))+' · 담당 수의사 '+esc(n.vet)+'</p>';
+  if(meds.length||preview){
+    h+='<h2>약 먹이는 방법</h2>';
+    h+=meds.length?'<ol>'+meds.map(function(m){return '<li><span class="mn">'+(m.name?esc(m.name):hole("약 봉투 표기",1))+'</span>'+(m.how?'<span>'+esc(m.how)+'</span>':hole("먹이는 방법"))+(m.period?'<span class="mp">기간 '+esc(m.period)+'</span>':"")+'</li>';}).join("")+'</ol>':hole("약이 없으면 이 부분은 보호자 화면에 나타나지 않습니다");
+  }
+  if(warns.length||preview){
+    h+='<h2 class="alert">이럴 때는 바로 연락해 주십시오</h2>';
+    h+=warns.length?'<ul>'+warns.map(function(w){return '<li>'+esc(w)+'</li>';}).join("")+'</ul>':hole("담당 수의사가 적을 주의 증상");
+  }
+  if(n.care.trim()||preview){h+='<h2>집에서 돌봐 주실 점</h2>'+(n.care.trim()?'<p>'+esc(n.care.trim())+'</p>':hole("담당 수의사가 적을 글"));}
+  if(n.next.date||preview){
+    h+='<h2>다음 내원</h2>'+(n.next.date?'<div class="visit">'+mdw(n.next.date)+(n.next.time?" "+ampm(n.next.time):"")+(n.next.why?'<span>'+esc(n.next.why)+'</span>':"")+'</div>':hole("다음 내원 날짜"));
+  }
+  h+='<div class="call"><b>'+esc(db.clinic.name)+'</b><div class="ph">'+esc(n.phone||db.clinic.phone)+'</div>'+(n.line.trim()?'<div class="ln2">'+esc(n.line.trim())+'</div>':"")+
+     '<button type="button" data-act="call">전화하기</button></div>'+
+     '<p class="by">이 안내는 담당 수의사 '+esc(n.vet)+' 선생님이 작성했습니다.</p></div>';
+  return h;
+}
+function refreshPreview(n){var p=$("#pv");if(p){var t=p.scrollTop;p.innerHTML=guestHTML(n,true);p.scrollTop=t;}}
+
+/* ───────── 링크 (흉내만) ───────── */
+function code(n){var s=0;for(var i=0;i<n.id.length;i++)s=(s*31+n.id.charCodeAt(i))>>>0;var A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",o="";for(var k=0;k<4;k++){o+=A[s%A.length];s=Math.floor(s/A.length)+7919*k;}return o;}
+function missing(n){var m=[];if(!n.pt.trim())m.push("환자 이름");if(!n.date)m.push("퇴원일");return m;}
+function soft(n){var m=[];if(!n.meds.some(function(x){return x.how.trim();}))m.push("먹이는 방법");if(!n.warns.some(function(x){return x.trim();}))m.push("주의 증상");if(!n.next.date)m.push("다음 내원일");return m;}
+function openLink(n){
+  var miss=missing(n),sh=$("#sheet");
+  if(miss.length){
+    sh.innerHTML='<h3 id="shT">링크를 만들기 전에</h3><p class="miss">'+miss.join(", ")+'을(를) 먼저 넣어 주십시오.</p><div class="bar2"><button class="btn ink" type="button" data-act="back">돌아가서 적기</button></div>';
+  } else {
+    if(!n.link){n.link="https://example.com/beomeo/d/"+code(n);}
+    var sf=soft(n);
+    sh.innerHTML='<h3 id="shT">'+esc(n.pt)+' 보호자님께 보낼 링크</h3><p class="sub">복사해서 카카오톡이나 문자에 붙여 넣으시면 됩니다.</p>'+
+      '<div class="url"><input id="urlBox" readonly value="'+esc(n.link)+'" aria-label="안내 링크"><button class="btn acc" type="button" data-act="copy">복사</button></div>'+
+      (sf.length?'<p class="miss" style="color:var(--mute)">비어 있는 칸: '+sf.join(", ")+'. 비운 칸은 보호자 화면에 나타나지 않습니다.</p>':"")+
+      '<p class="note">시제품이라 실제로 보내지거나 열리지 않습니다. 실제 키트에서는 병원 주소로 링크가 만들어집니다.</p>'+
+      '<div class="bar2"><button class="btn" type="button" data-act="guest-from-link">보호자 화면 보기</button><button class="btn ink" type="button" data-act="back">닫기</button></div>';
+  }
+  sh.hidden=false;$("#scrim").hidden=false;
+}
+function closeLink(){$("#sheet").hidden=true;$("#scrim").hidden=true;}
+function copyLink(){
+  var n=note(cur.id);if(!n)return;
+  var box=$("#urlBox");
+  function done(){n.linkedAt=TODAY;n.updated=Date.now();save();toast("링크를 복사했습니다. 시제품이라 실제로 보내지지는 않습니다");}
+  function legacy(){box.select();var ok=false;try{ok=document.execCommand("copy");}catch(e){}if(ok)done();else toast("복사가 막혀 있습니다. 주소를 길게 눌러 복사해 주십시오");}
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(n.link).then(done,legacy);}else legacy();
+}
+
+/* ───────── 병원 정보·문구 ───────── */
+function viewSet(){
+  return '<div class="hd"><h1>병원 정보·문구<span class="per">새 안내를 만들 때 기본으로 들어가는 내용입니다.</span></h1></div>'+
+  '<h2 class="sec">병원 연락처</h2><div class="form">'+
+    '<div class="fd w2"><label for="cn">병원 이름</label><input id="cn" data-c="name" value="'+esc(db.clinic.name)+'"></div>'+
+    '<div class="fd w2"><label for="cp">전화번호</label><input id="cp" data-c="phone" type="tel" value="'+esc(db.clinic.phone)+'"></div>'+
+    '<div class="fd w2"><label for="cl">연락처 아래 안내</label><textarea id="cl" data-c="line" style="min-height:70px">'+esc(db.clinic.line)+'</textarea></div></div>'+
+  '<p class="cap">예시 전화번호입니다. 교육 당일 병원 번호로 바꿉니다.</p>'+
+  '<h2 class="sec">병원 문구 모음<span class="aside">'+db.phrases.length+'개 · 작성 화면에서 눌러 붙입니다</span></h2>'+
+  '<p class="cap">원내에서 함께 쓰는 문장을 모아 두십시오. 의학적인 안내 문장은 원장님 병원의 기준대로 넣어 주십시오.</p>'+
+  db.phrases.map(function(p,i){return '<div class="phr"><span>'+esc(p)+'</span><button class="btn quiet warn sm" type="button" data-delphr="'+i+'">빼기</button></div>';}).join("")+
+  '<div class="addline"><input id="newPhr" placeholder="문구 추가" aria-label="추가할 문구"><button class="btn" type="button" data-act="add-phr">추가</button></div>'+
+  '<h2 class="sec">수의사<span class="aside">'+db.vets.length+'명</span></h2>'+
+  '<div class="vets">'+db.vets.map(function(v,i){return '<span>'+esc(v)+'<button type="button" data-delvet="'+i+'" aria-label="'+esc(v)+' 빼기">×</button></span>';}).join("")+'</div>'+
+  '<div class="addline"><input id="newVet" placeholder="이름" aria-label="추가할 수의사 이름"><button class="btn" type="button" data-act="add-vet">수의사 추가</button></div>'+
+  '<h2 class="sec">예시 데이터</h2><p class="cap">안내는 이 기기의 브라우저에만 저장됩니다. 처음 상태로 돌리면 지금까지 만든 안내가 지워집니다.</p>'+
+  '<button class="btn warn" type="button" data-act="reset">예시 데이터로 되돌리기</button>';
+}
+
+/* ───────── 이벤트 ───────── */
+var tt;
+function toast(m){var t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(function(){t.hidden=true;},2800);}
+function touch(n){n.updated=Date.now();save();var s=$("#saved");if(s){var d=new Date();s.textContent="저장했습니다 · "+pad(d.getHours())+":"+pad(d.getMinutes());}}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  var v,n=cur.id&&note(cur.id);
+  if((v=b.getAttribute("data-tab"))){if(v!==cur.v||cur.v==="edit")push({v:v});return;}
+  if((v=b.getAttribute("data-filter"))){ui.filter=v;rerender();return;}
+  if((v=b.getAttribute("data-open"))){push({v:"edit",id:v});return;}
+  if(n&&(v=b.getAttribute("data-mdel"))!=null){n.meds.splice(+v,1);touch(n);rerender();return;}
+  if(n&&(v=b.getAttribute("data-mup"))!=null){var i=+v,t=n.meds[i];n.meds[i]=n.meds[i-1];n.meds[i-1]=t;touch(n);rerender();return;}
+  if(n&&(v=b.getAttribute("data-wdel"))!=null){n.warns.splice(+v,1);touch(n);rerender();return;}
+  if(n&&(v=b.getAttribute("data-phr"))!=null){var p=db.phrases[+v];n.care=n.care.trim()?n.care.replace(/\s+$/,"")+"\n"+p:p;touch(n);var ta=$("#care");if(ta){ta.value=n.care;}refreshPreview(n);toast("문구를 붙였습니다");return;}
+  if((v=b.getAttribute("data-delphr"))!=null){db.phrases.splice(+v,1);save();rerender();return;}
+  if((v=b.getAttribute("data-delvet"))!=null){var nm=db.vets[+v];if(confirm(nm+" 수의사를 목록에서 뺄까요? 이미 만든 안내는 그대로 둡니다.")){db.vets.splice(+v,1);save();rerender();}return;}
+  switch(b.getAttribute("data-act")){
+    case "back":history.back();break;
+    case "new":
+      var nn={id:uid(),pt:"",kind:"",owner:"",date:TODAY,vet:db.lastVet||db.vets[0]||"",meds:[{name:"",how:"",period:""}],warns:[""],care:"",next:{date:"",time:"",why:""},phone:db.clinic.phone,line:db.clinic.line,link:"",linkedAt:"",updated:Date.now()};
+      db.notes.push(nn);save();push({v:"edit",id:nn.id});var f=$("#pt");if(f)f.focus();break;
+    case "add-med":if(n){n.meds.push({name:"",how:"",period:""});touch(n);rerender();var x=$("#mn"+(n.meds.length-1));if(x)x.focus();}break;
+    case "add-warn":if(n){n.warns.push("");touch(n);rerender();var w=$("#w"+(n.warns.length-1));if(w)w.focus();}break;
+    case "pv":if(n)push({v:"edit",id:n.id,pv:1});break;
+    case "guest":if(n)push({v:"edit",id:n.id,guest:1});break;
+    case "guest-from-link":if(n)history.replaceState({app:1,v:"edit",id:n.id,guest:1},""),apply(history.state);break;
+    case "link":if(n){var miss=missing(n);push({v:"edit",id:n.id,link:1});if(!miss.length){touch(n);}}break;
+    case "copy":copyLink();break;
+    case "call":toast("시제품에서는 전화가 걸리지 않습니다");break;
+    case "print":window.print();break;
+    case "del-note":if(n&&confirm((n.pt||"이")+" 안내를 지울까요? 되돌릴 수 없습니다.")){db.notes=db.notes.filter(function(x){return x.id!==n.id;});save();history.back();toast("안내를 지웠습니다");}break;
+    case "add-phr":var np=$("#newPhr").value.trim();if(!np){$("#newPhr").focus();break;}db.phrases.push(np);save();rerender();break;
+    case "add-vet":var nv=$("#newVet").value.trim();if(!nv){$("#newVet").focus();break;}if(db.vets.indexOf(nv)<0)db.vets.push(nv);save();rerender();break;
+    case "reset":if(confirm("이 기기에 저장된 안내를 모두 지우고 예시 데이터로 되돌릴까요?")){db=seed();save();rerender();toast("예시 데이터로 되돌렸습니다");}break;
+  }
+});
+$("#scrim").addEventListener("click",function(){if(cur.link)history.back();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&(cur.link||cur.pv||cur.guest))history.back();});
+document.addEventListener("input",function(e){
+  var t=e.target,n=cur.id&&note(cur.id),k;
+  if(t.id==="q"){ui.q=t.value;var pos=t.selectionStart;rerender();var s=$("#q");s.focus();try{s.setSelectionRange(pos,pos);}catch(_){}return;}
+  if((k=t.getAttribute("data-c"))){db.clinic[k]=t.value;save();return;}
+  if(!n)return;
+  if((k=t.getAttribute("data-f"))){n[k]=t.value;if(k==="vet")db.lastVet=t.value;}
+  else if((k=t.getAttribute("data-m"))!=null){n.meds[+k][t.getAttribute("data-k")]=t.value;}
+  else if((k=t.getAttribute("data-w"))!=null){n.warns[+k]=t.value;}
+  else if((k=t.getAttribute("data-n"))){n.next[k]=t.value;}
+  else return;
+  touch(n);refreshPreview(n);
+  if(t.id==="pt"){var h=$(".hd h1");if(h&&h.firstChild&&h.firstChild.nodeType===3)h.firstChild.nodeValue=(n.pt?n.pt+" 퇴원 안내":"새 퇴원 안내");}
+});
+document.addEventListener("change",function(e){var t=e.target,n=cur.id&&note(cur.id);if(n&&t.id==="vet"){n.vet=t.value;db.lastVet=t.value;touch(n);refreshPreview(n);}});
+
+/* ───────── 시작 ───────── */
+window.addEventListener("pagehide",save);
+load();
+history.replaceState({app:1,base:1},"");
+var start=homeState();history.pushState(start,"");apply(start);
+})();
+</script>
+</body>
+</html>
