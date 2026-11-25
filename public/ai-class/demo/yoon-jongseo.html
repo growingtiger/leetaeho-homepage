@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f4f2ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#17191b" media="(prefers-color-scheme: dark)">
+<title>사전문진표 · 윤종서 선생님을 위한 시제품</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* 에스동물메디컬센터 묶음(문진·근무표·수술 후 안내) 공통 바탕: 회백 종이, 먹색 글자, 짙은 남색 한 가지.
+   '확인 전'처럼 사람이 움직여야 하는 것만 황토색으로 표시하고, 나머지 구분은 글자로 한다. */
+:root{
+  --paper:#f4f2ee; --sheet:#fdfcfa; --sunk:#eae7e1;
+  --ink:#1c1e21; --ink-2:#44484d; --ink-3:#62676d;
+  --rule:#d6d2ca; --rule-2:#e7e3dc; --rule-strong:#1c1e21;
+  --accent:#2b4a73; --accent-wash:#e3e8ef; --warn:#8f4511; --warn-wash:#f5e6d8; --ok:#2f6a4f;
+  --serif:"Hahmlet","AppleMyungjo","Batang",serif;
+  --sans:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --rail:248px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --paper:#17191b; --sheet:#1f2123; --sunk:#27292c;
+  --ink:#e8e6e1; --ink-2:#c3c1bb; --ink-3:#9d9c97;
+  --rule:#3a3d40; --rule-2:#2c2f32; --rule-strong:#e8e6e1;
+  --accent:#9db8dc; --accent-wash:#1e2a3a; --warn:#e3a170; --warn-wash:#3a2a1d; --ok:#86c3a4;
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{margin:0;line-height:1.3}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+.n{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.idline{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding:8px 16px;font-size:13px;color:var(--ink-3);border-bottom:1px solid var(--rule)}
+.idline b{color:var(--ink);font-weight:500}
+
+.frame{display:block}
+.rail{padding:20px 16px 0}
+.rail .hosp{font-size:13px;color:var(--ink-3)}
+.rail h1{font-family:var(--serif);font-weight:700;font-size:24px;margin-top:2px;letter-spacing:-.01em}
+.rail .tag{font-size:14px;color:var(--ink-2);margin-top:4px}
+nav.views{display:flex;margin:16px -16px 0;padding:0 16px;border-bottom:1px solid var(--rule);overflow-x:auto;scrollbar-width:none}
+nav.views::-webkit-scrollbar{display:none}
+nav.views button{border:0;background:none;padding:10px 0 11px;margin-right:22px;font-size:16px;color:var(--ink-3);white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
+nav.views button .c{font-size:12px;font-weight:700;color:var(--warn);margin-left:4px}
+nav.views button[aria-current="page"]{color:var(--ink);font-weight:700;border-bottom-color:var(--accent)}
+.rail .note{display:none}
+main{padding:20px 16px 48px;min-width:0}
+@media (min-width:960px){
+  .frame{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);min-height:calc(100vh - 76px)}
+  .rail{position:sticky;top:0;align-self:start;height:100vh;padding:32px 28px;border-right:1px solid var(--rule);display:flex;flex-direction:column}
+  .rail h1{font-size:28px}
+  nav.views{flex-direction:column;margin:36px 0 0;padding:0;border:0;border-top:1px solid var(--rule)}
+  nav.views button{margin:0;padding:12px 0;text-align:left;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center}
+  nav.views button[aria-current="page"]{border-bottom-color:var(--rule);color:var(--accent)}
+  .rail .note{display:block;margin-top:auto;font-size:13px;color:var(--ink-3);line-height:1.55}
+  main{padding:36px 48px 64px;max-width:1040px}
+  .m-note{display:none}
+}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border-radius:4px;border:1px solid var(--rule);background:var(--sheet);font-size:15px;font-weight:500;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--ink-3)}
+.btn.solid{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn.acc{background:var(--accent);border-color:var(--accent);color:var(--sheet)}
+.btn.quiet{border-color:transparent;background:none;color:var(--accent);padding:0 6px}
+.btn.sm{min-height:36px;font-size:14px;padding:0 10px}
+.btn:disabled{opacity:.45;cursor:default}
+.inp,.ta,select.inp{width:100%;min-height:46px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet);padding:9px 12px;font-size:16px}
+.ta{min-height:96px;resize:vertical;line-height:1.6}
+.inp:focus,.ta:focus{border-color:var(--ink-3);outline:none;box-shadow:0 0 0 2px var(--accent-wash)}
+.ta::placeholder,.inp::placeholder{color:var(--ink-3);opacity:.8}
+select.inp{appearance:none;-webkit-appearance:none;padding-right:34px;background-image:linear-gradient(45deg,transparent 50%,var(--ink-3) 50%),linear-gradient(135deg,var(--ink-3) 50%,transparent 50%);background-position:calc(100% - 17px) 52%,calc(100% - 12px) 52%;background-size:5px 5px;background-repeat:no-repeat}
+
+section.view{display:none}
+section.view.on{display:block}
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 20px;padding-bottom:14px;border-bottom:2px solid var(--rule-strong)}
+.head .eyebrow{font-size:13px;color:var(--ink-3);letter-spacing:.04em}
+.head h2{font-family:var(--serif);font-weight:700;font-size:26px}
+@media (min-width:960px){.head h2{font-size:32px}}
+.head .acts{display:flex;flex-wrap:wrap;gap:8px}
+.lede{font-size:15px;color:var(--ink-2);margin-top:12px;max-width:64ch}
+.hint{font-size:14px;color:var(--ink-3);margin-top:6px}
+.empty{padding:28px 0;color:var(--ink-3)}
+
+/* ---------- 보호자 화면 ---------- */
+.owner-wrap{max-width:460px;margin:18px auto 0}
+.owner-note{font-size:13.5px;color:var(--ink-3);margin-top:12px;max-width:64ch}
+.phone{background:var(--sheet);border:1px solid var(--rule);border-radius:16px;padding:22px 18px 22px}
+@media (max-width:520px){.phone{border-radius:0;border-left:0;border-right:0;margin:0 -16px;padding:22px 16px}}
+.ph-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px;color:var(--ink-3)}
+.ph-top b{font-family:var(--serif);font-weight:600;color:var(--ink);font-size:14.5px}
+.steps{display:flex;gap:4px;margin:12px 0 18px}
+.steps i{flex:1;height:3px;background:var(--rule-2);border-radius:2px}
+.steps i.on{background:var(--accent)}
+.phone h3{font-family:var(--serif);font-weight:700;font-size:22px;line-height:1.4}
+.phone .lead{font-size:15.5px;color:var(--ink-2);margin-top:10px}
+.q{margin-top:20px}
+.q>.t{display:block;font-size:16px;font-weight:700;margin-bottom:8px}
+.q>.t .req{color:var(--warn);margin-left:3px;font-weight:500}
+.q .hint{margin:-4px 0 8px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts button{min-height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet);font-size:15px;color:var(--ink-2)}
+.opts button[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);font-weight:700;box-shadow:inset 0 0 0 1px var(--ink)}
+.docs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.docs button{min-height:48px;text-align:left;padding:6px 12px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet);font-size:15px}
+.docs button.wide{grid-column:1/-1;color:var(--ink-2)}
+.docs button[aria-pressed="true"]{border-color:var(--ink);font-weight:700;box-shadow:inset 0 0 0 1px var(--ink)}
+.consent{margin-top:20px;border-top:1px solid var(--rule);padding-top:14px}
+.consent h4{font-size:15.5px;font-weight:700}
+.consent dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:10px 0 0;font-size:14.5px}
+.consent dt{color:var(--ink-3)}
+.consent dd{margin:0}
+.consent .refuse{font-size:14.5px;color:var(--ink-2);margin-top:10px}
+.agree{display:flex;align-items:center;gap:10px;margin-top:14px;min-height:50px;padding:0 14px;border:1px solid var(--rule);border-radius:4px;font-size:15.5px;font-weight:500;cursor:pointer}
+.agree input{width:20px;height:20px;accent-color:var(--accent);margin:0}
+.agree:has(input:checked){border-color:var(--ink)}
+.asks{display:grid;gap:6px}
+.ask{display:grid;grid-template-columns:28px 1fr;align-items:center;gap:6px}
+.ask span{font-family:var(--serif);font-weight:600;color:var(--ink-3);text-align:center}
+.purpose{font-size:12.5px;color:var(--ink-3);margin-top:22px;line-height:1.55}
+.ph-nav{display:flex;gap:8px;margin-top:22px}
+.ph-nav .btn{flex:1;min-height:50px;font-size:16px}
+.ph-nav .btn.back{flex:0 0 auto;padding:0 18px}
+.err{font-size:14.5px;color:var(--warn);margin-top:10px;min-height:1em}
+.review{margin-top:16px;border-top:1px solid var(--rule)}
+.review div{padding:10px 0;border-bottom:1px solid var(--rule-2)}
+.review b{display:block;font-size:13px;color:var(--ink-3);font-weight:500}
+.review p{white-space:pre-line;font-size:15px}
+.done{text-align:left;padding:8px 0}
+.done .mk{width:44px;height:44px;border-radius:50%;border:2px solid var(--ok);position:relative;margin-bottom:14px}
+.done .mk::after{content:"";position:absolute;left:14px;top:8px;width:10px;height:18px;border-right:2px solid var(--ok);border-bottom:2px solid var(--ok);transform:rotate(45deg)}
+
+/* ---------- 의료진 화면 ---------- */
+.who{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-3)}
+.who select{width:auto;min-width:0;max-width:200px;min-height:40px;font-size:15px;padding:4px 34px 4px 10px}
+.datebar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px}
+.datebar .lbl{font-family:var(--serif);font-weight:600;font-size:19px;min-width:8.5em;text-align:center}
+@media (max-width:520px){.datebar .lbl{flex:1 1 auto;min-width:0;font-size:18px}}
+.datebar .arrow{width:44px;padding:0;font-size:18px}
+.filters{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin-top:12px}
+.filters select{width:auto;max-width:100%}
+.chk{display:inline-flex;align-items:center;gap:6px;font-size:14.5px;color:var(--ink-2);min-height:40px}
+.chk input{width:18px;height:18px;accent-color:var(--accent)}
+.daysum{margin-top:14px;padding:10px 0;border-top:2px solid var(--rule-strong);border-bottom:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:4px 22px;font-size:15px}
+.daysum b{font-family:var(--serif);font-size:20px;font-weight:600;margin-right:2px}
+.daysum .w b{color:var(--warn)}
+ul.ilist{list-style:none;margin:0;padding:0}
+ul.ilist li{border-bottom:1px solid var(--rule-2)}
+ul.ilist button{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:2px 12px;width:100%;text-align:left;border:0;background:none;padding:13px 0;align-items:start}
+ul.ilist button:hover .nm{color:var(--accent)}
+ul.ilist .tm{font-size:14px;color:var(--ink-3);padding-top:3px}
+ul.ilist .nm{font-family:var(--serif);font-weight:700;font-size:18px}
+ul.ilist .nm small{font-family:var(--sans);font-weight:400;font-size:14px;color:var(--ink-3);margin-left:6px}
+ul.ilist .meta{font-size:14px;color:var(--ink-2);grid-column:2}
+ul.ilist .first{font-size:14px;color:var(--ink-3);grid-column:2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tagx{display:inline-block;font-size:13px;font-weight:500;padding:1px 8px;border-radius:3px;white-space:nowrap;margin-top:3px}
+.tagx.wait{background:var(--warn-wash);color:var(--warn)}
+.tagx.seen{color:var(--ink-3);border:1px solid var(--rule)}
+
+/* 문진 한 건 */
+.doc{background:var(--sheet);border:1px solid var(--rule);padding:20px 22px 24px;margin-top:18px}
+@media (max-width:520px){.doc{margin-left:-16px;margin-right:-16px;border-left:0;border-right:0;padding:18px 16px}}
+.doc .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;align-items:flex-end;border-bottom:2px solid var(--rule-strong);padding-bottom:10px}
+.doc .top h3{font-family:var(--serif);font-size:24px;font-weight:700}
+.doc .top .sp{font-size:15px;color:var(--ink-2)}
+.doc .top .at{font-size:13.5px;color:var(--ink-3);text-align:right}
+table.kv{width:100%;border-collapse:collapse;margin-top:10px;font-size:15px}
+table.kv th{width:7.5em;text-align:left;font-weight:500;color:var(--ink-3);padding:7px 10px 7px 0;vertical-align:top;border-bottom:1px solid var(--rule-2);white-space:nowrap}
+table.kv td{padding:7px 0;border-bottom:1px solid var(--rule-2)}
+.ans{margin-top:18px}
+.ans h4{font-size:14px;color:var(--accent);font-weight:700;letter-spacing:.02em}
+.ans p{white-space:pre-line;margin-top:3px;font-size:15.5px}
+.ans p.none{color:var(--ink-3);font-size:14.5px}
+.ans ol{margin:4px 0 0;padding-left:1.4em}
+.seenlog{margin-top:20px;padding-top:10px;border-top:1px solid var(--rule);font-size:14px;color:var(--ink-2)}
+.seenlog b{font-weight:700}
+.doc-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.back-row{margin-top:14px}
+
+footer.foot{margin-top:56px;padding-top:14px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-3)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--paper);font-size:15px;padding:11px 18px;border-radius:4px;opacity:0;pointer-events:none;transition:.2s;max-width:calc(100% - 32px);text-align:center;z-index:60}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media print{
+  @page{size:A4;margin:14mm}
+  body{background:#fff;color:#000}
+  body>*:not(.frame){display:none!important}
+  .rail,.head,.lede,.datebar,.filters,.daysum,ul.ilist,.doc-acts,.back-row,footer.foot,.m-note,section.view:not(#v-staff){display:none!important}
+  .frame{display:block}
+  main{padding:0;max-width:none}
+  .doc{border:0;padding:0;margin:0;background:#fff}
+}
+@media (prefers-color-scheme:dark){.edu-note{background:#202325!important;color:#aaa9a3!important;border-bottom-color:#3a3d3f!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="edu-note" style="background:#f4f2ee;color:#5b5a55;font:13px/1.5 -apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;padding:8px 16px;text-align:center;border-bottom:1px solid #e3e0d8">교육용 예시 화면입니다. 진료 판단에 쓰는 프로그램이 아니며, 판매하지 않습니다.</div>
+<div class="idline"><span><b>윤종서 선생님을 위한 시제품</b> · 에스동물메디컬센터</span><span>환자·보호자·수의사 이름은 모두 지어낸 예시입니다.</span></div>
+
+<div class="frame">
+<aside class="rail">
+  <div class="hosp">에스동물메디컬센터</div>
+  <h1>사전문진표</h1>
+  <p class="tag">내원 전 보호자 작성 · 의료진 접수 확인</p>
+  <nav class="views" aria-label="화면">
+    <button data-view="owner" aria-current="page">보호자 화면</button>
+    <button data-view="staff">의료진 화면<span class="c n" id="wait-c"></span></button>
+  </nav>
+  <p class="note">보호자는 예약 안내 문자에 넣은 주소를 눌러 휴대폰으로 작성합니다. 시제품에서는 두 화면이 한 파일에 있고, 제출한 문진은 이 기기의 브라우저에만 저장됩니다.</p>
+</aside>
+
+<main>
+<!-- 보호자 화면 -->
+<section class="view on" id="v-owner">
+  <div class="head">
+    <div><div class="eyebrow">보호자가 휴대폰으로 보는 화면</div><h2>내원 전 문진</h2></div>
+  </div>
+  <p class="owner-note">예약 안내 문자나 카카오톡에 이 화면 주소를 넣어 보내 드리는 방식입니다. 보호자가 「보내기」를 누르시면 바로 의료진 화면의 접수 목록에 들어갑니다.</p>
+  <div class="owner-wrap"><div class="phone" id="phone"></div></div>
+</section>
+
+<!-- 의료진 화면 -->
+<section class="view" id="v-staff">
+  <div class="head">
+    <div><div class="eyebrow">진료실·접수 PC에서 보는 화면</div><h2 id="s-title">문진 접수 목록</h2></div>
+    <div class="acts"><label class="who">보는 사람 <select class="inp" id="who" aria-label="보는 사람"></select></label></div>
+  </div>
+  <div id="staff-body"></div>
+</section>
+
+<p class="hint m-note">제출한 문진은 이 기기의 브라우저에만 저장됩니다.</p>
+<footer class="foot">원장을 위한 AI 실전 교육 · 교육 당일 선생님 병원의 문진 항목과 담당 수의사 명단에 맞게 함께 고칩니다. <button class="btn quiet sm" data-act="reset">예시로 되돌리기</button></footer>
+</main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="yjs-intake-v1";
+var HOSP={name:"에스동물메디컬센터",tel:"052-000-0000 (예시 번호)"};
+var DOCTORS=["강도윤 원장","서하린 과장","문태오 과장","임채원 수의사","오지안 수의사","백시우 수의사","남유진 수의사","진하람 수의사"];
+var DEPTS=["내과","외과","정형외과","영상의학","응급·중환자","건강검진","치과","피부·안과","잘 모르겠습니다"];
+var SPECIES=["개","고양이","그 밖의 동물"];
+var PURPOSES=["처음 진료","재진","건강검진","수술 상담","다른 병원에서 의뢰","예방접종","그 밖의 일"];
+var SURVEY=[
+  {id:"story",label:"어떤 일로 오시는지 적어 주십시오",hint:"언제부터 그랬는지, 평소와 무엇이 다른지 적어 주시면 진료 준비에 도움이 됩니다.",ph:"예: 사흘 전부터 밥을 반만 먹고, 어제는 계단을 오르지 못했습니다.",big:true},
+  {id:"change",label:"최근에 달라진 점이 있으십니까",hint:"체중, 물 마시는 양, 밥 먹는 양, 잠자는 모습처럼 평소와 달라진 것을 적어 주십시오.",ph:"예: 물을 전보다 자주 마십니다."},
+  {id:"meds",label:"지금 먹이고 계신 약이나 영양제",hint:"이름을 아시는 대로 적어 주십시오. 모르시면 오실 때 약 봉투를 가져와 주십시오.",ph:"예: 다른 병원에서 받은 피부약, 관절 영양제"},
+  {id:"other",label:"다른 병원에서 받은 진료나 검사",hint:"병원 이름과 대략의 시기를 적어 주시면 기록을 요청할 때 씁니다.",ph:"예: 10월에 ○○동물병원에서 혈액검사"},
+  {id:"care",label:"진료할 때 알아 두면 좋을 점",hint:"미리 알려 주시면 아이가 덜 무섭도록 준비합니다.",ph:"예: 발 만지는 것을 싫어합니다 / 낯선 사람을 겁냅니다"}
+];
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function pad(n){return (n<10?"0":"")+n}
+function iso(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+function pd(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2],12)}
+function addD(s,n){var d=pd(s);d.setDate(d.getDate()+n);return iso(d)}
+var TODAY=iso(new Date());
+var WD="일월화수목금토";
+function kd(s){if(!s)return "";var d=pd(s);return (d.getMonth()+1)+"월 "+d.getDate()+"일 ("+WD[d.getDay()]+")"}
+function hm(isoT){var d=new Date(isoT);return pad(d.getHours())+":"+pad(d.getMinutes())}
+function stamp(isoT){var d=new Date(isoT);return (d.getMonth()+1)+"월 "+d.getDate()+"일 "+pad(d.getHours())+":"+pad(d.getMinutes())}
+function uid(){return "q"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function ago(h){return new Date(Date.now()-h*36e5).toISOString()}
+
+/* ---------- 예시 문진 (모두 지어낸 것) ---------- */
+function seed(){
+  function Q(o){return {id:o.id,at:o.at,visit:o.visit,owner:o.owner,phone:o.phone,pet:o.pet,species:o.species,breed:o.breed||"",age:o.age||"",purpose:o.purpose,ref:o.ref||"",doctor:o.doctor,dept:o.dept||"",a:o.a||{},asks:o.asks||[],seen:o.seen||[]}}
+  var list=[
+    Q({id:"s1",at:ago(15),visit:TODAY,owner:"정○○",phone:"010-0000-1201",pet:"가상-초코",species:"개",breed:"말티즈",age:"11살",purpose:"재진",doctor:"강도윤 원장",
+      a:{story:"지난주 진료 뒤로 기침은 줄었는데, 밤에 자다가 한두 번 깨서 기침을 합니다.",change:"산책을 나가면 예전보다 빨리 멈춰 섭니다.",meds:"지난주에 받은 약을 그대로 먹이고 있습니다.",care:"차에 타면 많이 떱니다."},
+      asks:["밤 기침이 계속되면 집에서 무엇을 보면 되는지 궁금합니다","다음 재진은 언제쯤인지"],seen:[{who:"강도윤 원장",at:ago(1.5)}]}),
+    Q({id:"s2",at:ago(12.5),visit:TODAY,owner:"김○○",phone:"010-0000-3378",pet:"가상-나비",species:"고양이",breed:"코리안 숏헤어",age:"8살",purpose:"다른 병원에서 의뢰",ref:"가상-하늘동물병원",doctor:"서하린 과장",
+      a:{story:"동네 병원에서 신장 수치가 높다고 큰 병원에 가 보라고 하셨습니다. 검사지는 사진으로 찍어 두었습니다.",change:"한 달 사이에 살이 빠진 것 같고, 물그릇을 하루에 두 번 채웁니다.",other:"11월 셋째 주 가상-하늘동물병원 혈액검사, 소변검사",care:"이동장에서 꺼내면 숨으려고 합니다. 수건을 덮어 주시면 조금 낫습니다."},
+      asks:["의뢰서와 검사지를 미리 보내 드려도 되는지"]}),
+    Q({id:"s3",at:ago(6),visit:TODAY,owner:"박○○",phone:"010-0000-8842",pet:"가상-두부",species:"개",breed:"푸들",age:"5살",purpose:"수술 상담",doctor:"문태오 과장",
+      a:{story:"왼쪽 뒷다리를 가끔 들고 걷습니다. 다른 병원에서 슬개골 이야기를 들었습니다.",change:"",care:"처음 보는 사람에게는 짖지만 간식을 주시면 금방 괜찮아집니다."},
+      asks:["수술을 하게 되면 입원은 며칠인지","수술 전에 집에서 준비할 것이 있는지"],seen:[{who:"문태오 과장",at:ago(0.9)}]}),
+    Q({id:"s4",at:ago(3.2),visit:TODAY,owner:"이○○",phone:"010-0000-5510",pet:"가상-보리",species:"개",breed:"골든 리트리버",age:"9살",purpose:"건강검진",doctor:"",dept:"건강검진",
+      a:{story:"올해 건강검진을 받으려고 합니다. 특별히 아픈 곳은 없습니다.",change:"최근 털이 많이 빠집니다.",meds:"관절 영양제를 먹이고 있습니다.",care:""},
+      asks:["검진 날 아침밥을 먹여도 되는지"]}),
+    Q({id:"s5",at:ago(5),visit:addD(TODAY,1),owner:"최○○",phone:"010-0000-2093",pet:"가상-까망",species:"고양이",breed:"페르시안",age:"3살",purpose:"처음 진료",doctor:"",dept:"피부·안과",
+      a:{story:"오른쪽 눈에서 눈물이 계속 나고 눈을 자주 비빕니다.",change:"",care:"발톱을 깎을 때 많이 싫어합니다."}}),
+    Q({id:"s6",at:ago(2.4),visit:addD(TODAY,1),owner:"한○○",phone:"010-0000-7765",pet:"가상-콩이",species:"개",breed:"웰시코기",age:"7살",purpose:"다른 병원에서 의뢰",ref:"가상-바다동물병원",doctor:"임채원 수의사",
+      a:{story:"의뢰해 주신 병원에서 초음파로 배 안에 혹이 보인다고 하셨습니다.",other:"11월 넷째 주 가상-바다동물병원 복부 초음파, 엑스레이",care:"입마개를 하면 얌전합니다."},
+      asks:["의뢰 병원에 결과를 어떻게 전달해 주시는지"]}),
+    Q({id:"s7",at:ago(40),visit:addD(TODAY,-1),owner:"윤○○",phone:"010-0000-4417",pet:"가상-모카",species:"개",breed:"시바견",age:"4살",purpose:"예방접종",doctor:"오지안 수의사",
+      a:{story:"예방접종 날짜가 되어 왔습니다.",care:"다른 개를 보면 흥분합니다. 대기실에서 떨어져 있고 싶습니다."},seen:[{who:"오지안 수의사",at:ago(26)}]})
+  ];
+  return {v:1,items:list,me:"강도윤 원장"};
+}
+var S;
+function load(){try{var o=JSON.parse(localStorage.getItem(KEY)||"null");if(o&&o.v===1&&o.items){S=o;return}}catch(e){}S=seed()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast("이 브라우저에는 저장할 수 없습니다. 개인 정보 보호 모드인지 확인해 주십시오.")}}
+
+/* 작성 중인 문진(보호자 화면) */
+function blankForm(){return {consent:false,owner:"",phone:"",pet:"",species:"",breed:"",age:"",visit:TODAY,purpose:"",ref:"",doctor:"",dept:"",a:{},asks:["","",""]}}
+var F=blankForm();
+
+/* ---------- 화면 이동 + 뒤로가기 (앱이 닫히지 않게) ---------- */
+var FIRST={tab:"owner",step:0,item:null};
+var V={tab:"owner",step:0,item:null};
+var ui={date:TODAY,doc:"",onlyWait:false};
+function cp(o){return {tab:o.tab,step:o.step,item:o.item}}
+function same(a,b){return a.tab===b.tab&&a.step===b.step&&a.item===b.item}
+function go(v){if(same(v,V))return;V=cp(v);history.pushState({app:1,v:cp(V)},"");render();window.scrollTo(0,0)}
+history.replaceState({app:1,base:1},"");
+history.pushState({app:1,v:cp(FIRST)},"");
+window.addEventListener("popstate",function(e){
+  var s=e.state||{};
+  if(!s.app||s.base){
+    history.pushState({app:1,v:cp(FIRST)},"");
+    if(same(V,FIRST))toast("앱을 닫으시려면 홈 화면으로 나가 주십시오");
+    else{V=cp(FIRST);render();window.scrollTo(0,0)}
+    return;
+  }
+  var v=s.v||FIRST;
+  if(V.tab==="owner"&&V.step==="done"&&v.tab==="owner"&&v.step!=="done"){V=cp(FIRST);history.replaceState({app:1,v:cp(V)},"")}
+  else V=cp(v);
+  render();window.scrollTo(0,0);
+});
+
+/* ---------- 그리기 ---------- */
+function render(){
+  $$("section.view").forEach(function(s){s.classList.toggle("on",s.id==="v-"+V.tab)});
+  $$("nav.views button").forEach(function(b){if(b.dataset.view===V.tab)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+  var w=S.items.filter(function(q){return !q.seen.length&&q.visit>=TODAY}).length;
+  $("#wait-c").textContent=w?String(w):"";
+  if(V.tab==="owner")renderOwner();else renderStaff();
+}
+
+/* 보호자 화면 */
+var STEPS=4;
+function bar(n){var h='<div class="steps" aria-hidden="true">';for(var i=0;i<STEPS;i++)h+='<i'+(i<=n?' class="on"':'')+'></i>';return h+'</div>'}
+function top(n){return '<div class="ph-top"><b>'+HOSP.name+'</b><span class="n">'+(n+1)+' / '+STEPS+'</span></div>'+bar(n)}
+var PURPOSE_LINE='<p class="purpose">이 문진은 진료를 준비하고 기록을 정리하는 데 씁니다. 진단과 치료 판단은 수의사가 진료실에서 합니다.</p>';
+function opts(name,list,cur){return '<div class="opts" role="group">'+list.map(function(x){return '<button type="button" data-opt="'+name+'" data-val="'+esc(x)+'" aria-pressed="'+(cur===x)+'">'+esc(x)+'</button>'}).join("")+'</div>'}
+function renderOwner(){
+  var st=V.step,h="";
+  if(st===0){
+    h=top(0)+'<h3>미리 알려 주시면<br>진료에 큰 도움이 됩니다</h3>'+
+      '<p class="lead">적어 주신 내용은 담당 수의사가 진료 들어가기 전에 확인합니다. 진료실에서 여쭐 것이 줄어, 궁금하신 이야기에 시간을 더 쓸 수 있습니다.</p>'+
+      '<p class="lead">모르시는 항목은 비워 두셔도 됩니다. 몇 분이면 끝납니다.</p>'+
+      '<div class="consent"><h4>개인정보 수집·이용 동의</h4><dl><dt>수집 항목</dt><dd>보호자 성함·연락처, 반려동물 정보와 건강 상태</dd><dt>이용 목적</dt><dd>진료 전 사전 확인과 진료 준비</dd><dt>보관 기간</dt><dd>병원 개인정보 처리방침에 따릅니다</dd></dl>'+
+      '<p class="refuse">동의하지 않으셔도 됩니다. 작성하지 않으셔도 진료에는 아무런 불이익이 없습니다.</p>'+
+      '<label class="agree"><input type="checkbox" id="f-consent"'+(F.consent?" checked":"")+'>위 내용에 동의하고 작성하겠습니다</label></div>'+
+      '<p class="err" id="err"></p><div class="ph-nav"><button class="btn solid" data-act="next">시작하기</button></div>'+PURPOSE_LINE;
+  }else if(st===1){
+    h=top(1)+'<h3>예약하신 아이를 알려 주십시오</h3><p class="lead">차트를 미리 찾아 두는 데 씁니다.</p>'+
+      '<div class="q"><label class="t" for="f-owner">보호자 성함<span class="req">필수</span></label><input class="inp" id="f-owner" data-f="owner" autocomplete="off" placeholder="예약하신 분 성함" value="'+esc(F.owner)+'"></div>'+
+      '<div class="q"><label class="t" for="f-phone">연락처<span class="req">필수</span></label><input class="inp n" id="f-phone" data-f="phone" type="tel" inputmode="numeric" maxlength="13" autocomplete="off" placeholder="010-0000-0000" value="'+esc(F.phone)+'"></div>'+
+      '<div class="q"><label class="t" for="f-pet">반려동물 이름<span class="req">필수</span></label><input class="inp" id="f-pet" data-f="pet" autocomplete="off" placeholder="아이 이름" value="'+esc(F.pet)+'"></div>'+
+      '<div class="q"><span class="t">어떤 아이입니까</span>'+opts("species",SPECIES,F.species)+
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><input class="inp" data-f="breed" aria-label="품종" placeholder="품종 (예: 말티즈)" value="'+esc(F.breed)+'"><input class="inp" data-f="age" aria-label="나이" placeholder="나이 (예: 5살)" value="'+esc(F.age)+'"></div></div>'+
+      '<div class="q"><label class="t" for="f-visit">언제 오십니까</label><input class="inp n" id="f-visit" type="date" data-f="visit" value="'+esc(F.visit)+'"></div>'+
+      '<div class="q"><span class="t">어떤 일로 오십니까</span>'+opts("purpose",PURPOSES,F.purpose)+
+        '<div id="refwrap"'+(F.purpose==="다른 병원에서 의뢰"?"":" hidden")+' style="margin-top:8px"><input class="inp" data-f="ref" aria-label="의뢰한 병원 이름" placeholder="의뢰해 주신 병원 이름" value="'+esc(F.ref)+'"></div></div>'+
+      '<div class="q"><span class="t">담당 수의사<span class="req">필수</span></span><p class="hint">누구신지 모르셔도 됩니다. 맨 아래를 골라 주십시오.</p><div class="docs" role="group">'+
+        DOCTORS.slice().sort(function(a,b){return a.localeCompare(b,"ko")}).map(function(d){return '<button type="button" data-doc="'+esc(d)+'" aria-pressed="'+(F.doctor===d)+'">'+esc(d)+'</button>'}).join("")+
+        '<button type="button" class="wide" data-doc="?" aria-pressed="'+(F.doctor==="?")+'">담당 수의사를 잘 모르겠습니다</button></div>'+
+        '<div id="deptwrap"'+(F.doctor==="?"?"":" hidden")+' style="margin-top:12px"><span class="t" style="display:block;font-size:15px;font-weight:700;margin-bottom:8px">어느 진료를 보러 오십니까</span>'+opts("dept",DEPTS,F.dept)+'</div></div>'+
+      '<p class="err" id="err"></p><div class="ph-nav"><button class="btn back" data-act="prev">이전</button><button class="btn solid" data-act="next">다음</button></div>'+PURPOSE_LINE;
+  }else if(st===2){
+    h=top(2)+'<h3>전하고 싶으신 말씀을 적어 주십시오</h3><p class="lead">비워 두셔도 됩니다. 적어 주시면 진료 전에 미리 보고 준비합니다.</p>'+
+      SURVEY.map(function(q){return '<div class="q"><label class="t" for="a-'+q.id+'">'+esc(q.label)+'</label>'+(q.hint?'<p class="hint">'+esc(q.hint)+'</p>':'')+
+        '<textarea class="ta" id="a-'+q.id+'" data-a="'+q.id+'" rows="'+(q.big?4:3)+'" placeholder="'+esc(q.ph)+'">'+esc(F.a[q.id]||"")+'</textarea></div>'}).join("")+
+      '<div class="q"><span class="t">진료 때 여쭙고 싶으신 것</span><p class="hint">적어 주시면 진료 중에 하나씩 답을 드립니다.</p><div class="asks">'+
+        [0,1,2].map(function(i){return '<div class="ask"><span>'+(i+1)+'</span><input class="inp" data-ask="'+i+'" aria-label="질문 '+(i+1)+'" placeholder="'+(i===0?"첫 번째로 궁금하신 점":"없으시면 비워 두십시오")+'" value="'+esc(F.asks[i])+'"></div>'}).join("")+'</div></div>'+
+      '<div class="ph-nav"><button class="btn back" data-act="prev">이전</button><button class="btn solid" data-act="next">다음</button></div>'+PURPOSE_LINE;
+  }else if(st===3){
+    var rows=[["보호자",F.owner+" · "+F.phone],["반려동물",[F.pet,F.species,F.breed,F.age].filter(Boolean).join(" · ")],["오시는 날",kd(F.visit)],["오시는 일",F.purpose+(F.ref?" ("+F.ref+")":"")],["담당",F.doctor==="?"?"잘 모름"+(F.dept?" · "+F.dept:""):F.doctor]];
+    SURVEY.forEach(function(q){var t=(F.a[q.id]||"").trim();if(t)rows.push([q.label,t])});
+    var as=F.asks.filter(function(x){return x.trim()});if(as.length)rows.push(["여쭙고 싶으신 것",as.map(function(x,i){return (i+1)+". "+x}).join("\n")]);
+    h=top(3)+'<h3>이대로 보내 드릴까요</h3><p class="lead">고치실 것이 있으면 「이전」을 눌러 주십시오. 보내신 뒤에는 이 화면에서 다시 열어 보실 수 없습니다.</p>'+
+      '<div class="review">'+rows.map(function(r){return '<div><b>'+esc(r[0])+'</b><p>'+esc(r[1])+'</p></div>'}).join("")+'</div>'+
+      '<div class="ph-nav"><button class="btn back" data-act="prev">이전</button><button class="btn acc" data-act="submit">보내기</button></div>'+PURPOSE_LINE;
+  }else{
+    h='<div class="ph-top"><b>'+HOSP.name+'</b><span></span></div><div class="done" style="margin-top:18px"><div class="mk" aria-hidden="true"></div><h3>잘 접수되었습니다</h3>'+
+      '<p class="lead">담당 수의사가 진료 전에 확인합니다. 오실 때 따로 준비하실 것은 없습니다. 다른 병원 검사지나 약 봉투가 있으시면 가져와 주십시오.</p>'+
+      '<p class="hint" style="margin-top:14px">적으신 내용은 병원에서만 볼 수 있습니다. 빠뜨린 것이 생각나시면 한 번 더 작성해 주시거나 '+HOSP.tel+'로 전화 주십시오.</p>'+
+      '<div class="ph-nav"><button class="btn" data-act="again">새 문진 작성하기</button><button class="btn solid" data-view="staff">의료진 화면에서 보기</button></div></div>';
+  }
+  $("#phone").innerHTML=h;
+}
+function check(st){
+  if(st===0&&!F.consent)return "동의하셔야 작성하실 수 있습니다.";
+  if(st===1){
+    if(!F.owner.trim())return "보호자 성함을 적어 주십시오.";
+    if(F.phone.replace(/\D/g,"").length<10)return "연락처를 끝까지 적어 주십시오.";
+    if(!F.pet.trim())return "반려동물 이름을 적어 주십시오.";
+    if(!F.doctor)return "담당 수의사를 골라 주십시오. 모르시면 맨 아래를 눌러 주십시오.";
+  }
+  return "";
+}
+function fmtPhone(v){var d=v.replace(/\D/g,"").slice(0,11);if(d.length<4)return d;if(d.length<8)return d.slice(0,3)+"-"+d.slice(3);return d.slice(0,3)+"-"+d.slice(3,d.length-4)+"-"+d.slice(-4)}
+
+/* 의료진 화면 */
+function byId(id){for(var i=0;i<S.items.length;i++)if(S.items[i].id===id)return S.items[i];return null}
+function docOf(q){return q.doctor||("잘 모름"+(q.dept?" · "+q.dept:""))}
+function renderWho(){$("#who").innerHTML=DOCTORS.concat(["접수 데스크"]).map(function(d){return '<option'+(S.me===d?" selected":"")+'>'+esc(d)+'</option>'}).join("")}
+function renderStaff(){
+  renderWho();
+  if(V.item&&byId(V.item)){renderDetail(byId(V.item));return}
+  $("#s-title").textContent="문진 접수 목록";
+  var day=S.items.filter(function(q){return q.visit===ui.date});
+  var waitN=day.filter(function(q){return !q.seen.length}).length;
+  var list=day.filter(function(q){if(ui.onlyWait&&q.seen.length)return false;if(ui.doc==="?")return !q.doctor;if(ui.doc&&q.doctor!==ui.doc)return false;return true}).sort(function(a,b){return a.at.localeCompare(b.at)});
+  var h='<p class="lede">내원 예정일별로 모았습니다. 이름을 누르시면 보호자가 적은 내용을 그대로 보실 수 있고, 「확인했습니다」를 누르시면 누가 언제 보았는지 남습니다.</p>'+
+    '<div class="datebar"><button class="btn arrow" data-day="-1" aria-label="전날">‹</button><span class="lbl n">'+kd(ui.date)+'</span><button class="btn arrow" data-day="1" aria-label="다음 날">›</button>'+
+    (ui.date!==TODAY?'<button class="btn sm" data-day="0">오늘</button>':'<button class="btn sm" data-day="t">내일</button>')+'</div>'+
+    '<div class="filters"><select class="inp" id="f-doc" aria-label="담당 수의사로 거르기"><option value="">모든 담당</option>'+DOCTORS.map(function(d){return '<option'+(ui.doc===d?" selected":"")+'>'+esc(d)+'</option>'}).join("")+'<option value="?"'+(ui.doc==="?"?" selected":"")+'>담당 모름</option></select>'+
+    '<label class="chk"><input type="checkbox" id="f-wait"'+(ui.onlyWait?" checked":"")+'>확인 전만 보기</label></div>'+
+    '<div class="daysum"><span><b class="n">'+day.length+'</b>건 접수</span><span class="'+(waitN?"w":"")+'"><b class="n">'+waitN+'</b>건 확인 전</span><span><b class="n">'+day.filter(function(q){return q.purpose==="다른 병원에서 의뢰"}).length+'</b>건 의뢰 환자</span></div>';
+  if(!list.length)h+='<p class="empty">'+(day.length?"조건에 맞는 문진이 없습니다.":"이날 들어온 문진이 없습니다.")+'</p>';
+  else h+='<ul class="ilist">'+list.map(function(q){
+    var first=(q.a.story||"").trim();
+    return '<li><button data-item="'+q.id+'"><span class="tm n">'+hm(q.at)+'</span><span class="nm">'+esc(q.pet)+'<small>'+esc([q.species,q.breed,q.age].filter(Boolean).join(" · "))+'</small></span>'+
+      '<span>'+(q.seen.length?'<span class="tagx seen">확인함</span>':'<span class="tagx wait">확인 전</span>')+'</span>'+
+      '<span class="meta">'+esc(q.purpose+(q.ref?" · "+q.ref:""))+' · 담당 '+esc(docOf(q))+' · 보호자 '+esc(q.owner)+'</span>'+
+      (first?'<span class="first">'+esc(first)+'</span>':'')+'</button></li>'}).join("")+'</ul>';
+  h+='<p class="hint" style="margin-top:14px">목록의 시각은 보호자가 문진을 보낸 때입니다. 「보호자 화면」에서 직접 한 건 작성해 보내시면 여기에 바로 들어옵니다.</p>';
+  $("#staff-body").innerHTML=h;
+}
+function renderDetail(q){
+  $("#s-title").textContent=q.pet+" 사전문진";
+  var h='<div class="back-row"><button class="btn sm" data-act="back">‹ 목록으로</button></div><div class="doc" id="doc"><div class="top"><div><h3>'+esc(q.pet)+'</h3><div class="sp">'+esc([q.species,q.breed,q.age].filter(Boolean).join(" · "))+'</div></div><div class="at">'+HOSP.name+' 사전문진<br>보낸 때 '+stamp(q.at)+'</div></div>'+
+    '<table class="kv"><tr><th>보호자</th><td>'+esc(q.owner)+'</td></tr><tr><th>연락처</th><td class="n">'+esc(q.phone)+'</td></tr><tr><th>오시는 날</th><td>'+kd(q.visit)+'</td></tr>'+
+    '<tr><th>오시는 일</th><td>'+esc(q.purpose)+'</td></tr>'+(q.ref?'<tr><th>의뢰 병원</th><td>'+esc(q.ref)+'</td></tr>':'')+'<tr><th>담당</th><td>'+esc(docOf(q))+'</td></tr></table>';
+  SURVEY.forEach(function(s){var t=(q.a[s.id]||"").trim();h+='<div class="ans"><h4>'+esc(s.label)+'</h4>'+(t?'<p>'+esc(t)+'</p>':'<p class="none">적지 않으셨습니다</p>')+'</div>'});
+  h+='<div class="ans"><h4>진료 때 여쭙고 싶으신 것</h4>'+(q.asks.length?'<ol>'+q.asks.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ol>':'<p class="none">적지 않으셨습니다</p>')+'</div>';
+  h+='<div class="seenlog">'+(q.seen.length?q.seen.map(function(s){return '확인 <b>'+esc(s.who)+'</b> · '+stamp(s.at)}).join("<br>"):"아직 아무도 확인하지 않았습니다.")+'</div></div>';
+  var mine=q.seen.some(function(s){return s.who===S.me});
+  h+='<div class="doc-acts"><button class="btn acc" data-act="seen"'+(mine?" disabled":"")+'>'+(mine?"확인했습니다 ("+esc(S.me)+")":esc(S.me)+" 이름으로 확인했습니다")+'</button><button class="btn" data-act="copy">차트용 복사</button><button class="btn" data-act="print">인쇄</button></div>'+
+    '<p class="hint" style="margin-top:10px">보호자가 적은 말을 그대로 옮긴 기록입니다. 이 화면은 내용을 판단하거나 점수를 매기지 않습니다.</p>';
+  $("#staff-body").innerHTML=h;
+}
+function chartText(q){
+  var L=["[사전문진] "+q.pet+" ("+[q.species,q.breed,q.age].filter(Boolean).join(", ")+")","보호자 "+q.owner+" "+q.phone,"내원 "+kd(q.visit)+" · "+q.purpose+(q.ref?" · 의뢰 "+q.ref:"")+" · 담당 "+docOf(q),"문진 제출 "+stamp(q.at)];
+  SURVEY.forEach(function(s){var t=(q.a[s.id]||"").trim();if(t){L.push("");L.push("■ "+s.label);L.push(t)}});
+  if(q.asks.length){L.push("");L.push("■ 여쭙고 싶은 것");q.asks.forEach(function(x,i){L.push((i+1)+". "+x)})}
+  return L.join("\n");
+}
+
+/* ---------- 입력 ---------- */
+document.addEventListener("input",function(e){
+  var t=e.target;
+  if(t.dataset.f){if(t.dataset.f==="phone"){t.value=fmtPhone(t.value)}F[t.dataset.f]=t.value;return}
+  if(t.dataset.a){F.a[t.dataset.a]=t.value;return}
+  if(t.dataset.ask){F.asks[+t.dataset.ask]=t.value;return}
+});
+document.addEventListener("change",function(e){
+  var t=e.target;
+  if(t.id==="f-consent"){F.consent=t.checked;$("#err").textContent="";return}
+  if(t.id==="who"){S.me=t.value;save();render();return}
+  if(t.id==="f-doc"){ui.doc=t.value;renderStaff();return}
+  if(t.id==="f-wait"){ui.onlyWait=t.checked;renderStaff();return}
+});
+document.addEventListener("click",function(e){
+  var t=e.target.closest("button");if(!t)return;
+  if(t.dataset.view){go({tab:t.dataset.view,step:t.dataset.view==="owner"?(V.tab==="owner"?V.step:lastStep):0,item:null});return}
+  if(t.dataset.opt){var k=t.dataset.opt;F[k]=F[k]===t.dataset.val?"":t.dataset.val;
+    $$('[data-opt="'+k+'"]').forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.val===F[k]))});
+    if(k==="purpose"){$("#refwrap").hidden=F.purpose!=="다른 병원에서 의뢰"}return}
+  if(t.dataset.doc){F.doctor=t.dataset.doc;if(F.doctor!=="?")F.dept="";$$("[data-doc]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.doc===F.doctor))});$("#deptwrap").hidden=F.doctor!=="?";$("#err").textContent="";return}
+  if(t.dataset.item){go({tab:"staff",step:0,item:t.dataset.item});return}
+  if(t.dataset.day){var d=t.dataset.day;ui.date=d==="0"?TODAY:d==="t"?addD(TODAY,1):addD(ui.date,+d);renderStaff();return}
+  var act=t.dataset.act;
+  if(act==="next"){var m=check(V.step);if(m){$("#err").textContent=m;return}lastStep=V.step+1;go({tab:"owner",step:V.step+1,item:null})}
+  else if(act==="prev"){history.back()}
+  else if(act==="submit"){
+    var q={id:uid(),at:new Date().toISOString(),visit:F.visit||TODAY,owner:F.owner.trim(),phone:F.phone,pet:F.pet.trim(),species:F.species,breed:F.breed.trim(),age:F.age.trim(),purpose:F.purpose||"그 밖의 일",ref:F.purpose==="다른 병원에서 의뢰"?F.ref.trim():"",doctor:F.doctor==="?"?"":F.doctor,dept:F.doctor==="?"?F.dept:"",a:{},asks:F.asks.map(function(x){return x.trim()}).filter(Boolean),seen:[]};
+    SURVEY.forEach(function(s){var v=(F.a[s.id]||"").trim();if(v)q.a[s.id]=v});
+    S.items.push(q);save();F=blankForm();lastStep=0;ui.date=q.visit;
+    V={tab:"owner",step:"done",item:null};history.replaceState({app:1,v:cp(V)},"");render();window.scrollTo(0,0);
+  }
+  else if(act==="again"){F=blankForm();V=cp(FIRST);history.replaceState({app:1,v:cp(V)},"");render();window.scrollTo(0,0)}
+  else if(act==="back"){history.back()}
+  else if(act==="seen"){var it=byId(V.item);if(it&&!it.seen.some(function(s){return s.who===S.me})){it.seen.push({who:S.me,at:new Date().toISOString()});save();render();toast("확인 기록을 남겼습니다")}}
+  else if(act==="copy"){var it2=byId(V.item);if(it2)copyText(chartText(it2))}
+  else if(act==="print"){window.print()}
+  else if(act==="reset"){if(confirm("보내신 문진을 모두 지우고 예시로 되돌리시겠습니까?")){try{localStorage.removeItem(KEY)}catch(_){}S=seed();F=blankForm();lastStep=0;ui={date:TODAY,doc:"",onlyWait:false};render();toast("예시로 되돌렸습니다")}}
+});
+var lastStep=0;
+function copyText(s){
+  function fb(){var ta=document.createElement("textarea");ta.value=s;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("복사했습니다. 차트 메모 칸에 붙여 넣어 주십시오.")}catch(_){toast("복사하지 못했습니다")}ta.remove()}
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(s).then(function(){toast("복사했습니다. 차트 메모 칸에 붙여 넣어 주십시오.")},fb);else fb();
+}
+var tT;function toast(m){var el=$("#toast");el.textContent=m;el.classList.add("on");clearTimeout(tT);tT=setTimeout(function(){el.classList.remove("on")},2600)}
+
+load();render();
+window.__intake={state:function(){return S},view:function(){return V}};
+})();
+</script>
+</body>
+</html>
